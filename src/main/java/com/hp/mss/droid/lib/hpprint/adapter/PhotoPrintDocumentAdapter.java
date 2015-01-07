@@ -82,7 +82,6 @@ public class PhotoPrintDocumentAdapter extends PrintDocumentAdapter {
                         final WriteResultCallback callback) {
 
         PdfDocument.Page page = myPdfDocument.startPage(0);
-        System.out.println("onWrite::page " + page);
 
         drawPage(page);
         myPdfDocument.finishPage(page);
