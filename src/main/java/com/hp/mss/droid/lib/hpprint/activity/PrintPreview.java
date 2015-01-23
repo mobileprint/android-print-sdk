@@ -3,9 +3,11 @@ package com.hp.mss.droid.lib.hpprint.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
 import android.os.Bundle;
+import android.support.v4.print.PrintHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Button;
 
 import com.hp.mss.droid.lib.hpprint.R;
 import com.hp.mss.droid.lib.hpprint.adapter.PhotoPrintDocumentAdapter;
+import com.hp.mss.droid.lib.hpprint.util.PrintUtil;
 
 /**
  * Copyright 2015 Hewlett-Packard, Co.
@@ -24,27 +27,26 @@ public class PrintPreview extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_preview);
-        photo = (Bitmap) getIntent().getExtras().get("bitmap");
-        setupPrintButton();
+        Uri photoFileName = (Uri) getIntent().getExtras().get("photoFileUri");
+        photo = PrintUtil.getImageBitmap(this, photoFileName);
+
     }
 
-    private void setupPrintButton() {
-        Button printButton = (Button)findViewById(R.id.button_print);
-        printButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performPrint();
-            }
-        });
-    }
 
     private void performPrint() {
-        PrintManager printManager = (PrintManager) this.getSystemService(Context.PRINT_SERVICE);
-        String jobName = this.getString(R.string.app_name);
-        PrintDocumentAdapter adapter = new PhotoPrintDocumentAdapter(this, photo);
-        printManager.print(jobName, adapter, null );
+
+//        PrintManager printManager = (PrintManager) this.getSystemService(Context.PRINT_SERVICE);
+//        String jobName = this.getString(R.string.app_name);
+//        PrintDocumentAdapter adapter = new PhotoPrintDocumentAdapter(this, photo);
+//        printManager.print(jobName, adapter, null );
+
+        PrintHelper printHelper = new PrintHelper(this);
+        printHelper.setScaleMode(PrintHelper.SCALE_MODE_FILL);
+        printHelper.printBitmap("Print Photo", photo);
+
     }
 
 
@@ -63,7 +65,8 @@ public class PrintPreview extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_print) {
+            performPrint();
             return true;
         }
 

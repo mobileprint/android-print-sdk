@@ -11,5 +11,6 @@
             android:label="@string/title_activity_print_preview" >
         </activity>
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
