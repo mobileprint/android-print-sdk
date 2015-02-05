@@ -1,28 +1,27 @@
 package com.hp.mss.droid.lib.hpprint.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintManager;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.print.PrintHelper;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.hp.mss.droid.lib.hpprint.R;
-import com.hp.mss.droid.lib.hpprint.adapter.PhotoPrintDocumentAdapter;
-import com.hp.mss.droid.lib.hpprint.util.PrintUtil;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Copyright 2015 Hewlett-Packard, Co.
  */
 
-public class PrintPreview extends Activity {
+public class PrintPreview extends Activity{
 
+    String photoFileName = null;
     Bitmap photo = null;
 
     @Override
@@ -30,9 +29,8 @@ public class PrintPreview extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_preview);
-        Uri photoFileName = (Uri) getIntent().getExtras().get("photoFileUri");
-        photo = PrintUtil.getImageBitmap(this, photoFileName);
-
+        String photoFileName = (String) getIntent().getExtras().get("photoFileUri");
+        photo = getImageBitmap(this, photoFileName);
     }
 
 
@@ -44,7 +42,7 @@ public class PrintPreview extends Activity {
 //        printManager.print(jobName, adapter, null );
 
         PrintHelper printHelper = new PrintHelper(this);
-        printHelper.setScaleMode(PrintHelper.SCALE_MODE_FILL);
+        printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
         printHelper.printBitmap("Print Photo", photo);
 
     }
@@ -72,4 +70,32 @@ public class PrintPreview extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public Bitmap getImageBitmap(Activity activity, String photoFileName) {
+        Bitmap b = null;
+
+        try {
+            File file = new File(photoFileName);
+
+            InputStream inputStream = new FileInputStream(file);
+            b = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return b;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if ( photoFileName != null ) {
+            File photoFile = new File(photoFileName);
+            if ( photoFile.exists() )
+                photoFile.deleteOnExit();
+        }
+    }
+
+
 }
