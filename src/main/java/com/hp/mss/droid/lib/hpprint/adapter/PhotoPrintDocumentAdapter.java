@@ -26,6 +26,9 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
+import android.widget.ImageView;
+
+import com.hp.mss.droid.lib.hpprint.view.PagePreviewView;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,11 +42,13 @@ public class PhotoPrintDocumentAdapter extends PrintDocumentAdapter {
     private PrintedPdfDocument myPdfDocument;
     public Bitmap thePhoto;
     public int totalPages;
+    private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
 
-    public PhotoPrintDocumentAdapter(Context context,Bitmap bitmap) {
+    public PhotoPrintDocumentAdapter(Context context,Bitmap bitmap, ImageView.ScaleType scaleType) {
         this.context = context;
         totalPages = 1;
         thePhoto = bitmap;
+        this.scaleType = scaleType;
     }
 
     @Override
@@ -71,7 +76,7 @@ public class PhotoPrintDocumentAdapter extends PrintDocumentAdapter {
 
         if ( totalPages > 0 ) {
             PrintDocumentInfo.Builder builder = new PrintDocumentInfo
-                    .Builder("Print elk.jpeg")
+                    .Builder("print_card")
                     .setContentType((PrintDocumentInfo.CONTENT_TYPE_PHOTO))
                     .setPageCount(totalPages);
 
@@ -90,7 +95,21 @@ public class PhotoPrintDocumentAdapter extends PrintDocumentAdapter {
                         final CancellationSignal cancellationSignal,
                         final WriteResultCallback callback) {
 
-        PdfDocument.Page page = myPdfDocument.startPage(0);
+        final float PdfDocumentScale = thePhoto.getDensity()/1000f;
+        final float scaledWidth = pageWidth * PdfDocumentScale;
+        final float scaledHeight = pageHeight * PdfDocumentScale;
+
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder((int)scaledWidth,(int)scaledHeight,0).create();
+
+        PdfDocument.Page page = myPdfDocument.startPage(pageInfo);
+
+        //check for cancellation
+        if (cancellationSignal.isCanceled()) {
+            callback.onWriteCancelled();
+            myPdfDocument.close();
+            myPdfDocument = null;
+            return;
+        }
 
         drawPage(page);
         myPdfDocument.finishPage(page);
@@ -110,31 +129,44 @@ public class PhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         callback.onWriteFinished(pageRanges);
     }
 
-    private boolean pageInRange(PageRange[] pageRanges, int page) {
-
-        for (int i=0; i<pageRanges.length; i++) {
-            if ((page >= pageRanges[i].getStart()) &&
-                    (page <= pageRanges[i].getEnd()))
-                return true;
-        }
-        return false;
-    }
-
+    //This method needs corresponding one for pagepreviewview to make the result print same as the preview.
     private void drawPage(PdfDocument.Page page) {
-
         Canvas canvas = page.getCanvas();
-        float scale = 72/1000;
-        int w = (int)( pageWidth * scale);
-        int h = (int)( pageHeight * scale);
-
-        try {
-            if (w > h)
-                canvas.drawBitmap(thePhoto, null, new Rect(0, 0, h, h), null);
-            else
-                canvas.drawBitmap(thePhoto, null, new Rect(0, 0, w, w), null);
-        } catch (Exception e) {
-            e.printStackTrace();
+        switch (scaleType) {
+            default:
+            case CENTER:
+                //TODO: Need to implement
+                break;
+            case CENTER_CROP:
+                drawCenterCrop(canvas);
+                break;
+            case CENTER_INSIDE:
+                //TODO: Need to implement
+                break;
+            case FIT_XY:
+                canvas.drawBitmap(thePhoto, null, canvas.getClipBounds(), null);
+                break;
         }
+    }
+
+    private void drawCenterCrop(Canvas canvas){
+
+        int photoWidth = thePhoto.getWidth();
+        int photoHeight = thePhoto.getHeight();
+
+        float scale = PagePreviewView.getImageScale(thePhoto.getWidth(), thePhoto.getHeight(), canvas.getWidth(), canvas.getHeight());
+
+        photoWidth *= scale;
+        photoHeight *= scale;
+
+        final int left = canvas.getWidth()/2-photoWidth/2;
+        final int right = left + photoWidth;
+        final int top = canvas.getHeight()/2-photoHeight/2;
+        final int bottom = top + photoHeight;
+
+        canvas.drawBitmap(thePhoto, null, new Rect(left, top, right, bottom ), null);
 
     }
+
+
 }

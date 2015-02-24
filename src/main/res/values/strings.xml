@@ -12,7 +12,7 @@
 
     <string-array name="paper_size_array">
         <item> 5 x 7 </item>
-        <item> 4 x 6  </item>
+        <item> 4 x 6 </item>
         <item> 8.5 x 11 </item>
     </string-array>
 

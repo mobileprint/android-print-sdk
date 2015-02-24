@@ -14,13 +14,23 @@ package com.hp.mss.droid.lib.hpprint.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintJob;
+import android.print.PrintManager;
+import android.widget.ImageView;
 
+import com.hp.mss.droid.lib.hpprint.R;
 import com.hp.mss.droid.lib.hpprint.activity.PrintPreview;
+import com.hp.mss.droid.lib.hpprint.adapter.PhotoPrintDocumentAdapter;
 
 
 public class PrintUtil {
@@ -32,13 +42,17 @@ public class PrintUtil {
                                                         "please install HP Print Plugin if you have HP printer(s)." +
                                                         " Please make sure print plugin service is turned on after the installation";
 
+    public static final String PHOTO_FILE_URI = "PHOTO_FILE_URI";
+    public static final String DPI = "DPI";
 
-    public void launchPrint(Activity activity, String photoFileName){
+
+    public void launchPrint(Activity activity, String photoFileName, int dpi){
 
         if ( checkAndInstallHPPrintPlugin(activity) ) {
 
                 Intent intent = new Intent(activity, PrintPreview.class);
-                intent.putExtra("photoFileUri", photoFileName);
+                intent.putExtra(PHOTO_FILE_URI, photoFileName);
+                intent.putExtra(DPI, dpi);
                 activity.startActivity(intent);
         }
     }
@@ -128,4 +142,19 @@ public class PrintUtil {
         public void ignoreWarningMsg(boolean ignore);
     }
 
+    public static void performPrint(Activity activity, Bitmap photo, ImageView.ScaleType scaleType) {
+
+        PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
+        String jobName = activity.getString(R.string.app_name);
+        //need to give original photo size..
+        PrintDocumentAdapter adapter = new PhotoPrintDocumentAdapter(activity, photo, scaleType);
+
+        PrintAttributes printAttributes = new PrintAttributes.Builder().
+                setMinMargins(PrintAttributes.Margins.NO_MARGINS).
+                setResolution(new PrintAttributes.Resolution("160", "160", 160, 160)).
+                build();
+
+        PrintJob printJob = printManager.print(jobName, adapter, printAttributes);
+
+    }
 }
