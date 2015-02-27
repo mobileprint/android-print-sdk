@@ -93,7 +93,6 @@ public class PrintUtil {
         return isInstalled;
     }
 
-
     public void dispatchInstallPluginIntent(Activity activity, String packageName) {
 
         String url;
@@ -113,7 +112,6 @@ public class PrintUtil {
         activity.startActivity(intent);
 
     }
-
 
     private void dispatchInstallMsgDialog(final Activity activity, String msg) {
 

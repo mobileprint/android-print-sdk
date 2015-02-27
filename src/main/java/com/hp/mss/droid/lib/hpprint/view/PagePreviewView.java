@@ -154,10 +154,6 @@ public class PagePreviewView extends View {
 
         findPhotoBounds();
 
-//        paperPaint.setStyle(Paint.Style.FILL);
-//        paperPaint.setColor(Color.BLACK);
-//        canvas.drawRect(pageBounds, paperPaint);
-
         float cardShadowRadiuspx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_RADIUS, getResources().getDisplayMetrics());
         float cardShadowOffsetpx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_OFFSET, getResources().getDisplayMetrics());
 
@@ -179,13 +175,13 @@ public class PagePreviewView extends View {
         switch (scaleType) {
             default:
             case CENTER:
-                //setImageBoundsToCenter();
+                //TODO: Not required for current use case
                 break;
             case CENTER_CROP:
                 setImageBoundsToCenterCrop();
                 break;
             case CENTER_INSIDE:
-                //setImageBoundsToCenterInside();
+                //TODO: Not required for current use case
                 break;
             case FIT_XY:
                 photo.setBounds(pageBounds);
@@ -226,34 +222,6 @@ public class PagePreviewView extends View {
             scale = canvasWidth / (float) photoWidth;
         }
         return scale;
-    }
-
-    private void setImageBoundsToCenter() {
-
-        final int intrinsicWidth = photo.getIntrinsicWidth();
-        final int intrinsicHeight = photo.getIntrinsicHeight();
-
-        final int left = pageBounds.left + (pageBounds.width() - intrinsicWidth) / 2;
-        final int right = pageBounds.top + (pageBounds.height() - intrinsicHeight) / 2;
-        photo.setBounds(left, right, left+intrinsicWidth, right+ intrinsicHeight);
-    }
-
-    private void setImageBoundsToCenterInside() {
-        final int intrinsicWidth = photo.getIntrinsicWidth();
-        final int intrinsicHeight = photo.getIntrinsicHeight();
-        if (landscape) {
-            int heightbound = pageBounds.height();
-            int widthBound = heightbound * intrinsicWidth / intrinsicHeight;
-            int left = pageBounds.centerX() - widthBound / 2;
-            int right = pageBounds.centerX() + widthBound / 2;
-            photo.setBounds(left, pageBounds.top, right, pageBounds.bottom);
-        } else {
-            int widthBound = pageBounds.width();
-            int heightbound = widthBound * intrinsicHeight / intrinsicWidth;
-            int top = pageBounds.centerY() - heightbound / 2;
-            int bottom = pageBounds.centerY() + heightbound / 2;
-            photo.setBounds(pageBounds.left, top, pageBounds.right, bottom);
-        }
     }
 
     private void updatePaths() {
@@ -330,12 +298,10 @@ public class PagePreviewView extends View {
         postInvalidate();
     }
 
-
     public void setPaperColor(int color) {
         paperColor = color;
         postInvalidate();
     }
-
 
     public void setScaleType(ImageView.ScaleType scaleType) {
         this.scaleType = scaleType;

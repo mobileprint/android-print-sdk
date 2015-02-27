@@ -135,13 +135,13 @@ public class PhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         switch (scaleType) {
             default:
             case CENTER:
-                //TODO: Need to implement
+                //TODO: Not required for current use case
                 break;
             case CENTER_CROP:
                 drawCenterCrop(canvas);
                 break;
             case CENTER_INSIDE:
-                //TODO: Need to implement
+                //TODO: Not required for current use case
                 break;
             case FIT_XY:
                 canvas.drawBitmap(thePhoto, null, canvas.getClipBounds(), null);
