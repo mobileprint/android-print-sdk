@@ -13,14 +13,18 @@
 package com.hp.mss.droid.lib.hpprint.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.support.v4.print.PrintHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hp.mss.droid.lib.hpprint.R;
+import com.hp.mss.droid.lib.hpprint.adapter.PhotoPrintDocumentAdapter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,14 +49,14 @@ public class PrintPreview extends Activity{
 
     private void performPrint() {
 
-//        PrintManager printManager = (PrintManager) this.getSystemService(Context.PRINT_SERVICE);
-//        String jobName = this.getString(R.string.app_name);
-//        PrintDocumentAdapter adapter = new PhotoPrintDocumentAdapter(this, photo);
-//        printManager.print(jobName, adapter, null );
+        PrintManager printManager = (PrintManager) this.getSystemService(Context.PRINT_SERVICE);
+        String jobName = this.getString(R.string.app_name);
+        PrintDocumentAdapter adapter = new PhotoPrintDocumentAdapter(this, photo);
+        printManager.print(jobName, adapter, null );
 
-        PrintHelper printHelper = new PrintHelper(this);
-        printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
-        printHelper.printBitmap("Print Photo", photo);
+//        PrintHelper printHelper = new PrintHelper(this);
+//        printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+//        printHelper.printBitmap("Print Photo", photo);
 
     }
 
