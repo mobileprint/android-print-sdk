@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.hp.mss.droid.lib.hpprint.R;
 import com.hp.mss.droid.lib.hpprint.util.PrintUtil;
@@ -77,6 +78,16 @@ public class PrintPreview extends Activity {
         landscapePhoto = photo.getWidth() > photo.getHeight();
 
         setPreviewViewLayoutProperties();
+
+        TextView linkTextView = (TextView) findViewById(R.id.ic_printing_support_link);
+        linkTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mobileSiteIntent = new Intent(Intent.ACTION_VIEW);
+                mobileSiteIntent.setData(Uri.parse(HP_ANDROID_MOBILE_SITE));
+                startActivity(mobileSiteIntent);
+            }
+        });
     }
 
 
@@ -161,11 +172,7 @@ public class PrintPreview extends Activity {
         }
     }
 
-    public void onAboutLinkClicked(View view) {
-        Intent mobileSiteIntent = new Intent(Intent.ACTION_VIEW);
-        mobileSiteIntent.setData(Uri.parse(HP_ANDROID_MOBILE_SITE));
-        startActivity(mobileSiteIntent);
-    }
+
 
     public void setSizeSpinnerListener(Spinner sizeSpinner) {
         sizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

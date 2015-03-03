@@ -91,6 +91,7 @@
             android:layout_marginTop="10dp"/>
 
         <TextView
+            android:id="@+id/ic_printing_support_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/ic_mobile_printing"
@@ -101,7 +102,6 @@
             android:paddingLeft="15sp"
             android:text="@string/learn_about_mobile_print"
             android:textColor="@color/HPFontColorBlue"
-            android:onClick="onAboutLinkClicked"
             android:layout_marginTop="15dp"/>
     </RelativeLayout>
 
