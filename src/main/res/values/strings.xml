@@ -18,7 +18,6 @@
 
     <string-array name="paper_type_array">
         <item> Photo Paper </item>
-        <item> Plain Paper </item>
     </string-array>
 
 </resources>
