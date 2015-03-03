@@ -57,7 +57,8 @@ public class PrintPreview extends Activity {
     Bitmap photo = null;
     private PagePreviewView previewView;
     private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
-
+    float paperWidth;
+    float paperHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -139,7 +140,7 @@ public class PrintPreview extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
-            PrintUtil.performPrint(this, photo, scaleType);
+            PrintUtil.performPrint(this, photo, scaleType, paperWidth, paperHeight);
             return true;
         }
 
@@ -183,10 +184,10 @@ public class PrintPreview extends Activity {
                 String[] sizeArray = paperSize.split(" x ");
 
                 if (sizeArray.length == 2) {
-                    float width = landscapePhoto ? Float.parseFloat(sizeArray[1].trim()) : Float.parseFloat(sizeArray[0].trim());
-                    float height = landscapePhoto ? Float.parseFloat(sizeArray[0].trim()) : Float.parseFloat(sizeArray[1].trim());
+                    paperWidth = landscapePhoto ? Float.parseFloat(sizeArray[1].trim()) : Float.parseFloat(sizeArray[0].trim());
+                    paperHeight = landscapePhoto ? Float.parseFloat(sizeArray[0].trim()) : Float.parseFloat(sizeArray[1].trim());
 
-                    previewView.setPageSize(width, height);
+                    previewView.setPageSize(paperWidth, paperHeight);
                 }
             }
 

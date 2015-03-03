@@ -140,7 +140,7 @@ public class PrintUtil {
         public void ignoreWarningMsg(boolean ignore);
     }
 
-    public static void performPrint(Activity activity, Bitmap photo, ImageView.ScaleType scaleType) {
+    public static void performPrint(Activity activity, Bitmap photo, ImageView.ScaleType scaleType, float paperWidth, float paperHeight) {
 
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
         String jobName = activity.getString(R.string.app_name);
@@ -149,6 +149,7 @@ public class PrintUtil {
 
         PrintAttributes printAttributes = new PrintAttributes.Builder().
                 setMinMargins(PrintAttributes.Margins.NO_MARGINS).
+                setMediaSize(new PrintAttributes.MediaSize("NA", "android", (int)(paperWidth*1000), (int)(paperHeight*1000))).
                 setResolution(new PrintAttributes.Resolution("160", "160", 160, 160)).
                 build();
 
