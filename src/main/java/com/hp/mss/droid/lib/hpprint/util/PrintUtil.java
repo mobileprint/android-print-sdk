@@ -14,23 +14,31 @@ package com.hp.mss.droid.lib.hpprint.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
+import android.print.PrintDocumentInfo;
 import android.print.PrintJob;
+import android.print.PrintJobInfo;
 import android.print.PrintManager;
+import android.print.PrinterId;
 import android.widget.ImageView;
 
 import com.hp.mss.droid.lib.hpprint.R;
 import com.hp.mss.droid.lib.hpprint.activity.PrintPreview;
 import com.hp.mss.droid.lib.hpprint.adapter.PhotoPrintDocumentAdapter;
+
+import org.json.JSONObject;
+
+import java.lang.reflect.Method;
 
 
 public class PrintUtil {
@@ -42,18 +50,22 @@ public class PrintUtil {
                                                         "please install HP Print Plugin if you have HP printer(s)." +
                                                         " Please make sure print plugin service is turned on after the installation";
 
+    public static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
     public static final String PHOTO_FILE_URI = "PHOTO_FILE_URI";
     public static final String DPI = "DPI";
+    public static final int MILS = 1000;
+    public static final int PRINT_JOB_WAIT_TIME = 1000;
 
+    public static PrintJob printJob;
 
-    public void launchPrint(Activity activity, String photoFileName, int dpi){
+    public void launchPrint(Activity activity, String photoFileName, int dpi, int request_id){
 
         if ( checkAndInstallHPPrintPlugin(activity) ) {
 
                 Intent intent = new Intent(activity, PrintPreview.class);
                 intent.putExtra(PHOTO_FILE_URI, photoFileName);
                 intent.putExtra(DPI, dpi);
-                activity.startActivity(intent);
+                activity.startActivityForResult(intent,request_id);
         }
     }
 
@@ -140,7 +152,7 @@ public class PrintUtil {
         public void ignoreWarningMsg(boolean ignore);
     }
 
-    public static void performPrint(Activity activity, Bitmap photo, ImageView.ScaleType scaleType, float paperWidth, float paperHeight) {
+    public static void performPrint(Activity activity, final OnPrintDataCollectedListener printDataListener, Bitmap photo, ImageView.ScaleType scaleType, float paperWidth, float paperHeight) {
 
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
         String jobName = activity.getString(R.string.app_name);
@@ -149,11 +161,63 @@ public class PrintUtil {
 
         PrintAttributes printAttributes = new PrintAttributes.Builder().
                 setMinMargins(PrintAttributes.Margins.NO_MARGINS).
-                setMediaSize(new PrintAttributes.MediaSize("NA", "android", (int)(paperWidth*1000), (int)(paperHeight*1000))).
+                setMediaSize(new PrintAttributes.MediaSize("NA", "android", (int) (paperWidth * MILS), (int) (paperHeight * MILS))).
                 setResolution(new PrintAttributes.Resolution("160", "160", 160, 160)).
                 build();
 
-        PrintJob printJob = printManager.print(jobName, adapter, printAttributes);
+        printJob = printManager.print(jobName, adapter, printAttributes);
+
+        final Handler handler = new Handler();
+
+        final Runnable r = new Runnable() {
+            public void run() {
+                if(printJob.isQueued() || printJob.isCompleted() || printJob.isStarted()){
+                    PrintJobInfo printJobInfo = printJob.getInfo();
+                    PrintAttributes printJobAttributes = printJobInfo.getAttributes();
+                    PrinterId printerId = printJobInfo.getPrinterId();
+
+                    try {
+                        Method gdi = PrintJobInfo.class.getMethod("getDocumentInfo");
+                        PrintDocumentInfo printDocumentInfo = (PrintDocumentInfo) gdi.invoke(printJobInfo);
+                        Method gsn = PrinterId.class.getMethod("getServiceName");
+                        ComponentName componentName = (ComponentName) gsn.invoke(printerId);
+
+                        JSONObject jsonObject = new JSONObject();
+                        if (printDocumentInfo.getContentType() == PrintDocumentInfo.CONTENT_TYPE_DOCUMENT) {
+                            jsonObject.put("paper_type", "Document");
+                        } else if (printDocumentInfo.getContentType() == PrintDocumentInfo.CONTENT_TYPE_PHOTO) {
+                            jsonObject.put("paper_type", "Photo Paper");
+                        } else if (printDocumentInfo.getContentType() == PrintDocumentInfo.CONTENT_TYPE_UNKNOWN) {
+                            jsonObject.put("paper_type", "Unknown");
+                        }
+                        jsonObject.put("print_plugin_tech", componentName.getPackageName());
+
+                        String width = Double.toString(printJobAttributes.getMediaSize().getWidthMils()/MILS);
+                        String height = Double.toString(printJobAttributes.getMediaSize().getHeightMils()/MILS);
+
+                        jsonObject.put("paper_size", width + " x " + height);
+                        jsonObject.put("printer_id", printerId.getLocalId());
+
+                        printDataListener.postPrintData(jsonObject);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }else if (printJob.isFailed() || printJob.isBlocked() || printJob.isCancelled()) {
+                    //do nothing
+                } else {
+                    handler.postDelayed(this, PRINT_JOB_WAIT_TIME);
+                }
+
+
+            }
+        };
+
+        handler.postDelayed(r, PRINT_JOB_WAIT_TIME);
 
     }
+
+    public interface OnPrintDataCollectedListener {
+        public void postPrintData(JSONObject jsonObject);
+    }
+
 }

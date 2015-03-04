@@ -37,12 +37,14 @@ import com.hp.mss.droid.lib.hpprint.R;
 import com.hp.mss.droid.lib.hpprint.util.PrintUtil;
 import com.hp.mss.droid.lib.hpprint.view.PagePreviewView;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
 
-public class PrintPreview extends Activity {
+public class PrintPreview extends Activity{
 
     private static final int DEFAULT_WIDTH = 5;
     private static final int DEFAULT_HEIGHT = 7;
@@ -59,6 +61,7 @@ public class PrintPreview extends Activity {
     private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     float paperWidth;
     float paperHeight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -90,8 +93,6 @@ public class PrintPreview extends Activity {
             }
         });
     }
-
-
 
     private void setPreviewViewLayoutProperties() {
         Display display = getWindowManager().getDefaultDisplay();
@@ -140,7 +141,13 @@ public class PrintPreview extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
-            PrintUtil.performPrint(this, photo, scaleType, paperWidth, paperHeight);
+            PrintUtil.performPrint(this, new PrintUtil.OnPrintDataCollectedListener() {
+                @Override
+                public void postPrintData(JSONObject jsonObject) {
+                    returnPrintDataToPreviousActivity(jsonObject);
+                }
+            },
+                    photo, scaleType, paperWidth, paperHeight);
             return true;
         }
 
@@ -204,4 +211,10 @@ public class PrintPreview extends Activity {
         setPreviewViewLayoutProperties();
     }
 
+    public void returnPrintDataToPreviousActivity(JSONObject jsonObject){
+        Intent editCardIntent = new Intent(this, getCallingActivity().getClass());
+        editCardIntent.putExtra(PrintUtil.PRINT_DATA_STRING, jsonObject.toString());
+        setResult(RESULT_OK, editCardIntent);
+        finish();
+    }
 }
