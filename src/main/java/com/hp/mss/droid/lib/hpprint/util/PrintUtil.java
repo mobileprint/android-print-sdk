@@ -50,9 +50,11 @@ public class PrintUtil {
                                                         "please install HP Print Plugin if you have HP printer(s)." +
                                                         " Please make sure print plugin service is turned on after the installation";
 
+    public static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
     public static final String PHOTO_FILE_URI = "PHOTO_FILE_URI";
     public static final String DPI = "DPI";
     public static final int MILS = 1000;
+    public static final int PRINT_JOB_WAIT_TIME = 1000;
 
     public static PrintJob printJob;
 
@@ -150,7 +152,7 @@ public class PrintUtil {
         public void ignoreWarningMsg(boolean ignore);
     }
 
-    public static void performPrint(Activity activity, Bitmap photo, ImageView.ScaleType scaleType, float paperWidth, float paperHeight) {
+    public static void performPrint(Activity activity, final OnPrintDataCollectedListener printDataListener, Bitmap photo, ImageView.ScaleType scaleType, float paperWidth, float paperHeight) {
 
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
         String jobName = activity.getString(R.string.app_name);
@@ -159,16 +161,13 @@ public class PrintUtil {
 
         PrintAttributes printAttributes = new PrintAttributes.Builder().
                 setMinMargins(PrintAttributes.Margins.NO_MARGINS).
-                setMediaSize(new PrintAttributes.MediaSize("NA", "android", (int) (paperWidth * 1000), (int) (paperHeight * 1000))).
+                setMediaSize(new PrintAttributes.MediaSize("NA", "android", (int) (paperWidth * MILS), (int) (paperHeight * MILS))).
                 setResolution(new PrintAttributes.Resolution("160", "160", 160, 160)).
                 build();
 
         printJob = printManager.print(jobName, adapter, printAttributes);
 
         final Handler handler = new Handler();
-
-        final PostData postData = new PostData();
-        postData.printDataCollectedListener = (PostData.OnPrintDataCollectedListener)activity;
 
         final Runnable r = new Runnable() {
             public void run() {
@@ -199,22 +198,26 @@ public class PrintUtil {
                         jsonObject.put("paper_size", width + " x " + height);
                         jsonObject.put("printer_id", printerId.getLocalId());
 
-                        postData.printDataCollectedListener.postPrintData(jsonObject);
+                        printDataListener.postPrintData(jsonObject);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }else if (printJob.isFailed() || printJob.isBlocked() || printJob.isCancelled()) {
                     //do nothing
                 } else {
-                    handler.postDelayed(this, 1000);
+                    handler.postDelayed(this, PRINT_JOB_WAIT_TIME);
                 }
 
 
             }
         };
 
-        handler.postDelayed(r, 1000);
+        handler.postDelayed(r, PRINT_JOB_WAIT_TIME);
 
+    }
+
+    public interface OnPrintDataCollectedListener {
+        public void postPrintData(JSONObject jsonObject);
     }
 
 }

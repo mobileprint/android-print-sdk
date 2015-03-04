@@ -34,7 +34,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.hp.mss.droid.lib.hpprint.R;
-import com.hp.mss.droid.lib.hpprint.util.PostData;
 import com.hp.mss.droid.lib.hpprint.util.PrintUtil;
 import com.hp.mss.droid.lib.hpprint.view.PagePreviewView;
 
@@ -45,7 +44,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 
-public class PrintPreview extends Activity implements PostData.OnPrintDataCollectedListener{
+public class PrintPreview extends Activity{
 
     private static final int DEFAULT_WIDTH = 5;
     private static final int DEFAULT_HEIGHT = 7;
@@ -142,7 +141,13 @@ public class PrintPreview extends Activity implements PostData.OnPrintDataCollec
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
-            PrintUtil.performPrint(this, photo, scaleType, paperWidth, paperHeight);
+            PrintUtil.performPrint(this, new PrintUtil.OnPrintDataCollectedListener() {
+                @Override
+                public void postPrintData(JSONObject jsonObject) {
+                    returnPrintDataToPreviousActivity(jsonObject);
+                }
+            },
+                    photo, scaleType, paperWidth, paperHeight);
             return true;
         }
 
@@ -206,9 +211,9 @@ public class PrintPreview extends Activity implements PostData.OnPrintDataCollec
         setPreviewViewLayoutProperties();
     }
 
-    public void postPrintData(JSONObject jsonObject){
+    public void returnPrintDataToPreviousActivity(JSONObject jsonObject){
         Intent editCardIntent = new Intent(this, getCallingActivity().getClass());
-        editCardIntent.putExtra("printData", jsonObject.toString());
+        editCardIntent.putExtra(PrintUtil.PRINT_DATA_STRING, jsonObject.toString());
         setResult(RESULT_OK, editCardIntent);
         finish();
     }
