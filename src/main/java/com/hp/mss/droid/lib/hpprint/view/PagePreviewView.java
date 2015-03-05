@@ -35,8 +35,8 @@ public class PagePreviewView extends View {
     private static final int DEFAULT_PAGE_WIDTH = 5;
     private static final int DEFAULT_PAGE_HEIGHT = 7;
     private static final int MEASUREMENT_FONT_SIZE = 15;
-    private static final int CARD_SHADOW_OFFSET = 10;
-    private static final int CARD_SHADOW_RADIUS = 20;
+    private static final int CARD_SHADOW_OFFSET = 5;
+    private static final int CARD_SHADOW_RADIUS = 5;
 
     private Paint solidPaint;
 
@@ -157,7 +157,7 @@ public class PagePreviewView extends View {
         float cardShadowRadiuspx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_RADIUS, getResources().getDisplayMetrics());
         float cardShadowOffsetpx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_OFFSET, getResources().getDisplayMetrics());
 
-        paperPaint.setShadowLayer(cardShadowRadiuspx,cardShadowOffsetpx,cardShadowOffsetpx,Color.BLACK);
+        paperPaint.setShadowLayer(cardShadowRadiuspx,cardShadowOffsetpx,cardShadowOffsetpx,Color.LTGRAY);
         setLayerType(LAYER_TYPE_SOFTWARE, paperPaint);
         canvas.drawRect(pageBounds, paperPaint);
 
