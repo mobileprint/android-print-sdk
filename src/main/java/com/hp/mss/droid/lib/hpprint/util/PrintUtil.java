@@ -127,11 +127,18 @@ public class PrintUtil {
 
 
     private static void printUsingPrintDocumentAdapter(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, final OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight){
+        String mediaLabel = "NA_LETTER";
+        if (paperWidth == 5f || paperWidth == 7f) {
+            mediaLabel ="na_5x7_5x7in";
+        } else if (paperWidth == 4f || paperWidth == 6f) {
+            mediaLabel ="na_index-4x6_4x6in";
+        }
+
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
         PrintDocumentAdapter adapter = new PhotoPrintDocumentAdapter(activity, bitmap, scaleType);
         PrintAttributes printAttributes = new PrintAttributes.Builder().
                 setMinMargins(PrintAttributes.Margins.NO_MARGINS).
-                setMediaSize(new PrintAttributes.MediaSize("NA", "android", (int) (paperWidth * MILS), (int) (paperHeight * MILS))).
+                setMediaSize(new PrintAttributes.MediaSize(mediaLabel, "android", (int) (paperWidth * MILS), (int) (paperHeight * MILS))).
                 setResolution(new PrintAttributes.Resolution("160", "160", 160, 160)).
                 build();
         printJob = printManager.print(printJobName, adapter, printAttributes);
