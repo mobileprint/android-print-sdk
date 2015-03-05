@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Handler;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
@@ -75,7 +76,7 @@ public class PrintUtil {
             ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
             //if we reach below this line, then the package is installed. Otheriwse, the catch block is executed.
 
-            if (packageName.equals(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME)) {
+            if (packageName.equals(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME) && deviceAlwaysReturnsPluginEnabled()) {
                 //Because of a bug either in the Nexus (Lollipop) or in the HP Print Plugin code that always says the app is enabled
                 // even if it is disabled, we will return INSTALLED_AND_DISABLED all the time. Note that the
                 // Text in the UI telling people to enable the plugin is properly worded in light of this bug.
@@ -92,6 +93,14 @@ public class PrintUtil {
         }
     }
 
+    private  static boolean deviceAlwaysReturnsPluginEnabled() {
+        if ((Build.MODEL.contains("Nexus") && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) || //Nexus Lollipop
+                (Build.MODEL.equalsIgnoreCase("SM-N900") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) || //Samsung Note 3 KitKit
+                (Build.MODEL.equalsIgnoreCase("GT-I9500") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT))  //Samsung Galaxy S4
+            return true;
+        else
+            return false;
+    }
 
     public static void printWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
                                         String printJobName, int dpi, int request_id){
