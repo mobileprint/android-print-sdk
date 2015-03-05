@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.hp.mss.droid.lib.hpprint.R;
 import com.hp.mss.droid.lib.hpprint.util.PrintUtil;
@@ -91,6 +92,14 @@ public class PrintPreview extends Activity {
         landscapePhoto = photo.getWidth() > photo.getHeight();
 
         setPreviewViewLayoutProperties();
+
+        TextView linkTextView = (TextView) findViewById(R.id.ic_printing_support_link);
+        linkTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAboutLinkClicked(view);
+            }
+        });
     }
 
 
