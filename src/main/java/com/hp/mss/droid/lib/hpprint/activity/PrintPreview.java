@@ -31,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.hp.mss.droid.lib.hpprint.R;
 import com.hp.mss.droid.lib.hpprint.util.PrintUtil;
@@ -44,7 +43,12 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 
-public class PrintPreview extends Activity{
+public class PrintPreview extends Activity {
+
+    public static final String PHOTO_FILE_URI = "photoFileUri";
+    public static final String PRINT_JOB_NAME = "printJobName";
+    public static final String SCALE_TYPE = "scaleMode";
+    public static final String DPI = "dpi";
 
     private static final int DEFAULT_WIDTH = 5;
     private static final int DEFAULT_HEIGHT = 7;
@@ -56,19 +60,24 @@ public class PrintPreview extends Activity{
 
     static String HP_ANDROID_MOBILE_SITE = "http://www8.hp.com/us/en/ads/mobility/overview.html?jumpid=va_r11400_eprint";
     String photoFileName = null;
+    String printJobName = null;
     Bitmap photo = null;
-    private PagePreviewView previewView;
-    private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     float paperWidth;
     float paperHeight;
 
+    private PagePreviewView previewView;
+    private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_print_preview);
-        String photoFileName = (String) getIntent().getExtras().get(PrintUtil.PHOTO_FILE_URI);
-        int dpi = (int) getIntent().getExtras().get(PrintUtil.DPI);
+
+        String photoFileName = (String) getIntent().getExtras().get(PHOTO_FILE_URI);
+        printJobName = (String) getIntent().getExtras().get(PRINT_JOB_NAME);
+        scaleType = (ImageView.ScaleType) getIntent().getExtras().get(SCALE_TYPE);
+        int dpi = (int) getIntent().getExtras().get(DPI);
         photo = getImageBitmap(this, photoFileName);
         photo.setDensity(dpi);
 
@@ -82,17 +91,9 @@ public class PrintPreview extends Activity{
         landscapePhoto = photo.getWidth() > photo.getHeight();
 
         setPreviewViewLayoutProperties();
-
-        TextView linkTextView = (TextView) findViewById(R.id.ic_printing_support_link);
-        linkTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mobileSiteIntent = new Intent(Intent.ACTION_VIEW);
-                mobileSiteIntent.setData(Uri.parse(HP_ANDROID_MOBILE_SITE));
-                startActivity(mobileSiteIntent);
-            }
-        });
     }
+
+
 
     private void setPreviewViewLayoutProperties() {
         Display display = getWindowManager().getDefaultDisplay();
@@ -138,16 +139,16 @@ public class PrintPreview extends Activity{
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        PrintUtil.OnPrintDataCollectedListener printDataCollectedListener =
+                new PrintUtil.OnPrintDataCollectedListener() {
+                    @Override
+                    public void postPrintData(JSONObject jsonObject) {
+                        returnPrintDataToPreviousActivity(jsonObject);
+                    }
+                };
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
-            PrintUtil.performPrint(this, new PrintUtil.OnPrintDataCollectedListener() {
-                @Override
-                public void postPrintData(JSONObject jsonObject) {
-                    returnPrintDataToPreviousActivity(jsonObject);
-                }
-            },
-                    photo, scaleType, paperWidth, paperHeight);
+            PrintUtil.printWithoutPreview(this, photo, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
             return true;
         }
 
@@ -180,7 +181,11 @@ public class PrintPreview extends Activity{
         }
     }
 
-
+    public void onAboutLinkClicked(View view) {
+        Intent mobileSiteIntent = new Intent(Intent.ACTION_VIEW);
+        mobileSiteIntent.setData(Uri.parse(HP_ANDROID_MOBILE_SITE));
+        startActivity(mobileSiteIntent);
+    }
 
     public void setSizeSpinnerListener(Spinner sizeSpinner) {
         sizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -217,4 +222,5 @@ public class PrintPreview extends Activity{
         setResult(RESULT_OK, editCardIntent);
         finish();
     }
+
 }

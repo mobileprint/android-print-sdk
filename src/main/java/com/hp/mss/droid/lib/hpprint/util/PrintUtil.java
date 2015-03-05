@@ -13,15 +13,12 @@
 package com.hp.mss.droid.lib.hpprint.util;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Handler;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
@@ -31,6 +28,7 @@ import android.print.PrintJobInfo;
 import android.print.PrintManager;
 import android.print.PrinterId;
 import android.widget.ImageView;
+import android.support.v4.print.PrintHelper;
 
 import com.hp.mss.droid.lib.hpprint.R;
 import com.hp.mss.droid.lib.hpprint.activity.PrintPreview;
@@ -42,130 +40,92 @@ import java.lang.reflect.Method;
 
 
 public class PrintUtil {
-    OnInstallPackageListener installPackageListener;
 
-    private static String HP_PRINT_PLUGIN_PACKAGE_NAME = "com.hp.android.printservice";
-    private static String GOOGLE_STORE_PACKAGE_NAME = "com.android.vending";
-    private static String INSTALL_HP_PRINT_PLUGIN_MSG = "To print best quality photos, " +
-                                                        "please install HP Print Plugin if you have HP printer(s)." +
-                                                        " Please make sure print plugin service is turned on after the installation";
-
+    public static final String HP_PRINT_PLUGIN_PACKAGE_NAME = "com.hp.android.printservice";
+    public static final String GOOGLE_STORE_PACKAGE_NAME = "com.android.vending";
     public static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
-    public static final String PHOTO_FILE_URI = "PHOTO_FILE_URI";
-    public static final String DPI = "DPI";
     public static final int MILS = 1000;
     public static final int PRINT_JOB_WAIT_TIME = 1000;
-
     public static PrintJob printJob;
 
-    public void launchPrint(Activity activity, String photoFileName, int dpi, int request_id){
-
-        if ( checkAndInstallHPPrintPlugin(activity) ) {
-
-                Intent intent = new Intent(activity, PrintPreview.class);
-                intent.putExtra(PHOTO_FILE_URI, photoFileName);
-                intent.putExtra(DPI, dpi);
-                activity.startActivityForResult(intent,request_id);
-        }
+    public static enum PackageStatus {
+        INSTALLED_AND_ENABLED,
+        INSTALLED_AND_DISABLED,
+        NOT_INSTALLED
     }
 
 
-    public boolean checkAndInstallHPPrintPlugin(Activity activity) {
+    private PrintUtil() {}
 
-        boolean isInstalled = false;
 
-        if ( isPackageInstalled(activity, HP_PRINT_PLUGIN_PACKAGE_NAME) )
-//                ||  isPackageInstalled(activity, MOPRIA_PRINT_PLUGIN_PACKAGE_NAME))
-        {
-
-            isInstalled = true;
-
-        } else {
-
-            dispatchInstallMsgDialog(activity, INSTALL_HP_PRINT_PLUGIN_MSG);
-
-        }
-
-        return isInstalled;
+    public static PackageStatus checkHPPrintPluginStatus(Activity activity) {
+        return checkPackageStatus(activity, HP_PRINT_PLUGIN_PACKAGE_NAME);
     }
 
-    public boolean isPackageInstalled(Activity activity, String packageName) {
+    public static PackageStatus checkGooglePlayStoreStatus(Activity activity) {
+        return checkPackageStatus(activity, GOOGLE_STORE_PACKAGE_NAME);
+    }
 
-        boolean isInstalled = false;
+    public static PackageStatus checkPackageStatus(Activity activity, String packageName) {
+        if (activity == null || packageName == null)
+            return PackageStatus.NOT_INSTALLED;
 
         PackageManager packageManager = activity.getPackageManager();
-
         try {
-
             ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-            isInstalled = true;
+            //if we reach below this line, then the package is installed. Otheriwse, the catch block is executed.
 
-        } catch (PackageManager.NameNotFoundException e) { }
+            if (packageName.equals(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME)) {
+                //Because of a bug either in the Nexus (Lollipop) or in the HP Print Plugin code that always says the app is enabled
+                // even if it is disabled, we will return INSTALLED_AND_DISABLED all the time. Note that the
+                // Text in the UI telling people to enable the plugin is properly worded in light of this bug.
+                return PackageStatus.INSTALLED_AND_DISABLED;
+            }
 
-        return isInstalled;
-    }
+            if (appInfo.enabled)
+                return PackageStatus.INSTALLED_AND_ENABLED;
+            else
+                return PackageStatus.INSTALLED_AND_DISABLED;
 
-    public void dispatchInstallPluginIntent(Activity activity, String packageName) {
-
-        String url;
-
-        if ( isPackageInstalled(activity, GOOGLE_STORE_PACKAGE_NAME) ) {
-
-            url = "market://details?id=" + packageName;
-
-        } else {
-
-            url = "https://play.google.com/store/apps/details?id=" + packageName;
-
+        } catch (PackageManager.NameNotFoundException e) {
+            return PackageStatus.NOT_INSTALLED;
         }
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-
     }
 
-    private void dispatchInstallMsgDialog(final Activity activity, String msg) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage(msg)
-               .setCancelable(false)
-               .setPositiveButton("Install HP Print Plugin", new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialog, int which) {
-                       dispatchInstallPluginIntent(activity, HP_PRINT_PLUGIN_PACKAGE_NAME);
-                   }
-               })
-               .setNeutralButton("Skip", new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialog, int which) {
-                       installPackageListener = (OnInstallPackageListener) activity;
-                       installPackageListener.ignoreWarningMsg(true);
-                   }
-               })
-        .create()
-        .show();
-
+    public static void printWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
+                                        String printJobName, int dpi, int request_id){
+        Intent intent = new Intent(activity, PrintPreview.class);
+        intent.putExtra(PrintPreview.PHOTO_FILE_URI, photoFileName);
+        intent.putExtra(PrintPreview.PRINT_JOB_NAME, printJobName);
+        intent.putExtra(PrintPreview.SCALE_TYPE, scaleType);
+        intent.putExtra(PrintPreview.DPI, dpi);
+        activity.startActivityForResult(intent, request_id);
     }
 
-    public interface OnInstallPackageListener {
-        public void ignoreWarningMsg(boolean ignore);
+
+    public static void printWithoutPreview(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, final OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight){
+        //printUsingPrintHelper(activity, bitmap, scaleMode, printJobName);
+        printUsingPrintDocumentAdapter(activity, bitmap, scaleType, printJobName, printDataListener, paperWidth, paperHeight);
     }
 
-    public static void performPrint(Activity activity, final OnPrintDataCollectedListener printDataListener, Bitmap photo, ImageView.ScaleType scaleType, float paperWidth, float paperHeight) {
 
+    private static void printUsingPrintHelper(Activity activity, Bitmap bitmap, int scaleMode, String printJobName) {
+        PrintHelper printHelper = new PrintHelper(activity);
+        printHelper.setScaleMode(scaleMode);
+        printHelper.printBitmap(printJobName, bitmap);
+    }
+
+
+    private static void printUsingPrintDocumentAdapter(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, final OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight){
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
-        String jobName = activity.getString(R.string.app_name);
-        //need to give original photo size..
-        PrintDocumentAdapter adapter = new PhotoPrintDocumentAdapter(activity, photo, scaleType);
-
+        PrintDocumentAdapter adapter = new PhotoPrintDocumentAdapter(activity, bitmap, scaleType);
         PrintAttributes printAttributes = new PrintAttributes.Builder().
                 setMinMargins(PrintAttributes.Margins.NO_MARGINS).
                 setMediaSize(new PrintAttributes.MediaSize("NA", "android", (int) (paperWidth * MILS), (int) (paperHeight * MILS))).
                 setResolution(new PrintAttributes.Resolution("160", "160", 160, 160)).
                 build();
-
-        printJob = printManager.print(jobName, adapter, printAttributes);
+        printJob = printManager.print(printJobName, adapter, printAttributes);
 
         final Handler handler = new Handler();
 
@@ -192,8 +152,8 @@ public class PrintUtil {
                         }
                         jsonObject.put("print_plugin_tech", componentName.getPackageName());
 
-                        String width = Double.toString(printJobAttributes.getMediaSize().getWidthMils()/MILS);
-                        String height = Double.toString(printJobAttributes.getMediaSize().getHeightMils()/MILS);
+                        String width = Double.toString(printJobAttributes.getMediaSize().getWidthMils()/(float)MILS);
+                        String height = Double.toString(printJobAttributes.getMediaSize().getHeightMils()/(float)MILS);
 
                         jsonObject.put("paper_size", width + " x " + height);
                         jsonObject.put("printer_id", printerId.getLocalId());
@@ -213,11 +173,9 @@ public class PrintUtil {
         };
 
         handler.postDelayed(r, PRINT_JOB_WAIT_TIME);
-
     }
 
     public interface OnPrintDataCollectedListener {
         public void postPrintData(JSONObject jsonObject);
     }
-
 }

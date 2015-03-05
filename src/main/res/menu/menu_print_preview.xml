@@ -3,7 +3,6 @@
     tools:context="com.hp.mss.droid.lib.hpprint.activity.PrintPreview">
     <item
         android:id="@+id/action_print"
-        android:title=" Print"
-        android:icon="@drawable/ic_mobile_printing"
+        android:title="Print"
         android:showAsAction="always|withText" />
 </menu>
