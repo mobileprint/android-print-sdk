@@ -89,7 +89,7 @@ public class PrintPluginInstaller {
         builder.setMessage(message)
                 .setTitle(header)
                 .setView(checkBoxView)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton("Install", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
