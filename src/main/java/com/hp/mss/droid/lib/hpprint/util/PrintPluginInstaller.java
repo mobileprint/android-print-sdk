@@ -42,6 +42,7 @@ public class PrintPluginInstaller {
 
     private final String SHOW_PLUGIN_INSTALL_MESSAGE_KEY = "com.hp.mss.droid.lib.hpprint.ShowPluginInstallMessage";
     private final String SHOW_PLUGIN_ENABLE_MESSAGE_KEY = "com.hp.mss.droid.lib.hpprint.ShowPluginEnableMessage";
+    public static final int ENABLE_PRINT_PLUGIN = 10;
 
 
     public PrintPluginInstaller(Activity activity, OnInstallPluginListener listener) {
@@ -135,11 +136,11 @@ public class PrintPluginInstaller {
         builder.setMessage(message)
                 .setTitle(title)
                 .setView(checkBoxView)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        activity.startActivity(new Intent(Settings.ACTION_PRINT_SETTINGS));
+                        activity.startActivityForResult(new Intent(Settings.ACTION_PRINT_SETTINGS), ENABLE_PRINT_PLUGIN);
                     }
                 })
                 .setNeutralButton("Skip", new DialogInterface.OnClickListener() {
