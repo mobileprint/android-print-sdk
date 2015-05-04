@@ -50,7 +50,7 @@ public class PrintPreview extends Activity {
     public static final String PHOTO_FILE_URI = "photoFileUri";
     public static final String PRINT_JOB_NAME = "printJobName";
     public static final String SCALE_TYPE = "scaleMode";
-    public static final String DPI = "dpi";
+    public static final String MULTIPLE_MEDIA_TYPES = "multiMediaTypes";
 
     private static final int DEFAULT_WIDTH = 5;
     private static final int DEFAULT_HEIGHT = 7;
@@ -79,9 +79,7 @@ public class PrintPreview extends Activity {
         String photoFileName = (String) getIntent().getExtras().get(PHOTO_FILE_URI);
         printJobName = (String) getIntent().getExtras().get(PRINT_JOB_NAME);
         scaleType = (ImageView.ScaleType) getIntent().getExtras().get(SCALE_TYPE);
-        int dpi = (int) getIntent().getExtras().get(DPI);
         photo = getImageBitmap(this, photoFileName);
-        photo.setDensity(dpi);
 
         Spinner size_spinner = (Spinner) findViewById(R.id.paper_size_spinner);
         setSizeSpinnerListener(size_spinner);
@@ -89,6 +87,7 @@ public class PrintPreview extends Activity {
         Spinner type_spinner = (Spinner) findViewById(R.id.paper_type_spinner);
 
         previewView = (PagePreviewView) findViewById(R.id.preview_image_view);
+        previewView.setMultiFile((Boolean) getIntent().getExtras().get(MULTIPLE_MEDIA_TYPES));
 
         landscapePhoto = photo.getWidth() > photo.getHeight();
 
@@ -129,10 +128,6 @@ public class PrintPreview extends Activity {
         previewView.setOrientation(landscapePhoto);
         previewView.setScaleType(scaleType);
         previewView.setPhoto(new BitmapDrawable(getResources(), photo));
-        //
-
-        Point photoSize = (landscapePhoto)? new Point(DEFAULT_HEIGHT, DEFAULT_WIDTH) :new Point(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        previewView.setPhotoSize(photoSize);
 
     }
 
@@ -158,7 +153,11 @@ public class PrintPreview extends Activity {
                 };
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
-            PrintUtil.printWithoutPreview(this, photo, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
+            if(previewView.getMultiFile()){
+                PrintUtil.printMultipleMediaTypesWithoutPreview(this, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
+            } else {
+                PrintUtil.printWithoutPreview(this, photo, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
+            }
             return true;
         }
 
@@ -209,7 +208,14 @@ public class PrintPreview extends Activity {
                     paperWidth = landscapePhoto ? Float.parseFloat(sizeArray[1].trim()) : Float.parseFloat(sizeArray[0].trim());
                     paperHeight = landscapePhoto ? Float.parseFloat(sizeArray[0].trim()) : Float.parseFloat(sizeArray[1].trim());
 
+
                     previewView.setPageSize(paperWidth, paperHeight);
+
+                    if (paperHeight == 5 && paperWidth == 4) {
+                        PrintUtil.is4x5media = true;
+                    } else {
+                        PrintUtil.is4x5media = false;
+                    }
                 }
             }
 
