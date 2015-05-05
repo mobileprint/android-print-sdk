@@ -13,14 +13,15 @@
 package com.hp.mss.hpprint.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.util.AttributeSet;
@@ -29,12 +30,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.hp.mss.hpprint.R;
+import com.hp.mss.hpprint.util.ImageLoaderUtil;
+import com.hp.mss.hpprint.util.PrintUtil;
 
 
 public class PagePreviewView extends View {
     private static final int LAYOUT_MARGIN_RATIO = 8;
-    private static final int DEFAULT_PAGE_WIDTH = 5;
-    private static final int DEFAULT_PAGE_HEIGHT = 7;
     private static final int MEASUREMENT_FONT_SIZE = 15;
     private static final int CARD_SHADOW_OFFSET = 5;
     private static final int CARD_SHADOW_RADIUS = 5;
@@ -53,17 +54,18 @@ public class PagePreviewView extends View {
     private Path rightArrow;
     private Path upArrow;
     private Path downArrow;
-    private float pageWidth = DEFAULT_PAGE_WIDTH;
-    private float pageHeight = DEFAULT_PAGE_HEIGHT;
+    private float pageWidth;
+    private float pageHeight;
     private boolean landscape;
     private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     private int paperColor = Color.WHITE;
     private Paint paperPaint;
-    private Point photoSize;
     private String widthText;
     private String heightText;
+    private boolean multiFile;
     Rect textWidthBounds = new Rect();
     Rect textHeightBounds = new Rect();
+    Context context;
 
     public PagePreviewView(Context context) {
         this(context, null);
@@ -71,6 +73,7 @@ public class PagePreviewView extends View {
 
     public PagePreviewView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
 
         init(context);
     }
@@ -91,7 +94,7 @@ public class PagePreviewView extends View {
         dottedPaint.setStyle(Paint.Style.STROKE);
         dottedPaint.setColor(Color.BLACK);
         dottedPaint.setAlpha(120);
-        dottedPaint.setPathEffect(new DashPathEffect(new float[]{5,5}, 0));
+        dottedPaint.setPathEffect(new DashPathEffect(new float[]{5, 5}, 0));
 
         //draw text
         textPaint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
@@ -123,6 +126,18 @@ public class PagePreviewView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if (multiFile) {
+            Bitmap bitmap;
+            if (pageHeight == 6) {
+                bitmap = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x6);
+            } else if (pageHeight == 7) {
+                bitmap = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_5x7);
+            } else {
+                bitmap = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
+            }
+            photo = new BitmapDrawable(context.getResources(), bitmap);
+        }
+
         //draw lines
         float bottomOffset = pageBounds.bottom + pxOffset;
         float rightOffset = pageBounds.right + pxOffset;
@@ -146,19 +161,18 @@ public class PagePreviewView extends View {
         canvas.drawText(widthText, widthXOrigin, widthYOrigin, textPaint);
 
         final int heightYOrigin = pageBounds.top + pageBounds.height() / 2 - textHeightBounds.centerY();
-        final int heightXOrigin = pageBounds.right + (int) pxOffset + (int) (pxOffset/2);
+        final int heightXOrigin = pageBounds.right + (int) pxOffset + (int) (pxOffset / 2);
         canvas.drawText(heightText, heightXOrigin, heightYOrigin, textPaint);
 
         if (photo == null) {
             return;
         }
-
         findPhotoBounds();
 
         float cardShadowRadiuspx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_RADIUS, getResources().getDisplayMetrics());
         float cardShadowOffsetpx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_OFFSET, getResources().getDisplayMetrics());
 
-        paperPaint.setShadowLayer(cardShadowRadiuspx,cardShadowOffsetpx,cardShadowOffsetpx,Color.LTGRAY);
+        paperPaint.setShadowLayer(cardShadowRadiuspx, cardShadowOffsetpx, cardShadowOffsetpx, Color.LTGRAY);
         setLayerType(LAYER_TYPE_SOFTWARE, paperPaint);
         canvas.drawRect(pageBounds, paperPaint);
 
@@ -193,17 +207,31 @@ public class PagePreviewView extends View {
     private void setImageBoundsToCenterCrop() {
         float pageboundswDPI = pageBounds.width() / pageWidth;
 
-        int photoWidth = (int) (photoSize.x * pageboundswDPI);
-        int photoHeight = (int) (photoSize.y * pageboundswDPI);
+        int photoWidth = (int) (pageWidth * pageboundswDPI);
+        int photoHeight = (int) (pageHeight * pageboundswDPI);
 
-        float scale = getImageScale(photoWidth, photoHeight, pageBounds.width(), pageBounds.height());
+        float scale;
+
+        if (((pageHeight == 6 || pageHeight == 5) && pageWidth == 4) || (pageHeight == 7 && pageWidth == 5)) {
+            scale = pageBounds.width() / ((float) photoWidth);
+        } else {
+            scale = pageBounds.width() / ((float) photoWidth);
+            scale = scale / (pageWidth / 4);
+        }
 
         photoWidth *= scale;
         photoHeight *= scale;
 
         final int left = pageBounds.centerX() - photoWidth / 2;
         final int right = left + photoWidth;
-        final int top = pageBounds.centerY() - photoHeight / 2;
+        final int top;
+
+        if (pageWidth == 4) {
+            top = pageBounds.top;
+        } else {
+            top = pageBounds.centerY() - photoHeight / 2;
+        }
+
         final int bottom = top + photoHeight;
 
         photo.setBounds(new Rect(left, top, right, bottom));
@@ -211,6 +239,7 @@ public class PagePreviewView extends View {
 
     public static float getImageScale(int photoWidth, int photoHeight, int canvasWidth, int canvasHeight) {
         float scale = 1;
+
         if (photoWidth > canvasWidth && photoHeight > canvasHeight) {
 
             float wScale = canvasWidth / (float) photoWidth;
@@ -314,6 +343,14 @@ public class PagePreviewView extends View {
         requestLayout();
     }
 
+    public void setMultiFile(boolean multiFile) {
+        this.multiFile = multiFile;
+    }
+
+    public boolean getMultiFile() {
+        return multiFile;
+    }
+
     public void setPageSize(float width, float height) {
         pageWidth = width;
         pageHeight = height;
@@ -338,9 +375,5 @@ public class PagePreviewView extends View {
                 }
             });
         }
-    }
-
-    public void setPhotoSize(Point size) {
-        this.photoSize = size;
     }
 }
