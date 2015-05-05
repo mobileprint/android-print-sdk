@@ -13,22 +13,18 @@
 package com.hp.mss.hpprint.view;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,10 +32,6 @@ import android.widget.ImageView;
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 
 public class PagePreviewView extends View {
@@ -102,7 +94,7 @@ public class PagePreviewView extends View {
         dottedPaint.setStyle(Paint.Style.STROKE);
         dottedPaint.setColor(Color.BLACK);
         dottedPaint.setAlpha(120);
-        dottedPaint.setPathEffect(new DashPathEffect(new float[]{5,5}, 0));
+        dottedPaint.setPathEffect(new DashPathEffect(new float[]{5, 5}, 0));
 
         //draw text
         textPaint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
@@ -169,7 +161,7 @@ public class PagePreviewView extends View {
         canvas.drawText(widthText, widthXOrigin, widthYOrigin, textPaint);
 
         final int heightYOrigin = pageBounds.top + pageBounds.height() / 2 - textHeightBounds.centerY();
-        final int heightXOrigin = pageBounds.right + (int) pxOffset + (int) (pxOffset/2);
+        final int heightXOrigin = pageBounds.right + (int) pxOffset + (int) (pxOffset / 2);
         canvas.drawText(heightText, heightXOrigin, heightYOrigin, textPaint);
 
         if (photo == null) {
@@ -180,7 +172,7 @@ public class PagePreviewView extends View {
         float cardShadowRadiuspx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_RADIUS, getResources().getDisplayMetrics());
         float cardShadowOffsetpx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_OFFSET, getResources().getDisplayMetrics());
 
-        paperPaint.setShadowLayer(cardShadowRadiuspx,cardShadowOffsetpx,cardShadowOffsetpx,Color.LTGRAY);
+        paperPaint.setShadowLayer(cardShadowRadiuspx, cardShadowOffsetpx, cardShadowOffsetpx, Color.LTGRAY);
         setLayerType(LAYER_TYPE_SOFTWARE, paperPaint);
         canvas.drawRect(pageBounds, paperPaint);
 
@@ -220,11 +212,11 @@ public class PagePreviewView extends View {
 
         float scale;
 
-        if(((pageHeight == 6 || pageHeight == 5) && pageWidth == 4) || (pageHeight == 7 && pageWidth == 5)) {
-            scale = pageBounds.width()/((float)photoWidth);
+        if (((pageHeight == 6 || pageHeight == 5) && pageWidth == 4) || (pageHeight == 7 && pageWidth == 5)) {
+            scale = pageBounds.width() / ((float) photoWidth);
         } else {
-            scale = pageBounds.width()/((float)photoWidth);
-            scale = scale / (pageWidth/4);
+            scale = pageBounds.width() / ((float) photoWidth);
+            scale = scale / (pageWidth / 4);
         }
 
         photoWidth *= scale;
@@ -234,7 +226,7 @@ public class PagePreviewView extends View {
         final int right = left + photoWidth;
         final int top;
 
-        if(pageWidth == 4){
+        if (pageWidth == 4) {
             top = pageBounds.top;
         } else {
             top = pageBounds.centerY() - photoHeight / 2;

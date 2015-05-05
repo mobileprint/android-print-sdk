@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,7 +32,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-//import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.view.PagePreviewView;
@@ -43,6 +41,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+
+//import com.hp.mss.hpprint.R;
 
 
 public class PrintPreview extends Activity {
@@ -76,8 +76,8 @@ public class PrintPreview extends Activity {
 
         setContentView(R.layout.activity_print_preview);
 
-        String photoFileName = (String) getIntent().getExtras().get(PHOTO_FILE_URI);
-        printJobName = (String) getIntent().getExtras().get(PRINT_JOB_NAME);
+        String photoFileName = getIntent().getExtras().getString(PHOTO_FILE_URI);
+        printJobName = getIntent().getExtras().getString(PRINT_JOB_NAME);
         scaleType = (ImageView.ScaleType) getIntent().getExtras().get(SCALE_TYPE);
         photo = getImageBitmap(this, photoFileName);
 
@@ -87,7 +87,7 @@ public class PrintPreview extends Activity {
         Spinner type_spinner = (Spinner) findViewById(R.id.paper_type_spinner);
 
         previewView = (PagePreviewView) findViewById(R.id.preview_image_view);
-        previewView.setMultiFile((Boolean) getIntent().getExtras().get(MULTIPLE_MEDIA_TYPES));
+        previewView.setMultiFile(getIntent().getExtras().getBoolean(MULTIPLE_MEDIA_TYPES));
 
         landscapePhoto = photo.getWidth() > photo.getHeight();
 
@@ -101,7 +101,6 @@ public class PrintPreview extends Activity {
             }
         });
     }
-
 
 
     private void setPreviewViewLayoutProperties() {
@@ -153,7 +152,7 @@ public class PrintPreview extends Activity {
                 };
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
-            if(previewView.getMultiFile()){
+            if (previewView.getMultiFile()) {
                 PrintUtil.printMultipleMediaTypesWithoutPreview(this, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
             } else {
                 PrintUtil.printWithoutPreview(this, photo, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
@@ -232,7 +231,7 @@ public class PrintPreview extends Activity {
         setPreviewViewLayoutProperties();
     }
 
-    public void returnPrintDataToPreviousActivity(JSONObject jsonObject){
+    public void returnPrintDataToPreviousActivity(JSONObject jsonObject) {
         Intent editCardIntent = new Intent(this, getCallingActivity().getClass());
         editCardIntent.putExtra(PrintUtil.PRINT_DATA_STRING, jsonObject.toString());
         setResult(RESULT_OK, editCardIntent);

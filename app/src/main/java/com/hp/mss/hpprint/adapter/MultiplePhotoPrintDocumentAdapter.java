@@ -13,17 +13,10 @@
 package com.hp.mss.hpprint.adapter;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -33,18 +26,11 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
-import android.util.Log;
-import android.util.TypedValue;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
-import com.hp.mss.hpprint.view.PagePreviewView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -52,6 +38,10 @@ import java.io.IOException;
 public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
     private static final float PdfDocumentScale = .5f;
     private static final String DEFAULT_IMAGE_SIZE = PrintUtil.IMAGE_SIZE_4x5;
+    public static final int PAPER_DIMENS_4000 = 4000;
+    public static final int PAPER_DIMENS_6000 = 6000;
+    public static final int PAPER_DIMENS_7000 = 7000;
+    public static final int PAPER_DIMENS_5000 = 5000;
     Context context;
     private int pageHeight;
     private int pageWidth;
@@ -86,12 +76,12 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         pageHeight = newAttributes.getMediaSize().getHeightMils();
         pageWidth = newAttributes.getMediaSize().getWidthMils();
 
-        if(is4x5media) {
+        if (is4x5media) {
             thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
         } else {
-            if(pageHeight == 6000 && pageWidth == 4000) {
+            if (pageHeight == PAPER_DIMENS_6000 && pageWidth == PAPER_DIMENS_4000) {
                 thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x6);
-            }else if(pageHeight == 7000 && pageWidth == 5000){
+            } else if (pageHeight == PAPER_DIMENS_7000 && pageWidth == PAPER_DIMENS_5000) {
                 thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_5x7);
             } else {
                 thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
@@ -99,13 +89,12 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         }
 
 
-
-        if ( cancellationSignal.isCanceled() ) {
+        if (cancellationSignal.isCanceled()) {
             callback.onLayoutCancelled();
             return;
         }
 
-        if ( totalPages > 0 ) {
+        if (totalPages > 0) {
             PrintDocumentInfo.Builder builder = new PrintDocumentInfo
                     .Builder("print_card")
                     .setContentType((PrintDocumentInfo.CONTENT_TYPE_PHOTO))
@@ -126,15 +115,10 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
                         final CancellationSignal cancellationSignal,
                         final WriteResultCallback callback) {
 
-        System.out.println("pageWidth" + pageWidth);
-        System.out.println("pageHeight" + pageHeight);
-
-//        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 0).create();
-
         final float scaledWidth = pageWidth * PdfDocumentScale;
         final float scaledHeight = pageHeight * PdfDocumentScale;
 
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder((int)scaledWidth,(int)scaledHeight,0).create();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder((int) scaledWidth, (int) scaledHeight, 0).create();
 
         PdfDocument.Page page = myPdfDocument.startPage(pageInfo);
 
@@ -184,33 +168,33 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         }
     }
 
-    private void drawCenterCrop(Canvas canvas){
+    private void drawCenterCrop(Canvas canvas) {
 
         float photoWidth = thePhoto.getWidth();
         float photoHeight = thePhoto.getHeight();
 
-        float scale = 4000/photoWidth * PdfDocumentScale;
+        float scale = PAPER_DIMENS_4000 / photoWidth * PdfDocumentScale;
 
-        if((pageHeight == 6000 && pageWidth == 4000) || (pageHeight == 7000 && pageWidth == 5000)) {
-            scale = canvas.getWidth()/photoWidth;
+        if ((pageHeight == PAPER_DIMENS_6000 && pageWidth == PAPER_DIMENS_4000) || (pageHeight == PAPER_DIMENS_7000 && pageWidth == PAPER_DIMENS_5000)) {
+            scale = canvas.getWidth() / photoWidth;
         }
 
         photoWidth *= scale;
         photoHeight *= scale;
 
-        final float left = canvas.getWidth()/2-photoWidth/2;
+        final float left = canvas.getWidth() / 2 - photoWidth / 2;
         final float right = left + photoWidth;
         final float top;
 
-        if(pageWidth == 4000){
+        if (pageWidth == PAPER_DIMENS_4000) {
             top = 0;
         } else {
-            top = canvas.getHeight()/2-photoHeight/2;
+            top = canvas.getHeight() / 2 - photoHeight / 2;
         }
 
         final float bottom = top + photoHeight;
 
-        canvas.drawBitmap(thePhoto, null, new Rect((int)left, (int)top, (int)right, (int)bottom ), null);
+        canvas.drawBitmap(thePhoto, null, new Rect((int) left, (int) top, (int) right, (int) bottom), null);
     }
 
 

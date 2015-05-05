@@ -28,8 +28,8 @@ import android.print.PrintJob;
 import android.print.PrintJobInfo;
 import android.print.PrintManager;
 import android.print.PrinterId;
-import android.widget.ImageView;
 import android.support.v4.print.PrintHelper;
+import android.widget.ImageView;
 
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.MultiplePhotoPrintDocumentAdapter;
@@ -62,7 +62,8 @@ public class PrintUtil {
     }
 
 
-    private PrintUtil() {}
+    private PrintUtil() {
+    }
 
 
     public static PackageStatus checkHPPrintPluginStatus(Activity activity) {
@@ -99,7 +100,7 @@ public class PrintUtil {
         }
     }
 
-    private  static boolean deviceAlwaysReturnsPluginEnabled() {
+    private static boolean deviceAlwaysReturnsPluginEnabled() {
         if ((Build.MODEL.contains("Nexus") && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) || //Nexus Lollipop
                 (Build.MODEL.equalsIgnoreCase("SM-N900") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) || //Samsung Note 3 KitKit
                 (Build.MODEL.equalsIgnoreCase("GT-I9500") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT))  //Samsung Galaxy S4
@@ -109,11 +110,8 @@ public class PrintUtil {
     }
 
 
-
-
-
     public static void printWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
-                                        String printJobName, int dpi, int request_id){
+                                        String printJobName, int dpi, int request_id) {
         printWithPreview(activity, photoFileName, false, scaleType,
                 printJobName, dpi, request_id);
     }
@@ -129,17 +127,17 @@ public class PrintUtil {
     }
 
     public static void printMultipleMediaTypesWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
-                                                          String printJobName, int dpi, int request_id){
+                                                          String printJobName, int dpi, int request_id) {
         printWithPreview(activity, photoFileName, true, scaleType,
                 printJobName, dpi, request_id);
 
     }
 
-    public static void printWithoutPreview(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, final OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight){
+    public static void printWithoutPreview(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, final OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight) {
         printUsingPrintDocumentAdapter(activity, bitmap, scaleType, printJobName, printDataListener, paperWidth, paperHeight);
     }
 
-    public static void printMultipleMediaTypesWithoutPreview(Activity activity, ImageView.ScaleType scaleType, String printJobName, final OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight){
+    public static void printMultipleMediaTypesWithoutPreview(Activity activity, ImageView.ScaleType scaleType, String printJobName, final OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight) {
         printUsingMultiplePhotoPrintDocumentAdapter(activity, scaleType, printJobName, printDataListener, paperWidth, paperHeight);
     }
 
@@ -149,13 +147,13 @@ public class PrintUtil {
         printHelper.printBitmap(printJobName, bitmap);
     }
 
-    private static void printUsingMultiplePhotoPrintDocumentAdapter(Activity activity, ImageView.ScaleType scaleType, String printJobName, OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight){
+    private static void printUsingMultiplePhotoPrintDocumentAdapter(Activity activity, ImageView.ScaleType scaleType, String printJobName, OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight) {
         String mediaLabel = "NA_LETTER";
         if (paperWidth == 5f || paperWidth == 7f) {
-            mediaLabel ="na_5x7_5x7in";
+            mediaLabel = "na_5x7_5x7in";
         } else if (paperWidth == 4f || paperWidth == 6f) {
-            mediaLabel ="na_index-4x6_4x6in";
-            if(paperWidth == 4f && paperHeight == 5f) {
+            mediaLabel = "na_index-4x6_4x6in";
+            if (paperWidth == 4f && paperHeight == 5f) {
                 paperHeight = 6f;
             }
         }
@@ -171,12 +169,12 @@ public class PrintUtil {
         doPrintMetrics(printDataListener);
     }
 
-    private static void printUsingPrintDocumentAdapter(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight){
+    private static void printUsingPrintDocumentAdapter(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight) {
         String mediaLabel = "NA_LETTER";
         if (paperWidth == 5f || paperWidth == 7f) {
-            mediaLabel ="na_5x7_5x7in";
+            mediaLabel = "na_5x7_5x7in";
         } else if (paperWidth == 4f || paperWidth == 6f) {
-            mediaLabel ="na_index-4x6_4x6in";
+            mediaLabel = "na_index-4x6_4x6in";
         }
 
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
@@ -191,11 +189,11 @@ public class PrintUtil {
         doPrintMetrics(printDataListener);
     }
 
-    private static void doPrintMetrics(final OnPrintDataCollectedListener printDataListener){
+    private static void doPrintMetrics(final OnPrintDataCollectedListener printDataListener) {
         final Handler handler = new Handler();
         final Runnable r = new Runnable() {
             public void run() {
-                if(printJob.isQueued() || printJob.isCompleted() || printJob.isStarted()){
+                if (printJob.isQueued() || printJob.isCompleted() || printJob.isStarted()) {
                     PrintJobInfo printJobInfo = printJob.getInfo();
                     PrintAttributes printJobAttributes = printJobInfo.getAttributes();
                     PrinterId printerId = printJobInfo.getPrinterId();
@@ -216,8 +214,8 @@ public class PrintUtil {
                         }
                         jsonObject.put("print_plugin_tech", componentName.getPackageName());
 
-                        String width = Double.toString(printJobAttributes.getMediaSize().getWidthMils()/(float)MILS);
-                        String height = Double.toString(printJobAttributes.getMediaSize().getHeightMils()/(float)MILS);
+                        String width = Double.toString(printJobAttributes.getMediaSize().getWidthMils() / (float) MILS);
+                        String height = Double.toString(printJobAttributes.getMediaSize().getHeightMils() / (float) MILS);
 
                         jsonObject.put("paper_size", width + " x " + height);
                         jsonObject.put("printer_id", printerId.getLocalId());
@@ -226,7 +224,7 @@ public class PrintUtil {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else if (printJob.isFailed() || printJob.isBlocked() || printJob.isCancelled()) {
+                } else if (printJob.isFailed() || printJob.isBlocked() || printJob.isCancelled()) {
                     //do nothing
                 } else {
                     handler.postDelayed(this, PRINT_JOB_WAIT_TIME);
