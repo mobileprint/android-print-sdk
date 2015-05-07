@@ -16,9 +16,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,19 +28,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.hp.mss.hpprint.R;
+import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
 
 
 public class PagePreviewView extends View {
-    private static final int LAYOUT_MARGIN_RATIO = 8;
-    private static final int MEASUREMENT_FONT_SIZE = 15;
-    private static final int CARD_SHADOW_OFFSET = 5;
-    private static final int CARD_SHADOW_RADIUS = 5;
-
-    private Paint solidPaint;
-
-    private Paint dottedPaint;
+    private static final float LAYOUT_MARGIN_RATIO = 9;
+    private static final int MEASUREMENT_FONT_SIZE = 20;
 
     private Paint textPaint;
 
@@ -50,10 +43,6 @@ public class PagePreviewView extends View {
 
     private final Rect pageBounds = new Rect();
     private float pxOffset;
-    private Path leftArrow;
-    private Path rightArrow;
-    private Path upArrow;
-    private Path downArrow;
     private float pageWidth;
     private float pageHeight;
     private boolean landscape;
@@ -63,9 +52,9 @@ public class PagePreviewView extends View {
     private String widthText;
     private String heightText;
     private boolean multiFile;
-    Rect textWidthBounds = new Rect();
-    Rect textHeightBounds = new Rect();
+    Rect textBounds = new Rect();
     Context context;
+    String dimens;
 
     public PagePreviewView(Context context) {
         this(context, null);
@@ -79,36 +68,25 @@ public class PagePreviewView extends View {
     }
 
     private void init(Context context) {
-        pxOffset = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+        pxOffset = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
 
         paperPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paperPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         paperPaint.setColor(Color.BLACK);
         paperPaint.setStrokeWidth(1);
 
-        solidPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        solidPaint.setStyle(Paint.Style.FILL);
-        solidPaint.setColor(Color.BLACK);
-
-        dottedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        dottedPaint.setStyle(Paint.Style.STROKE);
-        dottedPaint.setColor(Color.BLACK);
-        dottedPaint.setAlpha(120);
-        dottedPaint.setPathEffect(new DashPathEffect(new float[]{5, 5}, 0));
-
-        //draw text
         textPaint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(Color.BLACK);
+        textPaint.setColor(Color.WHITE);
         textPaint.setStyle(Paint.Style.FILL);
+        textPaint.setTextAlign(Paint.Align.CENTER);
         if (!isInEditMode()) {
-            Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/HPSimplified_Rg.ttf");
+            Typeface typeface = FontUtil.getDefaultFont(context);
             textPaint.setTypeface(typeface);
         }
 
         textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MEASUREMENT_FONT_SIZE, getResources().getDisplayMetrics()));
 
         photo = getResources().getDrawable(R.drawable.ann1);
-
 
     }
 
@@ -117,7 +95,6 @@ public class PagePreviewView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         pageBounds.set(getPreviewImageRect());
-        updatePaths();
 
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
@@ -138,43 +115,15 @@ public class PagePreviewView extends View {
             photo = new BitmapDrawable(context.getResources(), bitmap);
         }
 
-        //draw lines
-        float bottomOffset = pageBounds.bottom + pxOffset;
-        float rightOffset = pageBounds.right + pxOffset;
-
-        canvas.drawLine(pageBounds.left, bottomOffset, pageBounds.right, bottomOffset, solidPaint);
-        canvas.drawLine(rightOffset, pageBounds.top, rightOffset, pageBounds.bottom, solidPaint);
-
-        canvas.drawLine(pageBounds.left, pageBounds.bottom, pageBounds.left, bottomOffset, dottedPaint);
-        canvas.drawLine(pageBounds.right, pageBounds.bottom, pageBounds.right, bottomOffset, dottedPaint);
-        canvas.drawLine(pageBounds.right, pageBounds.bottom, rightOffset, pageBounds.bottom, dottedPaint);
-        canvas.drawLine(pageBounds.right, pageBounds.top, rightOffset, pageBounds.top, dottedPaint);
-
-        canvas.drawPath(leftArrow, solidPaint);
-        canvas.drawPath(rightArrow, solidPaint);
-        canvas.drawPath(upArrow, solidPaint);
-        canvas.drawPath(downArrow, solidPaint);
-
-
-        final int widthXOrigin = pageBounds.left + pageBounds.width() / 2 - textWidthBounds.centerX();
-        final int widthYOrigin = pageBounds.bottom + (int) pxOffset * 2;
-        canvas.drawText(widthText, widthXOrigin, widthYOrigin, textPaint);
-
-        final int heightYOrigin = pageBounds.top + pageBounds.height() / 2 - textHeightBounds.centerY();
-        final int heightXOrigin = pageBounds.right + (int) pxOffset + (int) (pxOffset / 2);
-        canvas.drawText(heightText, heightXOrigin, heightYOrigin, textPaint);
+        //draw label
+        final int labelXOrigin = pageBounds.centerX();
+        final int labelYOrigin = pageBounds.bottom + (int) pxOffset * 2;
+        canvas.drawText(dimens, labelXOrigin, labelYOrigin, textPaint);
 
         if (photo == null) {
             return;
         }
         findPhotoBounds();
-
-        float cardShadowRadiuspx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_RADIUS, getResources().getDisplayMetrics());
-        float cardShadowOffsetpx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CARD_SHADOW_OFFSET, getResources().getDisplayMetrics());
-
-        paperPaint.setShadowLayer(cardShadowRadiuspx, cardShadowOffsetpx, cardShadowOffsetpx, Color.LTGRAY);
-        setLayerType(LAYER_TYPE_SOFTWARE, paperPaint);
-        canvas.drawRect(pageBounds, paperPaint);
 
         canvas.saveLayer(pageBounds.left, pageBounds.top, pageBounds.right, pageBounds.bottom, null, Canvas.CLIP_TO_LAYER_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
 
@@ -208,7 +157,7 @@ public class PagePreviewView extends View {
         float pageboundswDPI = pageBounds.width() / pageWidth;
 
         int photoWidth = (int) (pageWidth * pageboundswDPI);
-        int photoHeight = (int) (pageHeight * pageboundswDPI);
+        int photoHeight = (int) (pageWidth == 4 ? 5 * pageboundswDPI : pageHeight * pageboundswDPI);
 
         float scale;
 
@@ -254,34 +203,6 @@ public class PagePreviewView extends View {
         return scale;
     }
 
-    private void updatePaths() {
-        //draw triangles
-        leftArrow = new Path();
-        leftArrow.moveTo(pageBounds.left, pageBounds.bottom + pxOffset);
-        leftArrow.lineTo(pageBounds.left + pxOffset / 2, pageBounds.bottom + pxOffset - pxOffset / 4);
-        leftArrow.lineTo(pageBounds.left + pxOffset / 2, pageBounds.bottom + pxOffset + pxOffset / 4);
-        leftArrow.close();
-
-        rightArrow = new Path();
-        rightArrow.moveTo(pageBounds.right, pageBounds.bottom + pxOffset);
-        rightArrow.lineTo(pageBounds.right - pxOffset / 2, pageBounds.bottom + pxOffset - pxOffset / 4);
-        rightArrow.lineTo(pageBounds.right - pxOffset / 2, pageBounds.bottom + pxOffset + pxOffset / 4);
-        rightArrow.close();
-
-        upArrow = new Path();
-        upArrow.moveTo(pageBounds.right + pxOffset, pageBounds.top);
-        upArrow.lineTo(pageBounds.right + pxOffset + pxOffset / 4, pageBounds.top + pxOffset / 2);
-        upArrow.lineTo(pageBounds.right + pxOffset - pxOffset / 4, pageBounds.top + pxOffset / 2);
-        upArrow.close();
-
-        downArrow = new Path();
-        downArrow.moveTo(pageBounds.right + pxOffset, pageBounds.bottom);
-        downArrow.lineTo(pageBounds.right + pxOffset + pxOffset / 4, pageBounds.bottom - pxOffset / 2);
-        downArrow.lineTo(pageBounds.right + pxOffset - pxOffset / 4, pageBounds.bottom - pxOffset / 2);
-        downArrow.close();
-    }
-
-
     private Rect getPreviewImageRect() {
 
         final float left;
@@ -319,8 +240,8 @@ public class PagePreviewView extends View {
         }
 
 
-        return new Rect((int) (left - pxOffset + 15), (int) (top - pxOffset / 2),
-                (int) (right - pxOffset + 15), (int) (bottom - pxOffset / 2));
+        return new Rect((int) (left), (int) (top - pxOffset / 2),
+                (int) (right), (int) (bottom - pxOffset / 2));
     }
 
     public void setPhoto(Drawable photo) {
@@ -355,11 +276,10 @@ public class PagePreviewView extends View {
         pageWidth = width;
         pageHeight = height;
 
-        widthText = pageWidth + "\"";
-        textPaint.getTextBounds(widthText, 0, widthText.length() - 1, textWidthBounds);
-
-        heightText = pageHeight + "\"";
-        textPaint.getTextBounds(heightText, 0, heightText.length() - 1, textHeightBounds);
+        widthText = Integer.toString((int) pageWidth);
+        heightText = Integer.toString((int) pageHeight);
+        dimens = widthText + " x " + heightText;
+        textPaint.getTextBounds(dimens, 0, dimens.length() - 1, textBounds);
 
         if (Looper.myLooper() == Looper.getMainLooper()) {
             requestLayout();

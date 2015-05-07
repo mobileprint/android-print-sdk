@@ -6,9 +6,10 @@
     <string name="action_settings">Settings</string>
     <string name="print_preview_prompt">Imagine a super duper image appears below</string>
     <string name="learn_about_mobile_print">Learn about Mobile Printing</string>
-    <string name="support">Support</string>
+    <string name="support">SUPPORT:</string>
     <string name="paper_size">Paper Size</string>
     <string name="paper_type">Paper Type</string>
+    <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
 
     <string-array name="paper_size_array">
         <item> 4 x 5 </item>

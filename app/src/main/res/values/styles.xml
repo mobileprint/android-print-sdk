@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LibTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/HPFontColorBlue</item>
+        <item name="colorPrimaryDark">@color/HPFontColorDarkBlue</item>
+        <!--<item name="android:background">@color/PrintPreviewBG</item>-->
+        <item name="colorAccent">@color/HPFontColorWhite</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:colorBackground">@color/PrintPreviewBG</item>
+        <item name="android:windowBackground">@color/PrintPreviewBG</item>
+        <!--<item name="android:actionModeStyle">@style/HPLibActionModeTheme</item>-->
+    </style>
+
+
+</resources>

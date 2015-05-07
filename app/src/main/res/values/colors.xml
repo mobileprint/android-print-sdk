@@ -2,12 +2,10 @@
 <resources>
     <color name="HPFontColorBlue">#0096D9</color>
     <color name="HPFontColorWhite">#FFFFFF</color>
+    <color name="HPFontColorDarkBlue">#007eba</color>
     <color name="HPLightGreyBackground">#EFEFF4</color>
     <color name="HPFontColorCarbonGrey">#333333</color>
     <color name="HPFontColorGrey">#8F8F95</color>
     <color name="HPFontColorLightGrey">#61E3E3EC</color>
-    <color name="NavDrawerTitleColor">#FFFFFF</color>
-    <color name="NavDrawerBackgroudColor">#0096D9</color>
-    <color name="NavDrawerPressedBackgroudColor">#68b2e3</color>
-    <color name="SelectTemplateBG">#2c363c</color>
+    <color name="PrintPreviewBG">#2c363c</color>
 </resources>

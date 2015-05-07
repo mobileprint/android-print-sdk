@@ -20,6 +20,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Menu;
@@ -31,8 +32,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hp.mss.hpprint.R;
+import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.view.PagePreviewView;
 
@@ -45,7 +48,7 @@ import java.io.InputStream;
 //import com.hp.mss.hpprint.R;
 
 
-public class PrintPreview extends Activity {
+public class PrintPreview extends ActionBarActivity {
 
     public static final String PHOTO_FILE_URI = "photoFileUri";
     public static final String PRINT_JOB_NAME = "printJobName";
@@ -75,6 +78,7 @@ public class PrintPreview extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_print_preview);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String photoFileName = getIntent().getExtras().getString(PHOTO_FILE_URI);
         printJobName = getIntent().getExtras().getString(PRINT_JOB_NAME);
@@ -100,6 +104,12 @@ public class PrintPreview extends Activity {
                 onAboutLinkClicked(view);
             }
         });
+
+        ((TextView) findViewById(R.id.paper_size_title)).setTypeface(FontUtil.getDefaultFont(this));
+        ((TextView) findViewById(R.id.print_preview_support_title)).setTypeface(FontUtil.getDefaultFont(this));
+        ((TextView) findViewById(R.id.ic_printing_support_link)).setTypeface(FontUtil.getDefaultFont(this));
+
+
     }
 
 
@@ -110,7 +120,7 @@ public class PrintPreview extends Activity {
 
         if (outMetrics.widthPixels <= outMetrics.heightPixels) { //screen in portrait mode
             previewWidth = outMetrics.widthPixels;
-            previewHeight = (int) (outMetrics.widthPixels * 4 / 5f);
+            previewHeight = (int) (outMetrics.widthPixels * 5 / 5f);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) previewView.getLayoutParams();
             params.width = previewWidth;
             params.height = previewHeight;
@@ -157,6 +167,10 @@ public class PrintPreview extends Activity {
             } else {
                 PrintUtil.printWithoutPreview(this, photo, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
             }
+            return true;
+        } else if (id == android.R.id.home) {
+            Toast.makeText(getApplicationContext(), "Back button clicked", Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
             return true;
         }
 
