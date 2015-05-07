@@ -169,7 +169,6 @@ public class PrintPreview extends ActionBarActivity {
             }
             return true;
         } else if (id == android.R.id.home) {
-            Toast.makeText(getApplicationContext(), "Back button clicked", Toast.LENGTH_SHORT).show();
             super.onBackPressed();
             return true;
         }
