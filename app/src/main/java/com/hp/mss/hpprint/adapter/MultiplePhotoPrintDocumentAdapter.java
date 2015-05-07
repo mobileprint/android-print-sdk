@@ -76,18 +76,11 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         pageHeight = newAttributes.getMediaSize().getHeightMils();
         pageWidth = newAttributes.getMediaSize().getWidthMils();
 
-        if (is4x5media) {
-            thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
+        if (pageHeight == PAPER_DIMENS_7000 && pageWidth == PAPER_DIMENS_5000) {
+            thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_5x7);
         } else {
-            if (pageHeight == PAPER_DIMENS_6000 && pageWidth == PAPER_DIMENS_4000) {
-                thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x6);
-            } else if (pageHeight == PAPER_DIMENS_7000 && pageWidth == PAPER_DIMENS_5000) {
-                thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_5x7);
-            } else {
-                thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
-            }
+            thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
         }
-
 
         if (cancellationSignal.isCanceled()) {
             callback.onLayoutCancelled();
