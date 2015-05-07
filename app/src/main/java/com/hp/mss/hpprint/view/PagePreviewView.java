@@ -157,6 +157,8 @@ public class PagePreviewView extends View {
         float pageboundswDPI = pageBounds.width() / pageWidth;
 
         int photoWidth = (int) (pageWidth * pageboundswDPI);
+
+        // This condtional is for printing 4x5 template on all media types 4 in. wide.
         int photoHeight = (int) (pageWidth == 4 ? 5 * pageboundswDPI : pageHeight * pageboundswDPI);
 
         float scale;
@@ -278,7 +280,7 @@ public class PagePreviewView extends View {
 
         widthText = Integer.toString((int) pageWidth);
         heightText = Integer.toString((int) pageHeight);
-        dimens = widthText + " x " + heightText;
+        dimens = String.format("%d x %d", (int)pageWidth, (int)pageHeight);
         textPaint.getTextBounds(dimens, 0, dimens.length() - 1, textBounds);
 
         if (Looper.myLooper() == Looper.getMainLooper()) {

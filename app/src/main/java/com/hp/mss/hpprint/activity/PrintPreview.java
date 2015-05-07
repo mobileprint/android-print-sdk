@@ -120,7 +120,7 @@ public class PrintPreview extends ActionBarActivity {
 
         if (outMetrics.widthPixels <= outMetrics.heightPixels) { //screen in portrait mode
             previewWidth = outMetrics.widthPixels;
-            previewHeight = (int) (outMetrics.widthPixels * 5 / 5f);
+            previewHeight = outMetrics.widthPixels;
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) previewView.getLayoutParams();
             params.width = previewWidth;
             params.height = previewHeight;

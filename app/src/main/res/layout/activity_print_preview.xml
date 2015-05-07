@@ -56,7 +56,8 @@
                 android:paddingBottom="5dp"
                 android:text="@string/support"
                 android:textSize="18sp"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:textAllCaps="true"/>
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/learn_more"
