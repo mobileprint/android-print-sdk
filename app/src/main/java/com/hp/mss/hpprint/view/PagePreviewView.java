@@ -105,9 +105,7 @@ public class PagePreviewView extends View {
 
         if (multiFile) {
             Bitmap bitmap;
-            if (pageHeight == 6) {
-                bitmap = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x6);
-            } else if (pageHeight == 7) {
+            if (pageHeight == 7) {
                 bitmap = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_5x7);
             } else {
                 bitmap = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
