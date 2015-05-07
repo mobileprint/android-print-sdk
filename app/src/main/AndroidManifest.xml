@@ -8,7 +8,8 @@
         <activity
             android:name=".activity.PrintPreview"
             android:label="@string/title_activity_print_preview"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/LibTheme">
         </activity>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
