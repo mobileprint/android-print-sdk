@@ -49,8 +49,6 @@ public class PagePreviewView extends View {
     private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     private int paperColor = Color.WHITE;
     private Paint paperPaint;
-    private String widthText;
-    private String heightText;
     private boolean multiFile;
     Rect textBounds = new Rect();
     Context context;
@@ -276,9 +274,7 @@ public class PagePreviewView extends View {
         pageWidth = width;
         pageHeight = height;
 
-        widthText = Integer.toString((int) pageWidth);
-        heightText = Integer.toString((int) pageHeight);
-        dimens = String.format("%d x %d", (int)pageWidth, (int)pageHeight);
+        dimens = String.format("%s x %s", fmt((double)pageWidth), fmt((double)pageHeight));
         textPaint.getTextBounds(dimens, 0, dimens.length() - 1, textBounds);
 
         if (Looper.myLooper() == Looper.getMainLooper()) {
@@ -295,5 +291,12 @@ public class PagePreviewView extends View {
                 }
             });
         }
+    }
+    public static String fmt(double d)
+    {
+        if(d == (long) d)
+            return String.format("%d",(long)d);
+        else
+            return String.format("%s",d);
     }
 }
