@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
+import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
 
 import org.json.JSONObject;
@@ -48,7 +49,7 @@ import java.io.InputStream;
 //import com.hp.mss.hpprint.R;
 
 
-public class PrintPreview extends ActionBarActivity {
+public class PrintPreview extends ActionBarActivity implements SnapShotsMediaPrompt.SnapShotsPromptListener {
 
     public static final String PHOTO_FILE_URI = "photoFileUri";
     public static final String PRINT_JOB_NAME = "printJobName";
@@ -153,19 +154,13 @@ public class PrintPreview extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        PrintUtil.OnPrintDataCollectedListener printDataCollectedListener =
-                new PrintUtil.OnPrintDataCollectedListener() {
-                    @Override
-                    public void postPrintData(JSONObject jsonObject) {
-                        returnPrintDataToPreviousActivity(jsonObject);
-                    }
-                };
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
-            if (previewView.getMultiFile()) {
-                PrintUtil.printMultipleMediaTypesWithoutPreview(this, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
+            if (paperWidth == 4 && paperHeight == 5) {
+                PrintUtil.enableSnapShotsMedia(this);
             } else {
-                PrintUtil.printWithoutPreview(this, photo, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
+                doPrint();
             }
             return true;
         } else if (id == android.R.id.home) {
@@ -236,6 +231,26 @@ public class PrintPreview extends ActionBarActivity {
 
             }
         });
+    }
+
+    @Override
+    public void SnapShotsPromptOk(){
+        doPrint();
+    }
+
+    public void doPrint(){
+        PrintUtil.OnPrintDataCollectedListener printDataCollectedListener =
+                new PrintUtil.OnPrintDataCollectedListener() {
+                    @Override
+                    public void postPrintData(JSONObject jsonObject) {
+                        returnPrintDataToPreviousActivity(jsonObject);
+                    }
+                };
+        if (previewView.getMultiFile()) {
+            PrintUtil.printMultipleMediaTypesWithoutPreview(this, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
+        } else {
+            PrintUtil.printWithoutPreview(this, photo, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
+        }
     }
 
     @Override
