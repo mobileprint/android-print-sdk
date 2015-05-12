@@ -274,7 +274,7 @@ public class PagePreviewView extends View {
         pageWidth = width;
         pageHeight = height;
 
-        dimens = String.format("%s x %s", fmt((double)pageWidth), fmt((double)pageHeight));
+        dimens = String.format("%s x %s", fmt(pageWidth), fmt(pageHeight));
         textPaint.getTextBounds(dimens, 0, dimens.length() - 1, textBounds);
 
         if (Looper.myLooper() == Looper.getMainLooper()) {
@@ -292,7 +292,7 @@ public class PagePreviewView extends View {
             });
         }
     }
-    public static String fmt(double d)
+    public static String fmt(float d)
     {
         if(d == (long) d)
             return String.format("%d",(long)d);

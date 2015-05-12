@@ -2,6 +2,7 @@ package com.hp.mss.hpprint.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,28 +21,13 @@ public class SnapShotsMediaPrompt {
     public interface SnapShotsPromptListener {
         public void SnapShotsPromptOk();
     }
-    private SnapShotsPromptListener promptListener;
 
-    private Activity activity = null;
+    private static final String SHOW_SNAP_SHOTS_MESSAGE_KEY = "com.hp.mss.hpprint.ShowSnapShotsMessage";
 
-    private final String SHOW_SNAP_SHOTS_MESSAGE_KEY = "com.hp.mss.hpprint.ShowSnapShotsMessage";
-
-    public SnapShotsMediaPrompt(Activity activity) {
-        promptListener = (SnapShotsPromptListener)activity;
-        this.activity = activity;
-    }
-
-    public void displaySnapShotsPrompt() {
-        String header = activity.getString(R.string.snap_shots_prompt_header);
-        String message = activity.getString(R.string.snap_shots_prompt_message_kitkat);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            message = activity.getString(R.string.snap_shots_prompt_message_lollipop);
-        }
-        showSnapShotsPrompt(activity, header, message);
-    }
-
-    private void showSnapShotsPrompt(final Activity activity, String header, String message) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+    public static void displaySnapShotsPrompt(final Context context, final SnapShotsPromptListener promptListener) {
+        String header = context.getString(R.string.snap_shots_prompt_header);
+        String message = context.getString(R.string.snap_shots_prompt_message);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         boolean showSnapShotsPrompt = preferences.getBoolean(SHOW_SNAP_SHOTS_MESSAGE_KEY, true);
         if (!showSnapShotsPrompt) {
             if (promptListener != null) {
@@ -50,23 +36,23 @@ public class SnapShotsMediaPrompt {
             return;
         }
 
-        View checkBoxView = View.inflate(activity, R.layout.checkbox, null);
+        View checkBoxView = View.inflate(context, R.layout.checkbox, null);
         CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-                preferences.edit().putBoolean(SHOW_SNAP_SHOTS_MESSAGE_KEY, false).commit();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+                preferences.edit().putBoolean(SHOW_SNAP_SHOTS_MESSAGE_KEY, !isChecked).commit();
             }
         });
-        checkBox.setText("Do not show again.");
+        checkBox.setText(R.string.snap_shots_prompt_do_not_show);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message)
                 .setTitle(header)
                 .setView(checkBoxView)
                 .setCancelable(true)
-                .setPositiveButton("CONTINUE", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.snap_shots_prompt_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (promptListener != null)

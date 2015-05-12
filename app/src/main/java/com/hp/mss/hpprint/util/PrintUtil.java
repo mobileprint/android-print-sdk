@@ -66,11 +66,6 @@ public class PrintUtil {
     private PrintUtil() {
     }
 
-    public static void enableSnapShotsMedia(Activity activity) {
-        SnapShotsMediaPrompt snapShotsMediaPrompt = new SnapShotsMediaPrompt(activity);
-        snapShotsMediaPrompt.displaySnapShotsPrompt();
-    }
-
     public static PackageStatus checkHPPrintPluginStatus(Activity activity) {
         return checkPackageStatus(activity, HP_PRINT_PLUGIN_PACKAGE_NAME);
     }

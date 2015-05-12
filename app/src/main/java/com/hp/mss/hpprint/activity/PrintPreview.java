@@ -49,7 +49,7 @@ import java.io.InputStream;
 //import com.hp.mss.hpprint.R;
 
 
-public class PrintPreview extends ActionBarActivity implements SnapShotsMediaPrompt.SnapShotsPromptListener {
+public class PrintPreview extends ActionBarActivity {
 
     public static final String PHOTO_FILE_URI = "photoFileUri";
     public static final String PRINT_JOB_NAME = "printJobName";
@@ -158,7 +158,14 @@ public class PrintPreview extends ActionBarActivity implements SnapShotsMediaPro
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
             if (paperWidth == 4 && paperHeight == 5) {
-                PrintUtil.enableSnapShotsMedia(this);
+                SnapShotsMediaPrompt.SnapShotsPromptListener snapShotsPromptListener =
+                        new SnapShotsMediaPrompt.SnapShotsPromptListener() {
+                            @Override
+                            public void SnapShotsPromptOk() {
+                                doPrint();
+                            }
+                        };
+                SnapShotsMediaPrompt.displaySnapShotsPrompt(this, snapShotsPromptListener);
             } else {
                 doPrint();
             }
@@ -231,11 +238,6 @@ public class PrintPreview extends ActionBarActivity implements SnapShotsMediaPro
 
             }
         });
-    }
-
-    @Override
-    public void SnapShotsPromptOk(){
-        doPrint();
     }
 
     public void doPrint(){
