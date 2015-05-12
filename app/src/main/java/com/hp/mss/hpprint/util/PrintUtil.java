@@ -49,6 +49,7 @@ public class PrintUtil {
     public static boolean is4x5media;
 
     public static final String HP_PRINT_PLUGIN_PACKAGE_NAME = "com.hp.android.printservice";
+    private final String SHOW_4X5_MESSAGE_KEY = "com.hp.mss.hpprint.Show4x5DialogMessage";
     public static final String GOOGLE_STORE_PACKAGE_NAME = "com.android.vending";
     public static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
     public static final int MILS = 1000;
@@ -64,7 +65,6 @@ public class PrintUtil {
 
     private PrintUtil() {
     }
-
 
     public static PackageStatus checkHPPrintPluginStatus(Activity activity) {
         return checkPackageStatus(activity, HP_PRINT_PLUGIN_PACKAGE_NAME);

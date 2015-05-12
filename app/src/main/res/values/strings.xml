@@ -27,4 +27,9 @@
     <string name="install_hp_print_plugin_msg">Do you have an HP printer? To print the best quality photos, please install HP Print Plugin.</string>
     <string name="enable_hp_print_plugin_msg">Ensure your HP Print Plugin is enabled.</string>
 
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">Printing on 4x5 Paper</string>
+    <string name="snap_shots_prompt_ok">CONTINUE</string>
+    <string name="snap_shots_prompt_do_not_show">Do not show again.</string>
+    <string name="snap_shots_prompt_message">You have selected 4x5 as your paper size. The next screen will show 4x6, but don\'t worry, it will print correctly.</string>
 </resources>
