@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -38,6 +39,8 @@ public class SnapShotsMediaPrompt {
 
         View checkBoxView = View.inflate(context, R.layout.checkbox, null);
         CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
+        int id = Resources.getSystem().getIdentifier("btn_check_holo_light", "drawable", "android");
+        checkBox.setButtonDrawable(id);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
