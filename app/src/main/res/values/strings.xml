@@ -25,6 +25,7 @@
     <!-- Print Plugin installation -->
     <string name="hp_print_plugin_alert_header">HP Print Plugin</string>
     <string name="install_hp_print_plugin_msg">Do you have an HP printer? To print the best quality photos, please install HP Print Plugin.</string>
+    <string name="update_hp_print_plugin_msg">Do you have an HP printer? To print the best quality photos, please update HP Print Plugin.</string>
     <string name="enable_hp_print_plugin_msg">Ensure your HP Print Plugin is enabled.</string>
 
     <!-- Snap Shots Prompt -->
