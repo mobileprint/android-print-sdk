@@ -29,6 +29,7 @@ import android.print.PrintJob;
 import android.print.PrintJobInfo;
 import android.print.PrintManager;
 import android.print.PrinterId;
+import android.support.annotation.NonNull;
 import android.support.v4.print.PrintHelper;
 import android.widget.ImageView;
 
@@ -104,10 +105,7 @@ public class PrintUtil {
         }
     }
 
-    public static PackageStatus checkPrintPackageStatus(Activity activity) {
-        if (activity == null)
-            return PackageStatus.NOT_INSTALLED;
-
+    public static PackageStatus checkPrintPackageStatus(@NonNull Activity activity) {
         PackageManager packageManager = activity.getPackageManager();
         try {
             ApplicationInfo appInfo = packageManager.getApplicationInfo(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME, PackageManager.GET_META_DATA);
