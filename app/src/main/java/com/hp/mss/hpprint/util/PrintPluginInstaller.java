@@ -56,6 +56,12 @@ public class PrintPluginInstaller {
         showInstallMessageDialog(activity, header, message);
     }
 
+    public void update() {
+        String header = activity.getString(R.string.hp_print_plugin_alert_header);
+        String message = activity.getString(R.string.update_hp_print_plugin_msg);
+        showInstallMessageDialog(activity, header, message, "Update");
+    }
+
 
     public void enable() {
         String header = activity.getString(R.string.hp_print_plugin_alert_header);
@@ -63,7 +69,7 @@ public class PrintPluginInstaller {
         showEnableMessageDialog(activity, header, message);
     }
 
-    private void showInstallMessageDialog(final Activity activity, String header, String message) {
+    private void showInstallMessageDialog(final Activity activity, String header, String message, String positiveButtonMessage) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
         boolean showPluginInstallMessage = preferences.getBoolean(SHOW_PLUGIN_INSTALL_MESSAGE_KEY, true);
         if (!showPluginInstallMessage) {
@@ -89,7 +95,7 @@ public class PrintPluginInstaller {
                 .setTitle(header)
                 .setView(checkBoxView)
                 .setCancelable(true)
-                .setPositiveButton("Install", new DialogInterface.OnClickListener() {
+                .setPositiveButton(positiveButtonMessage, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dispatchInstallPluginIntent(activity, PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME);
@@ -109,6 +115,9 @@ public class PrintPluginInstaller {
 
     }
 
+    private void showInstallMessageDialog(final Activity activity, String header, String message) {
+        showInstallMessageDialog(activity, header, message, "Install");
+    }
 
     private void showEnableMessageDialog (final Activity activity, String title, String message) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());

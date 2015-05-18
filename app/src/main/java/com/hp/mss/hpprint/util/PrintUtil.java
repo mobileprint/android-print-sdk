@@ -17,6 +17,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -28,6 +29,7 @@ import android.print.PrintJob;
 import android.print.PrintJobInfo;
 import android.print.PrintManager;
 import android.print.PrinterId;
+import android.support.annotation.NonNull;
 import android.support.v4.print.PrintHelper;
 import android.widget.ImageView;
 
@@ -54,9 +56,12 @@ public class PrintUtil {
     public static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
     public static final int MILS = 1000;
     public static final int PRINT_JOB_WAIT_TIME = 1000;
+    public static final int CURRENT_PRINT_PACKAGE_VERSION_CODE = 62; //Updated as of May 15,2015
     public static PrintJob printJob;
 
     public static enum PackageStatus {
+        INSTALLED_AND_NOT_UPDATED,
+        INSTALLED_AND_UPDATED,
         INSTALLED_AND_ENABLED,
         INSTALLED_AND_DISABLED,
         NOT_INSTALLED
@@ -94,6 +99,26 @@ public class PrintUtil {
                 return PackageStatus.INSTALLED_AND_ENABLED;
             else
                 return PackageStatus.INSTALLED_AND_DISABLED;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            return PackageStatus.NOT_INSTALLED;
+        }
+    }
+
+    public static PackageStatus checkPrintPackageStatus(@NonNull Activity activity) {
+        if (activity == null)
+            return PackageStatus.NOT_INSTALLED;
+
+        PackageManager packageManager = activity.getPackageManager();
+        try {
+            ApplicationInfo appInfo = packageManager.getApplicationInfo(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME, PackageManager.GET_META_DATA);
+            PackageInfo packageInfo = packageManager.getPackageInfo(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME, 0);
+            if (packageInfo.versionCode >= CURRENT_PRINT_PACKAGE_VERSION_CODE) {
+                return PackageStatus.INSTALLED_AND_UPDATED;
+            } else {
+                return PackageStatus.INSTALLED_AND_NOT_UPDATED;
+            }
+            //if we reach below this line, then the package is installed. Otheriwse, the catch block is executed.
 
         } catch (PackageManager.NameNotFoundException e) {
             return PackageStatus.NOT_INSTALLED;
