@@ -106,6 +106,9 @@ public class PrintUtil {
     }
 
     public static PackageStatus checkPrintPackageStatus(@NonNull Activity activity) {
+        if (activity == null)
+            return PackageStatus.NOT_INSTALLED;
+
         PackageManager packageManager = activity.getPackageManager();
         try {
             ApplicationInfo appInfo = packageManager.getApplicationInfo(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME, PackageManager.GET_META_DATA);
