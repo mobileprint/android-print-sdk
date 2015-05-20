@@ -91,10 +91,6 @@ class PrintMetricsCollector extends Thread {
     }
 
 
-    private static boolean isJobDone(final android.print.PrintJob printJob) {
-        return   (printJob.isQueued() || printJob.isCompleted() || printJob.isStarted() );
-    }
-
     private static boolean hasJobInfo(final android.print.PrintJob printJob) {
         return ( printJob.isQueued() || printJob.isCompleted() || printJob.isStarted() );
     }
