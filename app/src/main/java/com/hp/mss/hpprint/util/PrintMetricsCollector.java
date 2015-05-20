@@ -21,8 +21,8 @@ import android.os.Handler;
 
 
 class PrintMetricsCollector extends Thread {
-    public static final int PRINT_JOB_WAIT_TIME = 1000;
-    public static final int MILS = 1000;
+    private static final int PRINT_JOB_WAIT_TIME = 1000;
+    private static final int MILS = 1000;
 
     android.print.PrintJob printJob;
     PrintUtil.OnPrintDataCollectedListener collectedListener;
@@ -75,11 +75,7 @@ class PrintMetricsCollector extends Thread {
                 metricsData.numberOfCopy = String.valueOf(printJobInfo.getCopies());
 
                 collectedListener.postPrintData(metricsData);
-            } catch (NoSuchMethodException e) {
-                Log.e("ERROR", "CollectionRunner: " + e.getMessage());
-            } catch (InvocationTargetException e) {
-                Log.e("ERROR", "CollectionRunner: " + e.getMessage());
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 Log.e("ERROR", "CollectionRunner: " + e.getMessage());
             }
 
