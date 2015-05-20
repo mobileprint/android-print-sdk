@@ -35,10 +35,10 @@ public class PrintMetricsData implements Parcelable {
     public String printerName;
 
     public PrintMetricsData() {
-//        this.printerID = DATA_NOT_AVAILABLE;
-//        this.printerLocation = DATA_NOT_AVAILABLE;
-//        this.printerModel = DATA_NOT_AVAILABLE;
-//        this.printerName = DATA_NOT_AVAILABLE;
+        this.printerID = DATA_NOT_AVAILABLE;
+        this.printerLocation = DATA_NOT_AVAILABLE;
+        this.printerModel = DATA_NOT_AVAILABLE;
+        this.printerName = DATA_NOT_AVAILABLE;
     }
 
     public PrintMetricsData(Parcel in) {
