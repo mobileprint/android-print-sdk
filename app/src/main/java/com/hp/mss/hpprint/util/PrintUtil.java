@@ -13,7 +13,6 @@
 package com.hp.mss.hpprint.util;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -24,11 +23,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
-import android.print.PrintDocumentInfo;
 import android.print.PrintJob;
-import android.print.PrintJobInfo;
 import android.print.PrintManager;
-import android.print.PrinterId;
 import android.support.annotation.NonNull;
 import android.support.v4.print.PrintHelper;
 import android.widget.ImageView;
@@ -36,10 +32,7 @@ import android.widget.ImageView;
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.MultiplePhotoPrintDocumentAdapter;
 import com.hp.mss.hpprint.adapter.PhotoPrintDocumentAdapter;
-
-import org.json.JSONObject;
-
-import java.lang.reflect.Method;
+import com.hp.mss.hpprint.model.PrintMetricsData;
 
 
 public class PrintUtil {
@@ -68,8 +61,8 @@ public class PrintUtil {
     }
 
 
-    private PrintUtil() {
-    }
+    private PrintUtil() { }
+
 
     public static PackageStatus checkHPPrintPluginStatus(Activity activity) {
         return checkPackageStatus(activity, HP_PRINT_PLUGIN_PACKAGE_NAME);
@@ -134,7 +127,6 @@ public class PrintUtil {
             return false;
     }
 
-
     public static void printWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
                                         String printJobName, int dpi, int request_id) {
         printWithPreview(activity, photoFileName, false, scaleType,
@@ -189,9 +181,10 @@ public class PrintUtil {
                 setMinMargins(PrintAttributes.Margins.NO_MARGINS).
                 setMediaSize(new PrintAttributes.MediaSize(mediaLabel, "android", (int) (paperWidth * MILS), (int) (paperHeight * MILS))).
                 build();
-        printJob = printManager.print(printJobName, adapter, printAttributes);
+        PrintJob printJob = printManager.print(printJobName, adapter, printAttributes);
 
-        doPrintMetrics(printDataListener);
+        PrintMetricsCollector collector = new PrintMetricsCollector(printJob,printDataListener);
+        collector.run();
     }
 
     private static void printUsingPrintDocumentAdapter(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight) {
@@ -209,58 +202,13 @@ public class PrintUtil {
                 setMediaSize(new PrintAttributes.MediaSize(mediaLabel, "android", (int) (paperWidth * MILS), (int) (paperHeight * MILS))).
                 setResolution(new PrintAttributes.Resolution("160", "160", 160, 160)).
                 build();
-        printJob = printManager.print(printJobName, adapter, printAttributes);
+        PrintJob printJob = printManager.print(printJobName, adapter, printAttributes);
 
-        doPrintMetrics(printDataListener);
-    }
-
-    private static void doPrintMetrics(final OnPrintDataCollectedListener printDataListener) {
-        final Handler handler = new Handler();
-        final Runnable r = new Runnable() {
-            public void run() {
-                if (printJob.isQueued() || printJob.isCompleted() || printJob.isStarted()) {
-                    PrintJobInfo printJobInfo = printJob.getInfo();
-                    PrintAttributes printJobAttributes = printJobInfo.getAttributes();
-                    PrinterId printerId = printJobInfo.getPrinterId();
-
-                    try {
-                        Method gdi = PrintJobInfo.class.getMethod("getDocumentInfo");
-                        PrintDocumentInfo printDocumentInfo = (PrintDocumentInfo) gdi.invoke(printJobInfo);
-                        Method gsn = PrinterId.class.getMethod("getServiceName");
-                        ComponentName componentName = (ComponentName) gsn.invoke(printerId);
-
-                        JSONObject jsonObject = new JSONObject();
-                        if (printDocumentInfo.getContentType() == PrintDocumentInfo.CONTENT_TYPE_DOCUMENT) {
-                            jsonObject.put("paper_type", "Document");
-                        } else if (printDocumentInfo.getContentType() == PrintDocumentInfo.CONTENT_TYPE_PHOTO) {
-                            jsonObject.put("paper_type", "Photo Paper");
-                        } else if (printDocumentInfo.getContentType() == PrintDocumentInfo.CONTENT_TYPE_UNKNOWN) {
-                            jsonObject.put("paper_type", "Unknown");
-                        }
-                        jsonObject.put("print_plugin_tech", componentName.getPackageName());
-
-                        String width = Double.toString(printJobAttributes.getMediaSize().getWidthMils() / (float) MILS);
-                        String height = Double.toString(printJobAttributes.getMediaSize().getHeightMils() / (float) MILS);
-
-                        jsonObject.put("paper_size", width + " x " + height);
-                        jsonObject.put("printer_id", printerId.getLocalId());
-
-                        printDataListener.postPrintData(jsonObject);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (printJob.isFailed() || printJob.isBlocked() || printJob.isCancelled()) {
-                    //do nothing
-                } else {
-                    handler.postDelayed(this, PRINT_JOB_WAIT_TIME);
-                }
-            }
-        };
-
-        handler.postDelayed(r, PRINT_JOB_WAIT_TIME);
+        PrintMetricsCollector collector = new PrintMetricsCollector(printJob,printDataListener);
+        collector.run();
     }
 
     public interface OnPrintDataCollectedListener {
-        public void postPrintData(JSONObject jsonObject);
+        public void postPrintData(PrintMetricsData data);
     }
 }

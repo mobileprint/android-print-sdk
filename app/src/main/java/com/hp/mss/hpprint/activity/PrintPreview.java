@@ -20,6 +20,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hp.mss.hpprint.R;
+import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
@@ -244,8 +246,8 @@ public class PrintPreview extends ActionBarActivity {
         PrintUtil.OnPrintDataCollectedListener printDataCollectedListener =
                 new PrintUtil.OnPrintDataCollectedListener() {
                     @Override
-                    public void postPrintData(JSONObject jsonObject) {
-                        returnPrintDataToPreviousActivity(jsonObject);
+                    public void postPrintData(PrintMetricsData data) {
+                        returnPrintDataToPreviousActivity(data);
                     }
                 };
         if (previewView.getMultiFile()) {
@@ -261,10 +263,10 @@ public class PrintPreview extends ActionBarActivity {
         setPreviewViewLayoutProperties();
     }
 
-    public void returnPrintDataToPreviousActivity(JSONObject jsonObject) {
-        Intent editCardIntent = new Intent(this, getCallingActivity().getClass());
-        editCardIntent.putExtra(PrintUtil.PRINT_DATA_STRING, jsonObject.toString());
-        setResult(RESULT_OK, editCardIntent);
+    public void returnPrintDataToPreviousActivity(PrintMetricsData data) {
+        Intent callingIntent = new Intent(this, getCallingActivity().getClass());
+        callingIntent.putExtra(PrintMetricsData.class.toString(), data);
+        setResult(RESULT_OK, callingIntent);
         finish();
     }
 
