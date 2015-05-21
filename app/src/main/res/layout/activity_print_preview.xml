@@ -65,13 +65,21 @@
             android:layout_height="40dp"
             android:layout_below="@+id/support_title"
             android:background="@color/HPFontColorWhite">
+            <ImageView
+                android:id="@+id/learn_more_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10dp"
+                android:src="@drawable/ic_printscreen_print_instructions"/>
             <TextView
                 android:id="@+id/ic_printing_support_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:paddingLeft="15sp"
+                android:paddingLeft="10dp"
                 android:text="@string/learn_about_mobile_print"
+                android:layout_toEndOf="@id/learn_more_icon"
                 android:textColor="@color/HPFontColorBlue"
                 android:background="@color/HPFontColorWhite"/>
         </RelativeLayout>
