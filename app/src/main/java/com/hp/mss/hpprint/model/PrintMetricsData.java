@@ -15,7 +15,9 @@ import java.util.Map;
  */
 public class PrintMetricsData implements Parcelable {
 
-
+    public static final String CONTENT_TYPE_DOCUMENT = "Document";
+    public static final String CONTENT_TYPE_PHOTO = "Photo";
+    public static final String CONTENT_TYPE_UNKNOWN = "Unknown";
     private static final String DATA_NOT_AVAILABLE = "No data available";
     private static final String BLACK_AND_WHITE_FILTER = "black_and_white_filter";
     private static final String COPIES = "copies";
