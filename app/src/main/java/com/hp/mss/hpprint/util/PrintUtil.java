@@ -136,7 +136,7 @@ public class PrintUtil {
     }
 
     public static void setTracker(Tracker tracker) {
-        GAUtil.tracker = tracker;
+        GAUtil.setTracker(tracker);
     }
 
     public static void printWithPreview(Activity activity, String photoFileName, boolean multiMediaType, ImageView.ScaleType scaleType,
