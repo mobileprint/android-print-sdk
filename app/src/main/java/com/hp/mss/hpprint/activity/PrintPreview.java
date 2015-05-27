@@ -20,7 +20,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -33,16 +32,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hp.mss.hpprint.util.GAUtil;
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -249,6 +246,8 @@ public class PrintPreview extends ActionBarActivity {
                     public void postPrintData(PrintMetricsData data) {
                         if(data.printResult.equals(PrintMetricsData.PRINT_RESULT_SUCCESS)){
                             returnPrintDataToPreviousActivity(data);
+                        } else {
+                            GAUtil.sendEvent(getApplicationContext(), GAUtil.EVENT_CATEGORY_FULFILLMENT, GAUtil.EVENT_ACTION_PRINT, data.printResult);
                         }
                     }
                 };
