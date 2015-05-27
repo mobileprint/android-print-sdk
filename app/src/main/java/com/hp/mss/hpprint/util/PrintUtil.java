@@ -29,6 +29,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.print.PrintHelper;
 import android.widget.ImageView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.MultiplePhotoPrintDocumentAdapter;
 import com.hp.mss.hpprint.adapter.PhotoPrintDocumentAdapter;
@@ -131,6 +133,10 @@ public class PrintUtil {
                                         String printJobName, int dpi, int request_id) {
         printWithPreview(activity, photoFileName, false, scaleType,
                 printJobName, dpi, request_id);
+    }
+
+    public static void setTracker(Tracker tracker) {
+        GAUtil.setTracker(tracker);
     }
 
     public static void printWithPreview(Activity activity, String photoFileName, boolean multiMediaType, ImageView.ScaleType scaleType,
