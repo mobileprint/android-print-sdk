@@ -37,17 +37,29 @@ class PrintMetricsCollector extends Thread {
     @Override
     public void run() {
 
-        if ( printJob == null || collectedListener == null || isJobFailed(printJob) ) {
+        if ( printJob == null || collectedListener == null ) {
 
             return;
 
-        } else if ( hasJobInfo(printJob) ) {
+        } else if (isJobFailed(printJob)){
+            PrintMetricsData metricsData = new PrintMetricsData();
+            if( printJob.isFailed() ) {
+                metricsData.printResult = PrintMetricsData.PRINT_RESULT_FAILED;
+                collectedListener.postPrintData(metricsData);
+            } else if (printJob.isCancelled()) {
+                metricsData.printResult = PrintMetricsData.PRINT_RESULT_CANCEL;
+            }
+            collectedListener.postPrintData(metricsData);
+
+            return;
+        }else if ( hasJobInfo(printJob) ) {
 
             PrintJobInfo printJobInfo = printJob.getInfo();
             PrintAttributes printJobAttributes = printJobInfo.getAttributes();
             PrinterId printerId = printJobInfo.getPrinterId();
 
             PrintMetricsData metricsData = new PrintMetricsData();
+            metricsData.printResult = PrintMetricsData.PRINT_RESULT_SUCCESS;
 
             try {
                 Method gdi = PrintJobInfo.class.getMethod("getDocumentInfo");

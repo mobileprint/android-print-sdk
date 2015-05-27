@@ -28,6 +28,11 @@ public class PrintMetricsData implements Parcelable {
     private static final String PRINTER_LOCATION = "printer_location";
     private static final String PRINTER_MODEL = "printer_model";
     private static final String PRINTER_NAME = "printer_name";
+    private static final String PRINT_RESULT = "print_result";
+
+    public static final String PRINT_RESULT_FAILED = "Fail";
+    public static final String PRINT_RESULT_SUCCESS = "Success";
+    public static final String PRINT_RESULT_CANCEL = "Cancel";
 
 
     public String blackAndWhiteFilter;
@@ -39,6 +44,7 @@ public class PrintMetricsData implements Parcelable {
     public String printerLocation;
     public String printerModel;
     public String printerName;
+    public String printResult;
 
     public PrintMetricsData() {
         this.printerID = DATA_NOT_AVAILABLE;
@@ -57,6 +63,7 @@ public class PrintMetricsData implements Parcelable {
         printerLocation = in.readString();
         printerModel = in.readString();
         printerName = in.readString();
+        printResult = in.readString();
     }
 
     public PrintMetricsData(Map<String, String> map) {
@@ -69,6 +76,7 @@ public class PrintMetricsData implements Parcelable {
         this.printerLocation = map.get(PRINTER_LOCATION);
         this.printerModel = map.get(PRINTER_MODEL);
         this.printerName = map.get(PRINTER_NAME);
+        this.printResult = map.get(PRINT_RESULT);
     }
 
     public Map<String,String> toMap() {
@@ -83,6 +91,7 @@ public class PrintMetricsData implements Parcelable {
         map.put(PRINTER_LOCATION, this.printerLocation);
         map.put(PRINTER_MODEL, this.printerModel);
         map.put(PRINTER_NAME, this.printerName);
+        map.put(PRINT_RESULT, this.printResult);
 
         return map;
     }
@@ -103,6 +112,7 @@ public class PrintMetricsData implements Parcelable {
         out.writeString(printerLocation);
         out.writeString(printerModel);
         out.writeString(printerName);
+        out.writeString(printResult);
 
    }
 
