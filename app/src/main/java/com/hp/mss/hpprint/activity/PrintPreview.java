@@ -247,7 +247,7 @@ public class PrintPreview extends ActionBarActivity {
                         if(data.printResult.equals(PrintMetricsData.PRINT_RESULT_SUCCESS)){
                             returnPrintDataToPreviousActivity(data);
                         } else {
-                            GAUtil.sendEvent(getApplicationContext(), GAUtil.EVENT_CATEGORY_FULFILLMENT, GAUtil.EVENT_ACTION_PRINT, data.printResult);
+                            GAUtil.sendEvent(GAUtil.EVENT_CATEGORY_FULFILLMENT, GAUtil.EVENT_ACTION_PRINT, data.printResult);
                         }
                     }
                 };
