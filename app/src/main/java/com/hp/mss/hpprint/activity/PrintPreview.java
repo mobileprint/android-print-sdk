@@ -247,7 +247,9 @@ public class PrintPreview extends ActionBarActivity {
                 new PrintUtil.OnPrintDataCollectedListener() {
                     @Override
                     public void postPrintData(PrintMetricsData data) {
-                        returnPrintDataToPreviousActivity(data);
+                        if(data.printResult.equals(PrintMetricsData.PRINT_RESULT_SUCCESS)){
+                            returnPrintDataToPreviousActivity(data);
+                        }
                     }
                 };
         if (previewView.getMultiFile()) {
