@@ -19,18 +19,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Looper;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
+
+import java.lang.ref.WeakReference;
 
 
 public class PagePreviewView extends View {
@@ -39,8 +40,9 @@ public class PagePreviewView extends View {
 
     private Paint textPaint;
 
-    private Drawable photo;
+    private Bitmap photo;
 
+    private final Rect artifactBounds = new Rect();
     private final Rect pageBounds = new Rect();
     private float pxOffset;
     private float pageWidth;
@@ -49,10 +51,8 @@ public class PagePreviewView extends View {
     private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     private int paperColor = Color.WHITE;
     private Paint paperPaint;
-    private boolean multiFile;
-    Rect textBounds = new Rect();
-    Context context;
-    String dimens;
+    private Rect textBounds = new Rect();
+    private String dimens;
 
     public PagePreviewView(Context context) {
         this(context, null);
@@ -60,8 +60,6 @@ public class PagePreviewView extends View {
 
     public PagePreviewView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
-
         init(context);
     }
 
@@ -83,9 +81,6 @@ public class PagePreviewView extends View {
         }
 
         textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MEASUREMENT_FONT_SIZE, getResources().getDisplayMetrics()));
-
-        photo = getResources().getDrawable(R.drawable.ann1);
-
     }
 
     @Override
@@ -101,32 +96,20 @@ public class PagePreviewView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (multiFile) {
-            Bitmap bitmap;
-            if (pageHeight == 7) {
-                bitmap = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_5x7);
-            } else {
-                bitmap = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
-            }
-            photo = new BitmapDrawable(context.getResources(), bitmap);
-        }
-
         //draw label
         final int labelXOrigin = pageBounds.centerX();
         final int labelYOrigin = pageBounds.bottom + (int) pxOffset * 2;
         canvas.drawText(dimens, labelXOrigin, labelYOrigin, textPaint);
-
-        if (photo == null) {
-            return;
-        }
-        findPhotoBounds();
-
         canvas.saveLayer(pageBounds.left, pageBounds.top, pageBounds.right, pageBounds.bottom, null, Canvas.CLIP_TO_LAYER_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
 
         paperPaint.setStyle(Paint.Style.FILL);
         paperPaint.setColor(Color.WHITE);
         canvas.drawRect(pageBounds, paperPaint);
-        photo.draw(canvas);
+
+        if (photo != null) {
+            findPhotoBounds();
+            canvas.drawBitmap(photo, null, artifactBounds, null);
+        }
         canvas.restore();
     }
 
@@ -144,7 +127,7 @@ public class PagePreviewView extends View {
                 //TODO: Not required for current use case
                 break;
             case FIT_XY:
-                photo.setBounds(pageBounds);
+                artifactBounds.set(pageBounds);
                 break;
         }
     }
@@ -181,7 +164,7 @@ public class PagePreviewView extends View {
 
         final int bottom = top + photoHeight;
 
-        photo.setBounds(new Rect(left, top, right, bottom));
+        artifactBounds.set(left, top, right, bottom);
     }
 
     public static float getImageScale(int photoWidth, int photoHeight, int canvasWidth, int canvasHeight) {
@@ -214,7 +197,7 @@ public class PagePreviewView extends View {
         final float width = pageWidth;
         final float height = pageHeight;
 
-        boolean widthLimiting = (width / (float) getMeasuredWidth() > height / (float) getMeasuredHeight()) ? true : false;
+        boolean widthLimiting = (width / (float) getMeasuredWidth() > height / (float) getMeasuredHeight());
 
         if (widthLimiting) {
             resultWidth = getMeasuredWidth() * (LAYOUT_MARGIN_RATIO - 2) / LAYOUT_MARGIN_RATIO;
@@ -242,9 +225,16 @@ public class PagePreviewView extends View {
                 (int) (right), (int) (bottom - pxOffset / 2));
     }
 
-    public void setPhoto(Drawable photo) {
+    public void setPhoto(Bitmap photo) {
+        if (this.photo != null) {
+            this.photo.recycle();
+        }
         this.photo = photo;
-        postInvalidate();
+        invalidate();
+    }
+
+    public Bitmap getPhoto() {
+        return photo;
     }
 
     public void setPaperColor(int color) {
@@ -262,41 +252,94 @@ public class PagePreviewView extends View {
         requestLayout();
     }
 
-    public void setMultiFile(boolean multiFile) {
-        this.multiFile = multiFile;
-    }
-
-    public boolean getMultiFile() {
-        return multiFile;
-    }
-
     public void setPageSize(float width, float height) {
         pageWidth = width;
         pageHeight = height;
 
         dimens = String.format("%s x %s", fmt(pageWidth), fmt(pageHeight));
         textPaint.getTextBounds(dimens, 0, dimens.length() - 1, textBounds);
+    }
 
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            requestLayout();
-            postInvalidate();
+    private static String fmt(float d) {
+        if (d == (long) d)
+            return String.format("%d", (long) d);
+        else
+            return String.format("%s", d);
+    }
 
-        } else {
-            this.postOnAnimation(new Runnable() {
-                @Override
-                public void run() {
-                    requestLayout();
-                    postInvalidate();
+    public static class ImageLoaderTask extends AsyncTask<LoaderParams, Void, Pair<LoaderParams, Bitmap>> {
+        private static final String TAG = "ImageLoaderTask";
+        private WeakReference<Context> contextRef;
 
+        public ImageLoaderTask(Context context) {
+            contextRef = new WeakReference<>(context.getApplicationContext());
+        }
+
+
+        @Override
+        protected Pair<LoaderParams, Bitmap> doInBackground(LoaderParams... params) {
+            LoaderParams param = params[0];
+            final Context context = getContext();
+            if (context == null) {
+                return null;
+            }
+
+            final PagePreviewView view = param.target.get();
+            if (view != null) {
+                if (view.photo != null) {
+                    view.photo.recycle();
+                    view.photo = null;
                 }
-            });
+            } else {
+                return null;
+            }
+
+            final Bitmap bitmap;
+            if (param.multiFile) {
+                if (param.pageHeight == 7) {
+                    bitmap = ImageLoaderUtil.getImageWithSize(context, PrintUtil.IMAGE_SIZE_5x7);
+                } else {
+                    bitmap = ImageLoaderUtil.getImageWithSize(context, PrintUtil.IMAGE_SIZE_4x5);
+                }
+
+            } else {
+                bitmap = ImageLoaderUtil.getImageWithSize(context, param.filename);
+            }
+            return new Pair<>(param, bitmap);
+        }
+
+        @Override
+        protected void onPostExecute(Pair<LoaderParams, Bitmap> result) {
+            if (result.second == null) {
+                Log.e(TAG, "No photo loaded");
+                return;
+            }
+            final LoaderParams params = result.first;
+            final PagePreviewView view = params.target.get();
+            if (view != null) {
+                view.setPhoto(result.second);
+                view.requestLayout();
+            }
+        }
+
+        private Context getContext() {
+            return contextRef != null ? contextRef.get() : null;
         }
     }
-    public static String fmt(float d)
-    {
-        if(d == (long) d)
-            return String.format("%d",(long)d);
-        else
-            return String.format("%s",d);
+
+    public static class LoaderParams {
+        public final int pageHeight;
+        public final boolean multiFile;
+        public final String filename;
+        public final WeakReference<PagePreviewView> target;
+
+        public LoaderParams(int pageHeight, boolean multiFile, String filename, PagePreviewView target) {
+            this.pageHeight = pageHeight;
+            this.multiFile = multiFile;
+            this.filename = filename;
+            this.target = new WeakReference<>(target);
+        }
     }
+
+
 }

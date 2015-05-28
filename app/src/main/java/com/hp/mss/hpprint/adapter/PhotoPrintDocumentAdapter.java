@@ -129,6 +129,13 @@ public class PhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         callback.onWriteFinished(pageRanges);
     }
 
+    @Override
+    public void onFinish() {
+        super.onFinish();
+        thePhoto.recycle();
+        thePhoto = null;
+    }
+
     //This method needs corresponding one for pagepreviewview to make the result print same as the preview.
     private void drawPage(PdfDocument.Page page) {
         Canvas canvas = page.getCanvas();
