@@ -85,7 +85,7 @@ public class PrintPluginInstaller {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-                preferences.edit().putBoolean(SHOW_PLUGIN_INSTALL_MESSAGE_KEY, false).commit();
+                preferences.edit().putBoolean(SHOW_PLUGIN_INSTALL_MESSAGE_KEY, !isChecked).commit();
             }
         });
         checkBox.setText("Do not show again.");
@@ -135,7 +135,7 @@ public class PrintPluginInstaller {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-                preferences.edit().putBoolean(SHOW_PLUGIN_ENABLE_MESSAGE_KEY, false).commit();
+                preferences.edit().putBoolean(SHOW_PLUGIN_ENABLE_MESSAGE_KEY, !isChecked).commit();
             }
         });
         checkBox.setText("Do not show again.");
