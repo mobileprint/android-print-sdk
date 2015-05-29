@@ -11,7 +11,6 @@ import android.util.Log;
 
 import com.hp.mss.hpprint.model.PrintMetricsData;
 
-import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -20,20 +19,19 @@ class PrintMetricsCollector extends Thread {
     private static final int PRINT_JOB_WAIT_TIME = 1000;
     private static final int MILS = 1000;
 
-    private WeakReference<PrintJob> printJobRef;
+    private PrintJob printJob;
     private PrintUtil.OnPrintDataCollectedListener collectedListener;
     private Handler metricsHandler;
 
     public PrintMetricsCollector(PrintJob printJob, PrintUtil.OnPrintDataCollectedListener collectedListener) {
-        this.printJobRef = new WeakReference<>(printJob);
+        this.printJob = printJob;
         this.collectedListener = collectedListener;
         this.metricsHandler = new Handler();
     }
 
     @Override
     public void run() {
-        PrintJob printJob = getPrintJob();
-        if (getPrintJob() == null || collectedListener == null) {
+        if (printJob == null || collectedListener == null) {
             return;
         }
         if (isJobFailed(printJob)) {
@@ -94,11 +92,6 @@ class PrintMetricsCollector extends Thread {
 
         }
     }
-
-    private PrintJob getPrintJob() {
-        return printJobRef.get();
-    }
-
 
     private static boolean hasJobInfo(final PrintJob printJob) {
         return (printJob.isQueued() || printJob.isCompleted() || printJob.isStarted());
