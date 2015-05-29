@@ -2,10 +2,6 @@ package com.hp.mss.hpprint.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.print.PrintJob;
-import android.util.Log;
-
-import com.hp.mss.hpprint.util.PrintUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +18,7 @@ public class PrintMetricsData implements Parcelable {
     private static final String BLACK_AND_WHITE_FILTER = "black_and_white_filter";
     private static final String COPIES = "copies";
     private static final String PAPER_SIZE = "paper_size";
-    private static final String PAPER_TYPE ="paper_type";
+    private static final String PAPER_TYPE = "paper_type";
     private static final String PRINT_PLUGIN_TECH = "print_plugin_tech";
     private static final String PRINTER_ID = "printer_id";
     private static final String PRINTER_LOCATION = "printer_location";
@@ -79,19 +75,19 @@ public class PrintMetricsData implements Parcelable {
         this.printResult = map.get(PRINT_RESULT);
     }
 
-    public Map<String,String> toMap() {
+    public Map<String, String> toMap() {
         Map<String, String> map = new HashMap<String, String>();
 
-        map.put(BLACK_AND_WHITE_FILTER, this.blackAndWhiteFilter);
-        map.put(COPIES, this.numberOfCopy);
-        map.put(PAPER_SIZE, this.paperSize);
-        map.put(PAPER_TYPE, this.paperType);
-        map.put(PRINT_PLUGIN_TECH, this.printPluginTech);
-        map.put(PRINTER_ID, this.printerID);
-        map.put(PRINTER_LOCATION, this.printerLocation);
-        map.put(PRINTER_MODEL, this.printerModel);
-        map.put(PRINTER_NAME, this.printerName);
-        map.put(PRINT_RESULT, this.printResult);
+        if (blackAndWhiteFilter != null) map.put(BLACK_AND_WHITE_FILTER, this.blackAndWhiteFilter);
+        if (numberOfCopy != null) map.put(COPIES, this.numberOfCopy);
+        if (paperSize != null) map.put(PAPER_SIZE, this.paperSize);
+        if (paperType != null) map.put(PAPER_TYPE, this.paperType);
+        if (printPluginTech != null) map.put(PRINT_PLUGIN_TECH, this.printPluginTech);
+        if (printerID != null) map.put(PRINTER_ID, this.printerID);
+        if (printerLocation != null) map.put(PRINTER_LOCATION, this.printerLocation);
+        if (printerModel != null) map.put(PRINTER_MODEL, this.printerModel);
+        if (printerName != null) map.put(PRINTER_NAME, this.printerName);
+        if (printResult != null) map.put(PRINT_RESULT, this.printResult);
 
         return map;
     }
@@ -114,7 +110,7 @@ public class PrintMetricsData implements Parcelable {
         out.writeString(printerName);
         out.writeString(printResult);
 
-   }
+    }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public PrintMetricsData createFromParcel(Parcel in) {
