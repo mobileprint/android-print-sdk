@@ -1,6 +1,7 @@
 package com.hp.mss.hpprint.util;
 
 import android.content.ComponentName;
+import android.os.Handler;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentInfo;
 import android.print.PrintJob;
@@ -10,40 +11,34 @@ import android.util.Log;
 
 import com.hp.mss.hpprint.model.PrintMetricsData;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import android.os.Handler;
-
-
-/**
- * Created by panini on 5/18/15.
- */
-
 
 class PrintMetricsCollector extends Thread {
+    private static final String TAG = "PrintMetricsCollector";
     private static final int PRINT_JOB_WAIT_TIME = 1000;
     private static final int MILS = 1000;
 
-    android.print.PrintJob printJob;
-    PrintUtil.OnPrintDataCollectedListener collectedListener;
-    Handler metricsHandler;
+    private WeakReference<PrintJob> printJobRef;
+    private PrintUtil.OnPrintDataCollectedListener collectedListener;
+    private Handler metricsHandler;
 
     public PrintMetricsCollector(PrintJob printJob, PrintUtil.OnPrintDataCollectedListener collectedListener) {
-        this.printJob = printJob;
+        this.printJobRef = new WeakReference<>(printJob);
         this.collectedListener = collectedListener;
         this.metricsHandler = new Handler();
     }
 
     @Override
     public void run() {
-
-        if ( printJob == null || collectedListener == null ) {
-
+        PrintJob printJob = getPrintJob();
+        if (getPrintJob() == null || collectedListener == null) {
             return;
-
-        } else if (isJobFailed(printJob)){
+        }
+        if (isJobFailed(printJob)) {
             PrintMetricsData metricsData = new PrintMetricsData();
-            if( printJob.isFailed() ) {
+            if (printJob.isFailed()) {
                 metricsData.printResult = PrintMetricsData.PRINT_RESULT_FAILED;
                 collectedListener.postPrintData(metricsData);
             } else if (printJob.isCancelled()) {
@@ -52,7 +47,9 @@ class PrintMetricsCollector extends Thread {
             collectedListener.postPrintData(metricsData);
 
             return;
-        }else if ( hasJobInfo(printJob) ) {
+        }
+
+        if (hasJobInfo(printJob)) {
 
             PrintJobInfo printJobInfo = printJob.getInfo();
             PrintAttributes printJobAttributes = printJobInfo.getAttributes();
@@ -82,13 +79,13 @@ class PrintMetricsCollector extends Thread {
                 String width = Double.toString(printJobAttributes.getMediaSize().getWidthMils() / (float) MILS);
                 String height = Double.toString(printJobAttributes.getMediaSize().getHeightMils() / (float) MILS);
 
-                metricsData.paperSize =  (width + " x " + height).toString();
+                metricsData.paperSize = (width + " x " + height);
                 metricsData.printerID = printerId.getLocalId();
                 metricsData.numberOfCopy = String.valueOf(printJobInfo.getCopies());
 
                 collectedListener.postPrintData(metricsData);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                Log.e("ERROR", "CollectionRunner: " + e.getMessage());
+                Log.e(TAG, "CollectionRunner", e);
             }
 
         } else {
@@ -98,13 +95,17 @@ class PrintMetricsCollector extends Thread {
         }
     }
 
-
-    private static boolean hasJobInfo(final android.print.PrintJob printJob) {
-        return ( printJob.isQueued() || printJob.isCompleted() || printJob.isStarted() );
+    private PrintJob getPrintJob() {
+        return printJobRef.get();
     }
 
-    private static boolean isJobFailed(final android.print.PrintJob printJob) {
-        return ( printJob.isFailed() || printJob.isBlocked() || printJob.isCancelled() );
+
+    private static boolean hasJobInfo(final PrintJob printJob) {
+        return (printJob.isQueued() || printJob.isCompleted() || printJob.isStarted());
+    }
+
+    private static boolean isJobFailed(final PrintJob printJob) {
+        return (printJob.isFailed() || printJob.isBlocked() || printJob.isCancelled());
     }
 }
 

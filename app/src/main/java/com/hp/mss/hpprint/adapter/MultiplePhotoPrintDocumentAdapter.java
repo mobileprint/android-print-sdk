@@ -42,12 +42,12 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
     public static final int PAPER_DIMENS_6000 = 6000;
     public static final int PAPER_DIMENS_7000 = 7000;
     public static final int PAPER_DIMENS_5000 = 5000;
-    Context context;
+    private Context context;
     private int pageHeight;
     private int pageWidth;
     private PrintedPdfDocument myPdfDocument;
-    public Bitmap thePhoto;
-    public int totalPages;
+    private Bitmap thePhoto;
+    private int totalPages;
     private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     private boolean is4x5media;
 
@@ -76,10 +76,13 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         pageHeight = newAttributes.getMediaSize().getHeightMils();
         pageWidth = newAttributes.getMediaSize().getWidthMils();
 
+        if (thePhoto != null) {
+            thePhoto.recycle();
+        }
         if (pageHeight == PAPER_DIMENS_7000 && pageWidth == PAPER_DIMENS_5000) {
-            thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_5x7);
+            thePhoto = ImageLoaderUtil.getImageWithSize(context, PrintUtil.IMAGE_SIZE_5x7);
         } else {
-            thePhoto = ImageLoaderUtil.getImage(context, PrintUtil.IMAGE_SIZE_4x5);
+            thePhoto = ImageLoaderUtil.getImageWithSize(context, PrintUtil.IMAGE_SIZE_4x5);
         }
 
         if (cancellationSignal.isCanceled()) {
@@ -99,7 +102,6 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         } else {
             callback.onLayoutFailed("Page count is zero");
         }
-
     }
 
     @Override
@@ -139,6 +141,13 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         }
 
         callback.onWriteFinished(pageRanges);
+    }
+
+    @Override
+    public void onFinish() {
+        super.onFinish();
+        thePhoto.recycle();
+        thePhoto = null;
     }
 
     //This method needs corresponding one for pagepreviewview to make the result print same as the preview.

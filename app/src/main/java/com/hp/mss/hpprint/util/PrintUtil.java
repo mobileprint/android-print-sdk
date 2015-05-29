@@ -20,7 +20,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.os.Handler;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
@@ -45,16 +44,14 @@ public class PrintUtil {
 
     public static boolean is4x5media;
 
-    public static final String HP_PRINT_PLUGIN_PACKAGE_NAME = "com.hp.android.printservice";
-    private final String SHOW_4X5_MESSAGE_KEY = "com.hp.mss.hpprint.Show4x5DialogMessage";
-    public static final String GOOGLE_STORE_PACKAGE_NAME = "com.android.vending";
-    public static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
-    public static final int MILS = 1000;
-    public static final int PRINT_JOB_WAIT_TIME = 1000;
-    public static final int CURRENT_PRINT_PACKAGE_VERSION_CODE = 62; //Updated as of May 15,2015
-    public static PrintJob printJob;
+    static final String HP_PRINT_PLUGIN_PACKAGE_NAME = "com.hp.android.printservice";
+    private static final String SHOW_4X5_MESSAGE_KEY = "com.hp.mss.hpprint.Show4x5DialogMessage";
+    private static final String GOOGLE_STORE_PACKAGE_NAME = "com.android.vending";
+    private static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
+    private static final int MILS = 1000;
+    private static final int CURRENT_PRINT_PACKAGE_VERSION_CODE = 62; //Updated as of May 15,2015
 
-    public static enum PackageStatus {
+    public enum PackageStatus {
         INSTALLED_AND_NOT_UPDATED,
         INSTALLED_AND_UPDATED,
         INSTALLED_AND_ENABLED,
@@ -63,7 +60,8 @@ public class PrintUtil {
     }
 
 
-    private PrintUtil() { }
+    private PrintUtil() {
+    }
 
 
     public static PackageStatus checkHPPrintPluginStatus(Activity activity) {
@@ -121,12 +119,9 @@ public class PrintUtil {
     }
 
     private static boolean deviceAlwaysReturnsPluginEnabled() {
-        if ((Build.MODEL.contains("Nexus") && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) || //Nexus Lollipop
+        return (Build.MODEL.contains("Nexus") && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) || //Nexus Lollipop
                 (Build.MODEL.equalsIgnoreCase("SM-N900") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) || //Samsung Note 3 KitKit
-                (Build.MODEL.equalsIgnoreCase("GT-I9500") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT))  //Samsung Galaxy S4
-            return true;
-        else
-            return false;
+                (Build.MODEL.equalsIgnoreCase("GT-I9500") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT); //Samsung Galaxy S4
     }
 
     public static void printWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
@@ -140,19 +135,21 @@ public class PrintUtil {
     }
 
     public static void printWithPreview(Activity activity, String photoFileName, boolean multiMediaType, ImageView.ScaleType scaleType,
-                                        String printJobName, int dpi, int request_id) {
+                                        String printJobName, int dpi, int requestId) {
         Intent intent = new Intent(activity, PrintPreview.class);
         intent.putExtra(PrintPreview.PHOTO_FILE_URI, photoFileName);
         intent.putExtra(PrintPreview.PRINT_JOB_NAME, printJobName);
         intent.putExtra(PrintPreview.SCALE_TYPE, scaleType);
         intent.putExtra(PrintPreview.MULTIPLE_MEDIA_TYPES, multiMediaType);
-        activity.startActivityForResult(intent, request_id);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        activity.startActivityForResult(intent, requestId);
     }
 
     public static void printMultipleMediaTypesWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
-                                                          String printJobName, int dpi, int request_id) {
+                                                          String printJobName, int dpi, int requestId) {
         printWithPreview(activity, photoFileName, true, scaleType,
-                printJobName, dpi, request_id);
+                printJobName, dpi, requestId);
 
     }
 
@@ -189,7 +186,7 @@ public class PrintUtil {
                 build();
         PrintJob printJob = printManager.print(printJobName, adapter, printAttributes);
 
-        PrintMetricsCollector collector = new PrintMetricsCollector(printJob,printDataListener);
+        PrintMetricsCollector collector = new PrintMetricsCollector(printJob, printDataListener);
         collector.run();
     }
 
@@ -210,11 +207,11 @@ public class PrintUtil {
                 build();
         PrintJob printJob = printManager.print(printJobName, adapter, printAttributes);
 
-        PrintMetricsCollector collector = new PrintMetricsCollector(printJob,printDataListener);
+        PrintMetricsCollector collector = new PrintMetricsCollector(printJob, printDataListener);
         collector.run();
     }
 
     public interface OnPrintDataCollectedListener {
-        public void postPrintData(PrintMetricsData data);
+        void postPrintData(PrintMetricsData data);
     }
 }

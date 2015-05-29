@@ -12,15 +12,13 @@
 
 package com.hp.mss.hpprint.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Menu;
@@ -33,67 +31,58 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.hp.mss.hpprint.util.GAUtil;
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.util.FontUtil;
+import com.hp.mss.hpprint.util.GAUtil;
+import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
-//import com.hp.mss.hpprint.R;
-
-
-public class PrintPreview extends ActionBarActivity {
+public class PrintPreview extends AppCompatActivity {
+    private static final String HP_ANDROID_MOBILE_SITE = "http://www8.hp.com/us/en/ads/mobility/overview.html?jumpid=va_r11400_eprint";
 
     public static final String PHOTO_FILE_URI = "photoFileUri";
     public static final String PRINT_JOB_NAME = "printJobName";
     public static final String SCALE_TYPE = "scaleMode";
     public static final String MULTIPLE_MEDIA_TYPES = "multiMediaTypes";
 
-    private static final int DEFAULT_WIDTH = 5;
-    private static final int DEFAULT_HEIGHT = 7;
-
-    private int previewWidth;
-    private int previewHeight;
-
     private boolean landscapePhoto;
 
-    static String HP_ANDROID_MOBILE_SITE = "http://www8.hp.com/us/en/ads/mobility/overview.html?jumpid=va_r11400_eprint";
-    String photoFileName = null;
-    String printJobName = null;
-    Bitmap photo = null;
-    float paperWidth;
-    float paperHeight;
+    private String photoFileName = null;
+    private String printJobName = null;
+    private float paperWidth;
+    private float paperHeight;
 
     private PagePreviewView previewView;
     private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
+    private boolean multiFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_print_preview);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         String photoFileName = getIntent().getExtras().getString(PHOTO_FILE_URI);
         printJobName = getIntent().getExtras().getString(PRINT_JOB_NAME);
         scaleType = (ImageView.ScaleType) getIntent().getExtras().get(SCALE_TYPE);
-        photo = getImageBitmap(this, photoFileName);
 
-        Spinner size_spinner = (Spinner) findViewById(R.id.paper_size_spinner);
-        setSizeSpinnerListener(size_spinner);
-
-        Spinner type_spinner = (Spinner) findViewById(R.id.paper_type_spinner);
+        Spinner sizeSpinner = (Spinner) findViewById(R.id.paper_size_spinner);
+        setSizeSpinnerListener(sizeSpinner);
 
         previewView = (PagePreviewView) findViewById(R.id.preview_image_view);
-        previewView.setMultiFile(getIntent().getExtras().getBoolean(MULTIPLE_MEDIA_TYPES));
+        multiFile = getIntent().getExtras().getBoolean(MULTIPLE_MEDIA_TYPES);
 
-        landscapePhoto = photo.getWidth() > photo.getHeight();
+        Rect photoBounds = ImageLoaderUtil.getImageSize(photoFileName);
+        landscapePhoto = photoBounds.width() > photoBounds.height();
 
         setPreviewViewLayoutProperties();
 
@@ -119,24 +108,20 @@ public class PrintPreview extends ActionBarActivity {
         display.getMetrics(outMetrics);
 
         if (outMetrics.widthPixels <= outMetrics.heightPixels) { //screen in portrait mode
-            previewWidth = outMetrics.widthPixels;
-            previewHeight = outMetrics.widthPixels;
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) previewView.getLayoutParams();
-            params.width = previewWidth;
-            params.height = previewHeight;
+            int size = outMetrics.widthPixels;
+            params.width = size;
+            params.height = size;
             previewView.setLayoutParams(params);
         } else { //screen in landscape mode
-            previewWidth = (int) (outMetrics.widthPixels / 2f);
-            previewHeight = outMetrics.heightPixels;
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) previewView.getLayoutParams();
-            params.width = previewWidth;
-            params.height = previewHeight;
+            params.width = (int) (outMetrics.widthPixels / 2f);
+            params.height = outMetrics.heightPixels;
             previewView.setLayoutParams(params);
         }
 
         previewView.setOrientation(landscapePhoto);
         previewView.setScaleType(scaleType);
-        previewView.setPhoto(new BitmapDrawable(getResources(), photo));
 
     }
 
@@ -177,25 +162,10 @@ public class PrintPreview extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public Bitmap getImageBitmap(Activity activity, String photoFileName) {
-        Bitmap b = null;
-
-        try {
-            File file = new File(photoFileName);
-
-            InputStream inputStream = new FileInputStream(file);
-            b = BitmapFactory.decodeStream(inputStream);
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return b;
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        previewView.setPhoto(null);
         if (photoFileName != null) {
             File photoFile = new File(photoFileName);
             if (photoFile.exists())
@@ -223,12 +193,9 @@ public class PrintPreview extends ActionBarActivity {
 
 
                     previewView.setPageSize(paperWidth, paperHeight);
+                    new PagePreviewView.ImageLoaderTask(PrintPreview.this).execute(new PagePreviewView.LoaderParams((int) paperHeight, multiFile, photoFileName, previewView));
 
-                    if (paperHeight == 5 && paperWidth == 4) {
-                        PrintUtil.is4x5media = true;
-                    } else {
-                        PrintUtil.is4x5media = false;
-                    }
+                    PrintUtil.is4x5media = paperHeight == 5 && paperWidth == 4;
                 }
             }
 
@@ -239,22 +206,22 @@ public class PrintPreview extends ActionBarActivity {
         });
     }
 
-    public void doPrint(){
+    public void doPrint() {
         PrintUtil.OnPrintDataCollectedListener printDataCollectedListener =
                 new PrintUtil.OnPrintDataCollectedListener() {
                     @Override
                     public void postPrintData(PrintMetricsData data) {
-                        if(data.printResult.equals(PrintMetricsData.PRINT_RESULT_SUCCESS)){
+                        if (data.printResult.equals(PrintMetricsData.PRINT_RESULT_SUCCESS)) {
                             returnPrintDataToPreviousActivity(data);
                         } else {
                             GAUtil.sendEvent(GAUtil.EVENT_CATEGORY_FULFILLMENT, GAUtil.EVENT_ACTION_PRINT, data.printResult);
                         }
                     }
                 };
-        if (previewView.getMultiFile()) {
+        if (multiFile) {
             PrintUtil.printMultipleMediaTypesWithoutPreview(this, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
         } else {
-            PrintUtil.printWithoutPreview(this, photo, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
+            PrintUtil.printWithoutPreview(this, previewView.getPhoto(), scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
         }
     }
 
@@ -265,7 +232,7 @@ public class PrintPreview extends ActionBarActivity {
     }
 
     public void returnPrintDataToPreviousActivity(PrintMetricsData data) {
-        Intent callingIntent = new Intent(this, getCallingActivity().getClass());
+        Intent callingIntent = new Intent();
         callingIntent.putExtra(PrintMetricsData.class.toString(), data);
         setResult(RESULT_OK, callingIntent);
         finish();
