@@ -52,7 +52,7 @@ public class PagePreviewView extends View {
     private int paperColor = Color.WHITE;
     private Paint paperPaint;
     private Rect textBounds = new Rect();
-    private String dimens;
+    private String dimens = "";
 
     public PagePreviewView(Context context) {
         this(context, null);
