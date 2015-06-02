@@ -60,6 +60,7 @@ public class PrintPreview extends AppCompatActivity {
     private PagePreviewView previewView;
     private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     private boolean multiFile;
+    private boolean disableMenu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +130,7 @@ public class PrintPreview extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_print_preview, menu);
+        menu.findItem(R.id.action_print).setEnabled(!disableMenu);
         return true;
     }
 
@@ -138,7 +140,8 @@ public class PrintPreview extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        disableMenu = true;
+        invalidateOptionsMenu();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_print) {
             if (paperWidth == 4 && paperHeight == 5) {
@@ -148,6 +151,10 @@ public class PrintPreview extends AppCompatActivity {
                             public void SnapShotsPromptOk() {
                                 doPrint();
                             }
+                            public void SnapShotsPromptCancel() {
+                                disableMenu = false;
+                                invalidateOptionsMenu();
+                            }
                         };
                 SnapShotsMediaPrompt.displaySnapShotsPrompt(this, snapShotsPromptListener);
             } else {
@@ -156,6 +163,8 @@ public class PrintPreview extends AppCompatActivity {
             return true;
         } else if (id == android.R.id.home) {
             super.onBackPressed();
+            disableMenu = false;
+            invalidateOptionsMenu();
             return true;
         }
 
@@ -223,6 +232,8 @@ public class PrintPreview extends AppCompatActivity {
         } else {
             PrintUtil.printWithoutPreview(this, previewView.getPhoto(), scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
         }
+        disableMenu = false;
+        invalidateOptionsMenu();
     }
 
     @Override

@@ -21,6 +21,7 @@ public class SnapShotsMediaPrompt {
 
     public interface SnapShotsPromptListener {
         public void SnapShotsPromptOk();
+        public void SnapShotsPromptCancel();
     }
 
     private static final String SHOW_SNAP_SHOTS_MESSAGE_KEY = "com.hp.mss.hpprint.ShowSnapShotsMessage";
@@ -38,28 +39,32 @@ public class SnapShotsMediaPrompt {
         }
 
         View checkBoxView = View.inflate(context, R.layout.checkbox, null);
-        CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
+        final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
         if (Build.VERSION.SDK_INT <  Build.VERSION_CODES.LOLLIPOP) {
             int id = Resources.getSystem().getIdentifier("btn_check_holo_light", "drawable", "android");
             checkBox.setButtonDrawable(id);
         }
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-                preferences.edit().putBoolean(SHOW_SNAP_SHOTS_MESSAGE_KEY, !isChecked).commit();
-            }
-        });
         checkBox.setText(R.string.snap_shots_prompt_do_not_show);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message)
                 .setTitle(header)
                 .setView(checkBoxView)
-                .setCancelable(false)
+                .setCancelable(true)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        if (promptListener != null)
+                            promptListener.SnapShotsPromptCancel();
+                    }
+                })
                 .setPositiveButton(R.string.snap_shots_prompt_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (checkBox.isChecked()) {
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+                            preferences.edit().putBoolean(SHOW_SNAP_SHOTS_MESSAGE_KEY, false).commit();
+                        }
                         if (promptListener != null)
                             promptListener.SnapShotsPromptOk();
                     }
