@@ -56,7 +56,7 @@ public class SnapShotsMediaPrompt {
         builder.setMessage(message)
                 .setTitle(header)
                 .setView(checkBoxView)
-                .setCancelable(true)
+                .setCancelable(false)
                 .setPositiveButton(R.string.snap_shots_prompt_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
