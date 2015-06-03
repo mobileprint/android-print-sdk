@@ -34,6 +34,7 @@ public class PrintPluginInstaller {
         public void printPluginInstallationSkipped();
         public void printPluginInstallationSelected();
         public void printPluginEnableSkipped();
+        public void printPluginInstallationCanceled();
     }
     private OnInstallPluginListener installPluginListener;
 
@@ -78,26 +79,28 @@ public class PrintPluginInstaller {
             }
             return;
         }
-
         View checkBoxView = View.inflate(activity, R.layout.checkbox, null);
-        CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-                preferences.edit().putBoolean(SHOW_PLUGIN_INSTALL_MESSAGE_KEY, !isChecked).commit();
-            }
-        });
+        final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
         checkBox.setText("Do not show again.");
-
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage(message)
                 .setTitle(header)
                 .setView(checkBoxView)
                 .setCancelable(true)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        if (installPluginListener != null)
+                            installPluginListener.printPluginInstallationCanceled();
+                    }
+                })
                 .setPositiveButton(positiveButtonMessage, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (checkBox.isChecked()) {
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+                            preferences.edit().putBoolean(SHOW_PLUGIN_INSTALL_MESSAGE_KEY, false).commit();
+                        }
                         dispatchInstallPluginIntent(activity, PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME);
                         if (installPluginListener != null)
                             installPluginListener.printPluginInstallationSelected();
@@ -106,6 +109,10 @@ public class PrintPluginInstaller {
                 .setNeutralButton("Skip", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (checkBox.isChecked()) {
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+                            preferences.edit().putBoolean(SHOW_PLUGIN_INSTALL_MESSAGE_KEY, false).commit();
+                        }
                         if (installPluginListener != null)
                             installPluginListener.printPluginInstallationSkipped();
                     }
