@@ -15,11 +15,8 @@ public class ImageLoaderUtil {
     private static final String IMAGE_DIR = "imageDir";
     private static final String IMAGE_EXT = ".jpg";
 
-    public static Bitmap getImageWithSize(Context context, String imageSize) {
-        final Context applicationContext = context.getApplicationContext();
-        final File imageDir = applicationContext.getDir(IMAGE_DIR, Context.MODE_PRIVATE);
-        final File f = new File(imageDir, imageSize + IMAGE_EXT);
-
+    public static Bitmap getImageBitmap(String filename) {
+        final File f = new File(filename);
         try {
             return getImage(f.getCanonicalPath());
         } catch (IOException e) {
@@ -50,14 +47,14 @@ public class ImageLoaderUtil {
         return bitmap;
     }
 
-    public static Bitmap getBitmapWithSize(String imagePath, int reqWidth, int reqHeight) {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imagePath, options);
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(imagePath, options);
-    }
+//    public static Bitmap getBitmapWithSize(String imagePath, int reqWidth, int reqHeight) {
+//        final BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//        BitmapFactory.decodeFile(imagePath, options);
+//        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+//        options.inJustDecodeBounds = false;
+//        return BitmapFactory.decodeFile(imagePath, options);
+//    }
 
     public static Rect getImageSize(String imagePath) {
         final BitmapFactory.Options options = new BitmapFactory.Options();

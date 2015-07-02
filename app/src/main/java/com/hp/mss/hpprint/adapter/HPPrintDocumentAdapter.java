@@ -15,8 +15,6 @@ package com.hp.mss.hpprint.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -26,35 +24,30 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
-import android.widget.ImageView;
 
-import com.hp.mss.hpprint.util.ImageLoaderUtil;
-import com.hp.mss.hpprint.util.PrintUtil;
+import com.hp.mss.hpprint.model.PrintItem;
+import com.hp.mss.hpprint.model.PrintJob;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
-    private static final float PdfDocumentScale = .5f;
-    private static final String DEFAULT_IMAGE_SIZE = PrintUtil.IMAGE_SIZE_4x5;
-    public static final int PAPER_DIMENS_4000 = 4000;
-    public static final int PAPER_DIMENS_6000 = 6000;
-    public static final int PAPER_DIMENS_7000 = 7000;
-    public static final int PAPER_DIMENS_5000 = 5000;
+public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
+    private static final float PdfDocumentScale = .50f;
     private Context context;
     private int pageHeight;
     private int pageWidth;
     private PrintedPdfDocument myPdfDocument;
     private Bitmap thePhoto;
     private int totalPages;
-    private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     private boolean is4x5media;
+    private PrintJob printJob;
+    private PrintItem printItem;
 
-    public MultiplePhotoPrintDocumentAdapter(Context context, ImageView.ScaleType scaleType, boolean is4x5media) {
+    public HPPrintDocumentAdapter(Context context, PrintJob printJob, boolean is4x5media) {
         this.context = context;
         totalPages = 1;
-        this.scaleType = scaleType;
+        this.printJob = printJob;
         this.is4x5media = is4x5media;
     }
 
@@ -76,14 +69,7 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         pageHeight = newAttributes.getMediaSize().getHeightMils();
         pageWidth = newAttributes.getMediaSize().getWidthMils();
 
-        if (thePhoto != null) {
-            thePhoto.recycle();
-        }
-        if (pageHeight == PAPER_DIMENS_7000 && pageWidth == PAPER_DIMENS_5000) {
-            thePhoto = ImageLoaderUtil.getImageWithSize(context, PrintUtil.IMAGE_SIZE_5x7);
-        } else {
-            thePhoto = ImageLoaderUtil.getImageWithSize(context, PrintUtil.IMAGE_SIZE_4x5);
-        }
+        printItem = (printJob.getPrintItem(newAttributes.getMediaSize()));
 
         if (cancellationSignal.isCanceled()) {
             callback.onLayoutCancelled();
@@ -104,6 +90,8 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
         }
     }
 
+    Bitmap bitmap;
+
     @Override
     public void onWrite(final PageRange[] pageRanges,
                         final ParcelFileDescriptor destination,
@@ -115,6 +103,7 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
 
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder((int) scaledWidth, (int) scaledHeight, 0).create();
 
+
         PdfDocument.Page page = myPdfDocument.startPage(pageInfo);
 
         //check for cancellation
@@ -125,7 +114,7 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
             return;
         }
 
-        drawPage(page);
+        printItem.drawPage(page);
         myPdfDocument.finishPage(page);
 
         try {
@@ -151,55 +140,4 @@ public class MultiplePhotoPrintDocumentAdapter extends PrintDocumentAdapter {
             thePhoto = null;
         }
     }
-
-    //This method needs corresponding one for pagepreviewview to make the result print same as the preview.
-    private void drawPage(PdfDocument.Page page) {
-        Canvas canvas = page.getCanvas();
-        switch (scaleType) {
-            default:
-            case CENTER:
-                //TODO: Not required for current use case
-                break;
-            case CENTER_CROP:
-                drawCenterCrop(canvas);
-                break;
-            case CENTER_INSIDE:
-                //TODO: Not required for current use case
-                break;
-            case FIT_XY:
-                canvas.drawBitmap(thePhoto, null, canvas.getClipBounds(), null);
-                break;
-        }
-    }
-
-    private void drawCenterCrop(Canvas canvas) {
-
-        float photoWidth = thePhoto.getWidth();
-        float photoHeight = thePhoto.getHeight();
-
-        float scale = PAPER_DIMENS_4000 / photoWidth * PdfDocumentScale;
-
-        if ((pageHeight == PAPER_DIMENS_6000 && pageWidth == PAPER_DIMENS_4000) || (pageHeight == PAPER_DIMENS_7000 && pageWidth == PAPER_DIMENS_5000)) {
-            scale = canvas.getWidth() / photoWidth;
-        }
-
-        photoWidth *= scale;
-        photoHeight *= scale;
-
-        final float left = canvas.getWidth() / 2 - photoWidth / 2;
-        final float right = left + photoWidth;
-        final float top;
-
-        if (pageWidth == PAPER_DIMENS_4000) {
-            top = 0;
-        } else {
-            top = canvas.getHeight() / 2 - photoHeight / 2;
-        }
-
-        final float bottom = top + photoHeight;
-
-        canvas.drawBitmap(thePhoto, null, new Rect((int) left, (int) top, (int) right, (int) bottom), null);
-    }
-
-
 }

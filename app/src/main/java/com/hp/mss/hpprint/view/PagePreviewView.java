@@ -25,8 +25,9 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ImageView;
 
+import com.hp.mss.hpprint.model.PrintItem;
+import com.hp.mss.hpprint.model.PrintJob;
 import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
@@ -48,11 +49,12 @@ public class PagePreviewView extends View {
     private float pageWidth;
     private float pageHeight;
     private boolean landscape;
-    private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
     private int paperColor = Color.WHITE;
     private Paint paperPaint;
     private Rect textBounds = new Rect();
     private String dimens = "";
+    private PrintJob printJob;
+    private PrintItem.ScaleType scaleType;
 
     public PagePreviewView(Context context) {
         this(context, null);
@@ -119,9 +121,10 @@ public class PagePreviewView extends View {
             default:
             case CENTER:
                 //TODO: Not required for current use case
+                setImageBoundsToCenterCrop();
+
                 break;
             case CENTER_CROP:
-                setImageBoundsToCenterCrop();
                 break;
             case CENTER_INSIDE:
                 //TODO: Not required for current use case
@@ -242,7 +245,7 @@ public class PagePreviewView extends View {
         postInvalidate();
     }
 
-    public void setScaleType(ImageView.ScaleType scaleType) {
+    public void setScaleType(PrintItem.ScaleType scaleType) {
         this.scaleType = scaleType;
         postInvalidate();
     }
@@ -295,16 +298,8 @@ public class PagePreviewView extends View {
             }
 
             final Bitmap bitmap;
-            if (param.multiFile) {
-                if (param.pageHeight == 7) {
-                    bitmap = ImageLoaderUtil.getImageWithSize(context, PrintUtil.IMAGE_SIZE_5x7);
-                } else {
-                    bitmap = ImageLoaderUtil.getImageWithSize(context, PrintUtil.IMAGE_SIZE_4x5);
-                }
 
-            } else {
-                bitmap = ImageLoaderUtil.getImageWithSize(context, param.filename);
-            }
+            bitmap = ImageLoaderUtil.getImageBitmap(param.filename);
             return new Pair<>(param, bitmap);
         }
 
@@ -317,6 +312,7 @@ public class PagePreviewView extends View {
             final LoaderParams params = result.first;
             final PagePreviewView view = params.target.get();
             if (view != null) {
+                view.setScaleType(params.scaleType);
                 view.setPhoto(result.second);
                 view.requestLayout();
             }
@@ -329,14 +325,14 @@ public class PagePreviewView extends View {
 
     public static class LoaderParams {
         public final int pageHeight;
-        public final boolean multiFile;
         public final String filename;
+        public final PrintItem.ScaleType scaleType;
         public final WeakReference<PagePreviewView> target;
 
-        public LoaderParams(int pageHeight, boolean multiFile, String filename, PagePreviewView target) {
+        public LoaderParams(int pageHeight, String filename, PrintItem.ScaleType scaleType, PagePreviewView target) {
             this.pageHeight = pageHeight;
-            this.multiFile = multiFile;
             this.filename = filename;
+            this.scaleType = scaleType;
             this.target = new WeakReference<>(target);
         }
     }

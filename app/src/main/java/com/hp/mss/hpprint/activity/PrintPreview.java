@@ -17,6 +17,7 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.print.PrintAttributes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -32,6 +33,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.hp.mss.hpprint.R;
+import com.hp.mss.hpprint.model.PrintItem;
+import com.hp.mss.hpprint.model.PrintJob;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.GAUtil;
@@ -58,9 +61,10 @@ public class PrintPreview extends AppCompatActivity {
     private float paperHeight;
 
     private PagePreviewView previewView;
-    private ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
-    private boolean multiFile;
+    private PrintItem.ScaleType scaleType;
     private boolean disableMenu = false;
+
+    PrintJob printJob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +76,17 @@ public class PrintPreview extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        String photoFileName = getIntent().getExtras().getString(PHOTO_FILE_URI);
-        printJobName = getIntent().getExtras().getString(PRINT_JOB_NAME);
-        scaleType = (ImageView.ScaleType) getIntent().getExtras().get(SCALE_TYPE);
+        printJob = (PrintJob) getIntent().getExtras().getParcelable(PrintUtil.PRINT_JOB_DATA);
+        PrintItem printItem = printJob.getPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6);
+
+        photoFileName = printItem.getUri();
+        printJobName = printJob.getJobName();
+        scaleType = printItem.getScaleType();
 
         Spinner sizeSpinner = (Spinner) findViewById(R.id.paper_size_spinner);
         setSizeSpinnerListener(sizeSpinner);
 
         previewView = (PagePreviewView) findViewById(R.id.preview_image_view);
-        multiFile = getIntent().getExtras().getBoolean(MULTIPLE_MEDIA_TYPES);
 
         Rect photoBounds = ImageLoaderUtil.getImageSize(photoFileName);
         landscapePhoto = photoBounds.width() > photoBounds.height();
@@ -122,7 +128,7 @@ public class PrintPreview extends AppCompatActivity {
         }
 
         previewView.setOrientation(landscapePhoto);
-        previewView.setScaleType(scaleType);
+//        previewView.setScaleType(scaleType);
 
     }
 
@@ -200,9 +206,8 @@ public class PrintPreview extends AppCompatActivity {
                     paperWidth = landscapePhoto ? Float.parseFloat(sizeArray[1].trim()) : Float.parseFloat(sizeArray[0].trim());
                     paperHeight = landscapePhoto ? Float.parseFloat(sizeArray[0].trim()) : Float.parseFloat(sizeArray[1].trim());
 
-
                     previewView.setPageSize(paperWidth, paperHeight);
-                    new PagePreviewView.ImageLoaderTask(PrintPreview.this).execute(new PagePreviewView.LoaderParams((int) paperHeight, multiFile, photoFileName, previewView));
+                    new PagePreviewView.ImageLoaderTask(PrintPreview.this).execute(new PagePreviewView.LoaderParams((int) paperHeight, photoFileName, scaleType, previewView));
 
                     PrintUtil.is4x5media = paperHeight == 5 && paperWidth == 4;
                 }
@@ -227,11 +232,7 @@ public class PrintPreview extends AppCompatActivity {
                         }
                     }
                 };
-        if (multiFile) {
-            PrintUtil.printMultipleMediaTypesWithoutPreview(this, scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
-        } else {
-            PrintUtil.printWithoutPreview(this, previewView.getPhoto(), scaleType, printJobName, printDataCollectedListener, paperWidth, paperHeight);
-        }
+        PrintUtil.createPrintJob(this);
         disableMenu = false;
         invalidateOptionsMenu();
     }
