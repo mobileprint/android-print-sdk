@@ -12,6 +12,7 @@
 
 package com.hp.mss.hpprint.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -221,17 +222,6 @@ public class PrintPreview extends AppCompatActivity {
     }
 
     public void doPrint() {
-        PrintUtil.OnPrintDataCollectedListener printDataCollectedListener =
-                new PrintUtil.OnPrintDataCollectedListener() {
-                    @Override
-                    public void postPrintData(PrintMetricsData data) {
-                        if (data.printResult.equals(PrintMetricsData.PRINT_RESULT_SUCCESS)) {
-                            returnPrintDataToPreviousActivity(data);
-                        } else {
-                            GAUtil.sendEvent(GAUtil.EVENT_CATEGORY_FULFILLMENT, GAUtil.EVENT_ACTION_PRINT, data.printResult);
-                        }
-                    }
-                };
         PrintUtil.createPrintJob(this);
         disableMenu = false;
         invalidateOptionsMenu();
