@@ -18,11 +18,11 @@ public class PrintJob implements Parcelable{
 
     Map<PrintAttributes.MediaSize, PrintItem> printItems;
 
-    String defaultAssetUri;
-
-    ItemType defaultAssetUriType;
+    PrintItem defaultPrintItem;
 
     PrintAttributes printDialogOptions;
+
+    Context context;
 
     public enum ItemType {
         IMAGE,
@@ -31,13 +31,12 @@ public class PrintJob implements Parcelable{
     }
 
     //TODO: validate defaultAssetUri is consistent with itemType
-    public PrintJob(Context context, String defaultAssetUri, ItemType defaultAssetUriType) {
-        if(defaultAssetUri == null) {
-            throw new NullPointerException("defaultAssetUri is required to be set.");
+    public PrintJob(Context context, PrintItem defaultPrintItem) {
+        setDefaultPrintItem(defaultPrintItem);
+        if(defaultPrintItem == null) {
+            throw new NullPointerException("defaultPrintItem is required to be set.");
         }
-        this.defaultAssetUri = defaultAssetUri;
-        this.defaultAssetUriType = defaultAssetUriType;
-
+        this.context = context;
     }
 
     public String getJobName() {
@@ -48,6 +47,19 @@ public class PrintJob implements Parcelable{
         this.jobName = jobName;
     }
 
+    public PrintItem getDefaultPrintItem() {
+        return defaultPrintItem;
+    }
+
+    public void setDefaultPrintItem(PrintItem defaultPrintItem) {
+        this.defaultPrintItem = defaultPrintItem;
+    }
+    public int numPrintItems(){
+        return printItems.size();
+    }
+    public Map<PrintAttributes.MediaSize, PrintItem> getPrintItems(){
+        return printItems;
+    }
     public void addPrintItem(PrintItem printItem) {
         if(printItems == null) {
             printItems = new HashMap();
@@ -57,15 +69,18 @@ public class PrintJob implements Parcelable{
 
     public PrintItem getPrintItem(PrintAttributes.MediaSize mediaSize){
         PrintItem printItem = printItems.get(mediaSize);
-        if (printItem == null)
-            switch (defaultAssetUriType) {
-                case IMAGE:
-                    return new ImagePrintItem(mediaSize, defaultAssetUri);
-                default:
-                    throw new IllegalArgumentException("defaultAssetUriType is not valid.");
-            }
-        else
-            return printItem;
+
+        if(printItem == null) {
+            //get it for other orientation
+            printItem = printItems.get(new PrintAttributes.MediaSize(mediaSize.getId(), mediaSize.getLabel(context.getPackageManager()),mediaSize.getHeightMils(), mediaSize.getWidthMils()));
+            if (printItem == null)
+                return defaultPrintItem;
+            else
+                return printItem;
+
+        }
+
+        return printItem;
     }
 
     public void setPrintDialogOptions(PrintAttributes printAttributes){
@@ -76,13 +91,9 @@ public class PrintJob implements Parcelable{
         return printDialogOptions;
     }
 
-
-
     //Parcelable methods
     protected PrintJob(Parcel in) {
         jobName = in.readString();
-        defaultAssetUri = in.readString();
-        defaultAssetUriType = (ItemType) in.readValue(ItemType.class.getClassLoader());
         printDialogOptions = (PrintAttributes) in.readValue(PrintAttributes.class.getClassLoader());
 //        printItems = (HashMap) in.readParcelable(HashMap.class.getClassLoader());
         int size = in.readInt();
@@ -101,8 +112,6 @@ public class PrintJob implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(jobName);
-        dest.writeString(defaultAssetUri);
-        dest.writeValue(defaultAssetUriType);
         dest.writeValue(printDialogOptions);
 
         dest.writeInt(printItems.size());

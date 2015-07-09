@@ -15,6 +15,8 @@ package com.hp.mss.hpprint.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -25,6 +27,7 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
 
+import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJob;
 
@@ -90,8 +93,6 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
         }
     }
 
-    Bitmap bitmap;
-
     @Override
     public void onWrite(final PageRange[] pageRanges,
                         final ParcelFileDescriptor destination,
@@ -113,14 +114,14 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
             myPdfDocument = null;
             return;
         }
+        Canvas canvas = page.getCanvas();
 
-        printItem.drawPage(page);
+        printItem.drawPage(canvas, 1000 * PdfDocumentScale, new RectF(0,0,canvas.getWidth(), canvas.getHeight()));
         myPdfDocument.finishPage(page);
 
         try {
             myPdfDocument.writeTo(new FileOutputStream(
                     destination.getFileDescriptor()));
-
         } catch (IOException e) {
             callback.onWriteFailed(e.toString());
             return;

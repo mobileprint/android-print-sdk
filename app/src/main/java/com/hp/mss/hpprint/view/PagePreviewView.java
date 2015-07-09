@@ -18,19 +18,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJob;
 import com.hp.mss.hpprint.util.FontUtil;
-import com.hp.mss.hpprint.util.ImageLoaderUtil;
-import com.hp.mss.hpprint.util.PrintUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -43,18 +40,17 @@ public class PagePreviewView extends View {
 
     private Bitmap photo;
 
-    private final Rect artifactBounds = new Rect();
-    private final Rect pageBounds = new Rect();
+    private final RectF pageBounds = new RectF();
     private float pxOffset;
     private float pageWidth;
     private float pageHeight;
-    private boolean landscape;
     private int paperColor = Color.WHITE;
     private Paint paperPaint;
     private Rect textBounds = new Rect();
     private String dimens = "";
     private PrintJob printJob;
     private PrintItem.ScaleType scaleType;
+    private PrintItem printItem;
 
     public PagePreviewView(Context context) {
         this(context, null);
@@ -99,95 +95,24 @@ public class PagePreviewView extends View {
         super.onDraw(canvas);
 
         //draw label
-        final int labelXOrigin = pageBounds.centerX();
-        final int labelYOrigin = pageBounds.bottom + (int) pxOffset * 2;
+        final float labelXOrigin = pageBounds.centerX();
+        final float labelYOrigin = pageBounds.bottom + (int) pxOffset * 2;
         canvas.drawText(dimens, labelXOrigin, labelYOrigin, textPaint);
         canvas.saveLayer(pageBounds.left, pageBounds.top, pageBounds.right, pageBounds.bottom, null, Canvas.CLIP_TO_LAYER_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
 
         paperPaint.setStyle(Paint.Style.FILL);
         paperPaint.setColor(Color.WHITE);
-        canvas.drawRect(pageBounds, paperPaint);
+        RectF pageBoundsTemp = new RectF(pageBounds.left + 1, pageBounds.top + 1, pageBounds.right - 1, pageBounds.bottom - 1);
+        canvas.drawRect(pageBoundsTemp, paperPaint);
 
-        if (photo != null) {
-            findPhotoBounds();
-            canvas.drawBitmap(photo, null, artifactBounds, null);
+        if (printItem != null) {
+            float dpi = pageBounds.width() / pageWidth;
+            printItem.drawPage(canvas, dpi, pageBounds);
         }
         canvas.restore();
     }
 
-    //This method needs corresponding one for printdocument adapter to make the result print same as the preview.
-    private void findPhotoBounds() {
-        switch (scaleType) {
-            default:
-            case CENTER:
-                //TODO: Not required for current use case
-                setImageBoundsToCenterCrop();
-
-                break;
-            case CENTER_CROP:
-                break;
-            case CENTER_INSIDE:
-                //TODO: Not required for current use case
-                break;
-            case FIT_XY:
-                artifactBounds.set(pageBounds);
-                break;
-        }
-    }
-
-    private void setImageBoundsToCenterCrop() {
-        float pageboundswDPI = pageBounds.width() / pageWidth;
-
-        int photoWidth = (int) (pageWidth * pageboundswDPI);
-
-        // This condtional is for printing 4x5 template on all media types 4 in. wide.
-        int photoHeight = (int) (pageWidth == 4 ? 5 * pageboundswDPI : pageHeight * pageboundswDPI);
-
-        float scale;
-
-        if (((pageHeight == 6 || pageHeight == 5) && pageWidth == 4) || (pageHeight == 7 && pageWidth == 5)) {
-            scale = pageBounds.width() / ((float) photoWidth);
-        } else {
-            scale = pageBounds.width() / ((float) photoWidth);
-            scale = scale / (pageWidth / 4);
-        }
-
-        photoWidth *= scale;
-        photoHeight *= scale;
-
-        final int left = pageBounds.centerX() - photoWidth / 2;
-        final int right = left + photoWidth;
-        final int top;
-
-        if (pageWidth == 4) {
-            top = pageBounds.top;
-        } else {
-            top = pageBounds.centerY() - photoHeight / 2;
-        }
-
-        final int bottom = top + photoHeight;
-
-        artifactBounds.set(left, top, right, bottom);
-    }
-
-    public static float getImageScale(int photoWidth, int photoHeight, int canvasWidth, int canvasHeight) {
-        float scale = 1;
-
-        if (photoWidth > canvasWidth && photoHeight > canvasHeight) {
-
-            float wScale = canvasWidth / (float) photoWidth;
-            float hScale = canvasHeight / (float) photoHeight;
-
-            scale = (hScale > wScale) ? hScale : wScale;
-        } else if (photoHeight > canvasHeight) {
-            scale = canvasHeight / (float) photoHeight;
-        } else if (photoWidth > canvasWidth) {
-            scale = canvasWidth / (float) photoWidth;
-        }
-        return scale;
-    }
-
-    private Rect getPreviewImageRect() {
+    private RectF getPreviewImageRect() {
 
         final float left;
         final float top;
@@ -223,9 +148,11 @@ public class PagePreviewView extends View {
             bottom = getMeasuredHeight() * (LAYOUT_MARGIN_RATIO - 1) / LAYOUT_MARGIN_RATIO;
         }
 
+        return new RectF(left, top - pxOffset / 2, right, bottom - pxOffset / 2);
+    }
 
-        return new Rect((int) (left), (int) (top - pxOffset / 2),
-                (int) (right), (int) (bottom - pxOffset / 2));
+    public void setPrintItem(PrintItem printItem) {
+        this.printItem = printItem;
     }
 
     public void setPhoto(Bitmap photo) {
@@ -250,11 +177,6 @@ public class PagePreviewView extends View {
         postInvalidate();
     }
 
-    public void setOrientation(boolean landscape) {
-        this.landscape = landscape;
-        requestLayout();
-    }
-
     public void setPageSize(float width, float height) {
         pageWidth = width;
         pageHeight = height;
@@ -270,7 +192,7 @@ public class PagePreviewView extends View {
             return String.format("%s", d);
     }
 
-    public static class ImageLoaderTask extends AsyncTask<LoaderParams, Void, Pair<LoaderParams, Bitmap>> {
+    public static class ImageLoaderTask extends AsyncTask<LoaderParams, Void, LoaderParams> {
         private static final String TAG = "ImageLoaderTask";
         private WeakReference<Context> contextRef;
 
@@ -280,7 +202,7 @@ public class PagePreviewView extends View {
 
 
         @Override
-        protected Pair<LoaderParams, Bitmap> doInBackground(LoaderParams... params) {
+        protected LoaderParams doInBackground(LoaderParams... params) {
             LoaderParams param = params[0];
             final Context context = getContext();
             if (context == null) {
@@ -296,24 +218,16 @@ public class PagePreviewView extends View {
             } else {
                 return null;
             }
-
-            final Bitmap bitmap;
-
-            bitmap = ImageLoaderUtil.getImageBitmap(param.filename);
-            return new Pair<>(param, bitmap);
+            return param;
         }
 
         @Override
-        protected void onPostExecute(Pair<LoaderParams, Bitmap> result) {
-            if (result.second == null) {
-                Log.e(TAG, "No photo loaded");
-                return;
-            }
-            final LoaderParams params = result.first;
+        protected void onPostExecute(LoaderParams result) {
+            final LoaderParams params = result;
             final PagePreviewView view = params.target.get();
             if (view != null) {
-                view.setScaleType(params.scaleType);
-                view.setPhoto(result.second);
+                view.setScaleType(params.printItem.getScaleType());
+                view.setPrintItem(params.printItem);
                 view.requestLayout();
             }
         }
@@ -324,15 +238,11 @@ public class PagePreviewView extends View {
     }
 
     public static class LoaderParams {
-        public final int pageHeight;
-        public final String filename;
-        public final PrintItem.ScaleType scaleType;
+        public final PrintItem printItem;
         public final WeakReference<PagePreviewView> target;
 
-        public LoaderParams(int pageHeight, String filename, PrintItem.ScaleType scaleType, PagePreviewView target) {
-            this.pageHeight = pageHeight;
-            this.filename = filename;
-            this.scaleType = scaleType;
+        public LoaderParams(PrintItem printItem, PagePreviewView target) {
+            this.printItem = printItem;
             this.target = new WeakReference<>(target);
         }
     }

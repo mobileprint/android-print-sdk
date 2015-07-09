@@ -26,7 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -44,27 +44,20 @@ import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class PrintPreview extends AppCompatActivity {
     private static final String HP_ANDROID_MOBILE_SITE = "http://www8.hp.com/us/en/ads/mobility/overview.html?jumpid=va_r11400_eprint";
 
-    public static final String PHOTO_FILE_URI = "photoFileUri";
-    public static final String PRINT_JOB_NAME = "printJobName";
-    public static final String SCALE_TYPE = "scaleMode";
-    public static final String MULTIPLE_MEDIA_TYPES = "multiMediaTypes";
+    HashMap<String,PrintAttributes.MediaSize> spinnerMap = new HashMap<>();
+    private PagePreviewView previewView;
+    private boolean disableMenu = false;
 
-    private boolean landscapePhoto;
-
-    private String photoFileName = null;
-    private String printJobName = null;
     private float paperWidth;
     private float paperHeight;
 
-    private PagePreviewView previewView;
-    private PrintItem.ScaleType scaleType;
-    private boolean disableMenu = false;
-
     PrintJob printJob;
+    String spinnerSelectedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,20 +69,11 @@ public class PrintPreview extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        printJob = (PrintJob) getIntent().getExtras().getParcelable(PrintUtil.PRINT_JOB_DATA);
-        PrintItem printItem = printJob.getPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6);
+        printJob = getIntent().getExtras().getParcelable(PrintUtil.PRINT_JOB_DATA);
 
-        photoFileName = printItem.getUri();
-        printJobName = printJob.getJobName();
-        scaleType = printItem.getScaleType();
-
-        Spinner sizeSpinner = (Spinner) findViewById(R.id.paper_size_spinner);
-        setSizeSpinnerListener(sizeSpinner);
+        initializeSpinnerData();
 
         previewView = (PagePreviewView) findViewById(R.id.preview_image_view);
-
-        Rect photoBounds = ImageLoaderUtil.getImageSize(photoFileName);
-        landscapePhoto = photoBounds.width() > photoBounds.height();
 
         setPreviewViewLayoutProperties();
 
@@ -104,10 +88,42 @@ public class PrintPreview extends AppCompatActivity {
         ((TextView) findViewById(R.id.paper_size_title)).setTypeface(FontUtil.getDefaultFont(this));
         ((TextView) findViewById(R.id.print_preview_support_title)).setTypeface(FontUtil.getDefaultFont(this));
         ((TextView) findViewById(R.id.ic_printing_support_link)).setTypeface(FontUtil.getDefaultFont(this));
-
-
     }
 
+    private void initializeSpinnerData(){
+        Spinner sizeSpinner = (Spinner) findViewById(R.id.paper_size_spinner);
+
+        String[] spinnerArray = new String[printJob.numPrintItems()];
+        int i = 0;
+        for (PrintAttributes.MediaSize mediaSize: printJob.getPrintItems().keySet()) {
+            String text = getSpinnerText(mediaSize);
+            spinnerMap.put(text, mediaSize);
+            spinnerArray[i++] = text;
+        }
+
+        ArrayAdapter<String> adapter =new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sizeSpinner.setAdapter(adapter);
+
+        PrintAttributes.MediaSize mediaSize = printJob.getPrintDialogOptions().getMediaSize();
+        String text = getSpinnerText(mediaSize);
+        sizeSpinner.setSelection(adapter.getPosition(text));
+        setSizeSpinnerListener(sizeSpinner);
+    }
+
+    private String getSpinnerText(PrintAttributes.MediaSize mediaSize){
+        String widthText = fmt(mediaSize.getWidthMils() / 1000f);
+        String heightText = fmt(mediaSize.getHeightMils() / 1000f);
+        return String.format("%s x %s", widthText, heightText);
+    }
+
+    public static String fmt(double d)
+    {
+        if(d == (long) d)
+            return String.format("%d",(long)d);
+        else
+            return String.format("%s",d);
+    }
 
     private void setPreviewViewLayoutProperties() {
         Display display = getWindowManager().getDefaultDisplay();
@@ -126,10 +142,6 @@ public class PrintPreview extends AppCompatActivity {
             params.height = outMetrics.heightPixels;
             previewView.setLayoutParams(params);
         }
-
-        previewView.setOrientation(landscapePhoto);
-//        previewView.setScaleType(scaleType);
-
     }
 
     @Override
@@ -157,6 +169,7 @@ public class PrintPreview extends AppCompatActivity {
                             public void SnapShotsPromptOk() {
                                 doPrint();
                             }
+
                             public void SnapShotsPromptCancel() {
                                 disableMenu = false;
                                 invalidateOptionsMenu();
@@ -181,11 +194,12 @@ public class PrintPreview extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         previewView.setPhoto(null);
-        if (photoFileName != null) {
-            File photoFile = new File(photoFileName);
-            if (photoFile.exists())
-                photoFile.deleteOnExit();
-        }
+        //todo: delete printjob when done
+//        if (photoFileName != null) {
+//            File photoFile = new File(photoFileName);
+//            if (photoFile.exists())
+//                photoFile.deleteOnExit();
+//        }
     }
 
     public void onAboutLinkClicked(View view) {
@@ -198,19 +212,17 @@ public class PrintPreview extends AppCompatActivity {
         sizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String paperSize = (String) parent.getItemAtPosition(position);
+                spinnerSelectedText = (String) parent.getItemAtPosition(position);
 
-                String[] sizeArray = paperSize.split(" x ");
+                PrintItem printItem = printJob.getPrintItem(spinnerMap.get(spinnerSelectedText));
 
-                if (sizeArray.length == 2) {
-                    paperWidth = landscapePhoto ? Float.parseFloat(sizeArray[1].trim()) : Float.parseFloat(sizeArray[0].trim());
-                    paperHeight = landscapePhoto ? Float.parseFloat(sizeArray[0].trim()) : Float.parseFloat(sizeArray[1].trim());
+                paperWidth = printItem.getMediaSize().getWidthMils()/1000f;
+                paperHeight = printItem.getMediaSize().getHeightMils()/1000f;
 
-                    previewView.setPageSize(paperWidth, paperHeight);
-                    new PagePreviewView.ImageLoaderTask(PrintPreview.this).execute(new PagePreviewView.LoaderParams((int) paperHeight, photoFileName, scaleType, previewView));
+                previewView.setPageSize(paperWidth, paperHeight);
+                new PagePreviewView.ImageLoaderTask(PrintPreview.this).execute(new PagePreviewView.LoaderParams(printItem, previewView));
 
-                    PrintUtil.is4x5media = paperHeight == 5 && paperWidth == 4;
-                }
+                PrintUtil.is4x5media = paperHeight == 5 && paperWidth == 4;
             }
 
             @Override
@@ -232,7 +244,18 @@ public class PrintPreview extends AppCompatActivity {
                         }
                     }
                 };
+
+        PrintAttributes printAttributes = new PrintAttributes.Builder()
+                .setColorMode(printJob.getPrintDialogOptions().getColorMode())
+                .setMediaSize(spinnerMap.get(spinnerSelectedText))
+                .setMinMargins(printJob.getPrintDialogOptions().getMinMargins())
+                .setResolution(printJob.getPrintDialogOptions().getResolution())
+                .build();
+
+        printJob.setPrintDialogOptions(printAttributes);
+        PrintUtil.setPrintJob(printJob);
         PrintUtil.createPrintJob(this);
+
         disableMenu = false;
         invalidateOptionsMenu();
     }
