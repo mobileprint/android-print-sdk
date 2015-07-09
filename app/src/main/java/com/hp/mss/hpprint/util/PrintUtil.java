@@ -15,9 +15,6 @@ package com.hp.mss.hpprint.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
@@ -25,46 +22,26 @@ import android.print.PrintManager;
 
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
-import com.hp.mss.hpprint.model.ApplicationMetricsData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 
-import java.util.HashMap;
-
-
 public class PrintUtil {
-
-    public static final String IMAGE_SIZE_4x5 = "4x5";
-    public static final String IMAGE_SIZE_4x6 = "4x6";
-    public static final String IMAGE_SIZE_5x7 = "5x7";
 
     public static boolean is4x5media;
     public static boolean showPluginHelper = true;
 
-    static final String HP_PRINT_PLUGIN_PACKAGE_NAME = "com.hp.android.printservice";
-    private static final String SHOW_4X5_MESSAGE_KEY = "com.hp.mss.hpprint.Show4x5DialogMessage";
-    private static final String GOOGLE_STORE_PACKAGE_NAME = "com.android.vending";
-    private static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
-    public static final String PRINT_JOB_DATA = "PRINT_JOB_DATA";
-    public static final String SHOW_PLUGIN_HELPER = "SHOW_PLUGIN_HELPER";
     public static final String PLAY_STORE_PRINT_SERVICES_URL = "https://play.google.com/store/apps/collection/promotion_3000abc_print_services";
-    private static final int MILS = 1000;
-    private static final int CURRENT_PRINT_PACKAGE_VERSION_CODE = 62; //Updated as of May 15,2015
-
-    private static HashMap<String,String> appMetrics;
-
-    public enum PackageStatus {
-        INSTALLED_AND_NOT_UPDATED,
-        INSTALLED_AND_UPDATED,
-        INSTALLED_AND_ENABLED,
-        INSTALLED_AND_DISABLED,
-        NOT_INSTALLED
-    }
+    public static final String HAS_METRICS_LISTENER = "has_metrics_listener";
+    public static final int START_PREVIEW_ACTIVITY_REQUEST = 100;
 
     private static com.hp.mss.hpprint.model.PrintJob printJob;
 
+    public static PrintMetricsListener metricsListener;
+
     public static void print(Activity activity){
-        if (appMetrics == null || appMetrics.isEmpty()) {
-            appMetrics = (new ApplicationMetricsData(activity.getApplicationContext())).toMap();
+        metricsListener = null;
+
+        if (checkIfActivityImplementsInterface(activity, PrintUtil.PrintMetricsListener.class)) {
+            metricsListener = (PrintMetricsListener) activity;
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -85,15 +62,7 @@ public class PrintUtil {
         PrintJob androidPrintJob = printManager.print(printJob.getJobName(), adapter, printJob.getPrintDialogOptions());
 
         PrintMetricsCollector collector = new PrintMetricsCollector(activity, androidPrintJob);
-        collector.addMetrics(appMetrics);
         collector.run();
-    }
-
-    public static void startPrintPreviewActivity(Activity activity) {
-        Intent intent = new Intent(activity, PrintPreview.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        activity.startActivity(intent);
     }
 
     public static void setPrintJob(com.hp.mss.hpprint.model.PrintJob printJobData){
@@ -104,51 +73,11 @@ public class PrintUtil {
         return printJob;
     }
 
-    public static PackageStatus checkGooglePlayStoreStatus(Activity activity) {
-        return checkPackageStatus(activity, GOOGLE_STORE_PACKAGE_NAME);
+    public interface PrintMetricsListener {
+        void PrintMetricsListener(PrintMetricsData printMetricsData);
     }
 
-    public static PackageStatus checkPackageStatus(Activity activity, String packageName) {
-        if (activity == null || packageName == null)
-            return PackageStatus.NOT_INSTALLED;
-
-        PackageManager packageManager = activity.getPackageManager();
-        try {
-            ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-            //if we reach below this line, then the package is installed. Otheriwse, the catch block is executed.
-
-            if (packageName.equals(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME) && deviceAlwaysReturnsPluginEnabled()) {
-                //Because of a bug either in the Nexus (Lollipop) or in the HP Print Plugin code that always says the app is enabled
-                // even if it is disabled, we will return INSTALLED_AND_DISABLED all the time. Note that the
-                // Text in the UI telling people to enable the plugin is properly worded in light of this bug.
-                return PackageStatus.INSTALLED_AND_DISABLED;
-            }
-
-            if (appInfo.enabled)
-                return PackageStatus.INSTALLED_AND_ENABLED;
-            else
-                return PackageStatus.INSTALLED_AND_DISABLED;
-
-        } catch (PackageManager.NameNotFoundException e) {
-            return PackageStatus.NOT_INSTALLED;
-        }
-    }
-
-    public static void openPlayStore(Activity activity) {
-        String url = PLAY_STORE_PRINT_SERVICES_URL;
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-    }
-
-    private static boolean deviceAlwaysReturnsPluginEnabled() {
-        return (Build.MODEL.contains("Nexus") && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) || //Nexus Lollipop
-                (Build.MODEL.equalsIgnoreCase("SM-N900") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) || //Samsung Note 3 KitKit
-                (Build.MODEL.equalsIgnoreCase("GT-I9500") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT); //Samsung Galaxy S4
-    }
-
-
-    public static void showPluginHelper(final Activity activity) {
+    private static void showPluginHelper(final Activity activity) {
         PrintPluginHelper.PluginHelperListener printPluginListener = new PrintPluginHelper.PluginHelperListener() {
             @Override
             public void printPluginHelperSkippedByPreference() {
@@ -162,7 +91,6 @@ public class PrintUtil {
 
             @Override
             public void printPluginHelperSelected() {
-                openPlayStore(activity);
             }
 
             @Override
@@ -172,7 +100,21 @@ public class PrintUtil {
         PrintPluginHelper.showPluginHelper(activity, printPluginListener);
     }
 
-    public interface OnPrintDataCollectedListener {
-        void postPrintData(PrintMetricsData data);
+    private static void startPrintPreviewActivity(Activity activity) {
+        Intent intent = new Intent(activity, PrintPreview.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        boolean has_metrics_listener = (metricsListener != null) ? true : false;
+        intent.putExtra(HAS_METRICS_LISTENER, has_metrics_listener);
+
+        activity.startActivityForResult(intent, START_PREVIEW_ACTIVITY_REQUEST);
     }
+
+    private static boolean checkIfActivityImplementsInterface(Activity theActivity, Class theInterface){
+        for (Class i : theActivity.getClass().getInterfaces())
+            if (i.toString().equals(theInterface.toString()))
+                return true;
+        return false;
+    }
+
 }

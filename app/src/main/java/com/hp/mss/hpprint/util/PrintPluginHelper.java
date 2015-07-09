@@ -79,6 +79,7 @@ public class PrintPluginHelper {
                             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
                             preferences.edit().putBoolean(SHOW_PLUGIN_HELPER_KEY, false).commit();
                         }
+                        openPlayStore(activity);
                         if (pluginHelperListener != null)
                             pluginHelperListener.printPluginHelperSelected();
                     }
@@ -89,6 +90,11 @@ public class PrintPluginHelper {
         pluginDialog.show();
 
     }
-
+    public static void openPlayStore(Activity activity) {
+        String url = PrintUtil.PLAY_STORE_PRINT_SERVICES_URL;
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+    }
 
 }

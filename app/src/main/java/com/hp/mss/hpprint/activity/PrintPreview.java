@@ -12,16 +12,12 @@
 
 package com.hp.mss.hpprint.activity;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -37,19 +33,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.hp.mss.hpprint.R;
-import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJob;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.util.FontUtil;
-import com.hp.mss.hpprint.util.GAUtil;
-import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintPluginHelper;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
 
-import java.io.File;
 import java.util.HashMap;
 
 public class PrintPreview extends AppCompatActivity {
@@ -290,7 +282,6 @@ public class PrintPreview extends AppCompatActivity {
 
             @Override
             public void printPluginHelperSelected() {
-                openPlayStore();
             }
 
             @Override
@@ -298,13 +289,6 @@ public class PrintPreview extends AppCompatActivity {
             }
         };
         PrintPluginHelper.showPluginHelper(this, printPluginListener);
-    }
-
-    public void openPlayStore() {
-        String url = PrintUtil.PLAY_STORE_PRINT_SERVICES_URL;
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 
 }
