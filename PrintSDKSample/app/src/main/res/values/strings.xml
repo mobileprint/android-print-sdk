@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PrintSDKSample</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="print">Print</string>
+    <string-array name="scaleTypeArray">
+        <item>Center</item>
+        <item>Center Top-Left</item>
+        <item>Crop</item>
+        <item>Fit</item>
+    </string-array>
+</resources>

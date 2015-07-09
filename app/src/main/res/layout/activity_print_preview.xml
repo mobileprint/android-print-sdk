@@ -32,7 +32,6 @@
             android:layout_height="match_parent"
             android:spinnerMode="dialog"
             android:prompt="@string/paper_size"
-            android:entries="@array/paper_size_array"
             android:layout_alignParentRight="true"
             android:gravity="bottom|right"
             android:layout_centerVertical="true"/>
