@@ -21,11 +21,13 @@ import android.os.Build;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
-import android.widget.ImageView;
 
+import com.google.android.gms.analytics.Tracker;
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
-import com.hp.mss.hpprint.model.PrintMetricsData;
+import com.hp.mss.hpprint.model.ApplicationMetricsData;
+
+import java.util.HashMap;
 
 
 public class PrintUtil {
@@ -44,6 +46,8 @@ public class PrintUtil {
     private static final int MILS = 1000;
     private static final int CURRENT_PRINT_PACKAGE_VERSION_CODE = 62; //Updated as of May 15,2015
 
+    private static HashMap<String,String> appMetrics;
+
     public enum PackageStatus {
         INSTALLED_AND_NOT_UPDATED,
         INSTALLED_AND_UPDATED,
@@ -55,6 +59,10 @@ public class PrintUtil {
     private static com.hp.mss.hpprint.model.PrintJob printJob;
 
     public static void print(Activity activity){
+        if (appMetrics == null || appMetrics.isEmpty()) {
+            appMetrics = (new ApplicationMetricsData(activity.getApplicationContext())).toMap();
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             createPrintJob(activity);
         } else {
@@ -63,21 +71,35 @@ public class PrintUtil {
 
     }
 
+    public static void createPrintJob(Activity activity) {
+        PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
+        PrintDocumentAdapter adapter = new HPPrintDocumentAdapter(activity, printJob, false);
+
+        PrintJob androidPrintJob = printManager.print(printJob.getJobName(), adapter, printJob.getPrintDialogOptions());
+
+        PrintMetricsCollector collector = new PrintMetricsCollector(activity, androidPrintJob);
+        collector.addMetrics(appMetrics);
+        collector.run();
+    }
+
     public static void startPrintPreviewActivity(Activity activity) {
         Intent intent = new Intent(activity, PrintPreview.class);
         intent.putExtra(PRINT_JOB_DATA, printJob);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         activity.startActivity(intent);
-//        activity.startActivityForResult(intent, requestId);
     }
 
     public static void setPrintJob(com.hp.mss.hpprint.model.PrintJob printJobData){
         printJob = printJobData;
     }
 
-    public static PackageStatus checkHPPrintPluginStatus(Activity activity) {
-        return checkPackageStatus(activity, HP_PRINT_PLUGIN_PACKAGE_NAME);
+    public static void setTracker(Tracker tracker) {
+        GAUtil.setTracker(tracker);
+    }
+
+    public static void setApplicationMetrics(HashMap<String,String> map) {
+        appMetrics = map;
     }
 
     public static PackageStatus checkGooglePlayStoreStatus(Activity activity) {
@@ -109,70 +131,11 @@ public class PrintUtil {
             return PackageStatus.NOT_INSTALLED;
         }
     }
-//
-//    public static PackageStatus checkPrintPackageStatus(@NonNull Activity activity) {
-//        if (activity == null)
-//            return PackageStatus.NOT_INSTALLED;
-//
-//        PackageManager packageManager = activity.getPackageManager();
-//        try {
-//            ApplicationInfo appInfo = packageManager.getApplicationInfo(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME, PackageManager.GET_META_DATA);
-//            PackageInfo packageInfo = packageManager.getPackageInfo(PrintUtil.HP_PRINT_PLUGIN_PACKAGE_NAME, 0);
-//            if (packageInfo.versionCode >= CURRENT_PRINT_PACKAGE_VERSION_CODE) {
-//                return PackageStatus.INSTALLED_AND_UPDATED;
-//            } else {
-//                return PackageStatus.INSTALLED_AND_NOT_UPDATED;
-//            }
-//            //if we reach below this line, then the package is installed. Otheriwse, the catch block is executed.
-//
-//        } catch (PackageManager.NameNotFoundException e) {
-//            return PackageStatus.NOT_INSTALLED;
-//        }
-//    }
-//
+
     private static boolean deviceAlwaysReturnsPluginEnabled() {
         return (Build.MODEL.contains("Nexus") && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) || //Nexus Lollipop
                 (Build.MODEL.equalsIgnoreCase("SM-N900") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) || //Samsung Note 3 KitKit
                 (Build.MODEL.equalsIgnoreCase("GT-I9500") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT); //Samsung Galaxy S4
     }
 
-//    public static void printWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
-//                                        String printJobName, int dpi, int request_id) {
-//        printWithPreview(activity, photoFileName, false, scaleType,
-//                printJobName, dpi, request_id);
-//    }
-//
-//    //TODO: there should be 2 trackers. one from client, one for HP
-//    public static void setTracker(Tracker tracker) {
-//        GAUtil.setTracker(tracker);
-//    }
-
-
-//
-//    public static void printMultipleMediaTypesWithPreview(Activity activity, String photoFileName, ImageView.ScaleType scaleType,
-//                                                          String printJobName, int dpi, int requestId) {
-//        printWithPreview(activity, photoFileName, true, scaleType,
-//                printJobName, dpi, requestId);
-//
-//    }
-//
-//    public static void printWithoutPreview(Activity activity, Bitmap bitmap, ImageView.ScaleType scaleType, String printJobName, final OnPrintDataCollectedListener printDataListener, float paperWidth, float paperHeight) {
-//        printUsingPrintDocumentAdapter(activity, bitmap, scaleType, printJobName, printDataListener, paperWidth, paperHeight);
-//    }
-
-    public static void createPrintJob(Activity activity) {
-        PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
-        PrintDocumentAdapter adapter = new HPPrintDocumentAdapter(activity, printJob, false);
-
-        PrintJob androidPrintJob = printManager.print(printJob.getJobName(), adapter, printJob.getPrintDialogOptions());
-
-//        PrintMetricsCollector collector = new PrintMetricsCollector(androidPrintJob, printDataListener);
-//        collector.run();
-    }
-
-
-
-    public interface OnPrintDataCollectedListener {
-        void postPrintData(PrintMetricsData data);
-    }
 }

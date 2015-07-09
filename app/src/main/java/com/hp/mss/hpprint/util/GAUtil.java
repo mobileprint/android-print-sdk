@@ -1,7 +1,5 @@
 package com.hp.mss.hpprint.util;
 
-import android.content.Context;
-
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
