@@ -1,0 +1,2 @@
+include ':app', ':hpprinttest'
+project(':hpprinttest').projectDir = new File('../app')
