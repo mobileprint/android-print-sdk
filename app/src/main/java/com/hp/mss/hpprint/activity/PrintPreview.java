@@ -13,12 +13,15 @@
 package com.hp.mss.hpprint.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -34,12 +37,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.hp.mss.hpprint.R;
+import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJob;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.GAUtil;
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
+import com.hp.mss.hpprint.util.PrintPluginHelper;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
@@ -70,7 +75,8 @@ public class PrintPreview extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        printJob = getIntent().getExtras().getParcelable(PrintUtil.PRINT_JOB_DATA);
+        printJob = PrintUtil.getPrintJob();
+        PrintItem printItem = printJob.getPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6);
 
         initializeSpinnerData();
 
@@ -168,7 +174,11 @@ public class PrintPreview extends AppCompatActivity {
                         new SnapShotsMediaPrompt.SnapShotsPromptListener() {
                             @Override
                             public void SnapShotsPromptOk() {
-                                doPrint();
+                                if (PrintUtil.showPluginHelper) {
+                                    showPluginHelper();
+                                } else {
+                                    doPrint();
+                                }
                             }
 
                             public void SnapShotsPromptCancel() {
@@ -178,7 +188,11 @@ public class PrintPreview extends AppCompatActivity {
                         };
                 SnapShotsMediaPrompt.displaySnapShotsPrompt(this, snapShotsPromptListener);
             } else {
-                doPrint();
+                if (PrintUtil.showPluginHelper) {
+                    showPluginHelper();
+                } else {
+                    doPrint();
+                }
             }
             return true;
         } else if (id == android.R.id.home) {
@@ -260,6 +274,37 @@ public class PrintPreview extends AppCompatActivity {
         callingIntent.putExtra(PrintMetricsData.class.toString(), data);
         setResult(RESULT_OK, callingIntent);
         finish();
+    }
+
+    public void showPluginHelper() {
+        PrintPluginHelper.PluginHelperListener printPluginListener = new PrintPluginHelper.PluginHelperListener() {
+            @Override
+            public void printPluginHelperSkippedByPreference() {
+                doPrint();
+            }
+
+            @Override
+            public void printPluginHelperSkipped() {
+                doPrint();
+            }
+
+            @Override
+            public void printPluginHelperSelected() {
+                openPlayStore();
+            }
+
+            @Override
+            public void printPluginHelperCanceled() {
+            }
+        };
+        PrintPluginHelper.showPluginHelper(this, printPluginListener);
+    }
+
+    public void openPlayStore() {
+        String url = PrintUtil.PLAY_STORE_PRINT_SERVICES_URL;
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 }

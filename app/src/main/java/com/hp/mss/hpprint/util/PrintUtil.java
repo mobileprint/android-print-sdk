@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
@@ -37,12 +38,15 @@ public class PrintUtil {
     public static final String IMAGE_SIZE_5x7 = "5x7";
 
     public static boolean is4x5media;
+    public static boolean showPluginHelper = true;
 
     static final String HP_PRINT_PLUGIN_PACKAGE_NAME = "com.hp.android.printservice";
     private static final String SHOW_4X5_MESSAGE_KEY = "com.hp.mss.hpprint.Show4x5DialogMessage";
     private static final String GOOGLE_STORE_PACKAGE_NAME = "com.android.vending";
     private static final String PRINT_DATA_STRING = "PRINT_DATA_STRING";
     public static final String PRINT_JOB_DATA = "PRINT_JOB_DATA";
+    public static final String SHOW_PLUGIN_HELPER = "SHOW_PLUGIN_HELPER";
+    public static final String PLAY_STORE_PRINT_SERVICES_URL = "https://play.google.com/store/apps/collection/promotion_3000abc_print_services";
     private static final int MILS = 1000;
     private static final int CURRENT_PRINT_PACKAGE_VERSION_CODE = 62; //Updated as of May 15,2015
 
@@ -64,11 +68,14 @@ public class PrintUtil {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            createPrintJob(activity);
+            if (PrintUtil.showPluginHelper) {
+                showPluginHelper(activity);
+            } else {
+                createPrintJob(activity);
+            }
         } else {
             startPrintPreviewActivity(activity);
         }
-
     }
 
     public static void createPrintJob(Activity activity) {
@@ -84,7 +91,6 @@ public class PrintUtil {
 
     public static void startPrintPreviewActivity(Activity activity) {
         Intent intent = new Intent(activity, PrintPreview.class);
-        intent.putExtra(PRINT_JOB_DATA, printJob);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         activity.startActivity(intent);
@@ -100,6 +106,10 @@ public class PrintUtil {
 
     public static void setApplicationMetrics(HashMap<String,String> map) {
         appMetrics = map;
+    }
+
+    public static com.hp.mss.hpprint.model.PrintJob getPrintJob(){
+        return printJob;
     }
 
     public static PackageStatus checkGooglePlayStoreStatus(Activity activity) {
@@ -132,10 +142,45 @@ public class PrintUtil {
         }
     }
 
+    public static void openPlayStore(Activity activity) {
+        String url = PLAY_STORE_PRINT_SERVICES_URL;
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+    }
+
     private static boolean deviceAlwaysReturnsPluginEnabled() {
         return (Build.MODEL.contains("Nexus") && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) || //Nexus Lollipop
                 (Build.MODEL.equalsIgnoreCase("SM-N900") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) || //Samsung Note 3 KitKit
                 (Build.MODEL.equalsIgnoreCase("GT-I9500") && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT); //Samsung Galaxy S4
     }
 
+
+    public static void showPluginHelper(final Activity activity) {
+        PrintPluginHelper.PluginHelperListener printPluginListener = new PrintPluginHelper.PluginHelperListener() {
+            @Override
+            public void printPluginHelperSkippedByPreference() {
+                createPrintJob(activity);
+            }
+
+            @Override
+            public void printPluginHelperSkipped() {
+                createPrintJob(activity);
+            }
+
+            @Override
+            public void printPluginHelperSelected() {
+                openPlayStore(activity);
+            }
+
+            @Override
+            public void printPluginHelperCanceled() {
+            }
+        };
+        PrintPluginHelper.showPluginHelper(activity, printPluginListener);
+    }
+
+    public interface OnPrintDataCollectedListener {
+        void postPrintData(PrintMetricsData data);
+    }
 }
