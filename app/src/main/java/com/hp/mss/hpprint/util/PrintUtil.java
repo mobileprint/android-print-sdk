@@ -23,10 +23,10 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
 
-import com.google.android.gms.analytics.Tracker;
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.ApplicationMetricsData;
+import com.hp.mss.hpprint.model.PrintMetricsData;
 
 import java.util.HashMap;
 
@@ -98,14 +98,6 @@ public class PrintUtil {
 
     public static void setPrintJob(com.hp.mss.hpprint.model.PrintJob printJobData){
         printJob = printJobData;
-    }
-
-    public static void setTracker(Tracker tracker) {
-        GAUtil.setTracker(tracker);
-    }
-
-    public static void setApplicationMetrics(HashMap<String,String> map) {
-        appMetrics = map;
     }
 
     public static com.hp.mss.hpprint.model.PrintJob getPrintJob(){
