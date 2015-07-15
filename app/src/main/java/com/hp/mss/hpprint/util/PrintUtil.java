@@ -74,7 +74,7 @@ public class PrintUtil {
     }
 
     public interface PrintMetricsListener {
-        void PrintMetricsListener(PrintMetricsData printMetricsData);
+        void onPrintMetricsDataPosted(PrintMetricsData printMetricsData);
     }
 
     private static void showPluginHelper(final Activity activity) {

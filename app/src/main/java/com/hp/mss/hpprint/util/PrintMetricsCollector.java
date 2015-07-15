@@ -119,7 +119,7 @@ class PrintMetricsCollector extends Thread {
         postMetricsToHPServer(hostActivity.getApplicationContext(), printMetricsData);
 
         if (PrintUtil.metricsListener != null) {
-            ((PrintUtil.PrintMetricsListener) PrintUtil.metricsListener).PrintMetricsListener(printMetricsData);
+            ((PrintUtil.PrintMetricsListener) PrintUtil.metricsListener).onPrintMetricsDataPosted(printMetricsData);
         }
     }
 

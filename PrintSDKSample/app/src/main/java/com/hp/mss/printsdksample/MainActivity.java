@@ -210,7 +210,7 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
     }
 
     @Override
-    public void PrintMetricsListener(PrintMetricsData printMetricsData) {
+    public void onPrintMetricsDataPosted(PrintMetricsData printMetricsData) {
         if (showMetricsDialog) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(printMetricsData.toMap().toString());
