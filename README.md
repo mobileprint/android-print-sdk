@@ -11,6 +11,8 @@
 - [Advanced](#advanced)
     + [Multiple Assets](#multiple-assets)
     + [Default Print Attributes](#default-print-attributes)
+    + [Print Metrics](#print-metrics)
+    + [Plugin Install Helper](#plugin-install-helper)
 
 ## Features
 
@@ -74,7 +76,7 @@ After creating the `PrintItem`, you are ready to create the `PrintJob` object wh
 to build the print.
 
 ```java
-PrintJob printJob = new PrintJob(this, printItemDefault);
+PrintJob printJob = new PrintJob(activity, printItemDefault);
 printJob.setJobName("Example");
 PrintUtil.setPrintJob(printJob);
 ```
@@ -84,7 +86,7 @@ PrintUtil.setPrintJob(printJob);
 Once you have created the `PrintJob` object, you are ready to print.
 
 ```java
-PrintUtil.print(this);
+PrintUtil.print(activity);
 ```
 
 ## Advanced
@@ -120,4 +122,16 @@ PrintAttributes printAttributes = new PrintAttributes.Builder()
         .setMediaSize(printItemLetter.getMediaSize())
         .build();
 printJob.setPrintDialogOptions(printAttributes);
+```
+
+### Print Metrics
+
+TBD
+
+### Plugin Install Helper
+
+You can disable the our print plugin install helper by setting doing:
+
+```java
+PrintUtil.showPluginHelper = false;
 ```
