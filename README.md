@@ -24,7 +24,7 @@ The JavaDocs for this project are located in the Documentation directory of the 
 
 ## Installation
 
-The __DroidPrint__ library is not yet available publicly via maven or jcenter. 
+The __DroidPrint__ library is not yet available publicly via maven or jcenter.
 Currently, to install the plugin, you need to download the source code and compile it into your application.
 
 Clone the source code into the same parent directory as your android app.
@@ -48,44 +48,43 @@ You must also include the project in your gradle file:
 
 ## Basic Usage
 
-In order to for the usage of the __DroidPrint__ library, all you need is the URI to the bitmap you want to print.
-
+In order to use the __DroidPrint__ library, you need to first obtain the URI to the bitmap you want to print.
 Once you have that, you are ready to invoke our print workflow.
 
 ### ImageAsset
 
-One of the first objects you need to create in order to use our print workflow is the `ImageAsset` object. 
+One of the first objects you need to create in order to use our print workflow is the `ImageAsset` object.
 You will need at least one but you can create as many as needed ([Multiple Assets](#multiple-assets)). For example:
 
 ```java
-
 ImageAsset imageAsset4x6 = new ImageAsset(filename4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
-
 ```
 
 ### PrintItem
 
-Once you create an image asset, you need to associate it with a `PrintItem` object. 
-You will also need a minimum of one of these objects. You will need to provide a `ScaleType` and the `ImageAsset` itself.
+Once you create an image asset, you need to associate it with a `PrintItem` object. You will need to provide a `ScaleType` and the `ImageAsset` itself.
 
 ```java
-
 PrintItem printItemDefault = new ImagePrintItem(PrintItem.ScaleType.CENTER, imageAsset4x6);
-
 ```
 
 ### PrintJob
 
 After creating the `PrintItem`, you are ready to create the `PrintJob` object which contains all the relevant info needed
-to build the print. 
+to build the print.
 
 ```java
-
 PrintJob printJob = new PrintJob(this, printItemDefault);
 printJob.setJobName("Example");
 PrintUtil.setPrintJob(printJob);
-PrintUtil.print(this);
+```
 
+### Print
+
+Once you have created the `PrintJob` object, you are ready to print.
+
+```java
+PrintUtil.print(this);
 ```
 
 ## Advanced
@@ -100,9 +99,7 @@ When creating an `PrintItem`, you can provide the constructor a MediaSize object
 would like the PrintItem to be used for a particular paper size selection. For example, if you did:
 
 ```java
-
 PrintItem printItemLetter = new ImagePrintItem(PrintAttributes.MediaSize.NA_LETTER, scaleType, imageAsset4x5);
-
 ```
 
 It would tell the Print Library that you want to use the `imageAsset4x5` whenever the user selects the letter size media in
@@ -110,10 +107,8 @@ the Android Print Dialog.
 
 You must then add the printItem to the `PrintJob` by invoking:
 
-```java 
-
+```java
 printJob.addPrintItem(printItemLetter);
-
 ```
 
 ### Default Print Attributes
@@ -121,10 +116,8 @@ printJob.addPrintItem(printItemLetter);
 `PrintJob` takes in an Android standard [`PrintAttributes`](https://developer.android.com/reference/android/print/PrintAttributes.html) object which is used to set print dialog options.
 
 ```java
-
 PrintAttributes printAttributes = new PrintAttributes.Builder()
         .setMediaSize(printItemLetter.getMediaSize())
         .build();
 printJob.setPrintDialogOptions(printAttributes);
-
 ```
