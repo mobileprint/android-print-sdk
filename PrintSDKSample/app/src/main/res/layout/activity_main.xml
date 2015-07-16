@@ -1,18 +1,23 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/component_margin">
+
+    <TextView
+        android:id="@+id/assetText"
         android:layout_width="match_parent"
-        android:orientation="vertical">
-
-
+        android:layout_height="wrap_content"
+        android:text="@string/asset"
+        android:textAlignment="viewStart"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
         <LinearLayout
+            android:id="@+id/assetLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_below="@+id/assetText">
             <ImageView
                 android:id="@+id/templateimage4x5p"
                 android:src="@drawable/template4x5p"
@@ -47,19 +52,95 @@
                 android:layout_margin="1dp" />
         </LinearLayout>
 
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner" />
-
-        <Button
-            android:id="@+id/button1"
+    <RelativeLayout
+        android:id="@+id/layoutLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/assetLayout"
+        android:layout_marginTop="@dimen/component_margin"
+        android:layout_marginBottom="@dimen/component_margin">
+        <TextView
+            android:id="@+id/SpinnerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Print"
-            android:onClick="buttonClicked"/>
+            android:text="@string/layout_option"
+            android:textAlignment="viewStart"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/SpinnerText"
+                android:id="@+id/layoutRadioGroup"
+                android:checkedButton="@+id/layoutCenter"
+                android:orientation="horizontal"
+                android:paddingStart="25px">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutCenter"
+                    android:text="@string/layout_center" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutCorp"
+                    android:text="@string/layout_crop" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutFit"
+                    android:text="@string/layout_fit" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutCenterTopLeft"
+                    android:text="@string/layout_center_top_left" />
+        </RadioGroup>
+    </RelativeLayout>
 
-    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/metricsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutLayout"
+        android:layout_marginTop="@dimen/component_margin"
+        android:layout_marginBottom="@dimen/component_margin">
+        <TextView
+            android:id="@+id/metricsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/metrics_option"
+            android:textAlignment="viewStart"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/metricsText"
+            android:id="@+id/metricsRadioGroup"
+            android:checkedButton="@+id/withMetrics"
+            android:orientation="horizontal"
+            android:paddingStart="25px">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/withMetrics"
+                android:text="With Metrics" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/withoutMetrics"
+                android:text="Without Metrics" />
+        </RadioGroup>
+    </RelativeLayout>
 
-</ScrollView>
+    <Button
+        android:id="@+id/printBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Print"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:onClick="buttonClicked"
+        android:layout_below="@+id/metricsLayout"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
+

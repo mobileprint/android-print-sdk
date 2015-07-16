@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.hp.mss.hpprint.model.ApplicationMetricsData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 
 import java.lang.reflect.InvocationTargetException;
@@ -29,11 +30,11 @@ import java.util.Map;
 
 class PrintMetricsCollector extends Thread {
 
-    public static final String PRINT_METRICS_PRODUCTION_SERVER = "https://print-metrics-w1.twosmiles.com/api/v1/mobile_app_metrics";
-    public static final String PRINT_METRICS_TEST_SERVER = "http://print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics";
-    public static final String PRINT_METRICS_LOCAL_SERVER = "http://10.0.2.2:4567/api/v1/mobile_app_metrics";
-    public static final String PRINT_METRICS_USER_NAME = "hpmobileprint";
-    public static final String PRINT_METRICS_PASSWORD = "print1t";
+    private static final String PRINT_METRICS_PRODUCTION_SERVER = "https://print-metrics-w1.twosmiles.com/api/v1/mobile_app_metrics";
+    private static final String PRINT_METRICS_TEST_SERVER = "http://print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics";
+//    private static final String PRINT_METRICS_LOCAL_SERVER = "http://10.0.2.2:4567/api/v1/mobile_app_metrics";
+    private static final String PRINT_METRICS_USER_NAME = "hpmobileprint";
+    private static final String PRINT_METRICS_PASSWORD = "print1t";
 
     private static final String TAG = "PrintMetricsCollector";
     private static final int PRINT_JOB_WAIT_TIME = 1000;
@@ -42,8 +43,7 @@ class PrintMetricsCollector extends Thread {
     private PrintJob printJob;
     private Handler metricsHandler;
     private Activity hostActivity;
-
-    private HashMap<String, String> combinedMetrics = new HashMap<String, String>();
+    private static HashMap<String,String> appMetrics;
 
     public PrintMetricsCollector(Activity activity, PrintJob printJob) {
         this.hostActivity = activity;
@@ -63,7 +63,7 @@ class PrintMetricsCollector extends Thread {
             } else if (printJob.isCancelled()) {
                 printMetricsData.printResult = PrintMetricsData.PRINT_RESULT_CANCEL;
             }
-            postMetrics(hostActivity.getApplicationContext(), printMetricsData);
+            postMetrics(printMetricsData);
             return;
         }
 
@@ -101,13 +101,25 @@ class PrintMetricsCollector extends Thread {
                 printMetricsData.printerID = printerId.getLocalId();
                 printMetricsData.numberOfCopy = String.valueOf(printJobInfo.getCopies());
 
-                postMetrics(hostActivity.getApplicationContext(), printMetricsData);
+                postMetrics(printMetricsData);
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 Log.e(TAG, "CollectionRunner", e);
             }
 
         } else {
             metricsHandler.postDelayed(this, PRINT_JOB_WAIT_TIME);
+        }
+    }
+
+    public static void setApplicationMetrics(HashMap<String,String> map) {
+        appMetrics = map;
+    }
+
+    private void postMetrics(PrintMetricsData printMetricsData) {
+        postMetricsToHPServer(hostActivity.getApplicationContext(), printMetricsData);
+
+        if (PrintUtil.metricsListener != null) {
+            ((PrintUtil.PrintMetricsListener) PrintUtil.metricsListener).onPrintMetricsDataPosted(printMetricsData);
         }
     }
 
@@ -119,24 +131,22 @@ class PrintMetricsCollector extends Thread {
         return (printJob.isFailed() || printJob.isBlocked() || printJob.isCancelled());
     }
 
-    private void postMetrics(final Context context, final PrintMetricsData data) {
+    private void postMetricsToHPServer(final Context context, final PrintMetricsData data) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        addMetrics( (HashMap<String,String>)data.toMap() );
 
         StringRequest sr = new StringRequest(Request.Method.POST, getPrintMetricsServer(context), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("PrintMetricsUtil", response.toString());
+                Log.e("PrintMetricsCollector", response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("PrintMetricsUtil", error.toString());
+                Log.i("PrintMetricsCollector", error.toString());
             }
         }){
             @Override
             protected Map<String,String> getParams(){
-
                 Map<String,String> params = getMetricsParams();
                 return params;
             }
@@ -152,10 +162,9 @@ class PrintMetricsCollector extends Thread {
             }
         };
         queue.add(sr);
-
     }
 
-    public static boolean isDebuggable(Context context) {
+    private static boolean isDebuggable(Context context) {
         return ( 0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) );
     }
 
@@ -163,13 +172,18 @@ class PrintMetricsCollector extends Thread {
         return (isDebuggable(context) ? PRINT_METRICS_TEST_SERVER : PRINT_METRICS_PRODUCTION_SERVER);
     }
 
-    public void addMetrics(HashMap metricsMap) {
-        combinedMetrics.putAll(metricsMap);
-    }
 
     private Map<String, String> getMetricsParams() {
+        HashMap<String, String> combinedMetrics = new HashMap<String, String>();
+
+        if (appMetrics == null || appMetrics.isEmpty()) {
+            appMetrics = (new ApplicationMetricsData(hostActivity.getApplicationContext())).toMap();
+        }
+        combinedMetrics.putAll(appMetrics);
         return combinedMetrics;
     }
+
+
 
 }
 

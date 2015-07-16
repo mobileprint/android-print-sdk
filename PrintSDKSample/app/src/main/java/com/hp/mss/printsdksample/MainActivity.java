@@ -1,32 +1,30 @@
 package com.hp.mss.printsdksample;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.print.PrintAttributes;
-import android.support.v4.print.PrintHelper;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
+import android.widget.Toast;
 
-import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJob;
+import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.model.asset.ImageAsset;
-import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
 
 import java.io.File;
@@ -34,12 +32,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends ActionBarActivity implements RadioGroup.OnCheckedChangeListener, PrintUtil.PrintMetricsListener {
     String filename4x5l;
     String filename4x5p;
 
     String filename4x6;
     String filename5x7;
+
+    PrintItem.ScaleType scaleType;
+    boolean showMetricsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +49,20 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         final Activity activity = this;
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.scaleTypeArray, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        RadioGroup layoutRadioGroup = (RadioGroup) findViewById(R.id.layoutRadioGroup);
+        layoutRadioGroup.setOnCheckedChangeListener(this);
+        onCheckedChanged(layoutRadioGroup, layoutRadioGroup.getCheckedRadioButtonId());
 
-        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        RadioGroup metricsRadioGroup = (RadioGroup) findViewById(R.id.metricsRadioGroup);
+        metricsRadioGroup.setOnCheckedChangeListener(this);
+        onCheckedChanged(metricsRadioGroup, metricsRadioGroup.getCheckedRadioButtonId());
+
+        final RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 // make sure it is not called anymore
-                linearLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                relativeLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
                 filename4x5l = generateBitmap((ImageView) findViewById(R.id.templateimage4x5l), "4x5l");
                 filename4x5p = generateBitmap((ImageView) findViewById(R.id.templateimage4x5p), "4x5p");
@@ -70,27 +72,33 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             }
         });
 
-
     }
 
-    PrintItem.ScaleType scaleType;
-
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        String scaleTypeString = (String) parent.getItemAtPosition(pos);
-        if (scaleTypeString.equals("Center")) {
-            scaleType = PrintItem.ScaleType.CENTER;
-        } else if (scaleTypeString.equals("Fit")) {
-            scaleType = PrintItem.ScaleType.FIT;
-        } else if (scaleTypeString.equals("Crop")) {
-            scaleType = PrintItem.ScaleType.CROP;
-        } else if (scaleTypeString.equals("Center Top-Left")) {
-            scaleType = PrintItem.ScaleType.CENTER_TOP_LEFT;
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+        switch(checkedId) {
+            case R.id.layoutCenter:
+                scaleType = PrintItem.ScaleType.CENTER;
+                break;
+            case R.id.layoutCorp:
+                scaleType = PrintItem.ScaleType.CROP;
+                break;
+            case R.id.layoutFit:
+                scaleType = PrintItem.ScaleType.FIT;
+                break;
+            case R.id.layoutCenterTopLeft:
+                scaleType = PrintItem.ScaleType.CENTER_TOP_LEFT;
+                break;
+            case R.id.withMetrics:
+                showMetricsDialog = true;
+                break;
+            case R.id.withoutMetrics:
+                showMetricsDialog = false;
+                break;
+            default:
+                showMetricsDialog = true;
+                scaleType = PrintItem.ScaleType.CENTER;
         }
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
     }
 
     public void buttonClicked(View v) {
@@ -199,5 +207,19 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPrintMetricsDataPosted(PrintMetricsData printMetricsData) {
+        if (showMetricsDialog) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(printMetricsData.toMap().toString());
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+            builder.create().show();
+        }
     }
 }
