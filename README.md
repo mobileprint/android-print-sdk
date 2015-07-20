@@ -126,7 +126,20 @@ printJob.setPrintDialogOptions(printAttributes);
 
 ### Print Metrics
 
-TBD
+Printing related metrics will be sent to HP server.  HP is collecting information like: wireless setup, printer id, number of pages, black and white filter, and print job status. See `PrintMetricsData` for details.
+
+Above printing information is also available to your app. In order to allow us to post printing metrics data to your app, please implement `PrintUtil.PrintMetricsListener` in your calling activity.
+
+```java
+class YourCallingActivity extends ActionBarActivity implements PrintUtil.PrintMetricsListener {
+	...
+	@Override
+    	public void onPrintMetricsDataPosted(PrintMetricsData printMetricsData) {
+   			// Do what you want to do with available printMetricsData
+    	}
+    	...
+}
+```
 
 ### Plugin Install Helper
 
