@@ -26,7 +26,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.hp.mss.hpprint.model.PrintItem;
-import com.hp.mss.hpprint.model.PrintJob;
+import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.util.FontUtil;
 
 import java.lang.ref.WeakReference;
@@ -48,7 +48,7 @@ public class PagePreviewView extends View {
     private Paint paperPaint;
     private Rect textBounds = new Rect();
     private String dimens = "";
-    private PrintJob printJob;
+    private PrintJobData printJobData;
     private PrintItem.ScaleType scaleType;
     private PrintItem printItem;
 

@@ -1,37 +1,31 @@
 package com.hp.mss.hpprint.model;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.print.PrintAttributes;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by panini on 6/30/15.
- */
-public class PrintJob implements Parcelable{
-    String jobName;
+public class PrintJobData implements Parcelable{
+    private String jobName;
 
-    Map<PrintAttributes.MediaSize, PrintItem> printItems;
+    private Map<PrintAttributes.MediaSize, PrintItem> printItems;
 
-    PrintItem defaultPrintItem;
+    private PrintItem defaultPrintItem;
 
-    PrintAttributes printDialogOptions;
+    private PrintAttributes printDialogOptions;
 
-    Context context;
+    private Context context;
 
-    public enum ItemType {
-        IMAGE,
-        PDF,
-        HTML
-    }
-
+    /**
+     * Use this constructor to create an instance of the PrintJobData object with a default print item.
+     * @param context The context.
+     * @param defaultPrintItem The minimum required print item for the HP Print SDK print flow.
+     */
     //TODO: validate defaultAssetUri is consistent with itemType
-    public PrintJob(Context context, PrintItem defaultPrintItem) {
+    public PrintJobData(Context context, PrintItem defaultPrintItem) {
         setDefaultPrintItem(defaultPrintItem);
         if(defaultPrintItem == null) {
             throw new NullPointerException("defaultPrintItem is required to be set.");
@@ -39,27 +33,58 @@ public class PrintJob implements Parcelable{
         this.context = context;
     }
 
+    /**
+     * Gets the print job name.
+     * @return The job name string.
+     */
     public String getJobName() {
         return jobName;
     }
 
+    /**
+     * Sets the print job name.
+     * @param jobName The print job name.
+     */
     public void setJobName(String jobName) {
         this.jobName = jobName;
     }
 
+    /**
+     * Gets the default {@link PrintItem}.
+     * @return The default print item.
+     */
     public PrintItem getDefaultPrintItem() {
         return defaultPrintItem;
     }
 
+    /**
+     * Sets the default {@link PrintItem}.
+     * @param defaultPrintItem The default print item.
+     */
     public void setDefaultPrintItem(PrintItem defaultPrintItem) {
         this.defaultPrintItem = defaultPrintItem;
     }
+
+    /**
+     * Gets the number of print items.
+     * @return The number of print items.
+     */
     public int numPrintItems(){
         return printItems.size();
     }
+
+    /**
+     * Gets the print item hash map.
+     * @return The hash map of print items.
+     */
     public Map<PrintAttributes.MediaSize, PrintItem> getPrintItems(){
         return printItems;
     }
+
+    /**
+     * Adds a print item to the hashmap. Each print item needs a unique media size.
+     * @param printItem The print item you want to add to the print item hash map.
+     */
     public void addPrintItem(PrintItem printItem) {
         if(printItems == null) {
             printItems = new HashMap();
@@ -67,6 +92,12 @@ public class PrintJob implements Parcelable{
         printItems.put(printItem.getMediaSize(), printItem);
     }
 
+    /**
+     * This method gets a print item using a media size as the key. If the print item does not exist,
+     * the default print item will be used.
+     * @param mediaSize The media size of the print item you want to retrieve.
+     * @return The print item if found, otherwise the default print item.
+     */
     public PrintItem getPrintItem(PrintAttributes.MediaSize mediaSize){
         PrintItem printItem = printItems.get(mediaSize);
 
@@ -83,16 +114,27 @@ public class PrintJob implements Parcelable{
         return printItem;
     }
 
+    /**
+     * This method is used to set the default dialog options that appear when the Android print dialog
+     * shows up.
+     * @see <a href="https://developer.android.com/reference/android/print/PrintAttributes.html">PrintAttributes</a>
+     * @param printAttributes Android {@link PrintAttributes}.
+     */
     public void setPrintDialogOptions(PrintAttributes printAttributes){
         this.printDialogOptions = printAttributes;
     }
 
+    /**
+     * Get the print dialog options.
+     * @return Android {@link PrintAttributes}.
+     * @see <a href="https://developer.android.com/reference/android/print/PrintAttributes.html">PrintAttributes</a>
+     */
     public PrintAttributes getPrintDialogOptions() {
         return printDialogOptions;
     }
 
     //Parcelable methods
-    protected PrintJob(Parcel in) {
+    protected PrintJobData(Parcel in) {
         jobName = in.readString();
         printDialogOptions = (PrintAttributes) in.readValue(PrintAttributes.class.getClassLoader());
 //        printItems = (HashMap) in.readParcelable(HashMap.class.getClassLoader());
@@ -124,15 +166,15 @@ public class PrintJob implements Parcelable{
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<PrintJob> CREATOR = new Parcelable.Creator<PrintJob>() {
+    public static final Parcelable.Creator<PrintJobData> CREATOR = new Parcelable.Creator<PrintJobData>() {
         @Override
-        public PrintJob createFromParcel(Parcel in) {
-            return new PrintJob(in);
+        public PrintJobData createFromParcel(Parcel in) {
+            return new PrintJobData(in);
         }
 
         @Override
-        public PrintJob[] newArray(int size) {
-            return new PrintJob[size];
+        public PrintJobData[] newArray(int size) {
+            return new PrintJobData[size];
         }
     };
 

@@ -27,9 +27,8 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
 
-import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PrintItem;
-import com.hp.mss.hpprint.model.PrintJob;
+import com.hp.mss.hpprint.model.PrintJobData;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,13 +43,13 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
     private Bitmap thePhoto;
     private int totalPages;
     private boolean is4x5media;
-    private PrintJob printJob;
+    private PrintJobData printJobData;
     private PrintItem printItem;
 
-    public HPPrintDocumentAdapter(Context context, PrintJob printJob, boolean is4x5media) {
+    public HPPrintDocumentAdapter(Context context, PrintJobData printJobData, boolean is4x5media) {
         this.context = context;
         totalPages = 1;
-        this.printJob = printJob;
+        this.printJobData = printJobData;
         this.is4x5media = is4x5media;
     }
 
@@ -72,7 +71,7 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
         pageHeight = newAttributes.getMediaSize().getHeightMils();
         pageWidth = newAttributes.getMediaSize().getWidthMils();
 
-        printItem = (printJob.getPrintItem(newAttributes.getMediaSize()));
+        printItem = (printJobData.getPrintItem(newAttributes.getMediaSize()));
 
         if (cancellationSignal.isCanceled()) {
             callback.onLayoutCancelled();
@@ -116,7 +115,7 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
         }
         Canvas canvas = page.getCanvas();
 
-        printItem.drawPage(canvas, 1000 * PdfDocumentScale, new RectF(0,0,canvas.getWidth(), canvas.getHeight()));
+        printItem.drawPage(canvas, 1000 * PdfDocumentScale, new RectF(0, 0, canvas.getWidth(), canvas.getHeight()));
         myPdfDocument.finishPage(page);
 
         try {

@@ -15,30 +15,44 @@ import com.hp.mss.hpprint.model.asset.Asset;
 import com.hp.mss.hpprint.model.asset.ImageAsset;
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
 
-/**
- * Created by panini on 6/30/15.
- */
 public class ImagePrintItem extends PrintItem {
-    public static final int PAPER_DIMENS_4000 = 4000;
-    public static final int PAPER_DIMENS_6000 = 6000;
-    public static final int PAPER_DIMENS_7000 = 7000;
-    public static final int PAPER_DIMENS_5000 = 5000;
 
     public static PrintItem.ScaleType DEFAULT_SCALE_TYPE = PrintItem.ScaleType.FIT;
 
-
+    /**
+     * Create an ImagePrintItem with defined media size, scale type, and asset.
+     * @param mediaSize The media size you want the asset to be used for.
+     * @param scaleType The scale type used to layout the asset on the media.
+     * @param asset The asset itself.
+     */
     public ImagePrintItem(PrintAttributes.MediaSize mediaSize, ScaleType scaleType, ImageAsset asset) {
         super(mediaSize, scaleType, asset);
     }
 
+    /**
+     * Create an ImagePrintItem without a defined scale type. Fit to page will be used.
+     * @param mediaSize The media size you want the asset to be used for.
+     * @param asset The asset itself.
+     */
     public ImagePrintItem(PrintAttributes.MediaSize mediaSize, ImageAsset asset) {
         this(mediaSize, DEFAULT_SCALE_TYPE, asset);
     }
 
+    /**
+     * Create an ImagePrintItem without defining a media size. This is useful when defining the default
+     * print item.
+     * @param scaleType The scale type used to layout the asset on the media.
+     * @param asset The asset itself.
+     */
     public ImagePrintItem(ScaleType scaleType, ImageAsset asset) {
         this(null, scaleType, asset);
     }
 
+    /**
+     * Create an ImagePrintItem with only the asset. This will use the default scale type and a null
+     * media size.
+     * @param asset The asset itself.
+     */
     public ImagePrintItem(ImageAsset asset) {
         this(null, DEFAULT_SCALE_TYPE, asset);
     }

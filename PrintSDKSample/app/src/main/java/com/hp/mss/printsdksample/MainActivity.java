@@ -18,11 +18,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
+import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PrintItem;
-import com.hp.mss.hpprint.model.PrintJob;
+import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.model.asset.ImageAsset;
 import com.hp.mss.hpprint.util.PrintUtil;
@@ -115,9 +115,9 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
 
         //this is the minimum constructor to create an image print item
         PrintItem printItemDefault = new ImagePrintItem(scaleType, imageAsset5x7);
-        PrintJob printJob = new PrintJob(this, printItemDefault);
+        PrintJobData printJobData = new PrintJobData(this, printItemDefault);
 
-        printJob.setJobName("Example");
+        printJobData.setJobName("Example");
         PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000);
 
         PrintItem printItem4x5 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6, scaleType, imageAsset4x5p);
@@ -126,17 +126,17 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
 
         PrintItem printItem5x7 = new ImagePrintItem(mediaSize5x7, scaleType, imageAsset5x7);
 
-        printJob.addPrintItem(printItem4x5);
-        printJob.addPrintItem(printItem85x11);
-        printJob.addPrintItem(printItem85x11l);
-        printJob.addPrintItem(printItem5x7);
+        printJobData.addPrintItem(printItem4x5);
+        printJobData.addPrintItem(printItem85x11);
+        printJobData.addPrintItem(printItem85x11l);
+        printJobData.addPrintItem(printItem5x7);
 
         PrintAttributes printAttributes = new PrintAttributes.Builder()
                 .setMediaSize(printItem85x11.getMediaSize())
                 .build();
-        printJob.setPrintDialogOptions(printAttributes);
+        printJobData.setPrintDialogOptions(printAttributes);
 
-        PrintUtil.setPrintJob(printJob);
+        PrintUtil.setPrintJobData(printJobData);
         PrintUtil.print(this);
     }
 
