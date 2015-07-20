@@ -137,7 +137,7 @@ class YourCallingActivity extends ActionBarActivity implements PrintUtil.PrintMe
     	public void onPrintMetricsDataPosted(PrintMetricsData printMetricsData) {
    			// Do what you want to do with available printMetricsData
     	}
-    	...
+	...
 }
 ```
 
