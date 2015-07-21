@@ -18,6 +18,7 @@ public class PrintJobData implements Parcelable{
     private PrintAttributes printDialogOptions;
 
     private Context context;
+    String previewPaperSize = "N/A";
 
     /**
      * Use this constructor to create an instance of the PrintJobData object with a default print item.
@@ -131,6 +132,14 @@ public class PrintJobData implements Parcelable{
      */
     public PrintAttributes getPrintDialogOptions() {
         return printDialogOptions;
+    }
+
+    public String getPreviewPaperSize() {
+        return previewPaperSize;
+    }
+
+    public void setPreviewPaperSize(String previewPaperSize) {
+        this.previewPaperSize = previewPaperSize;
     }
 
     //Parcelable methods

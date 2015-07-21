@@ -22,6 +22,7 @@ public class PrintMetricsData implements Parcelable {
     private static final String PRINTER_MODEL = "printer_model";
     private static final String PRINTER_NAME = "printer_name";
     private static final String PRINT_RESULT = "print_result";
+    private static final String PREVIEW_PAPER_SIZE = "preview_paper_size";
 
     public static final String PRINT_RESULT_FAILED = "Fail";
     public static final String PRINT_RESULT_SUCCESS = "Success";
@@ -32,6 +33,7 @@ public class PrintMetricsData implements Parcelable {
     public String numberOfCopy;
     public String paperSize;
     public String paperType;
+    public String previewPaperSize;
     public String printPluginTech;
     public String printerID;
     public String printerLocation;
@@ -51,6 +53,7 @@ public class PrintMetricsData implements Parcelable {
         numberOfCopy = in.readString();
         paperSize = in.readString();
         paperType = in.readString();
+        previewPaperSize = in.readString();
         printPluginTech = in.readString();
         printerID = in.readString();
         printerLocation = in.readString();
@@ -64,6 +67,7 @@ public class PrintMetricsData implements Parcelable {
         this.numberOfCopy = map.get(COPIES);
         this.paperSize = map.get(PAPER_SIZE);
         this.paperType = map.get(PAPER_TYPE);
+        this.previewPaperSize = map.get(PREVIEW_PAPER_SIZE);
         this.printPluginTech = map.get(PRINT_PLUGIN_TECH);
         this.printerID = map.get(PRINTER_ID);
         this.printerLocation = map.get(PRINTER_LOCATION);
@@ -79,6 +83,7 @@ public class PrintMetricsData implements Parcelable {
         if (numberOfCopy != null) map.put(COPIES, this.numberOfCopy);
         if (paperSize != null) map.put(PAPER_SIZE, this.paperSize);
         if (paperType != null) map.put(PAPER_TYPE, this.paperType);
+        if (previewPaperSize != null) map.put(PREVIEW_PAPER_SIZE, this.previewPaperSize);
         if (printPluginTech != null) map.put(PRINT_PLUGIN_TECH, this.printPluginTech);
         if (printerID != null) map.put(PRINTER_ID, this.printerID);
         if (printerLocation != null) map.put(PRINTER_LOCATION, this.printerLocation);
@@ -100,6 +105,7 @@ public class PrintMetricsData implements Parcelable {
         out.writeString(numberOfCopy);
         out.writeString(paperSize);
         out.writeString(paperType);
+        out.writeString(previewPaperSize);
         out.writeString(printPluginTech);
         out.writeString(printerID);
         out.writeString(printerLocation);

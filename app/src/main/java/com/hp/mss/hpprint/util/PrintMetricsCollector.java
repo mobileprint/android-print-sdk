@@ -44,11 +44,13 @@ class PrintMetricsCollector extends Thread {
     private Handler metricsHandler;
     private Activity hostActivity;
     private static HashMap<String,String> appMetrics;
+    private String previewPaperSize;
 
     public PrintMetricsCollector(Activity activity, PrintJob printJob) {
         this.hostActivity = activity;
         this.printJob = printJob;
         this.metricsHandler = new Handler();
+        this.previewPaperSize = PrintUtil.getPrintJobData().getPreviewPaperSize();
     }
 
     @Override
@@ -56,13 +58,19 @@ class PrintMetricsCollector extends Thread {
         if (printJob == null ) {
             return;
         }
+
         if (isJobFailed(printJob)) {
             PrintMetricsData printMetricsData = new PrintMetricsData();
+            printMetricsData.previewPaperSize = this.previewPaperSize;
+
             if (printJob.isFailed()) {
                 printMetricsData.printResult = PrintMetricsData.PRINT_RESULT_FAILED;
             } else if (printJob.isCancelled()) {
                 printMetricsData.printResult = PrintMetricsData.PRINT_RESULT_CANCEL;
+            } else {
+                printMetricsData.printResult = PrintMetricsData.PRINT_RESULT_FAILED;
             }
+
             postMetrics(printMetricsData);
             return;
         }
@@ -74,6 +82,8 @@ class PrintMetricsCollector extends Thread {
             PrinterId printerId = printJobInfo.getPrinterId();
 
             PrintMetricsData printMetricsData = new PrintMetricsData();
+            printMetricsData.previewPaperSize = this.previewPaperSize;
+
             printMetricsData.printResult = PrintMetricsData.PRINT_RESULT_SUCCESS;
 
             try {
@@ -147,7 +157,7 @@ class PrintMetricsCollector extends Thread {
         }){
             @Override
             protected Map<String,String> getParams(){
-                Map<String,String> params = getMetricsParams();
+                Map<String,String> params = getMetricsParams(data);
                 return params;
             }
 
@@ -173,13 +183,14 @@ class PrintMetricsCollector extends Thread {
     }
 
 
-    private Map<String, String> getMetricsParams() {
+    private Map<String, String> getMetricsParams(PrintMetricsData data) {
         HashMap<String, String> combinedMetrics = new HashMap<String, String>();
 
         if (appMetrics == null || appMetrics.isEmpty()) {
             appMetrics = (new ApplicationMetricsData(hostActivity.getApplicationContext())).toMap();
         }
         combinedMetrics.putAll(appMetrics);
+        combinedMetrics.putAll(data.toMap());
         return combinedMetrics;
     }
 

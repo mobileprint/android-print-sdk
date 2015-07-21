@@ -248,7 +248,9 @@ public class PrintPreview extends AppCompatActivity {
                 .build();
 
         printJobData.setPrintDialogOptions(printAttributes);
+        printJobData.setPreviewPaperSize(spinnerSelectedText);
         PrintUtil.setPrintJobData(printJobData);
+
         PrintUtil.createPrintJob(this);
 
         disableMenu = false;
