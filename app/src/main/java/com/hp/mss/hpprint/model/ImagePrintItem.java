@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 package com.hp.mss.hpprint.model;
 
 import android.content.Context;
@@ -15,6 +27,10 @@ import com.hp.mss.hpprint.model.asset.Asset;
 import com.hp.mss.hpprint.model.asset.ImageAsset;
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
 
+/**
+ * Once you create an image asset, you need to associate it with a PrintItem object.
+ * You will need to provide a ScaleType and the ImageAsset itself.
+ */
 public class ImagePrintItem extends PrintItem {
 
     public static PrintItem.ScaleType DEFAULT_SCALE_TYPE = PrintItem.ScaleType.FIT;

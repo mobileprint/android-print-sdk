@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 package com.hp.mss.hpprint.model;
 
 import android.os.Parcel;
@@ -6,6 +18,12 @@ import android.os.Parcelable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is the class that encapsulates all the printing related data HP is collecting.
+ * This data is available to your app if the calling activity implements
+ * {@link com.hp.mss.hpprint.util.PrintUtil.PrintMetricsListener PrintUtil.PrintMetricsListener} interface.
+ *
+ */
 public class PrintMetricsData implements Parcelable {
 
     public static final String CONTENT_TYPE_DOCUMENT = "Document";

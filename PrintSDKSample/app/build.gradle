@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 apply plugin: 'com.android.application'
 
 android {
@@ -22,5 +34,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
-    compile project(':hpprinttest')
+    compile project(':hpprintsdk')
 }

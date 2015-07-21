@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 package com.hp.mss.hpprint.model.asset;
 
 import android.graphics.Bitmap;
@@ -6,6 +18,15 @@ import android.os.Parcelable;
 
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
 
+/**
+ *
+ * One of the first objects you need to create in order to use our print workflow is the ImageAsset
+ * object. You will need at least one but you can create as many as needed.
+ * <p>
+ * The ImageAsset represents an image. It contains the uri, measurements, and the unit type.
+ * <p>
+ * When created, give it to a {@link com.hp.mss.hpprint.model.PrintItem}
+ */
 public class ImageAsset implements Asset, Parcelable {
 
     /**

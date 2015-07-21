@@ -1,14 +1,14 @@
-//
-// Hewlett-Packard Company
-// All rights reserved.
-//
-// This file, its contents, concepts, methods, behavior, and operation
-// (collectively the "Software") are protected by trade secret, patent,
-// and copyright laws. The use of the Software is governed by a license
-// agreement. Disclosure of the Software to third parties, in any form,
-// in whole or in part, is expressly prohibited except as authorized by
-// the license agreement.
-//
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
 
 package com.hp.mss.hpprint.activity;
 
@@ -44,6 +44,12 @@ import com.hp.mss.hpprint.view.PagePreviewView;
 
 import java.util.HashMap;
 
+/**
+ * The intent of this class is to allow KitKat device users to preview the print out prior to sending
+ * the print job to the printer. This class is only used within the HP Print SDK (You should not
+ * create this activity by yourself). In the future, we may allow UI customization
+ * within this activity.
+ */
 public class PrintPreview extends AppCompatActivity {
     private static final String HP_ANDROID_MOBILE_SITE = "http://www8.hp.com/us/en/ads/mobility/overview.html?jumpid=va_r11400_eprint";
 
