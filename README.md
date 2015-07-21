@@ -70,15 +70,15 @@ Once you create an image asset, you need to associate it with a `PrintItem` obje
 PrintItem printItemDefault = new ImagePrintItem(PrintItem.ScaleType.CENTER, imageAsset4x6);
 ```
 
-### PrintJob
+### PrintJobData
 
-After creating the `PrintItem`, you are ready to create the `PrintJob` object which contains all the relevant info needed
+After creating the `PrintItem`, you are ready to create the `PrintJobData` object which contains all the relevant info needed
 to build the print.
 
 ```java
-PrintJob printJob = new PrintJob(activity, printItemDefault);
-printJob.setJobName("Example");
-PrintUtil.setPrintJob(printJob);
+PrintJobData printJobData = new PrintJobData(activity, printItemDefault);
+printJobData.setJobName("Example");
+PrintUtil.setPrintJobData(printJobData);
 ```
 
 ### Print
