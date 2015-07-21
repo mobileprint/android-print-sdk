@@ -22,21 +22,23 @@ import android.print.PrintManager;
 
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
+import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 
 public class PrintUtil {
+    public static final String PLAY_STORE_PRINT_SERVICES_URL = "https://play.google.com/store/apps/collection/promotion_3000abc_print_services";
+    private static final String HAS_METRICS_LISTENER = "has_metrics_listener";
+    private static final int START_PREVIEW_ACTIVITY_REQUEST = 100;
 
+    private static PrintJobData printJobData;
+    protected static PrintMetricsListener metricsListener;
     public static boolean is4x5media;
     public static boolean showPluginHelper = true;
 
-    public static final String PLAY_STORE_PRINT_SERVICES_URL = "https://play.google.com/store/apps/collection/promotion_3000abc_print_services";
-    public static final String HAS_METRICS_LISTENER = "has_metrics_listener";
-    public static final int START_PREVIEW_ACTIVITY_REQUEST = 100;
-
-    private static com.hp.mss.hpprint.model.PrintJob printJob;
-
-    public static PrintMetricsListener metricsListener;
-
+    /**
+     * Call to start the HP Print SDK print flow.
+     * @param activity
+     */
     public static void print(Activity activity){
         metricsListener = null;
 
@@ -55,25 +57,46 @@ public class PrintUtil {
         }
     }
 
+    /**
+     * Directly create the android PrintJob. This should not be needed except for special circumstances.
+     * Please use the {@link #print(Activity) print} method.
+     * @param activity
+     */
     public static void createPrintJob(Activity activity) {
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
-        PrintDocumentAdapter adapter = new HPPrintDocumentAdapter(activity, printJob, false);
+        PrintDocumentAdapter adapter = new HPPrintDocumentAdapter(activity, printJobData, false);
 
-        PrintJob androidPrintJob = printManager.print(printJob.getJobName(), adapter, printJob.getPrintDialogOptions());
+        PrintJob androidPrintJob = printManager.print(printJobData.getJobName(), adapter, printJobData.getPrintDialogOptions());
 
         PrintMetricsCollector collector = new PrintMetricsCollector(activity, androidPrintJob);
         collector.run();
     }
 
-    public static void setPrintJob(com.hp.mss.hpprint.model.PrintJob printJobData){
-        printJob = printJobData;
+    /**
+     * Sets the printJobData.
+     * @param printJobData
+     */
+    public static void setPrintJobData(PrintJobData printJobData){
+        PrintUtil.printJobData = printJobData;
     }
 
-    public static com.hp.mss.hpprint.model.PrintJob getPrintJob(){
-        return printJob;
+    /**
+     * Gets the printJobData.
+     * @return The printJobData that is set using {@link #setPrintJobData(PrintJobData)} otherwise it will return null.
+     */
+    public static PrintJobData getPrintJobData(){
+        return printJobData;
     }
 
+    /**
+     * This interface exists in order to pass print metrics back to the calling activity.
+     * In order to receive print metrics, you must implement this interface in your activity that calls {@link #print(Activity)}.
+     */
     public interface PrintMetricsListener {
+        /**
+         * This method, when implemented allows you to access data in the PrintMetricsData class.
+         * @param printMetricsData
+         */
         void onPrintMetricsDataPosted(PrintMetricsData printMetricsData);
     }
 

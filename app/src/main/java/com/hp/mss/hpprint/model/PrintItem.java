@@ -10,9 +10,6 @@ import android.print.PrintAttributes;
 
 import com.hp.mss.hpprint.model.asset.Asset;
 
-/**
- * Created by panini on 6/30/15.
- */
 //Clients are able to override printitems, to have their own layouting methods.
 public abstract class PrintItem implements Parcelable{
 
@@ -21,6 +18,10 @@ public abstract class PrintItem implements Parcelable{
     Asset asset;
 
     public static PrintItem.ScaleType DEFAULT_SCALE_TYPE = null;
+
+    /**
+     * This defines how the print item will be laid out on the paper.
+     */
     public enum ScaleType {
         CENTER,
         CROP,
@@ -43,22 +44,46 @@ public abstract class PrintItem implements Parcelable{
         this.asset = asset;
     }
 
+    /**
+     * Get the media size of the print item.
+     * @return The MediaSize attribute of the print item.
+     * @see <a href="https://developer.android.com/reference/android/print/PrintAttributes.MediaSize.html">MediaSize</a>
+     */
     public PrintAttributes.MediaSize getMediaSize(){
         return mediaSize;
     }
 
+    /**
+     * Get the scale type.
+     * @return The print item's scale type.
+     */
     public ScaleType getScaleType(){
         return scaleType;
     }
 
+    /**
+     * Get the asset of the print item.
+     * @return The print item asset.
+     */
     public Asset getAsset(){
         return asset;
     }
 
+    /**
+     * Get's the bitmap from the asset.
+     * @return The bitmap
+     */
     public Bitmap getPrintableBitmap(){
         return asset.getPrintableBitmap();
     }
 
+    /**
+     * Draw the printItem onto a canvas.
+     * @param canvas The canvas to be drawn on
+     * @param dpi The dpi of the canvas
+     * @param pageBounds The bounds of the page on the canvas. (Canvas can be bigger than the page we
+     *                   want to draw on.
+     */
     public abstract void drawPage(Canvas canvas, float dpi, RectF pageBounds);
 
     //Parcelable methods

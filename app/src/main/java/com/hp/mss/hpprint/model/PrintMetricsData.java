@@ -6,9 +6,6 @@ import android.os.Parcelable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by panini on 5/13/15.
- */
 public class PrintMetricsData implements Parcelable {
 
     public static final String CONTENT_TYPE_DOCUMENT = "Document";

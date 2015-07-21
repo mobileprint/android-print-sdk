@@ -12,9 +12,6 @@ import com.hp.mss.hpprint.R;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by panini on 7/8/15.
- */
 public class ApplicationMetricsData {
 
     private static final String TAG = "ClientMetricsData";

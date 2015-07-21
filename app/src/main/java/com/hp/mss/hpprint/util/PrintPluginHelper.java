@@ -13,9 +13,6 @@ import android.widget.CheckBox;
 
 import com.hp.mss.hpprint.R;
 
-/**
- * Created by panini on 7/6/15.
- */
 public class PrintPluginHelper {
 
     public interface PluginHelperListener {

@@ -34,7 +34,7 @@ import android.widget.TextView;
 
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.model.PrintItem;
-import com.hp.mss.hpprint.model.PrintJob;
+import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.PrintPluginHelper;
@@ -54,7 +54,7 @@ public class PrintPreview extends AppCompatActivity {
     private float paperWidth;
     private float paperHeight;
 
-    PrintJob printJob;
+    PrintJobData printJobData;
     String spinnerSelectedText;
 
     @Override
@@ -67,8 +67,8 @@ public class PrintPreview extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        printJob = PrintUtil.getPrintJob();
-        PrintItem printItem = printJob.getPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6);
+        printJobData = PrintUtil.getPrintJobData();
+        PrintItem printItem = printJobData.getPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6);
 
         initializeSpinnerData();
 
@@ -92,9 +92,9 @@ public class PrintPreview extends AppCompatActivity {
     private void initializeSpinnerData(){
         Spinner sizeSpinner = (Spinner) findViewById(R.id.paper_size_spinner);
 
-        String[] spinnerArray = new String[printJob.numPrintItems()];
+        String[] spinnerArray = new String[printJobData.numPrintItems()];
         int i = 0;
-        for (PrintAttributes.MediaSize mediaSize: printJob.getPrintItems().keySet()) {
+        for (PrintAttributes.MediaSize mediaSize: printJobData.getPrintItems().keySet()) {
             String text = getSpinnerText(mediaSize);
             spinnerMap.put(text, mediaSize);
             spinnerArray[i++] = text;
@@ -104,7 +104,7 @@ public class PrintPreview extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(adapter);
 
-        PrintAttributes.MediaSize mediaSize = printJob.getPrintDialogOptions().getMediaSize();
+        PrintAttributes.MediaSize mediaSize = printJobData.getPrintDialogOptions().getMediaSize();
         String text = getSpinnerText(mediaSize);
         sizeSpinner.setSelection(adapter.getPosition(text));
         setSizeSpinnerListener(sizeSpinner);
@@ -116,7 +116,7 @@ public class PrintPreview extends AppCompatActivity {
         return String.format("%s x %s", widthText, heightText);
     }
 
-    public static String fmt(double d)
+    private static String fmt(double d)
     {
         if(d == (long) d)
             return String.format("%d",(long)d);
@@ -221,7 +221,7 @@ public class PrintPreview extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerSelectedText = (String) parent.getItemAtPosition(position);
 
-                PrintItem printItem = printJob.getPrintItem(spinnerMap.get(spinnerSelectedText));
+                PrintItem printItem = printJobData.getPrintItem(spinnerMap.get(spinnerSelectedText));
 
                 paperWidth = printItem.getMediaSize().getWidthMils()/1000f;
                 paperHeight = printItem.getMediaSize().getHeightMils()/1000f;
@@ -241,14 +241,14 @@ public class PrintPreview extends AppCompatActivity {
 
     public void doPrint() {
         PrintAttributes printAttributes = new PrintAttributes.Builder()
-                .setColorMode(printJob.getPrintDialogOptions().getColorMode())
+                .setColorMode(printJobData.getPrintDialogOptions().getColorMode())
                 .setMediaSize(spinnerMap.get(spinnerSelectedText))
-                .setMinMargins(printJob.getPrintDialogOptions().getMinMargins())
-                .setResolution(printJob.getPrintDialogOptions().getResolution())
+                .setMinMargins(printJobData.getPrintDialogOptions().getMinMargins())
+                .setResolution(printJobData.getPrintDialogOptions().getResolution())
                 .build();
 
-        printJob.setPrintDialogOptions(printAttributes);
-        PrintUtil.setPrintJob(printJob);
+        printJobData.setPrintDialogOptions(printAttributes);
+        PrintUtil.setPrintJobData(printJobData);
         PrintUtil.createPrintJob(this);
 
         disableMenu = false;
