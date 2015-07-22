@@ -26,12 +26,12 @@ import android.widget.CheckBox;
 import com.hp.mss.hpprint.R;
 
 /**
- * TODO: Peter will write this.
+ * The PrintPluginHelper displays a dialog that takes the user to the play store to get a print service plugin.
  */
 public class PrintPluginHelper {
 
     /**
-     * TODO: Peter will write this.
+     * This interface allows us to track user interaction with the dialog and create the printJob.
      */
     public interface PluginHelperListener {
         public void printPluginHelperSkippedByPreference();

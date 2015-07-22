@@ -39,6 +39,10 @@ public class PrintUtil {
     private static PrintJobData printJobData;
     protected static PrintMetricsListener metricsListener;
     public static boolean is4x5media;
+
+    /**
+     * Set this to false to disable plugin helper dialogs.
+     */
     public static boolean showPluginHelper = true;
 
     /**

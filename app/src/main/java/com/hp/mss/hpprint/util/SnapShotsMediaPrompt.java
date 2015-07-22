@@ -30,12 +30,12 @@ import android.widget.CompoundButton;
 import com.hp.mss.hpprint.R;
 
 /**
- * TODO: Peter will write this.
+ * This informs the user about 4x5 media and the steps necessary to print.
  */
 public class SnapShotsMediaPrompt {
 
     /**
-     * TODO: Peter will write this.
+     * This allows us to track user interaction with the prompt.
      */
     public interface SnapShotsPromptListener {
         public void SnapShotsPromptOk();
