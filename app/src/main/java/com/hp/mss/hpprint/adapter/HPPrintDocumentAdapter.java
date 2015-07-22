@@ -1,14 +1,14 @@
-//
-// Hewlett-Packard Company
-// All rights reserved.
-//
-// This file, its contents, concepts, methods, behavior, and operation
-// (collectively the "Software") are protected by trade secret, patent,
-// and copyright laws. The use of the Software is governed by a license
-// agreement. Disclosure of the Software to third parties, in any form,
-// in whole or in part, is expressly prohibited except as authorized by
-// the license agreement.
-//
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
 
 package com.hp.mss.hpprint.adapter;
 
@@ -33,7 +33,10 @@ import com.hp.mss.hpprint.model.PrintJobData;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
+/**
+ * This class is our customized PrintDocumentAdapter. It's intended to be used within the HP Print SDK.
+ * You should not need to create this yourself.
+ */
 public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
     private static final float PdfDocumentScale = .50f;
     private Context context;

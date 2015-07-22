@@ -1,14 +1,14 @@
-//
-// Hewlett-Packard Company
-// All rights reserved.
-//
-// This file, its contents, concepts, methods, behavior, and operation
-// (collectively the "Software") are protected by trade secret, patent,
-// and copyright laws. The use of the Software is governed by a license
-// agreement. Disclosure of the Software to third parties, in any form,
-// in whole or in part, is expressly prohibited except as authorized by
-// the license agreement.
-//
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
 
 package com.hp.mss.hpprint.util;
 
@@ -25,6 +25,12 @@ import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 
+/**
+ * In order to print, you need to call the print(Activity) method in this class. It automatically creates
+ * the print preview activity for KitKat devices. It also helps you install/detect print plugins.
+ * <p>
+ * You will need to set the printJobData in order to invoke the print method.
+ */
 public class PrintUtil {
     public static final String PLAY_STORE_PRINT_SERVICES_URL = "https://play.google.com/store/apps/collection/promotion_3000abc_print_services";
     private static final String HAS_METRICS_LISTENER = "has_metrics_listener";
@@ -33,11 +39,15 @@ public class PrintUtil {
     private static PrintJobData printJobData;
     protected static PrintMetricsListener metricsListener;
     public static boolean is4x5media;
+
+    /**
+     * Set this to false to disable plugin helper dialogs.
+     */
     public static boolean showPluginHelper = true;
 
     /**
      * Call to start the HP Print SDK print flow.
-     * @param activity
+     * @param activity The calling activity.
      */
     public static void print(Activity activity){
         metricsListener = null;
@@ -59,8 +69,8 @@ public class PrintUtil {
 
     /**
      * Directly create the android PrintJob. This should not be needed except for special circumstances.
-     * Please use the {@link #print(Activity) print} method.
-     * @param activity
+     * Please use the {@link #print(Activity)} method.
+     * @param activity The calling activity.
      */
     public static void createPrintJob(Activity activity) {
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
@@ -74,7 +84,7 @@ public class PrintUtil {
 
     /**
      * Sets the printJobData.
-     * @param printJobData
+     * @param printJobData The print job data object that you want to use.
      */
     public static void setPrintJobData(PrintJobData printJobData){
         PrintUtil.printJobData = printJobData;
@@ -95,7 +105,7 @@ public class PrintUtil {
     public interface PrintMetricsListener {
         /**
          * This method, when implemented allows you to access data in the PrintMetricsData class.
-         * @param printMetricsData
+         * @param printMetricsData The print metrics data.
          */
         void onPrintMetricsDataPosted(PrintMetricsData printMetricsData);
     }

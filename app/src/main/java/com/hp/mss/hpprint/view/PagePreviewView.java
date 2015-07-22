@@ -1,14 +1,14 @@
-//
-// Hewlett-Packard Company
-// All rights reserved.
-//
-// This file, its contents, concepts, methods, behavior, and operation
-// (collectively the "Software") are protected by trade secret, patent,
-// and copyright laws. The use of the Software is governed by a license
-// agreement. Disclosure of the Software to third parties, in any form,
-// in whole or in part, is expressly prohibited except as authorized by
-// the license agreement.
-//
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
 
 package com.hp.mss.hpprint.view;
 
@@ -31,7 +31,9 @@ import com.hp.mss.hpprint.util.FontUtil;
 
 import java.lang.ref.WeakReference;
 
-
+/**
+ * This is used inside the PrintPreview Activity. You do not need to create this by yourself.
+ */
 public class PagePreviewView extends View {
     private static final float LAYOUT_MARGIN_RATIO = 9;
     private static final int MEASUREMENT_FONT_SIZE = 20;

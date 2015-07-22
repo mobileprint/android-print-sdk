@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 package com.hp.mss.hpprint.model;
 
 import android.graphics.Bitmap;
@@ -10,9 +22,11 @@ import android.print.PrintAttributes;
 
 import com.hp.mss.hpprint.model.asset.Asset;
 
-//Clients are able to override printitems, to have their own layouting methods.
+/**
+ * This is an abstract class provided as a base for print item implementations.
+ */
 public abstract class PrintItem implements Parcelable{
-
+    //Clients are able to override printitems, to have their own layouting methods.
     PrintAttributes.MediaSize mediaSize;
     ScaleType scaleType;
     Asset asset;

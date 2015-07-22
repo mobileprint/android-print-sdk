@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 package com.hp.mss.hpprint.model;
 
 import android.content.Context;
@@ -12,6 +24,10 @@ import com.hp.mss.hpprint.R;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is the class that encapsulates all the basic application data HP is collecting.
+ * It is used inside HP print SDK, you should not create this yourself.
+ */
 public class ApplicationMetricsData {
 
     private static final String TAG = "ClientMetricsData";

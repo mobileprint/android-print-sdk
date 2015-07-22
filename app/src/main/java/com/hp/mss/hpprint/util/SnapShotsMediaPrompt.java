@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 package com.hp.mss.hpprint.util;
 
 import android.app.Activity;
@@ -17,8 +29,14 @@ import android.widget.CompoundButton;
 
 import com.hp.mss.hpprint.R;
 
+/**
+ * This informs the user about 4x5 media and the steps necessary to print.
+ */
 public class SnapShotsMediaPrompt {
 
+    /**
+     * This allows us to track user interaction with the prompt.
+     */
     public interface SnapShotsPromptListener {
         public void SnapShotsPromptOk();
         public void SnapShotsPromptCancel();

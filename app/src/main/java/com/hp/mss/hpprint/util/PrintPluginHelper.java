@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 package com.hp.mss.hpprint.util;
 
 import android.app.Activity;
@@ -13,8 +25,14 @@ import android.widget.CheckBox;
 
 import com.hp.mss.hpprint.R;
 
+/**
+ * The PrintPluginHelper displays a dialog that takes the user to the play store to get a print service plugin.
+ */
 public class PrintPluginHelper {
 
+    /**
+     * This interface allows us to track user interaction with the dialog and create the printJob.
+     */
     public interface PluginHelperListener {
         public void printPluginHelperSkippedByPreference();
         public void printPluginHelperSkipped();

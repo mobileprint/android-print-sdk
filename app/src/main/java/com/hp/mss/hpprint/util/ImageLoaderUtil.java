@@ -1,3 +1,15 @@
+/*
+ * Hewlett-Packard Company
+ * All rights reserved.
+ *
+ * This file, its contents, concepts, methods, behavior, and operation
+ * (collectively the "Software") are protected by trade secret, patent,
+ * and copyright laws. The use of the Software is governed by a license
+ * agreement. Disclosure of the Software to third parties, in any form,
+ * in whole or in part, is expressly prohibited except as authorized by
+ * the license agreement.
+ */
+
 package com.hp.mss.hpprint.util;
 
 import android.content.Context;
@@ -10,13 +22,21 @@ import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This is used in the HP Print SDK to load images from URI's.
+ */
 public class ImageLoaderUtil {
     private static final String TAG = "ImageLoaderUtil";
     private static final String IMAGE_DIR = "imageDir";
     private static final String IMAGE_EXT = ".jpg";
 
-    public static Bitmap getImageBitmap(String filename) {
-        final File f = new File(filename);
+    /**
+     * This method gives you the bitmap of the image you tell it to load from the filesystem.
+     * @param uri The file location.
+     * @return The bitmap of the photo at the location you specify.
+     */
+    public static Bitmap getImageBitmap(String uri) {
+        final File f = new File(uri);
         try {
             return getImage(f.getCanonicalPath());
         } catch (IOException e) {
@@ -25,7 +45,7 @@ public class ImageLoaderUtil {
         }
     }
 
-    public static Bitmap getImage(String imagePath) {
+    private static Bitmap getImage(String imagePath) {
         final int MAX_TRIALS = 3;
         int trial = 0;
         Bitmap bitmap = null;
@@ -55,38 +75,38 @@ public class ImageLoaderUtil {
 //        options.inJustDecodeBounds = false;
 //        return BitmapFactory.decodeFile(imagePath, options);
 //    }
-
-    public static Rect getImageSize(String imagePath) {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-
-        BitmapFactory.decodeFile(imagePath, options);
-
-        final int imageWidth = options.outWidth;
-        final int imageHeight = options.outHeight;
-
-        return new Rect(0, 0, imageWidth, imageHeight);
-    }
-
-    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
+//
+//    private static Rect getImageSize(String imagePath) {
+//        final BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//
+//        BitmapFactory.decodeFile(imagePath, options);
+//
+//        final int imageWidth = options.outWidth;
+//        final int imageHeight = options.outHeight;
+//
+//        return new Rect(0, 0, imageWidth, imageHeight);
+//    }
+//
+//    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+//        // Raw height and width of image
+//        final int height = options.outHeight;
+//        final int width = options.outWidth;
+//        int inSampleSize = 1;
+//
+//        if (height > reqHeight || width > reqWidth) {
+//
+//            final int halfHeight = height / 2;
+//            final int halfWidth = width / 2;
+//
+//            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+//            // height and width larger than the requested height and width.
+//            while ((halfHeight / inSampleSize) > reqHeight
+//                    && (halfWidth / inSampleSize) > reqWidth) {
+//                inSampleSize *= 2;
+//            }
+//        }
+//
+//        return inSampleSize;
+//    }
 }
