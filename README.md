@@ -37,12 +37,12 @@ Insert the following into your settings.gradle file in your project at the end o
 
 Add the following new line into the same settings.gradle file in your project:
 
-    project(':droidprint').projectDir = new File('../DroidPrint')
+    project(':droidprint').projectDir = new File('../DroidPrint/app')
 
 It should look something like this:
 
     include ':app', ':droidprint'
-    project(':droidprint').projectDir = new File('../DroidPrint')
+    project(':droidprint').projectDir = new File('../DroidPrint/app')
 
 You must also include the project in your gradle file:
 
