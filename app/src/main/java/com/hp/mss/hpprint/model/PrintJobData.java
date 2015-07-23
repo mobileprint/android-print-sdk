@@ -70,6 +70,9 @@ public class PrintJobData implements Parcelable{
      * @return The number of print items.
      */
     public int numPrintItems(){
+        if(printItems == null){
+            return 0;
+        }
         return printItems.size();
     }
 
@@ -99,6 +102,12 @@ public class PrintJobData implements Parcelable{
      * @return The print item if found, otherwise the default print item.
      */
     public PrintItem getPrintItem(PrintAttributes.MediaSize mediaSize){
+        if(printItems == null){
+            PrintItem newPrintItem = defaultPrintItem;
+            newPrintItem.mediaSize = mediaSize;
+            return newPrintItem;
+        }
+
         PrintItem printItem = printItems.get(mediaSize);
 
         if(printItem == null) {
