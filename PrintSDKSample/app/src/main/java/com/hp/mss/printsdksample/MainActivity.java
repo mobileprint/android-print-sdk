@@ -17,7 +17,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.print.PrintAttributes;
 import android.support.v7.app.ActionBarActivity;
@@ -37,19 +39,17 @@ import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.model.asset.ImageAsset;
+import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 
 public class MainActivity extends ActionBarActivity implements RadioGroup.OnCheckedChangeListener, PrintUtil.PrintMetricsListener {
-    String filename4x5l;
-    String filename4x5p;
 
-    String filename4x6;
-    String filename5x7;
 
     PrintItem.ScaleType scaleType;
     boolean showMetricsDialog;
@@ -59,8 +59,6 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Activity activity = this;
-
         RadioGroup layoutRadioGroup = (RadioGroup) findViewById(R.id.layoutRadioGroup);
         layoutRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(layoutRadioGroup, layoutRadioGroup.getCheckedRadioButtonId());
@@ -68,22 +66,6 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
         RadioGroup metricsRadioGroup = (RadioGroup) findViewById(R.id.metricsRadioGroup);
         metricsRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(metricsRadioGroup, metricsRadioGroup.getCheckedRadioButtonId());
-
-        final RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-        relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                // make sure it is not called anymore
-                relativeLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                filename4x5l = generateBitmap((ImageView) findViewById(R.id.templateimage4x5l), "4x5l");
-                filename4x5p = generateBitmap((ImageView) findViewById(R.id.templateimage4x5p), "4x5p");
-                filename4x6 = generateBitmap((ImageView) findViewById(R.id.templateimage4x6), "4x6");
-                filename5x7 = generateBitmap((ImageView) findViewById(R.id.templateimage5x7), "5x7");
-
-            }
-        });
-
     }
 
     @Override
@@ -114,89 +96,66 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
     }
 
     public void buttonClicked(View v) {
-        Button button = (Button) v;
 
-        String buttonText = ((Button) v).getText().toString();
+        //Save images from drawables
+        String file4x5l = ImageLoaderUtil.saveImageFromDrawable(this, R.drawable.template4x5l, "4x5l");
+        String file4x5p = ImageLoaderUtil.saveImageFromDrawable(this, R.drawable.template4x5p, "4x5p");
+        String file4x6 = ImageLoaderUtil.saveImageFromDrawable(this, R.drawable.template4x6, "4x6");
+        String file5x7 = ImageLoaderUtil.saveImageFromDrawable(this, R.drawable.template5x7, "5x7");
 
-        //Create the image assets
-        ImageAsset imageAsset4x5l = new ImageAsset(filename4x5l, ImageAsset.MeasurementUnits.INCHES, 5, 4);
-        ImageAsset imageAsset4x5p = new ImageAsset(filename4x5p, ImageAsset.MeasurementUnits.INCHES, 4, 5);
+        //Save image from assets directory
+        String assetFile = ImageLoaderUtil.saveImageFromAssetDir(this, "oceanwave.jpeg");
 
-        ImageAsset imageAsset4x6 = new ImageAsset(filename4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
-        ImageAsset imageAsset5x7 = new ImageAsset(filename5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
+        //Or you can save a bitmap by doing the following.
+        //String bitmapFile = ImageLoaderUtil.savePrintableImage(this, bitmap, "filename");
 
-        //this is the minimum constructor to create an image print item
+        //Create image assets from the saved files.
+        ImageAsset imageAsset4x5l = new ImageAsset(file4x5l, ImageAsset.MeasurementUnits.INCHES, 5, 4);
+        ImageAsset imageAsset4x5p = new ImageAsset(file4x5p, ImageAsset.MeasurementUnits.INCHES, 4, 5);
+        ImageAsset imageAsset4x6 = new ImageAsset(file4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+        ImageAsset imageAsset5x7 = new ImageAsset(file5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
+        ImageAsset assetdirectory = new ImageAsset(assetFile, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+
+        //Create the printJobData with the default print item
         PrintItem printItemDefault = new ImagePrintItem(scaleType, imageAsset5x7);
         PrintJobData printJobData = new PrintJobData(this, printItemDefault);
 
+        //Giving the print job a name.
         printJobData.setJobName("Example");
+
+        //Example for creating a custom media size in android.
         PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000);
 
-        PrintItem printItem4x5 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6, scaleType, imageAsset4x5p);
+        //Create printitems from the assets. These define what asset is to be used for each media size.
+        PrintItem printItem4x6 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6, scaleType, imageAsset4x6);
         PrintItem printItem85x11 = new ImagePrintItem(PrintAttributes.MediaSize.NA_LETTER, scaleType, imageAsset4x5p);
         PrintItem printItem85x11l = new ImagePrintItem(new PrintAttributes.MediaSize(printItem85x11.getMediaSize().getId(), "android", printItem85x11.getMediaSize().getHeightMils(), printItem85x11.getMediaSize().getWidthMils()), scaleType, imageAsset4x5l);
-
         PrintItem printItem5x7 = new ImagePrintItem(mediaSize5x7, scaleType, imageAsset5x7);
+        PrintItem printItem5x8 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_5X8, scaleType, assetdirectory);
 
-        printJobData.addPrintItem(printItem4x5);
+        //Lastly, add all the printitems to the print job data.
+        printJobData.addPrintItem(printItem4x6);
         printJobData.addPrintItem(printItem85x11);
         printJobData.addPrintItem(printItem85x11l);
         printJobData.addPrintItem(printItem5x7);
+        printJobData.addPrintItem(printItem5x8);
 
+        //Optionally include print attributes.
         PrintAttributes printAttributes = new PrintAttributes.Builder()
-                .setMediaSize(printItem85x11.getMediaSize())
+                .setMediaSize(PrintAttributes.MediaSize.NA_INDEX_4X6)
                 .build();
         printJobData.setPrintDialogOptions(printAttributes);
 
+        //Set the printJobData to the PrintUtil and call print.
         PrintUtil.setPrintJobData(printJobData);
         PrintUtil.print(this);
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    public String generateBitmap(ImageView imageView, String prefix) {
-
-        imageView.buildDrawingCache();
-        Bitmap printableBitmap = imageView.getDrawingCache();
-        return savePrintableImage(printableBitmap, prefix);
-    }
-
-    private String savePrintableImage(Bitmap photo, String prefix) {
-
-        String imageURI = null;
-
-        FileOutputStream out;
-        try {
-            File imageFile = createImageFile(getApplicationContext(), prefix);
-            if (imageFile != null) {
-                imageURI = imageFile.getAbsolutePath();
-                out = new FileOutputStream(imageURI);
-                photo.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                out.flush();
-                out.close();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        Log.i("Filename", imageURI + "");
-        return imageURI;
-
-    }
-
-    public static File createImageFile(Context context, String imageSize) throws IOException {
-
-        ContextWrapper cw = new ContextWrapper(context);
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        File path = new File(directory, imageSize + ".jpg");
-
-        return path;
     }
 
     @Override

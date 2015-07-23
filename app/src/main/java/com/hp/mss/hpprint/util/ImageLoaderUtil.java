@@ -13,6 +13,8 @@
 package com.hp.mss.hpprint.util;
 
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -20,7 +22,9 @@ import android.os.Looper;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * This is used in the HP Print SDK to load images from URI's.
@@ -65,6 +69,83 @@ public class ImageLoaderUtil {
             throw new RuntimeException("OoM");
         }
         return bitmap;
+    }
+
+    /**
+     * Use this to save the image if the image exists in your assets directory.
+     * @param context The activity context.
+     * @param filePath Path to the asset in your assets directory.
+     * @return The string uri to be used for creating {@link com.hp.mss.hpprint.model.asset.ImageAsset}.
+     */
+    public static String saveImageFromAssetDir(Context context, String filePath) {
+        AssetManager assetManager = context.getAssets();
+
+        InputStream istr;
+        Bitmap bitmap = null;
+        try {
+            istr = assetManager.open(filePath);
+            bitmap = BitmapFactory.decodeStream(istr);
+        } catch (IOException e) {
+            // handle exception
+        }
+
+        return savePrintableImage(context, bitmap, filePath);
+    }
+
+    /**
+     * Use this to save the image if the image is a drawable.
+     * @param context The activity context.
+     * @param resourceId Resource ID.
+     * @param name Name of the file you want to save as.
+     * @return The string uri to be used for creating {@link com.hp.mss.hpprint.model.asset.ImageAsset}.
+     */
+    public static String saveImageFromDrawable(Context context, int resourceId, String name){
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId);
+        return savePrintableImage(context, bitmap, name);
+    }
+
+    /**
+     * Use this to save the image if you already have a bitmap generated to print.
+     * @param context The activity context.
+     * @param bitmap The bitmap.
+     * @param fileName Name of the file you want to save as.
+     * @return The string uri to be used for creating {@link com.hp.mss.hpprint.model.asset.ImageAsset}.
+     */
+    public static String savePrintableImage(Context context, Bitmap bitmap, String fileName) {
+        String imageURI = null;
+
+        FileOutputStream out;
+        try {
+            File imageFile = ImageLoaderUtil.createImageFile(context.getApplicationContext(), fileName);
+            if (imageFile != null) {
+                imageURI = imageFile.getAbsolutePath();
+                out = new FileOutputStream(imageURI);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        Log.i("Filename", imageURI + "");
+
+        return imageURI;
+
+
+    }
+
+    protected static File createImageFile(Context context, String fileName) throws IOException {
+
+        ContextWrapper cw = new ContextWrapper(context);
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+
+        // Create imageDir
+        File path = new File(directory, fileName + ".jpg");
+
+        return path;
     }
 
 //    public static Bitmap getBitmapWithSize(String imagePath, int reqWidth, int reqHeight) {
