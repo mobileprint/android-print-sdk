@@ -34,6 +34,7 @@ public class ImageLoaderUtil {
     private static final String IMAGE_DIR = "imageDir";
     private static final String IMAGE_EXT = ".jpg";
 
+    private static Context c;
     /**
      * This method gives you the bitmap of the image you tell it to load from the filesystem.
      * @param uri The file location.
@@ -112,6 +113,7 @@ public class ImageLoaderUtil {
      * @return The string uri to be used for creating {@link com.hp.mss.hpprint.model.asset.ImageAsset}.
      */
     public static String savePrintableImage(Context context, Bitmap bitmap, String fileName) {
+        c = context;
         String imageURI = null;
 
         FileOutputStream out;
@@ -140,14 +142,25 @@ public class ImageLoaderUtil {
 
         ContextWrapper cw = new ContextWrapper(context);
         // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        File directory = cw.getDir(IMAGE_DIR, Context.MODE_PRIVATE);
 
         // Create imageDir
-        File path = new File(directory, fileName + ".jpg");
+        File path = new File(directory, fileName + IMAGE_EXT);
+        path.deleteOnExit();
 
         return path;
     }
 
+    protected static void cleanUpFileDirectory(){
+        ContextWrapper cw = new ContextWrapper(c.getApplicationContext());
+        File directory = cw.getDir(IMAGE_DIR, Context.MODE_PRIVATE);
+
+        File file[] = directory.listFiles();
+        for (int i=0; i < file.length; i++)
+        {
+            file[i].delete();
+        }
+    }
 //    public static Bitmap getBitmapWithSize(String imagePath, int reqWidth, int reqHeight) {
 //        final BitmapFactory.Options options = new BitmapFactory.Options();
 //        options.inJustDecodeBounds = true;

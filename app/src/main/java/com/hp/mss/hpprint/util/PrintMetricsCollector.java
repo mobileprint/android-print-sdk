@@ -80,6 +80,7 @@ class PrintMetricsCollector extends Thread {
         }
 
         if (isJobFailed(printJob)) {
+            ImageLoaderUtil.cleanUpFileDirectory();
             PrintMetricsData printMetricsData = new PrintMetricsData();
             printMetricsData.previewPaperSize = this.previewPaperSize;
 
@@ -96,6 +97,7 @@ class PrintMetricsCollector extends Thread {
         }
 
         if (hasJobInfo(printJob)) {
+            ImageLoaderUtil.cleanUpFileDirectory();
 
             PrintJobInfo printJobInfo = printJob.getInfo();
             PrintAttributes printJobAttributes = printJobInfo.getAttributes();

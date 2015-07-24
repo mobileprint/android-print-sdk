@@ -12,11 +12,14 @@
 
 package com.hp.mss.hpprint.model.asset;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.hp.mss.hpprint.util.ImageLoaderUtil;
+
+import java.util.UUID;
 
 /**
  *
@@ -54,6 +57,51 @@ public class ImageAsset implements Asset, Parcelable {
         this.height = height;
         this.measurementUnits = measurementUnits;
         this.uri = uri;
+    }
+
+    /**
+     * Constructor used to create an ImageAsset with a resource.
+     * @param context The context.
+     * @param resourceId The resource id.
+     * @param measurementUnits The measurement unit of the width and height.
+     * @param width The width of the asset.
+     * @param height The height of the asset.
+     */
+    public ImageAsset(Context context, int resourceId, MeasurementUnits measurementUnits, float width, float height) {
+        this(ImageLoaderUtil.saveImageFromDrawable(context, resourceId, Integer.toString(resourceId)),
+                measurementUnits,
+                width,
+                height);
+    }
+
+    /**
+     * Constructor used to create an ImageAsset with an asset located in the "assets" directory.
+     * @param context The context.
+     * @param assetURI The location of the asset within the assets directory.
+     * @param measurementUnits The measurement unit of the width and height.
+     * @param width The width of the asset.
+     * @param height The height of the asset.
+     */
+    public ImageAsset(Context context, String assetURI, MeasurementUnits measurementUnits, float width, float height) {
+        this(ImageLoaderUtil.saveImageFromAssetDir(context, assetURI),
+                measurementUnits,
+                width,
+                height);
+    }
+
+    /**
+     * Constructor used to create an ImageAsset with a bitmap.
+     * @param context The context.
+     * @param bitmap The bitmap you want to use to create the ImageAsset.
+     * @param measurementUnits The measurement unit of the width and height.
+     * @param width The width of the asset.
+     * @param height The height of the asset.
+     */
+    public ImageAsset(Context context, Bitmap bitmap, MeasurementUnits measurementUnits, float width, float height){
+        this(ImageLoaderUtil.savePrintableImage(context, bitmap, UUID.randomUUID().toString()),
+                measurementUnits,
+                width,
+                height);
     }
 
     /**

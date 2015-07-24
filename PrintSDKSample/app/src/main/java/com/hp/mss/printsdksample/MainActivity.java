@@ -97,24 +97,15 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
 
     public void buttonClicked(View v) {
 
-        //Save images from drawables
-        String file4x5l = ImageLoaderUtil.saveImageFromDrawable(this, R.drawable.template4x5l, "4x5l");
-        String file4x5p = ImageLoaderUtil.saveImageFromDrawable(this, R.drawable.template4x5p, "4x5p");
-        String file4x6 = ImageLoaderUtil.saveImageFromDrawable(this, R.drawable.template4x6, "4x6");
-        String file5x7 = ImageLoaderUtil.saveImageFromDrawable(this, R.drawable.template5x7, "5x7");
-
-        //Save image from assets directory
-        String assetFile = ImageLoaderUtil.saveImageFromAssetDir(this, "oceanwave.jpeg");
-
-        //Or you can save a bitmap by doing the following.
-        //String bitmapFile = ImageLoaderUtil.savePrintableImage(this, bitmap, "filename");
-
         //Create image assets from the saved files.
-        ImageAsset imageAsset4x5l = new ImageAsset(file4x5l, ImageAsset.MeasurementUnits.INCHES, 5, 4);
-        ImageAsset imageAsset4x5p = new ImageAsset(file4x5p, ImageAsset.MeasurementUnits.INCHES, 4, 5);
-        ImageAsset imageAsset4x6 = new ImageAsset(file4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
-        ImageAsset imageAsset5x7 = new ImageAsset(file5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
-        ImageAsset assetdirectory = new ImageAsset(assetFile, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+        ImageAsset imageAsset4x5l = new ImageAsset(this, R.drawable.template4x5l, ImageAsset.MeasurementUnits.INCHES, 5, 4);
+        ImageAsset imageAsset4x5p = new ImageAsset(this, R.drawable.template4x5p, ImageAsset.MeasurementUnits.INCHES, 4, 5);
+        ImageAsset imageAsset4x6 = new ImageAsset(this, R.drawable.template4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+        ImageAsset imageAsset5x7 = new ImageAsset(this, R.drawable.template5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
+        ImageAsset assetdirectory = new ImageAsset(this, "oceanwave.jpeg", ImageAsset.MeasurementUnits.INCHES, 4, 6);
+
+        //Alternatively, you can use a bitmap by doing the following.
+        // ImageAsset bitmapAsset = new ImageAsset(this, bitmap, ImageAsset.MeasurementUnits.INCHES, 4,5);
 
         //Create the printJobData with the default print item
         PrintItem printItemDefault = new ImagePrintItem(scaleType, imageAsset5x7);
