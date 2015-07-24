@@ -55,20 +55,35 @@ Once you have that, you are ready to invoke our print workflow.
 
 ### ImageAsset
 
-One of the first objects you need to create in order to use our print workflow is the `ImageAsset` object.
-You will need at least one but you can create as many as needed ([Multiple Assets](#multiple-assets)). For example:
+One of the first objects you need to create in order to use our print workflow is the `ImageAsset` object. It tells the print sdk what you want to print.
+You will need at least one but you can create as many as needed ([Multiple Assets](#multiple-assets)). You can use one of the following 3 methods to create the imageAsset.
 
 ```java
-ImageAsset imageAsset4x6 = new ImageAsset(filename4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+ImageAsset imageAsset4x6 = new ImageAsset(this, R.drawable.template4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
 ```
+
+```java
+ImageAsset assetdirectory = new ImageAsset(this, "oceanwave.jpeg", ImageAsset.MeasurementUnits.INCHES, 4, 6);
+```
+
+```java
+ImageAsset bitmapAsset = new ImageAsset(this, bitmap, ImageAsset.MeasurementUnits.INCHES, 4,5);
+```
+
+Or, if you already saved the bitmap into the internal storage location for your app:
+
+```java
+ImageAsset imageAsset4x6 = new ImageAsset(fileUriString, ImageAsset.MeasurementUnits.INCHES, 4, 6);
 
 ### PrintItem
 
-Once you create an image asset, you need to associate it with a `PrintItem` object. You will need to provide a `ScaleType` and the `ImageAsset` itself.
+Once you create an image asset, you need to associate it with a `PrintItem` object. This object provides a scaletype (layout) for the imageAsset and allows you to define what media size you want to associate with the `ImageAsset`. You will need to provide a `ScaleType` and the `ImageAsset` itself.
 
 ```java
 PrintItem printItemDefault = new ImagePrintItem(PrintItem.ScaleType.CENTER, imageAsset4x6);
 ```
+
+For more information, take a look in the Sample App or the JavaDocs.
 
 ### PrintJobData
 
