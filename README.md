@@ -74,6 +74,7 @@ Or, if you already saved the bitmap into the internal storage location for your 
 
 ```java
 ImageAsset imageAsset4x6 = new ImageAsset(fileUriString, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+```
 
 ### PrintItem
 
