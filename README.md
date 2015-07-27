@@ -7,7 +7,7 @@
 - [Basic Usage](#basic-usage)
     + [ImageAsset](#imageasset)
     + [PrintItem](#printitem)
-    + [PrintJob](#printjob)
+    + [printJobData](#printJobData)
 - [Advanced](#advanced)
     + [Multiple Assets](#multiple-assets)
     + [Default Print Attributes](#default-print-attributes)
@@ -99,7 +99,7 @@ PrintUtil.setPrintJobData(printJobData);
 
 ### Print
 
-Once you have created the `PrintJob` object, you are ready to print.
+Once you have created the `PrintJobData` object, you are ready to print.
 
 ```java
 PrintUtil.print(activity);
@@ -108,7 +108,7 @@ PrintUtil.print(activity);
 ## Advanced
 
 If you would like more customization on what gets printed when users select certain print settings in the Android Print Dialog,
-we optionally provide a way to give the `PrintJob` multiple `PrintItems` that will be selected based on your user's media size selection as
+we optionally provide a way to give the `PrintJobData` multiple `PrintItems` that will be selected based on your user's media size selection as
 well as orientation.
 
 ### Multiple Assets
@@ -123,21 +123,21 @@ PrintItem printItemLetter = new ImagePrintItem(PrintAttributes.MediaSize.NA_LETT
 It would tell the Print Library that you want to use the `imageAsset4x5` whenever the user selects the letter size media in
 the Android Print Dialog.
 
-You must then add the printItem to the `PrintJob` by invoking:
+You must then add the printItem to the `PrintJobData` by invoking:
 
 ```java
-printJob.addPrintItem(printItemLetter);
+printJobData.addPrintItem(printItemLetter);
 ```
 
 ### Default Print Attributes
 
-`PrintJob` takes in an Android standard [`PrintAttributes`](https://developer.android.com/reference/android/print/PrintAttributes.html) object which is used to set print dialog options.
+`printJobData` takes in an Android standard [`PrintAttributes`](https://developer.android.com/reference/android/print/PrintAttributes.html) object which is used to set print dialog options.
 
 ```java
 PrintAttributes printAttributes = new PrintAttributes.Builder()
         .setMediaSize(printItemLetter.getMediaSize())
         .build();
-printJob.setPrintDialogOptions(printAttributes);
+printJobData.setPrintDialogOptions(printAttributes);
 ```
 
 ### Print Metrics
@@ -159,7 +159,7 @@ class YourCallingActivity extends ActionBarActivity implements PrintUtil.PrintMe
 
 ### Plugin Install Helper
 
-You can disable the our print plugin install helper by setting doing:
+You can disable the our print plugin install helper by setting:
 
 ```java
 PrintUtil.showPluginHelper = false;
