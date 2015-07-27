@@ -63,6 +63,12 @@ public class PrintPreview extends AppCompatActivity {
     PrintJobData printJobData;
     String spinnerSelectedText;
 
+    private static final PrintAttributes.MediaSize[] defaultMediaSizes = {
+        PrintAttributes.MediaSize.NA_LETTER,
+        PrintAttributes.MediaSize.NA_INDEX_4X6,
+        new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000)
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +80,6 @@ public class PrintPreview extends AppCompatActivity {
         }
 
         printJobData = PrintUtil.getPrintJobData();
-        PrintItem printItem = printJobData.getPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6);
 
         initializeSpinnerData();
 
@@ -98,21 +103,33 @@ public class PrintPreview extends AppCompatActivity {
     private void initializeSpinnerData(){
         Spinner sizeSpinner = (Spinner) findViewById(R.id.paper_size_spinner);
 
-        String[] spinnerArray = new String[printJobData.numPrintItems()];
-        int i = 0;
-        for (PrintAttributes.MediaSize mediaSize: printJobData.getPrintItems().keySet()) {
-            String text = getSpinnerText(mediaSize);
-            spinnerMap.put(text, mediaSize);
-            spinnerArray[i++] = text;
+        String[] spinnerArray;
+        if(printJobData.numPrintItems() == 0){
+            spinnerArray = new String[defaultMediaSizes.length];
+            for (int i = 0; i < defaultMediaSizes.length; i++) {
+                String text = getSpinnerText(defaultMediaSizes[i]);
+                spinnerMap.put(text, defaultMediaSizes[i]);
+                spinnerArray[i] = text;
+            }
+        } else {
+            spinnerArray = new String[printJobData.numPrintItems()];
+            int i = 0;
+            for (PrintAttributes.MediaSize mediaSize: printJobData.getPrintItems().keySet()) {
+                String text = getSpinnerText(mediaSize);
+                spinnerMap.put(text, mediaSize);
+                spinnerArray[i++] = text;
+            }
         }
 
         ArrayAdapter<String> adapter =new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(adapter);
 
-        PrintAttributes.MediaSize mediaSize = printJobData.getPrintDialogOptions().getMediaSize();
-        String text = getSpinnerText(mediaSize);
-        sizeSpinner.setSelection(adapter.getPosition(text));
+        if(printJobData.getPrintDialogOptions() != null) {
+            PrintAttributes.MediaSize mediaSize = printJobData.getPrintDialogOptions().getMediaSize();
+            String text = getSpinnerText(mediaSize);
+            sizeSpinner.setSelection(adapter.getPosition(text));
+        }
         setSizeSpinnerListener(sizeSpinner);
     }
 
@@ -229,8 +246,8 @@ public class PrintPreview extends AppCompatActivity {
 
                 PrintItem printItem = printJobData.getPrintItem(spinnerMap.get(spinnerSelectedText));
 
-                paperWidth = printItem.getMediaSize().getWidthMils()/1000f;
-                paperHeight = printItem.getMediaSize().getHeightMils()/1000f;
+                paperWidth = printItem.getMediaSize().getWidthMils() / 1000f;
+                paperHeight = printItem.getMediaSize().getHeightMils() / 1000f;
 
                 previewView.setPageSize(paperWidth, paperHeight);
                 new PagePreviewView.ImageLoaderTask(PrintPreview.this).execute(new PagePreviewView.LoaderParams(printItem, previewView));
@@ -246,12 +263,20 @@ public class PrintPreview extends AppCompatActivity {
     }
 
     public void doPrint() {
-        PrintAttributes printAttributes = new PrintAttributes.Builder()
-                .setColorMode(printJobData.getPrintDialogOptions().getColorMode())
-                .setMediaSize(spinnerMap.get(spinnerSelectedText))
-                .setMinMargins(printJobData.getPrintDialogOptions().getMinMargins())
-                .setResolution(printJobData.getPrintDialogOptions().getResolution())
-                .build();
+
+        PrintAttributes printAttributes = printJobData.getPrintDialogOptions();
+        if(printAttributes == null){
+            printAttributes = new PrintAttributes.Builder()
+                    .setMediaSize(spinnerMap.get(spinnerSelectedText))
+                    .build();
+        } else {
+             printAttributes = new PrintAttributes.Builder()
+                    .setColorMode(printJobData.getPrintDialogOptions().getColorMode())
+                    .setMediaSize(spinnerMap.get(spinnerSelectedText))
+                    .setMinMargins(printJobData.getPrintDialogOptions().getMinMargins())
+                    .setResolution(printJobData.getPrintDialogOptions().getResolution())
+                    .build();
+        }
 
         printJobData.setPrintDialogOptions(printAttributes);
         printJobData.setPreviewPaperSize(spinnerSelectedText);
