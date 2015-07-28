@@ -23,6 +23,8 @@
     <string name="layout_fit">Fit</string>
     <string name="layout_center_top_left">Center Top Left</string>
     <string name="metrics_option">Metrics Options</string>
+
+    <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
     <string-array name="scaleTypeArray">
         <item>Center</item>
         <item>Center Top-Left</item>

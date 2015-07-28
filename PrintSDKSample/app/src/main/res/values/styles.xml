@@ -15,6 +15,30 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/HPFontColorBlue</item>
+        <item name="colorPrimaryDark">@color/HPFontColorDarkBlue</item>
+        <item name="colorAccent">@color/HPFontColorWhite</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:colorBackground">@color/PrintPreviewBG</item>
+        <item name="android:windowBackground">@color/PrintPreviewBG</item>
     </style>
 
+    <style name="pagePreviewView">
+        <item name="sizeFontColor">@android:color/white</item>
+    </style>
+    <style name="previewPrintInstructionsBG">
+        <item name="android:background">@android:color/white</item>
+    </style>
+    <style name="previewPrintInstructionsText">
+        <item name="android:textColor">@color/HPFontColorBlue</item>
+    </style>
+    <style name="previewSpinnerBG">
+        <item name="android:background">@android:color/white</item>
+    </style>
+    <style name="previewPaperSizeSpinnerText">
+        <item name="android:textColor">@color/HPFontColorCarbonGrey</item>
+    </style>
+    <style name="previewSupportText">
+        <item name="android:textColor">@color/HPFontColorGrey</item>
+    </style>
 </resources>

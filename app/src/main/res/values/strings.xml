@@ -22,7 +22,7 @@
     <string name="support">Support:</string>
     <string name="paper_size">Paper Size</string>
     <string name="paper_type">Paper Type</string>
-    <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
+    <string name="lib_font"></string>
 
     <string-array name="paper_size_array">
         <item> 4 x 5 </item>

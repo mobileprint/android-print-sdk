@@ -12,19 +12,7 @@
   -->
 
 <resources>
-  <style name="pagePreviewView">
-    <item name="sizeFontColor">@android:color/black</item>
-  </style>
-  <style name="previewPrintInstructionsBG">
-    <item name="android:background">@android:color/white</item>
-  </style>
-  <style name="previewPrintInstructionsText">
-  </style>
-  <style name="previewSpinnerBG">
-    <item name="android:background">@android:color/white</item>
-  </style>
-  <style name="previewPaperSizeSpinnerText">
-  </style>
-  <style name="previewSupportText">
-  </style>
+  <declare-styleable name="PagePreviewView">
+    <attr name="sizeFontColor" format="reference|color"/>
+  </declare-styleable>
 </resources>

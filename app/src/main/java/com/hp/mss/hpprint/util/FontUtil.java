@@ -26,7 +26,12 @@ public class FontUtil {
     public static Typeface getDefaultFont(Context context) {
         if (defaultFont == null) {
             final String defaultFontFile = context.getResources().getString(R.string.lib_font);
-            defaultFont = Typeface.createFromAsset(context.getAssets(), defaultFontFile);
+
+            if(defaultFontFile.equals("")){
+                defaultFont = Typeface.DEFAULT;
+            }else{
+                defaultFont = Typeface.createFromAsset(context.getAssets(), defaultFontFile);
+            }
         }
         return defaultFont;
     }

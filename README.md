@@ -13,6 +13,9 @@
     + [Default Print Attributes](#default-print-attributes)
     + [Print Metrics](#print-metrics)
     + [Plugin Install Helper](#plugin-install-helper)
+- [KitKat Print Preview](#kitkat-print-preview)
+    + [Font](#font)
+    + [Color](#color)
 
 ## Features
 
@@ -163,4 +166,41 @@ You can disable the our print plugin install helper by setting:
 
 ```java
 PrintUtil.showPluginHelper = false;
+```
+
+## KitKat Print Preview
+
+You can customize the KitKat print preview to your liking by applying overrides to the library styles. Besides the font colors, the preview activity will match the theme you have set up for the rest of your application.
+
+### Font
+
+In your strings resource file:
+
+```xml
+<string name="lib_font">fonts/HPSimplified_BdIt.ttf</string>
+```
+
+### Color
+
+In your styles resource file:
+
+```xml
+<style name="pagePreviewView">
+    <item name="sizeFontColor">@android:color/white</item>
+</style>
+<style name="previewPrintInstructionsBG">
+    <item name="android:background">@android:color/white</item>
+</style>
+<style name="previewPrintInstructionsText">
+    <item name="android:textColor">@color/HPFontColorBlue</item>
+</style>
+<style name="previewSpinnerBG">
+    <item name="android:background">@android:color/white</item>
+</style>
+<style name="previewPaperSizeSpinnerText">
+    <item name="android:textColor">@color/HPFontColorBlue</item>
+</style>
+<style name="previewSupportText">
+    <item name="android:textColor">@color/HPFontColorGrey</item>
+</style>
 ```

@@ -13,6 +13,7 @@
 package com.hp.mss.hpprint.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,9 +26,12 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.util.FontUtil;
+
+import org.w3c.dom.Attr;
 
 import java.lang.ref.WeakReference;
 
@@ -53,6 +57,7 @@ public class PagePreviewView extends View {
     private PrintJobData printJobData;
     private PrintItem.ScaleType scaleType;
     private PrintItem printItem;
+    private int textColor;
 
     public PagePreviewView(Context context) {
         this(context, null);
@@ -60,7 +65,18 @@ public class PagePreviewView extends View {
 
     public PagePreviewView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        readAttrs(context, attrs);
         init(context);
+
+    }
+
+    private void readAttrs(Context context, AttributeSet attrs){
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PagePreviewView,0,0);
+        try{
+            textColor = a.getColor(R.styleable.PagePreviewView_sizeFontColor, Color.WHITE);
+        } finally {
+            a.recycle();
+        }
     }
 
     private void init(Context context) {
@@ -72,7 +88,7 @@ public class PagePreviewView extends View {
         paperPaint.setStrokeWidth(1);
 
         textPaint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(Color.WHITE);
+        textPaint.setColor(textColor);
         textPaint.setStyle(Paint.Style.FILL);
         textPaint.setTextAlign(Paint.Align.CENTER);
         if (!isInEditMode()) {

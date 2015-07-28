@@ -11,21 +11,25 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.hp.mss.hpprint.activity.PrintPreview">
+    tools:context="com.hp.mss.hpprint.activity.PrintPreview"
+    >
 
     <com.hp.mss.hpprint.view.PagePreviewView
+        style="@style/pagePreviewView"
         android:id="@+id/preview_image_view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="100dp"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/HPFontColorWhite">
+        style="@style/previewSpinnerBG">
 
         <TextView
             android:id="@+id/paper_size_title"
@@ -33,12 +37,14 @@
             android:layout_height="wrap_content"
             android:text="@string/paper_size"
             android:gravity="left|bottom"
-            android:textSize="15sp"
-            android:paddingLeft="45px"
-            android:layout_centerVertical="true"/>
+            android:textSize="16sp"
+            android:paddingLeft="30dp"
+            android:layout_centerVertical="true"
+            style="@style/previewPaperSizeSpinnerText"/>
 
         <Spinner
             android:id="@+id/paper_size_spinner"
+            android:paddingBottom="1dp"
             android:paddingRight="45dp"
             android:layout_width="120dp"
             android:layout_height="match_parent"
@@ -59,8 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <TextView
+                style="@style/previewSupportText"
                 android:id="@+id/print_preview_support_title"
-                android:textColor="@color/HPFontColorGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15sp"
@@ -71,28 +77,20 @@
                 android:textAllCaps="true"/>
         </RelativeLayout>
         <RelativeLayout
+            style="@style/previewPrintInstructionsBG"
             android:id="@+id/learn_more"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/support_title"
-            android:background="@color/HPFontColorWhite">
-            <ImageView
-                android:id="@+id/learn_more_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingLeft="10dp"
-                android:src="@drawable/ic_printscreen_print_instructions"/>
+            android:layout_below="@+id/support_title">
             <TextView
+                style="@style/previewPrintInstructionsText"
                 android:id="@+id/ic_printing_support_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:paddingLeft="10dp"
-                android:text="@string/learn_about_mobile_print"
-                android:layout_toEndOf="@id/learn_more_icon"
-                android:textColor="@color/HPFontColorBlue"
-                android:background="@color/HPFontColorWhite"/>
+                android:paddingLeft="30dp"
+                android:textSize="15sp"
+                android:text="@string/learn_about_mobile_print"/>
         </RelativeLayout>
     </RelativeLayout>
 

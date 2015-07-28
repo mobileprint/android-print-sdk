@@ -28,8 +28,7 @@
             android:name=".activity.PrintPreview"
             android:label="@string/title_activity_print_preview"
             android:screenOrientation="portrait"
-            android:launchMode="singleTop"
-            android:theme="@style/LibTheme">
+            android:launchMode="singleTop">
         </activity>
     </application>
 </manifest>
