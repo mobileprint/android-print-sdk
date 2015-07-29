@@ -12,7 +12,6 @@
 
 package com.hp.mss.hpprint.activity;
 
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -42,7 +41,9 @@ import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * The intent of this class is to allow KitKat device users to preview the print out prior to sending
@@ -64,9 +65,9 @@ public class PrintPreview extends AppCompatActivity {
     String spinnerSelectedText;
 
     private static final PrintAttributes.MediaSize[] defaultMediaSizes = {
-        PrintAttributes.MediaSize.NA_LETTER,
         PrintAttributes.MediaSize.NA_INDEX_4X6,
-        new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000)
+        new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000),
+        PrintAttributes.MediaSize.NA_LETTER
     };
 
     @Override
@@ -102,32 +103,51 @@ public class PrintPreview extends AppCompatActivity {
 
     private void initializeSpinnerData(){
         Spinner sizeSpinner = (Spinner) findViewById(R.id.paper_size_spinner);
+        List<String> spinnerList = new ArrayList<String>();
 
-        String[] spinnerArray;
-        if(printJobData.numPrintItems() == 0){
-            spinnerArray = new String[defaultMediaSizes.length];
-            for (int i = 0; i < defaultMediaSizes.length; i++) {
-                String text = getSpinnerText(defaultMediaSizes[i]);
-                spinnerMap.put(text, defaultMediaSizes[i]);
-                spinnerArray[i] = text;
-            }
-        } else {
-            spinnerArray = new String[printJobData.numPrintItems()];
-            int i = 0;
-            for (PrintAttributes.MediaSize mediaSize: printJobData.getPrintItems().keySet()) {
-                String text = getSpinnerText(mediaSize);
+        // add 4x5 as needed
+        String text = "";
+        if (PrintUtil.is4x5media) {
+            text = PrintUtil.mediaSize4x5Label;
+            spinnerMap.put(text, PrintAttributes.MediaSize.NA_INDEX_4X6);
+            spinnerList.add(text);
+        }
+
+        // add default media size
+        for (int i = 0; i < defaultMediaSizes.length; i++) {
+            text = getSpinnerText(defaultMediaSizes[i]);
+            spinnerMap.put(text, defaultMediaSizes[i]);
+            spinnerList.add(text);
+        }
+
+        // add media size in print items
+        for (PrintAttributes.MediaSize mediaSize: printJobData.getPrintItems().keySet()) {
+            text = getSpinnerText(mediaSize);
+            if (!spinnerList.contains(text)) {
                 spinnerMap.put(text, mediaSize);
-                spinnerArray[i++] = text;
+                spinnerList.add(text);
             }
         }
 
-        ArrayAdapter<String> adapter =new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, spinnerArray);
+        // add media size from default print item if it does exist
+        if (printJobData.getDefaultPrintItem() != null && printJobData.getDefaultPrintItem().getMediaSize() != null) {
+            PrintAttributes.MediaSize mediaSize = printJobData.getDefaultPrintItem().getMediaSize();
+            text = getSpinnerText(mediaSize);
+            if (!spinnerList.contains(text)) {
+                spinnerMap.put(text, mediaSize);
+                spinnerList.add(text);
+            }
+        }
+
+        String[] spinnerArray = spinnerList.toArray(new String[spinnerList.size()]);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(adapter);
 
         if(printJobData.getPrintDialogOptions() != null) {
             PrintAttributes.MediaSize mediaSize = printJobData.getPrintDialogOptions().getMediaSize();
-            String text = getSpinnerText(mediaSize);
+            text = getSpinnerText(mediaSize);
             sizeSpinner.setSelection(adapter.getPosition(text));
         }
         setSizeSpinnerListener(sizeSpinner);
@@ -138,6 +158,8 @@ public class PrintPreview extends AppCompatActivity {
         String heightText = fmt(mediaSize.getHeightMils() / 1000f);
         return String.format("%s x %s", widthText, heightText);
     }
+
+
 
     private static String fmt(double d)
     {
@@ -245,9 +267,20 @@ public class PrintPreview extends AppCompatActivity {
                 spinnerSelectedText = (String) parent.getItemAtPosition(position);
 
                 PrintItem printItem = printJobData.getPrintItem(spinnerMap.get(spinnerSelectedText));
-
-                paperWidth = printItem.getMediaSize().getWidthMils() / 1000f;
-                paperHeight = printItem.getMediaSize().getHeightMils() / 1000f;
+                if (printItem != null && printItem.getMediaSize() != null) {
+                    paperWidth = printItem.getMediaSize().getWidthMils() / 1000f;
+                    paperHeight = printItem.getMediaSize().getHeightMils() / 1000f;
+                } else {
+                    printItem = printJobData.getDefaultPrintItem();
+                    PrintAttributes.MediaSize mediaSize = spinnerMap.get(spinnerSelectedText);
+                    if (spinnerSelectedText == PrintUtil.mediaSize4x5Label) {
+                        paperWidth = 4;
+                        paperHeight = 5;
+                    } else {
+                        paperWidth = mediaSize.getWidthMils() / 1000f;
+                        paperHeight = mediaSize.getHeightMils() / 1000f;
+                    }
+                }
 
                 previewView.setPageSize(paperWidth, paperHeight);
                 new PagePreviewView.ImageLoaderTask(PrintPreview.this).execute(new PagePreviewView.LoaderParams(printItem, previewView));
