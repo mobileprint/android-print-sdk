@@ -30,6 +30,7 @@ import java.io.InputStream;
  * This is used in the HP Print SDK to load images from URI's.
  */
 public class ImageLoaderUtil {
+    private static final int MAXFILEAGE = (int) 3600000L;   // file aging file is 1 hour
     private static final String TAG = "ImageLoaderUtil";
     private static final String IMAGE_DIR = "imageDir";
     private static final String IMAGE_EXT = ".jpg";
@@ -158,7 +159,9 @@ public class ImageLoaderUtil {
         File file[] = directory.listFiles();
         for (int i=0; i < file.length; i++)
         {
-            file[i].delete();
+            if(file[i].lastModified() + MAXFILEAGE < System.currentTimeMillis()) {
+                file[i].delete();
+            }
         }
     }
 //    public static Bitmap getBitmapWithSize(String imagePath, int reqWidth, int reqHeight) {
