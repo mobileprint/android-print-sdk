@@ -268,8 +268,13 @@ public class PrintPreview extends AppCompatActivity {
 
                 PrintItem printItem = printJobData.getPrintItem(spinnerMap.get(spinnerSelectedText));
                 if (printItem != null && printItem.getMediaSize() != null) {
-                    paperWidth = printItem.getMediaSize().getWidthMils() / 1000f;
-                    paperHeight = printItem.getMediaSize().getHeightMils() / 1000f;
+                    if (spinnerSelectedText == PrintUtil.mediaSize4x5Label) {
+                        paperWidth = 4;
+                        paperHeight = 5;
+                    } else {
+                        paperWidth = printItem.getMediaSize().getWidthMils() / 1000f;
+                        paperHeight = printItem.getMediaSize().getHeightMils() / 1000f;
+                    }
                 } else {
                     printItem = printJobData.getDefaultPrintItem();
                     PrintAttributes.MediaSize mediaSize = spinnerMap.get(spinnerSelectedText);
