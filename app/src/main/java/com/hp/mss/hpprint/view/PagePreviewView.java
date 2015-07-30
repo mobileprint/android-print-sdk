@@ -104,7 +104,7 @@ public class PagePreviewView extends View {
 
         paperPaint.setStyle(Paint.Style.FILL);
         paperPaint.setColor(Color.WHITE);
-        RectF pageBoundsTemp = new RectF(pageBounds.left + 1, pageBounds.top + 1, pageBounds.right - 1, pageBounds.bottom - 1);
+        RectF pageBoundsTemp = new RectF(pageBounds.left, pageBounds.top, pageBounds.right, pageBounds.bottom);
         canvas.drawRect(pageBoundsTemp, paperPaint);
 
         if (printItem != null) {
