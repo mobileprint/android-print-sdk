@@ -357,8 +357,11 @@ public class PrintPreview extends AppCompatActivity {
 
             @Override
             public void printPluginHelperCanceled() {
+                disableMenu = false;
+                invalidateOptionsMenu();
             }
         };
+
         PrintPluginHelper.showPluginHelper(this, printPluginListener);
     }
 
