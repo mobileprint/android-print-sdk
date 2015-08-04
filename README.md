@@ -17,6 +17,9 @@
     + [Font](#font)
     + [Color](#color)
 
+## Download .aar
+[Download](https://github.com/IPGPTP/DroidPrint/tree/master/hpprint.aar)
+
 ## Features
 
 1. Kitkat print preview
