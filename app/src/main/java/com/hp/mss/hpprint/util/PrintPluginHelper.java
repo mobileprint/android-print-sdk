@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -54,10 +55,10 @@ public class PrintPluginHelper {
             }
             return;
         }
-        View checkBoxView = View.inflate(activity, R.layout.checkbox, null);
+        View checkBoxView = View.inflate(new ContextThemeWrapper(activity, R.style.printPluginHelperDialogCheckBox), R.layout.checkbox, null);
         final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
         checkBox.setText("Do not show again.");
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(activity, R.style.printPluginHelperDialog));
         final AlertDialog pluginDialog = builder.setMessage(message)
                 .setTitle(header)
                 .setView(checkBoxView)

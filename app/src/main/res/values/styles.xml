@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Hewlett-Packard Company
   ~ All rights reserved.
   ~
@@ -12,19 +11,26 @@
   -->
 
 <resources>
-  <style name="pagePreviewView">
-    <item name="sizeFontColor">@android:color/black</item>
-  </style>
-  <style name="previewPrintInstructionsBG">
-    <item name="android:background">@android:color/white</item>
-  </style>
-  <style name="previewPrintInstructionsText">
-  </style>
-  <style name="previewSpinnerBG">
-    <item name="android:background">@android:color/white</item>
-  </style>
-  <style name="previewPaperSizeSpinnerText">
-  </style>
-  <style name="previewSupportText">
-  </style>
+
+    <style name="pagePreviewView">
+        <item name="sizeFontColor">@android:color/black</item>
+    </style>
+
+    <style name="previewPrintInstructionsBG">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="previewPrintInstructionsText"></style>
+
+    <style name="previewSpinnerBG">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="previewPaperSizeSpinnerText"></style>
+
+    <style name="previewSupportText"></style>
+
+    <style name="printPluginHelperDialog" parent="@android:style/Theme.Holo.Dialog"></style>
+
+    <style name="printPluginHelperDialogCheckBox" parent="@android:style/Theme.Holo"></style>
 </resources>
