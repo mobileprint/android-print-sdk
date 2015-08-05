@@ -89,21 +89,25 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
                     android:id="@+id/layoutCenter"
                     android:text="@string/layout_center" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
                     android:id="@+id/layoutCorp"
                     android:text="@string/layout_crop" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
                     android:id="@+id/layoutFit"
                     android:text="@string/layout_fit" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
                     android:id="@+id/layoutCenterTopLeft"
                     android:text="@string/layout_center_top_left" />
         </RadioGroup>
@@ -134,11 +138,13 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
                 android:id="@+id/withMetrics"
                 android:text="With Metrics" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
                 android:id="@+id/withoutMetrics"
                 android:text="Without Metrics" />
         </RadioGroup>
@@ -146,6 +152,8 @@
 
     <Button
         android:id="@+id/printBtn"
+        android:background="@color/HPFontColorBlue"
+        android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Print"
