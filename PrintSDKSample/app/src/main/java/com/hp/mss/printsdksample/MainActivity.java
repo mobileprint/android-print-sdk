@@ -98,17 +98,16 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
     public void buttonClicked(View v) {
 
         //Create image assets from the saved files.
-        ImageAsset imageAsset4x5l = new ImageAsset(this, R.drawable.template4x5l, ImageAsset.MeasurementUnits.INCHES, 5, 4);
-        ImageAsset imageAsset4x5p = new ImageAsset(this, R.drawable.template4x5p, ImageAsset.MeasurementUnits.INCHES, 4, 5);
-        ImageAsset imageAsset4x6 = new ImageAsset(this, R.drawable.template4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
-        ImageAsset imageAsset5x7 = new ImageAsset(this, R.drawable.template5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
-        ImageAsset assetdirectory = new ImageAsset(this, "oceanwave.jpeg", ImageAsset.MeasurementUnits.INCHES, 4, 6);
+        ImageAsset imageAsset4x5 = new ImageAsset(this, R.drawable.t4x5, ImageAsset.MeasurementUnits.INCHES, 4, 5);
+        ImageAsset imageAsset4x6 = new ImageAsset(this, R.drawable.t4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+        ImageAsset imageAsset5x7 = new ImageAsset(this, R.drawable.t5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
+        ImageAsset assetdirectory = new ImageAsset(this, "t8.5x11.png", ImageAsset.MeasurementUnits.INCHES, 8.5f, 11f);
 
         //Alternatively, you can use a bitmap by doing the following.
         // ImageAsset bitmapAsset = new ImageAsset(this, bitmap, ImageAsset.MeasurementUnits.INCHES, 4,5);
 
         //Create the printJobData with the default print item
-        PrintItem printItemDefault = new ImagePrintItem(scaleType, imageAsset5x7);
+        PrintItem printItemDefault = new ImagePrintItem(scaleType, imageAsset4x5);
         PrintJobData printJobData = new PrintJobData(this, printItemDefault);
 
         //Giving the print job a name.
@@ -119,15 +118,13 @@ public class MainActivity extends ActionBarActivity implements RadioGroup.OnChec
 
         //Create printitems from the assets. These define what asset is to be used for each media size.
         PrintItem printItem4x6 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6, scaleType, imageAsset4x6);
-        PrintItem printItem85x11 = new ImagePrintItem(PrintAttributes.MediaSize.NA_LETTER, scaleType, imageAsset4x5p);
-        PrintItem printItem85x11l = new ImagePrintItem(new PrintAttributes.MediaSize(printItem85x11.getMediaSize().getId(), "android", printItem85x11.getMediaSize().getHeightMils(), printItem85x11.getMediaSize().getWidthMils()), scaleType, imageAsset4x5l);
+        PrintItem printItem85x11 = new ImagePrintItem(PrintAttributes.MediaSize.NA_LETTER, scaleType, assetdirectory);
         PrintItem printItem5x7 = new ImagePrintItem(mediaSize5x7, scaleType, imageAsset5x7);
-        PrintItem printItem5x8 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_5X8, scaleType, assetdirectory);
+        PrintItem printItem5x8 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_5X8, scaleType, imageAsset4x5);
 
         //Lastly, add all the printitems to the print job data.
         printJobData.addPrintItem(printItem4x6);
         printJobData.addPrintItem(printItem85x11);
-        printJobData.addPrintItem(printItem85x11l);
         printJobData.addPrintItem(printItem5x7);
         printJobData.addPrintItem(printItem5x8);
 
