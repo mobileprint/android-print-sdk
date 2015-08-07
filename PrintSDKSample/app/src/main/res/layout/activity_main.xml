@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/asset"
+        android:textColor="@android:color/white"
         android:textAlignment="viewStart"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
         <LinearLayout
@@ -76,6 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/layout_option"
+            android:textColor="@android:color/white"
             android:textAlignment="viewStart"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
             <RadioGroup
@@ -126,6 +128,7 @@
             android:layout_height="wrap_content"
             android:text="@string/metrics_option"
             android:textAlignment="viewStart"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
         <RadioGroup
             android:layout_width="wrap_content"

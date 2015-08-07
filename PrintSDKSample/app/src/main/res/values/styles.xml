@@ -18,7 +18,6 @@
         <item name="colorControlNormal">#888888</item>
         <item name="colorPrimary">@color/HPFontColorBlue</item>
         <item name="colorPrimaryDark">@color/HPFontColorDarkBlue</item>
-        <item name="android:textColor">@android:color/white</item>
         <item name="colorAccent">@color/HPFontColorBlue</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:colorBackground">@color/PrintPreviewBG</item>
