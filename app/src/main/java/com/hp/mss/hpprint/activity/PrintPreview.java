@@ -121,13 +121,14 @@ public class PrintPreview extends AppCompatActivity {
         }
 
         // add media size in print items
-        for (PrintAttributes.MediaSize mediaSize: printJobData.getPrintItems().keySet()) {
-            text = getSpinnerText(mediaSize);
-            if (!spinnerList.contains(text)) {
-                spinnerMap.put(text, mediaSize);
-                spinnerList.add(text);
+        if(printJobData.getPrintItems() != null)
+            for (PrintAttributes.MediaSize mediaSize: printJobData.getPrintItems().keySet()) {
+                text = getSpinnerText(mediaSize);
+                if (!spinnerList.contains(text)) {
+                    spinnerMap.put(text, mediaSize);
+                    spinnerList.add(text);
+                }
             }
-        }
 
         // add media size from default print item if it does exist
         if (printJobData.getDefaultPrintItem() != null && printJobData.getDefaultPrintItem().getMediaSize() != null) {
