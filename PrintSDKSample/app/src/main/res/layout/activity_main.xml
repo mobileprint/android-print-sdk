@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:id="@+id/layoutCenterTopLeft"
-                    android:text="@string/layout_center_top_left" />
+                    android:text="@string/layout_top_left" />
         </RadioGroup>
     </RelativeLayout>
 
