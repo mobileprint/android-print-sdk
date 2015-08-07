@@ -1,5 +1,7 @@
 # DroidPrint
 
+A library to simplify development printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
+
 ## Contents
 
 - [JavaDocs](##javadocs)
@@ -64,14 +66,17 @@ Once you have that, you are ready to invoke our print workflow.
 One of the first objects you need to create in order to use our print workflow is the `ImageAsset` object. It tells the print sdk what you want to print.
 You will need at least one but you can create as many as needed ([Multiple Assets](#multiple-assets)). You can use one of the following 3 methods to create the imageAsset.
 
+To load an ImageAsset from resources:
 ```java
 ImageAsset imageAsset4x6 = new ImageAsset(this, R.drawable.template4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
 ```
 
+To load an image from storage:
 ```java
 ImageAsset assetdirectory = new ImageAsset(this, "oceanwave.jpeg", ImageAsset.MeasurementUnits.INCHES, 4, 6);
 ```
 
+To load an ImageAsset from an existing `Bitmap` object:
 ```java
 ImageAsset bitmapAsset = new ImageAsset(this, bitmap, ImageAsset.MeasurementUnits.INCHES, 4,5);
 ```
