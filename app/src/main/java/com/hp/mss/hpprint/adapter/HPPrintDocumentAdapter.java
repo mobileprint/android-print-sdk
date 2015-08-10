@@ -112,6 +112,7 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
         //check for cancellation
         if (cancellationSignal.isCanceled()) {
             callback.onWriteCancelled();
+            myPdfDocument.finishPage(page);
             myPdfDocument.close();
             myPdfDocument = null;
             return;
