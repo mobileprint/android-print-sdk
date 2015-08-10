@@ -18,6 +18,7 @@ A library to simplify development printing in apps on Android, as well as provid
 - [KitKat Print Preview](#kitkat-print-preview)
     + [Font](#font)
     + [Color](#color)
+- [Layout Options](#layout-options)
 
 ## Download .aar
 [Download](https://github.com/IPGPTP/DroidPrint/tree/master/hpprint.aar)
@@ -212,3 +213,7 @@ In your styles resource file:
     <item name="android:textColor">@color/HPFontColorGrey</item>
 </style>
 ```
+
+## Layout Options
+Examples of the various layout options are available on the following Wiki page:
+[Layout Options](https://github.com/IPGPTP/DroidPrint/wiki/Layout-Options)
