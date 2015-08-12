@@ -29,6 +29,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/preview_image_view"
+        android:layout_marginLeft="65dp"
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:gravity="center_vertical">

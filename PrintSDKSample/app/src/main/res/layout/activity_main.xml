@@ -17,58 +17,10 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_margin="@dimen/component_margin">
-
-    <TextView
-        android:id="@+id/assetText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/asset"
-        android:textAlignment="viewStart"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-        <LinearLayout
-            android:id="@+id/assetLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/assetText">
-            <ImageView
-                android:id="@+id/templateimage4x5p"
-                android:src="@drawable/template4x5p"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:adjustViewBounds="true"
-                android:layout_margin="1dp" />
-            <ImageView
-                android:id="@+id/templateimage4x5l"
-                android:src="@drawable/template4x5l"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:adjustViewBounds="true"
-                android:layout_margin="1dp" />
-            <ImageView
-                android:id="@+id/templateimage4x6"
-                android:src="@drawable/template4x6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:adjustViewBounds="true"
-                android:layout_margin="1dp" />
-            <ImageView
-                android:id="@+id/templateimage5x7"
-                android:src="@drawable/template5x7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:adjustViewBounds="true"
-                android:layout_margin="1dp" />
-        </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/layoutLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/assetLayout"
         android:layout_marginTop="@dimen/component_margin"
         android:layout_marginBottom="@dimen/component_margin">
         <TextView
@@ -76,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/layout_option"
+            android:textColor="@android:color/white"
             android:textAlignment="viewStart"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
             <RadioGroup
@@ -109,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:id="@+id/layoutCenterTopLeft"
-                    android:text="@string/layout_center_top_left" />
+                    android:text="@string/layout_top_left" />
         </RadioGroup>
     </RelativeLayout>
 
@@ -126,6 +79,7 @@
             android:layout_height="wrap_content"
             android:text="@string/metrics_option"
             android:textAlignment="viewStart"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
         <RadioGroup
             android:layout_width="wrap_content"
@@ -156,7 +110,7 @@
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Print"
+        android:text="Preview"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:onClick="buttonClicked"
         android:layout_below="@+id/metricsLayout"

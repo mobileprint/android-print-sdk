@@ -21,7 +21,7 @@
     <string name="layout_center">Center</string>
     <string name="layout_crop">Crop</string>
     <string name="layout_fit">Fit</string>
-    <string name="layout_center_top_left">Center Top Left</string>
+    <string name="layout_top_left">Top Left</string>
     <string name="metrics_option">Metrics Options</string>
 
     <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
