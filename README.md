@@ -169,9 +169,10 @@ class YourCallingActivity extends ActionBarActivity implements PrintUtil.PrintMe
 }
 ```
 
-### Plugin Install Helper
+### Print Service Plugin Install Helper
+In order to improve the customer's print experience, we have created a helper that guides the customer to the print plugin play store page. The helper works by displaying an alert dialog when the customer hits print.
 
-You can disable the our print plugin install helper by setting:
+You can disable the  print plugin install helper by setting:
 
 ```java
 PrintUtil.showPluginHelper = false;
