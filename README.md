@@ -20,9 +20,6 @@ A library to simplify development printing in apps on Android, as well as provid
     + [Color](#color)
 - [Layout Options](#layout-options)
 
-## Download .aar
-[Download](https://github.com/IPGPTP/DroidPrint/tree/master/hpprint.aar)
-
 ## Features
 
 1. Kitkat print preview
