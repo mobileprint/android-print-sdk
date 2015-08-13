@@ -20,9 +20,15 @@ A library to simplify development of printing in apps on Android, as well as pro
     + [Color](#color)
 - [Layout Options](#layout-options)
 
+## Overview
+
+![Droid Print Stack](https://s3-us-west-2.amazonaws.com/droidprint/images/DroidPrintStack.png)
+
+DroidPrint provides an interface that simplifies developer interaction with Android Print functionality.  It also provides the following features currently not offered by Android:
+
 ## Features
 
-1. Kitkat print preview
+1. Kitkat print preview (Lollipop has its own print preview functionality)
 2. Dialogs for assisting users in installing print plugins
 3. More advanced layouting features than google's `PrintHelper`
 
@@ -175,9 +181,9 @@ You can disable the  print plugin install helper by setting:
 PrintUtil.showPluginHelper = false;
 ```
 
-## KitKat Print Preview
+## KitKat Print Preview (Lollipop has its own print preview functionality)
 
-You can customize the KitKat print preview to your liking by applying overrides to the library styles. Besides the font colors, the preview activity will match the theme you have set up for the rest of your application.
+Whereas Lollipop offers print preview functionality, KitKat did not offer this feature. DroidPrint implements print preview on KitKat. You can customize the KitKat print preview to your liking by applying overrides to the library styles. Besides the font colors, the preview activity will match the theme you have set up for the rest of your application.
 
 ### Font
 
