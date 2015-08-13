@@ -219,5 +219,21 @@ In your styles resource file:
 ```
 
 ## Layout Options
-Examples of the various layout options are available on the following Wiki page:
-[Layout Options](https://github.com/IPGPTP/DroidPrint/wiki/Layout-Options)
+
+The following images demonstrate the effect of each of the Layout Options.
+
+Here is the image we will use for the examples:
+![puppies image](https://s3-us-west-2.amazonaws.com/droidprint/images/image.jpeg)
+
+### Layout Options:
+## Center
+![Centered Image](https://s3-us-west-2.amazonaws.com/droidprint/images/centered.jpeg)
+
+## Crop
+![Cropped Image](https://s3-us-west-2.amazonaws.com/droidprint/images/full_page.jpeg)
+
+## Fit
+![Fit page](https://s3-us-west-2.amazonaws.com/droidprint/images/fit_page.jpeg)
+
+## Top Left
+![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
