@@ -36,13 +36,6 @@ DroidPrint provides an interface that simplifies developer interaction with Andr
 
 The JavaDocs for this project are located can be found at [http://ipgptp.github.io/DroidPrint/javadocs/](http://ipgptp.github.io/DroidPrint/javadocs/). This includes complete documentation for all classes, methods, constants, you may need.
 
-## Requirements
-
-* Android Studio
-* Android SDK Build Tools Version "21.1.2"
-* Android Support Repository Version "16"
-* Android Support Library Version "22.2.1"
-
 Update the SDK items listed above if you are outdated.
 
 ## Installation
@@ -51,11 +44,14 @@ Update the SDK items listed above if you are outdated.
 
 In order to use the SDK and run the PrintSDKSample app, you need the following SDK Platforms and Build-tools installed:
 
-* Android SDK Platform-tools 22
-* Android SDK Build-tools 22
-* Android SDK Build-tools 21.1.2
-* SDK Platform 22
-* SDK Platform 21
+* Android Studio
+* Android SDK Platform-tools Version "22"
+* Android SDK Build-tools Version "22"
+* Android SDK Build-tools Version "21.1.2"
+* Android Support Repository Version "16"
+* Android Support Library Version "22.2.1"
+* SDK Platform "22"
+* SDK Platform "21"
 
 The __DroidPrint__ library is not yet available publicly via maven or jcenter.
 Currently, to install the plugin, you need to download the source code and compile it into your application.
