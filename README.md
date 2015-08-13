@@ -61,7 +61,7 @@ The __DroidPrint__ library is not yet available publicly via maven or jcenter.
 Currently, to install the plugin, you need to download the source code and compile it into your application.
 
 1. Download the source code from [https://github.com/IPGPTP/DroidPrint/archive/master.zip](https://github.com/IPGPTP/DroidPrint/archive/master.zip).
-2. Unzip the source code into your project folder.
+2. Unzip the source code into the root of your project folder.
 3. Rename the folder from "DroidPrint-master" to "DroidPrint"
 4. Insert the following into your settings.gradle file (Located in the root directory of your app source) in your project at the end of the the 'include' line:
 
@@ -75,6 +75,8 @@ Currently, to install the plugin, you need to download the source code and compi
 
         include ':app', ':droidprint'
         project(':droidprint').projectDir = new File('./DroidPrint/app')
+        
+    Make sure that './DroidPrint/app' directory is pointing to the correct location. 
 
 6. You must also include the project in the dependencies section of your build.gradle file (Located in the app directory of your source code):
 
