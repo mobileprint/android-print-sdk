@@ -65,20 +65,20 @@ Currently, to install the plugin, you need to download the source code and compi
 3. Rename the folder from "DroidPrint-master" to "DroidPrint"
 4. Insert the following into your settings.gradle file (Located in the root directory of your app source) in your project at the end of the the 'include' line:
 
-       ':droidprint'
+        ':droidprint'
 
 5. Add the following new line into the same settings.gradle file in your project:
 
-       project(':droidprint').projectDir = new File('./DroidPrint/app')
+        project(':droidprint').projectDir = new File('./DroidPrint/app')
 
     As a result, it should look something like this:
 
-       include ':app', ':droidprint'
-       project(':droidprint').projectDir = new File('./DroidPrint/app')
+        include ':app', ':droidprint'
+        project(':droidprint').projectDir = new File('./DroidPrint/app')
 
 6. You must also include the project in the dependencies section of your build.gradle file (Located in the app directory of your source code):
 
-       compile project(':droidprint')
+        compile project(':droidprint')
 
 ## Basic Usage
 
