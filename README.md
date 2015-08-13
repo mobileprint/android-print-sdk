@@ -32,7 +32,7 @@ DroidPrint provides an interface that simplifies developer interaction with Andr
 
 1. Kitkat print preview (Lollipop has its own print preview functionality)
 2. Dialogs for assisting users in installing print plugins
-3. More advanced layouting features than google's `PrintHelper`
+3. More advanced [layouting features](#layout-options) than google's `PrintHelper`
 
 ## JavaDocs
 
