@@ -1,6 +1,6 @@
 # DroidPrint
 
-A library to simplify development printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
+A library to simplify development of printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
 
 ## Contents
 
