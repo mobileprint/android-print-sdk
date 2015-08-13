@@ -42,7 +42,7 @@ Update the SDK items listed above if you are outdated.
 
 ### Minimum System Requirements
 
-In order to use the SDK and run the PrintSDKSample app, you need the following SDK Platforms and Build-tools installed:
+In order to use the SDK and run the PrintSDKSample app, you need the following SDK Platforms and Build-tools installed. Note: Android Studio should prompt you to install any missing tools and assist with installation.
 
 * Android Studio
 * Android SDK Platform-tools Version "22"
