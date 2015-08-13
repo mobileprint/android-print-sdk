@@ -2,6 +2,8 @@
 
 A library to simplify development of printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
 
+Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
+
 ## Contents
 
 - [JavaDocs](##javadocs)
@@ -50,33 +52,15 @@ In order to use the SDK and run the PrintSDKSample app, you need the following S
 * Android SDK Build-tools Version "21.1.2"
 * Android Support Repository Version "16"
 * Android Support Library Version "22.2.1"
-* SDK Platform "22"
-* SDK Platform "21"
+* SDK Platform "22" (Lolipop)
+* SDK Platform "21" (Lolipop)
+* SDK Platform "19" (Kitkat)
 
 The __DroidPrint__ library is not yet available publicly via maven or jcenter.
-Currently, to install the plugin, you need to download the source code and compile it into your application.
+There are two ways to install the library in your application. One option is to download the source code and compile it into your application. The other option is to use the aar file.
 
-1. Download the source code from [https://github.com/IPGPTP/DroidPrint/archive/master.zip](https://github.com/IPGPTP/DroidPrint/archive/master.zip).
-2. Unzip the source code into the root of your project folder.
-3. Rename the folder from "DroidPrint-master" to "DroidPrint"
-4. Insert the following into your settings.gradle file (Located in the root directory of your app source) in your project at the end of the the 'include' line:
-
-        ':droidprint'
-
-5. Add the following new line into the same settings.gradle file in your project:
-
-        project(':droidprint').projectDir = new File('./DroidPrint/app')
-
-    As a result, it should look something like this:
-
-        include ':app', ':droidprint'
-        project(':droidprint').projectDir = new File('./DroidPrint/app')
-        
-    Make sure that './DroidPrint/app' directory is pointing to the correct location. 
-
-6. You must also include the project in the dependencies section of your build.gradle file (Located in the app directory of your source code):
-
-        compile project(':droidprint')
+1. [Install from source](https://github.com/IPGPTP/DroidPrint/wiki/Install-with-source-code)
+2. [Install aar file](https://github.com/IPGPTP/DroidPrint/wiki/Install-With-.aar-File)
 
 ## Basic Usage
 
