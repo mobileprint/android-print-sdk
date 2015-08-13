@@ -180,7 +180,9 @@ class YourCallingActivity extends ActionBarActivity implements PrintUtil.PrintMe
 ```
 
 ### Print Service Plugin Install Helper
-In order to improve the customer's print experience, we have created a helper that guides the customer to the print plugin play store page. The helper works by displaying an alert dialog when the customer hits print.
+Currently, the Android Framework requires customers to install a print service plugin for their printer on their device. Without the right plugin, the device will be unable to discover or use their printer.
+
+In order to improve the customer's print experience, we have created a helper that guides them to the print plugin play store page. The helper works by displaying an alert dialog when the customer hits print. 
 
 You can disable the  print plugin install helper by setting:
 
