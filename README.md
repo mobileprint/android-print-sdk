@@ -38,6 +38,16 @@ The JavaDocs for this project are located in the Documentation directory of the 
 
 ## Installation
 
+### Minimum System Requirements
+
+In order to use the SDK and run the PrintSDKSample app, you need the following SDK Platforms and Build-tools installed:
+
+* Android SDK Platform-tools 22
+* Android SDK Build-tools 22
+* Android SDK Build-tools 21.1.2
+* SDK Platform 22
+* SDK Platform 21
+
 The __DroidPrint__ library is not yet available publicly via maven or jcenter.
 Currently, to install the plugin, you need to download the source code and compile it into your application.
 
