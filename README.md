@@ -38,8 +38,6 @@ DroidPrint provides an interface that simplifies developer interaction with Andr
 
 The JavaDocs for this project are located can be found at [http://ipgptp.github.io/DroidPrint/javadocs/](http://ipgptp.github.io/DroidPrint/javadocs/). This includes complete documentation for all classes, methods, constants, you may need.
 
-Update the SDK items listed above if you are outdated.
-
 ## Installation
 
 ### Minimum System Requirements
