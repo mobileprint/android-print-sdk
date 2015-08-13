@@ -34,7 +34,16 @@ DroidPrint provides an interface that simplifies developer interaction with Andr
 
 ## JavaDocs
 
-The JavaDocs for this project are located in the Documentation directory of the source code.
+The JavaDocs for this project are located can be found at [http://ipgptp.github.io/DroidPrint/javadocs/](http://ipgptp.github.io/DroidPrint/javadocs/). This includes complete documentation for all classes, methods, constants, you may need.
+
+## Requirements
+
+* Android Studio
+* Android SDK Build Tools Version "21.1.2"
+* Android Support Repository Version "16"
+* Android Support Library Version "22.2.1"
+
+Update the SDK items listed above if you are outdated.
 
 ## Installation
 
@@ -51,24 +60,25 @@ In order to use the SDK and run the PrintSDKSample app, you need the following S
 The __DroidPrint__ library is not yet available publicly via maven or jcenter.
 Currently, to install the plugin, you need to download the source code and compile it into your application.
 
-Clone the source code into the same parent directory as your android app.
+1. Download the source code from [https://github.com/IPGPTP/DroidPrint/archive/master.zip](https://github.com/IPGPTP/DroidPrint/archive/master.zip).
+2. Unzip the source code into your project folder.
+3. Rename the folder from "DroidPrint-master" to "DroidPrint"
+4. Insert the following into your settings.gradle file (Located in the root directory of your app source) in your project at the end of the the 'include' line:
 
-Insert the following into your settings.gradle file in your project at the end of the the 'include' line:
+       ':droidprint'
 
-    ':droidprint'
+5. Add the following new line into the same settings.gradle file in your project:
 
-Add the following new line into the same settings.gradle file in your project:
+       project(':droidprint').projectDir = new File('./DroidPrint/app')
 
-    project(':droidprint').projectDir = new File('../DroidPrint/app')
+    As a result, it should look something like this:
 
-It should look something like this:
+       include ':app', ':droidprint'
+       project(':droidprint').projectDir = new File('./DroidPrint/app')
 
-    include ':app', ':droidprint'
-    project(':droidprint').projectDir = new File('../DroidPrint/app')
+6. You must also include the project in the dependencies section of your build.gradle file (Located in the app directory of your source code):
 
-You must also include the project in your gradle file:
-
-    compile project(':droidprint')
+       compile project(':droidprint')
 
 ## Basic Usage
 
@@ -138,6 +148,13 @@ well as orientation.
 
 ### Multiple Assets
 
+#### OverView
+Android's system print dialog gives the user the ability to select from an array of
+paper sizes to print on. In order to accomodate for that, we give you the ability to print different assets on different paper sizes. By default, the `PrintItem` you pass into the constructor of `PrintJobData` will be used for any paper size the user selects. This library gives you the ability to create multiple `PrintItem`'s to override how your print looks when the user selects different paper sizes.
+
+So to clarify, let's say you created `PrintJobData` with a 'PrintItem' that contained a '4x6' asset. If you hadn't added any other `PrintItem`'s to the `PrintJobData`, then no matter what paper size the user selects in the print dialog, the '4x6 ' asset will be used. However, if you want the user to print a different asset when they select a paper size of '8.5x11' then, you can create a separate `PrintItem` that will be able to handle prints to that paper size.
+
+#### Usage
 When creating an `PrintItem`, you can provide the constructor a MediaSize object that lets the Print Library know that you
 would like the PrintItem to be used for a particular paper size selection. For example, if you did:
 
