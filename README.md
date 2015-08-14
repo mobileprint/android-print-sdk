@@ -4,9 +4,10 @@ A library to simplify development of printing in apps on Android, as well as pro
 
 Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
 
+Please see the [Quick Start](https://github.com/IPGPTP/DroidPrint/wiki/Quick-Start) page, if you want to get started right away.
+
 ## Contents
 
-- [Quick Start](https://github.com/IPGPTP/DroidPrint/wiki/Quick-Start)
 - [JavaDocs](##javadocs)
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
