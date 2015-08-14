@@ -6,6 +6,7 @@ Note: Print functionality only exists starting in Android API versions 19 and be
 
 ## Contents
 
+- [Quick Start](https://github.com/IPGPTP/DroidPrint/wiki/Quick-Start)
 - [JavaDocs](##javadocs)
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
