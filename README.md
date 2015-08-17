@@ -1,4 +1,10 @@
-# Quick Start Guide - Scroll below for more info
+# DroidPrint
+
+A library to simplify development of printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
+
+Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
+
+# Quick Start Guide
 
 Note: If you are behind a proxy, please make sure Android Studio is capable of downloading build tools from the SDK Manager.  Depending on your configuration, additional downloads may be required.
 
@@ -17,16 +23,6 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
 6. Run the app!
     ![Running app](https://s3-us-west-2.amazonaws.com/droidprint/images/runapp.png)
 7. At this point, you should have a working example for reference. To learn more, please check out the full [README](https://github.com/IPGPTP/DroidPrint) file on the project homepage.
-
-
-
-# DroidPrint
-
-A library to simplify development of printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
-
-Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
-
-Please see the [Quick Start](https://github.com/IPGPTP/DroidPrint/wiki/Quick-Start) page, if you want to get started right away.
 
 ## Contents
 
