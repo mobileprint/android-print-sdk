@@ -15,18 +15,12 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 22
     buildToolsVersion "21.1.2"
-    def sha = ""
-    def moniker = ""
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
-
-        def cmd = "git rev-parse --short HEAD"
-        def proc = cmd.execute()
-        sha = proc.text.trim()
     }
     buildTypes {
         release {
