@@ -22,7 +22,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
     ![Build error](https://s3-us-west-2.amazonaws.com/droidprint/images/builderror.png)
 6. Run the app!
     ![Running app](https://s3-us-west-2.amazonaws.com/droidprint/images/runapp.png)
-7. At this point, you should have a working example for reference. To learn more, please check out the full [README](https://github.com/IPGPTP/DroidPrint) file on the project homepage.
+7. At this point, you should have a working example for reference. To learn more, please check out the full README below.
 
 ## Contents
 
