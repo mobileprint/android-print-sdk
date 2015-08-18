@@ -2,6 +2,28 @@
 
 A library to simplify development of printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
 
+Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
+
+# Quick Start Guide
+
+Note: If you are behind a proxy, please make sure Android Studio is capable of downloading build tools from the SDK Manager.  Depending on your configuration, additional downloads may be required.
+
+***
+
+1. Clone the repo (for this tutorial, we'll clone to our home folder)
+
+    `git clone git@github.com:IPGPTP/DroidPrint ~/DroidPrint`
+
+2. Run Android Studio.
+3. Select `File | Open`.
+4. Navigate to the `~/DroidPrint` directory and select the `PrintSDKSample` directory. Then click the `Choose` button.
+    ![Load Sample App](https://s3-us-west-2.amazonaws.com/droidprint/images/PrintSDKSample.png)
+5. Android Studio will alert you regarding any missing dependencies.  Click the appropriate link(s) to fix them.
+    ![Build error](https://s3-us-west-2.amazonaws.com/droidprint/images/builderror.png)
+6. Run the app!
+    ![Running app](https://s3-us-west-2.amazonaws.com/droidprint/images/runapp.png)
+7. At this point, you should have a working example for reference. To learn more, please check out the full [README](https://github.com/IPGPTP/DroidPrint) file on the project homepage.
+
 ## Contents
 
 - [JavaDocs](##javadocs)
@@ -30,45 +52,33 @@ DroidPrint provides an interface that simplifies developer interaction with Andr
 
 1. Kitkat print preview (Lollipop has its own print preview functionality)
 2. Dialogs for assisting users in installing print plugins
-3. More advanced layouting features than google's `PrintHelper`
+3. More advanced [layouting features](#layout-options) than google's `PrintHelper`
 
 ## JavaDocs
 
-The JavaDocs for this project are located in the Documentation directory of the source code.
+The JavaDocs for this project are located can be found at [http://ipgptp.github.io/DroidPrint/javadocs/](http://ipgptp.github.io/DroidPrint/javadocs/). This includes complete documentation for all classes, methods, constants, you may need.
 
 ## Installation
 
 ### Minimum System Requirements
 
-In order to use the SDK and run the PrintSDKSample app, you need the following SDK Platforms and Build-tools installed:
+In order to use the SDK and run the PrintSDKSample app, you need the following SDK Platforms and Build-tools installed. Note: Android Studio should prompt you to install any missing tools and assist with installation.
 
-* Android SDK Platform-tools 22
-* Android SDK Build-tools 22
-* Android SDK Build-tools 21.1.2
-* SDK Platform 22
-* SDK Platform 21
+* Android Studio
+* Android SDK Platform-tools Version "22"
+* Android SDK Build-tools Version "22"
+* Android SDK Build-tools Version "21.1.2"
+* Android Support Repository Version "16"
+* Android Support Library Version "22.2.1"
+* SDK Platform "22" (Lolipop)
+* SDK Platform "21" (Lolipop)
+* SDK Platform "19" (Kitkat)
 
 The __DroidPrint__ library is not yet available publicly via maven or jcenter.
-Currently, to install the plugin, you need to download the source code and compile it into your application.
+There are two ways to install the library in your application. One option is to download the source code and compile it into your application. The other option is to use the aar file.
 
-Clone the source code into the same parent directory as your android app.
-
-Insert the following into your settings.gradle file in your project at the end of the the 'include' line:
-
-    ':droidprint'
-
-Add the following new line into the same settings.gradle file in your project:
-
-    project(':droidprint').projectDir = new File('../DroidPrint/app')
-
-It should look something like this:
-
-    include ':app', ':droidprint'
-    project(':droidprint').projectDir = new File('../DroidPrint/app')
-
-You must also include the project in your gradle file:
-
-    compile project(':droidprint')
+1. [Install from source](https://github.com/IPGPTP/DroidPrint/wiki/Install-with-source-code)
+2. [Install aar file](https://github.com/IPGPTP/DroidPrint/wiki/Install-With-.aar-File)
 
 ## Basic Usage
 
@@ -138,6 +148,13 @@ well as orientation.
 
 ### Multiple Assets
 
+#### OverView
+Android's system print dialog gives the user the ability to select from an array of
+paper sizes to print on. In order to accomodate for that, we give you the ability to print different assets on different paper sizes. By default, the `PrintItem` you pass into the constructor of `PrintJobData` will be used for any paper size the user selects. This library gives you the ability to create multiple `PrintItem`'s to override how your print looks when the user selects different paper sizes.
+
+So to clarify, let's say you created `PrintJobData` with a 'PrintItem' that contained a '4x6' asset. If you hadn't added any other `PrintItem`'s to the `PrintJobData`, then no matter what paper size the user selects in the print dialog, the '4x6 ' asset will be used. However, if you want the user to print a different asset when they select a paper size of '8.5x11' then, you can create a separate `PrintItem` that will be able to handle prints to that paper size.
+
+#### Usage
 When creating an `PrintItem`, you can provide the constructor a MediaSize object that lets the Print Library know that you
 would like the PrintItem to be used for a particular paper size selection. For example, if you did:
 
@@ -183,7 +200,9 @@ class YourCallingActivity extends ActionBarActivity implements PrintUtil.PrintMe
 ```
 
 ### Print Service Plugin Install Helper
-In order to improve the customer's print experience, we have created a helper that guides the customer to the print plugin play store page. The helper works by displaying an alert dialog when the customer hits print.
+Currently, the Android Framework requires customers to install a print service plugin for their printer on their device. Without the right plugin, the device will be unable to discover or use their printer.
+
+In order to improve the customer's print experience, we have created a helper that guides them to the print plugin play store page. The helper works by displaying an alert dialog when the customer hits print. 
 
 You can disable the  print plugin install helper by setting:
 
