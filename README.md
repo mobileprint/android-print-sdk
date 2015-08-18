@@ -4,7 +4,25 @@ A library to simplify development of printing in apps on Android, as well as pro
 
 Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
 
-Please see the [Quick Start](https://github.com/IPGPTP/DroidPrint/wiki/Quick-Start) page, if you want to get started right away.
+# Quick Start Guide
+
+Note: If you are behind a proxy, please make sure Android Studio is capable of downloading build tools from the SDK Manager.  Depending on your configuration, additional downloads may be required.
+
+***
+
+1. Clone the repo (for this tutorial, we'll clone to our home folder)
+
+    `git clone git@github.com:IPGPTP/DroidPrint ~/DroidPrint`
+
+2. Run Android Studio.
+3. Select `File | Open`.
+4. Navigate to the `~/DroidPrint` directory and select the `PrintSDKSample` directory. Then click the `Choose` button.
+    ![Load Sample App](https://s3-us-west-2.amazonaws.com/droidprint/images/PrintSDKSample.png)
+5. Android Studio will alert you regarding any missing dependencies.  Click the appropriate link(s) to fix them.
+    ![Build error](https://s3-us-west-2.amazonaws.com/droidprint/images/builderror.png)
+6. Run the app!
+    ![Running app](https://s3-us-west-2.amazonaws.com/droidprint/images/runapp.png)
+7. At this point, you should have a working example for reference. To learn more, please check out the full [README](https://github.com/IPGPTP/DroidPrint) file on the project homepage.
 
 ## Contents
 
