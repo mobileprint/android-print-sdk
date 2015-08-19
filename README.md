@@ -41,6 +41,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
     + [Font](#font)
     + [Color](#color)
 - [Layout Options](#layout-options)
+- [Terms & Conditions](#terms-&-conditions)
 
 ## Overview
 
@@ -266,3 +267,6 @@ Here is the image we will use for the examples:
 
 ## Top Left
 ![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
+
+## Terms & Conditions
+By using the HP Mobile Print SDK, you agree to HP's [terms & conditions](http://assets.print-dev.com/sdk-resources/terms/HP-Mobile-Print-SDK-Terms.pdf)
