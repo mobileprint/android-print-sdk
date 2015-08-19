@@ -38,6 +38,16 @@ android {
     }
 }
 
+task copyAarFile(type: Copy) {
+    def myDir = System.getProperty("user.dir")
+    def myFile = "hpprint.aar"
+
+    from("${myDir}/app/build/outputs/aar/")
+    into("${myDir}/")
+    include("hpprint.aar")
+}
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
