@@ -193,7 +193,9 @@ public class PrintPreview extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_print_preview, menu);
-        menu.findItem(R.id.action_print).setEnabled(!disableMenu);
+        MenuItem menuPrintItem = menu.findItem(R.id.action_print);
+        menuPrintItem.setEnabled(!disableMenu);
+        menuPrintItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
 
