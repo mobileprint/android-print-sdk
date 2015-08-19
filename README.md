@@ -19,7 +19,9 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
     `git clone git@github.com:IPGPTP/DroidPrint ~/DroidPrint`
 
 2. Run Android Studio.
+    ![Run Android Studio](https://s3-us-west-2.amazonaws.com/droidprint/images/androidstudio.png)
 3. Select `File | Open`.
+    ![File Open](https://s3-us-west-2.amazonaws.com/droidprint/images/fileopen.png)
 4. Navigate to the `~/DroidPrint` directory and select the `PrintSDKSample` directory. Then click the `Choose` button.
     ![Load Sample App](https://s3-us-west-2.amazonaws.com/droidprint/images/PrintSDKSample.png)
 5. Android Studio will alert you regarding any missing dependencies.  Click the appropriate link(s) to fix them.
