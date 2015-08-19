@@ -12,11 +12,9 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.hp.mss.hpprint.activity.PrintPreview"
-    xmlns:yourapp="http://schemas.android.com/apk/res-auto">
+    tools:context="com.hp.mss.hpprint.activity.PrintPreview">
     <item
         android:id="@+id/action_print"
         android:title="Print"
-        android:icon="@drawable/ic_mobile_printing_text"
-        yourapp:showAsAction="always"/>
+        android:icon="@drawable/ic_mobile_printing_text"/>
 </menu>
