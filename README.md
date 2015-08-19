@@ -4,7 +4,11 @@ A library to simplify development of printing in apps on Android, as well as pro
 
 Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
 
+By using the HP Mobile Print SDK, you agree to HP's [terms & conditions](http://assets.print-dev.com/sdk-resources/terms/HP-Mobile-Print-SDK-Terms.pdf).
+
 # Quick Start Guide
+
+The purpose of this quick start is to get you up and running with a sample app that uses the SDK. Once you have this app running, you will have an example for comparison as you integrate the SDK into your own apps.
 
 Note: If you are behind a proxy, please make sure Android Studio is capable of downloading build tools from the SDK Manager.  Depending on your configuration, additional downloads may be required.
 
@@ -267,6 +271,3 @@ Here is the image we will use for the examples:
 
 ## Top Left
 ![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
-
-## Terms & Conditions
-By using the HP Mobile Print SDK, you agree to HP's [terms & conditions](http://assets.print-dev.com/sdk-resources/terms/HP-Mobile-Print-SDK-Terms.pdf)
