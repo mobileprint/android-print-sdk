@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentInfo;
@@ -32,6 +33,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.hp.mss.hpprint.model.ApplicationMetricsData;
+import com.hp.mss.hpprint.model.ImagePrintItem;
+import com.hp.mss.hpprint.model.PrintItem;
+import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 
 import java.lang.reflect.InvocationTargetException;
@@ -60,6 +64,7 @@ class PrintMetricsCollector extends Thread {
     private Activity hostActivity;
     private static HashMap<String,String> appMetrics;
     private String previewPaperSize;
+    PrintJobData printJobData;
 
     /**
      * Called inside the Print SDK to send printing related data to HP server.
@@ -70,7 +75,8 @@ class PrintMetricsCollector extends Thread {
         this.hostActivity = activity;
         this.printJob = printJob;
         this.metricsHandler = new Handler();
-        this.previewPaperSize = PrintUtil.getPrintJobData().getPreviewPaperSize();
+        this.printJobData = PrintUtil.getPrintJobData();
+        this.previewPaperSize = printJobData.getPreviewPaperSize();
     }
 
     @Override
@@ -106,6 +112,20 @@ class PrintMetricsCollector extends Thread {
             PrintMetricsData printMetricsData = new PrintMetricsData();
             printMetricsData.previewPaperSize = this.previewPaperSize;
 
+            PrintItem printItem = printJobData.getPrintItem(printJobAttributes.getMediaSize());
+            if(printItem.getClass().equals(ImagePrintItem.class)) {
+                printMetricsData.contentType = "image";
+            } else {
+                printMetricsData.contentType = "invalid";
+            }
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+
+            BitmapFactory.decodeFile(printItem.getAsset().getAssetUri(), options);
+            printMetricsData.contentWidthPixels = Integer.toString(options.outWidth);
+            printMetricsData.contentHeightPixels = Integer.toString(options.outHeight);
+
             printMetricsData.printResult = PrintMetricsData.PRINT_RESULT_SUCCESS;
 
             try {
@@ -124,16 +144,20 @@ class PrintMetricsCollector extends Thread {
                     printMetricsData.paperType = PrintMetricsData.CONTENT_TYPE_UNKNOWN;
                 }
 
-                printMetricsData.blackAndWhiteFilter = String.valueOf(printJobInfo.getAttributes().getColorMode());
+                if(printJobInfo.getAttributes().getColorMode() == PrintAttributes.COLOR_MODE_MONOCHROME)
+                    printMetricsData.blackAndWhiteFilter = "1";
+                else
+                    printMetricsData.blackAndWhiteFilter = "0";
 
                 String width = Double.toString(printJobAttributes.getMediaSize().getWidthMils() / (float) MILS);
                 String height = Double.toString(printJobAttributes.getMediaSize().getHeightMils() / (float) MILS);
 
                 printMetricsData.paperSize = (width + " x " + height);
-                printMetricsData.printerID = printerId.getLocalId();
+                printMetricsData.printerID = ApplicationMetricsData.md5(printerId.getLocalId());
                 printMetricsData.numberOfCopy = String.valueOf(printJobInfo.getCopies());
 
                 postMetrics(printMetricsData);
+
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 Log.e(TAG, "CollectionRunner", e);
             }

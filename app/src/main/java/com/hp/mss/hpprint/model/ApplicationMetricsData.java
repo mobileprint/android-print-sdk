@@ -13,16 +13,19 @@
 package com.hp.mss.hpprint.model;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 
 import com.hp.mss.hpprint.BuildConfig;
-import com.hp.mss.hpprint.R;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This is the class that encapsulates all the basic application data HP is collecting.
@@ -51,6 +54,8 @@ public class ApplicationMetricsData {
     private static final String UNKNOWN_SSID = "<unknown ssid>";
     private static final String NO_WIFI = "NO-WIFI";
     private  static final String APP_TYPE_LABEL = "app_type";
+    private  static final String PRODUCT_ID_LABEL = "product_id";
+    private  static final String PRINT_LIBRARY_VERSION_LABEL = "print_library_version";
 
     private String deviceBrand;
     private String deviceId;
@@ -63,25 +68,42 @@ public class ApplicationMetricsData {
     private String version;
     private String wifiSsid;
     private String appType;
+    private String productId;
+    private String printLibraryVersion;
 
     public ApplicationMetricsData(final Context context) {
 
-        this.deviceBrand = Build.BRAND;
+//        this.deviceBrand = Build.BRAND;
         this.deviceId = getDeviceId(context);
         this.deviceType = Build.MODEL;
-        this.manufacturer = Build.MANUFACTURER;
+//        this.manufacturer = Build.MANUFACTURER;
         this.osType = OS_TYPE;
         this.osVersion = Build.VERSION.RELEASE;
 
-        this.productName = context.getString(R.string.app_name);
-        this.version = BuildConfig.VERSION_NAME;
+        this.productName = getAppLable(context);
+        this.productId = context.getPackageName();
+        this.printLibraryVersion = BuildConfig.VERSION_NAME;
 
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            this.version = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            this.version = "<N/A>";
+        }
         offRamp = ACTION_PRINT;
 
-        this.wifiSsid = getWifiSsid(context);
-        this.appType = APP_TYPE;
+        this.wifiSsid = md5(getWifiSsid(context));
+//        this.appType = APP_TYPE;
     }
-
+    public String getAppLable(Context pContext) {
+        PackageManager lPackageManager = pContext.getPackageManager();
+        ApplicationInfo lApplicationInfo = null;
+        try {
+            lApplicationInfo = lPackageManager.getApplicationInfo(pContext.getApplicationInfo().packageName, 0);
+        } catch (final PackageManager.NameNotFoundException e) {
+        }
+        return (String) (lApplicationInfo != null ? lPackageManager.getApplicationLabel(lApplicationInfo) : "Unknown");
+    }
     public HashMap<String, String> toMap() {
 
         HashMap<String, String>  map = new HashMap<String, String>();
@@ -97,7 +119,28 @@ public class ApplicationMetricsData {
         if (this.version != null) map.put(VERSION_LABEL, this.version);
         if (this.wifiSsid != null) map.put(WIFI_SSID_LABEL, this.wifiSsid);
         if (this.appType != null) map.put(APP_TYPE_LABEL, this.appType);
+        if (this.productId != null) map.put(PRODUCT_ID_LABEL, this.productId);
+        if (this.printLibraryVersion != null) map.put(PRINT_LIBRARY_VERSION_LABEL, this.printLibraryVersion);
         return map;
+    }
+
+    public static String md5(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0; i<messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexString.toString().toUpperCase();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private String getWifiSsid(Context context) {

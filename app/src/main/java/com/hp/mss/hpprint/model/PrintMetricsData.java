@@ -41,6 +41,9 @@ public class PrintMetricsData implements Parcelable {
     private static final String PRINTER_NAME = "printer_name";
     private static final String PRINT_RESULT = "print_result";
     private static final String PREVIEW_PAPER_SIZE = "preview_paper_size";
+    private static final String CONTENT_TYPE = "content_type";
+    private static final String CONTENT_WIDTH_PIXELS = "content_width_pixels";
+    private static final String CONTENT_HEIGHT_PIXELS = "content_height_pixels";
 
     public static final String PRINT_RESULT_FAILED = "Fail";
     public static final String PRINT_RESULT_SUCCESS = "Success";
@@ -58,6 +61,10 @@ public class PrintMetricsData implements Parcelable {
     public String printerModel;
     public String printerName;
     public String printResult;
+    public String contentType;
+    public String contentWidthPixels;
+    public String contentHeightPixels;
+
 
     public PrintMetricsData() {
         this.printerID = DATA_NOT_AVAILABLE;
@@ -78,6 +85,9 @@ public class PrintMetricsData implements Parcelable {
         printerModel = in.readString();
         printerName = in.readString();
         printResult = in.readString();
+        contentType = in.readString();
+        contentWidthPixels = in.readString();
+        contentHeightPixels = in.readString();
     }
 
     public PrintMetricsData(Map<String, String> map) {
@@ -92,6 +102,9 @@ public class PrintMetricsData implements Parcelable {
         this.printerModel = map.get(PRINTER_MODEL);
         this.printerName = map.get(PRINTER_NAME);
         this.printResult = map.get(PRINT_RESULT);
+        this.contentType = map.get(CONTENT_TYPE);
+        this.contentWidthPixels = map.get(CONTENT_WIDTH_PIXELS);
+        this.contentHeightPixels = map.get(CONTENT_HEIGHT_PIXELS);
     }
 
     public Map<String, String> toMap() {
@@ -108,6 +121,9 @@ public class PrintMetricsData implements Parcelable {
         if (printerModel != null) map.put(PRINTER_MODEL, this.printerModel);
         if (printerName != null) map.put(PRINTER_NAME, this.printerName);
         if (printResult != null) map.put(PRINT_RESULT, this.printResult);
+        if (contentType != null) map.put(CONTENT_TYPE, this.contentType);
+        if (contentWidthPixels != null) map.put(CONTENT_WIDTH_PIXELS, this.contentWidthPixels);
+        if (contentHeightPixels != null) map.put(CONTENT_HEIGHT_PIXELS, this.contentHeightPixels);
 
         return map;
     }
@@ -130,6 +146,9 @@ public class PrintMetricsData implements Parcelable {
         out.writeString(printerModel);
         out.writeString(printerName);
         out.writeString(printResult);
+        out.writeString(contentType);
+        out.writeString(contentWidthPixels);
+        out.writeString(contentHeightPixels);
 
     }
 
