@@ -33,6 +33,9 @@ android {
         } else {
             versionCode = 0
         }
+
+        def f1 = new File('../hpprint_ver.txt')
+        f1.text = "${versionName} (${versionCode})\n"
     }
     buildTypes {
         release {
