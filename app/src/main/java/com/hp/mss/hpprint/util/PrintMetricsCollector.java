@@ -85,7 +85,9 @@ class PrintMetricsCollector extends Thread {
             return;
         }
 
-        if (isJobFailed(printJob)) {
+        String printJobInfoString = printJob.getInfo().toString();
+
+        if (isJobFailed(printJob) && !printJobInfoString.contains("PDF printer")) {
             ImageLoaderUtil.cleanUpFileDirectory();
             PrintMetricsData printMetricsData = new PrintMetricsData();
             printMetricsData.previewPaperSize = this.previewPaperSize;
@@ -102,7 +104,7 @@ class PrintMetricsCollector extends Thread {
             return;
         }
 
-        if (hasJobInfo(printJob)) {
+        if (hasJobInfo(printJob) || printJobInfoString.contains("PDF printer")) {
             ImageLoaderUtil.cleanUpFileDirectory();
 
             PrintJobInfo printJobInfo = printJob.getInfo();
