@@ -12,13 +12,14 @@
 
 package com.hp.mss.hpprint.activity;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintAttributes;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Menu;
@@ -51,7 +52,7 @@ import java.util.List;
  * create this activity by yourself). In the future, we may allow UI customization
  * within this activity.
  */
-public class PrintPreview extends AppCompatActivity {
+public class PrintPreview extends Activity {
     private static final String HP_ANDROID_MOBILE_SITE = "http://www8.hp.com/us/en/ads/mobility/overview.html?jumpid=va_r11400_eprint";
 
     HashMap<String,PrintAttributes.MediaSize> spinnerMap = new HashMap<>();
@@ -75,9 +76,10 @@ public class PrintPreview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_print_preview);
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         }
 
         printJobData = PrintUtil.getPrintJobData();

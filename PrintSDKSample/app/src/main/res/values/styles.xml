@@ -13,16 +13,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@android:style/Theme.Holo">
         <!-- Customize your theme here. -->
-        <item name="colorControlNormal">#888888</item>
-        <item name="colorPrimary">@color/HPFontColorBlue</item>
-        <item name="colorPrimaryDark">@color/HPFontColorDarkBlue</item>
-        <item name="colorAccent">@color/HPFontColorBlue</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:colorBackground">@color/PrintPreviewBG</item>
-        <item name="android:windowBackground">@color/PrintPreviewBG</item>
     </style>
+    <!-- ActionBar styles -->
 
     <style name="pagePreviewView">
         <item name="sizeFontColor">@android:color/white</item>

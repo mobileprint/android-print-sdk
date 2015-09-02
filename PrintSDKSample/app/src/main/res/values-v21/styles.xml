@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Hewlett-Packard Company
   ~ All rights reserved.
@@ -10,11 +11,8 @@
   ~ the license agreement.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.hp.mss.hpprint.activity.PrintPreview">
-    <item
-        android:id="@+id/action_print"
-        android:title="Print"
-        />
-</menu>
+<resources>
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light">
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

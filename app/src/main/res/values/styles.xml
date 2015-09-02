@@ -11,6 +11,15 @@
   -->
 
 <resources>
+    <style name="PreviewTheme" parent="@android:style/Theme.Holo">
+        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+
+    </style>
+    <style name="MyActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+        <item name="android:background">@color/HPFontColorBlue</item>
+    </style>
 
     <style name="pagePreviewView">
         <item name="sizeFontColor">@android:color/black</item>
