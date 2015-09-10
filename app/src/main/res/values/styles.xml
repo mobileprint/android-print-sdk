@@ -14,6 +14,7 @@
     <style name="PreviewTheme" parent="@android:style/Theme.Holo">
         <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:spinnerItemStyle">@style/previewSpinnerTextColor</item>
 
     </style>
     <style name="MyActionBar"
@@ -33,6 +34,10 @@
 
     <style name="previewSpinnerBG">
         <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="previewSpinnerTextColor">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="previewPaperSizeSpinnerText"></style>
