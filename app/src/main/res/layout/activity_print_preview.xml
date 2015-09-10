@@ -45,14 +45,14 @@
         <Spinner
             android:id="@+id/paper_size_spinner"
             android:paddingBottom="1dp"
-            android:paddingRight="45dp"
-            android:layout_width="120dp"
+            android:paddingTop="1dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:spinnerMode="dialog"
             android:prompt="@string/paper_size"
             android:layout_alignParentRight="true"
-            android:gravity="bottom|right"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:gravity="bottom|right" />
 
     </RelativeLayout>
 

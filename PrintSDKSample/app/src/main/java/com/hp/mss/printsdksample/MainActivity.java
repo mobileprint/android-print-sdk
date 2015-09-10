@@ -48,7 +48,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-public class MainActivity extends ActionBarActivity implements RadioGroup.OnCheckedChangeListener, PrintUtil.PrintMetricsListener {
+public class MainActivity extends Activity implements RadioGroup.OnCheckedChangeListener, PrintUtil.PrintMetricsListener {
 
 
     PrintItem.ScaleType scaleType;

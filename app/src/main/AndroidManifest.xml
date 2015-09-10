@@ -25,6 +25,7 @@
         android:allowBackup="true" >
         <activity
             android:name="com.hp.mss.hpprint.activity.PrintPreview"
+            android:theme="@style/PreviewTheme"
             android:label="@string/title_activity_print_preview"
             android:launchMode="singleTop">
         </activity>

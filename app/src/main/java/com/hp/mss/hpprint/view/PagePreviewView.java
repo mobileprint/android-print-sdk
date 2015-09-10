@@ -115,7 +115,6 @@ public class PagePreviewView extends View {
         //draw label
         final float labelXOrigin = pageBounds.centerX();
         final float labelYOrigin = pageBounds.bottom + (int) pxOffset * 2;
-        canvas.drawText(dimens, labelXOrigin, labelYOrigin, textPaint);
         canvas.saveLayer(pageBounds.left, pageBounds.top, pageBounds.right, pageBounds.bottom, null, Canvas.CLIP_TO_LAYER_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
 
         paperPaint.setStyle(Paint.Style.FILL);

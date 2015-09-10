@@ -52,9 +52,9 @@
 
             <Spinner
                 android:id="@+id/paper_size_spinner"
+                android:paddingTop="1dp"
                 android:paddingBottom="1dp"
-                android:paddingRight="45dp"
-                android:layout_width="120dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:spinnerMode="dialog"
                 android:prompt="@string/paper_size"

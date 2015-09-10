@@ -110,6 +110,8 @@
         android:textColor="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
         android:text="Preview"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:onClick="buttonClicked"
