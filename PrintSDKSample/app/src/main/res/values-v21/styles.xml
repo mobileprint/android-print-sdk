@@ -12,7 +12,7 @@
   -->
 
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.Material.Light">
+    <style name="AppTheme" parent="@android:style/Theme.Holo">
         <!-- Customize your theme here. -->
     </style>
 </resources>
