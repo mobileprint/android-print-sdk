@@ -73,14 +73,19 @@ public class PrintUtil {
      * Please use the {@link #print(Activity)} method.
      * @param activity The calling activity.
      */
-    public static void createPrintJob(Activity activity) {
+    public static void createPrintJob(final Activity activity) {
         PrintManager printManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
         PrintDocumentAdapter adapter = new HPPrintDocumentAdapter(activity, printJobData, false);
 
-        PrintJob androidPrintJob = printManager.print(printJobData.getJobName(), adapter, printJobData.getPrintDialogOptions());
+        final PrintJob androidPrintJob = printManager.print(printJobData.getJobName(), adapter, printJobData.getPrintDialogOptions());
 
-        PrintMetricsCollector collector = new PrintMetricsCollector(activity, androidPrintJob);
-        collector.run();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PrintMetricsCollector collector = new PrintMetricsCollector(activity, androidPrintJob);
+                collector.start();
+            }
+        });
     }
 
     /**
@@ -112,7 +117,7 @@ public class PrintUtil {
     }
 
     private static void showPluginHelper(final Activity activity) {
-        PrintPluginHelper.PluginHelperListener printPluginListener = new PrintPluginHelper.PluginHelperListener() {
+        final PrintPluginHelper.PluginHelperListener printPluginListener = new PrintPluginHelper.PluginHelperListener() {
             @Override
             public void printPluginHelperSkippedByPreference() {
                 createPrintJob(activity);
@@ -131,7 +136,12 @@ public class PrintUtil {
             public void printPluginHelperCanceled() {
             }
         };
-        PrintPluginHelper.showPluginHelper(activity, printPluginListener);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PrintPluginHelper.showPluginHelper(activity, printPluginListener);
+            }
+        });
     }
 
     private static void startPrintPreviewActivity(Activity activity) {

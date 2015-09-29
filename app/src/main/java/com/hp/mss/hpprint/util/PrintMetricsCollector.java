@@ -195,12 +195,12 @@ class PrintMetricsCollector extends Thread {
         StringRequest sr = new StringRequest(Request.Method.POST, getPrintMetricsServer(context), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("PrintMetricsCollector", response.toString());
+                Log.i("PrintMetricsCollector", response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("PrintMetricsCollector", error.toString());
+                Log.e("PrintMetricsCollector", error.toString());
             }
         }){
             @Override
