@@ -93,7 +93,11 @@ public class ApplicationMetricsData {
         }
         offRamp = ACTION_PRINT;
 
-        this.wifiSsid = md5(getWifiSsid(context));
+        try {
+            this.wifiSsid = md5(getWifiSsid(context));
+        } catch (SecurityException se) {
+            this.wifiSsid = "NO PERMISSION";
+        }
 //        this.appType = APP_TYPE;
     }
     public String getAppLable(Context pContext) {
