@@ -90,18 +90,20 @@ public class ImagePrintItem extends PrintItem {
                 drawCenterTopLeft(canvas, bitmap, ppi, pageBounds);
         }
     }
+
     private void drawCenter(Canvas canvas, Bitmap bitmap, float ppi, RectF pageBounds) {
 
         float assetWidthInInches = ((ImageAsset)asset).widthInInches();
         float assetHeightInInches = ((ImageAsset)asset).heightInInches();
 
-        final float left = (canvas.getWidth() - assetWidthInInches*ppi)/2;
+        final float left =pageBounds.left + (pageBounds.width() - assetWidthInInches*ppi)/2;
         final float right = left + assetWidthInInches*ppi;
-        final float top = (canvas.getHeight() - assetHeightInInches*ppi)/2;
+        final float top = pageBounds.top + (pageBounds.height() - assetHeightInInches*ppi)/2;
         final float bottom = top + assetHeightInInches*ppi;
 
         canvas.drawBitmap(bitmap, null, new Rect((int) left, (int) top, (int) right, (int) bottom), null);
     }
+
     private void drawCenterTopLeft(Canvas canvas, Bitmap bitmap, float ppi, RectF pageBounds) {
 
         float assetWidthInInches = ((ImageAsset)asset).widthInInches();
