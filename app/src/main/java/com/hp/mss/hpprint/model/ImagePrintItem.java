@@ -73,12 +73,12 @@ public class ImagePrintItem extends PrintItem {
         this(null, DEFAULT_SCALE_TYPE, asset);
     }
 
-    public void drawPage(Canvas canvas, float dpi, RectF pageBounds) {
+    public void drawPage(Canvas canvas, float ppi, RectF pageBounds) {
         Bitmap bitmap = getPrintableBitmap();
         switch (scaleType) {
             default:
             case CENTER:
-                drawCenter(canvas, bitmap, dpi, pageBounds);
+                drawCenter(canvas, bitmap, ppi, pageBounds);
                 break;
             case CROP:
                 drawCrop(canvas, bitmap, pageBounds);
@@ -87,48 +87,32 @@ public class ImagePrintItem extends PrintItem {
                 drawFit(canvas, bitmap, pageBounds);
                 break;
             case CENTER_TOP_LEFT:
-                drawCenterTopLeft(canvas, bitmap, dpi, pageBounds);
+                drawCenterTopLeft(canvas, bitmap, ppi, pageBounds);
         }
     }
-    private void drawCenter(Canvas canvas, Bitmap bitmap, float dpi, RectF pageBounds) {
 
-        float photoWidth = bitmap.getWidth();
-        float photoHeight = bitmap.getHeight();
+    private void drawCenter(Canvas canvas, Bitmap bitmap, float ppi, RectF pageBounds) {
 
         float assetWidthInInches = ((ImageAsset)asset).widthInInches();
         float assetHeightInInches = ((ImageAsset)asset).heightInInches();
 
-        float widthScale = dpi / (photoWidth/assetWidthInInches);
-        float heightScale = dpi /(photoHeight/assetHeightInInches);
-
-        photoWidth *= widthScale;
-        photoHeight *= heightScale;
-
-        final float left = pageBounds.left + (pageBounds.width() / 2) - (photoWidth / 2);
-        final float right = left + photoWidth;
-        final float top = pageBounds.top + (pageBounds.height() / 2) - (photoHeight / 2);
-        final float bottom = top + photoHeight;
+        final float left =pageBounds.left + (pageBounds.width() - assetWidthInInches*ppi)/2;
+        final float right = left + assetWidthInInches*ppi;
+        final float top = pageBounds.top + (pageBounds.height() - assetHeightInInches*ppi)/2;
+        final float bottom = top + assetHeightInInches*ppi;
 
         canvas.drawBitmap(bitmap, null, new Rect((int) left, (int) top, (int) right, (int) bottom), null);
     }
-    private void drawCenterTopLeft(Canvas canvas, Bitmap bitmap, float dpi, RectF pageBounds) {
 
-        float photoWidth = bitmap.getWidth();
-        float photoHeight = bitmap.getHeight();
+    private void drawCenterTopLeft(Canvas canvas, Bitmap bitmap, float ppi, RectF pageBounds) {
 
         float assetWidthInInches = ((ImageAsset)asset).widthInInches();
         float assetHeightInInches = ((ImageAsset)asset).heightInInches();
 
-        float widthScale = dpi / (photoWidth/assetWidthInInches);
-        float heightScale = dpi /(photoHeight/assetHeightInInches);
-
-        photoWidth *= widthScale;
-        photoHeight *= heightScale;
-
         final float left = pageBounds.left;
-        final float right = left + photoWidth;
+        final float right = left + assetWidthInInches * ppi;
         final float top = pageBounds.top;
-        final float bottom = top + photoHeight;
+        final float bottom = top + assetHeightInInches * ppi;
 
         canvas.drawBitmap(bitmap, null, new Rect((int) left, (int) top, (int) right, (int) bottom), null);
     }

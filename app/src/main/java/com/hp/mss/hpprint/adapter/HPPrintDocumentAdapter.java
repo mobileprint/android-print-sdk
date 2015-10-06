@@ -38,10 +38,8 @@ import java.io.IOException;
  * You should not need to create this yourself.
  */
 public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
-    private static final float PdfDocumentScale = .50f;
+
     private Context context;
-    private int pageHeight;
-    private int pageWidth;
     private PrintedPdfDocument myPdfDocument;
     private Bitmap thePhoto;
     private int totalPages;
@@ -71,8 +69,6 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
 
         myPdfDocument = new PrintedPdfDocument(context, newAttributes);
 
-        pageHeight = newAttributes.getMediaSize().getHeightMils();
-        pageWidth = newAttributes.getMediaSize().getWidthMils();
 
         printItem = (printJobData.getPrintItem(newAttributes.getMediaSize()));
 
@@ -101,13 +97,11 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
                         final CancellationSignal cancellationSignal,
                         final WriteResultCallback callback) {
 
-        final float scaledWidth = pageWidth * PdfDocumentScale;
-        final float scaledHeight = pageHeight * PdfDocumentScale;
-
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder((int) scaledWidth, (int) scaledHeight, 0).create();
 
 
-        PdfDocument.Page page = myPdfDocument.startPage(pageInfo);
+
+
+        PdfDocument.Page page = myPdfDocument.startPage(0);
 
         //check for cancellation
         if (cancellationSignal.isCanceled()) {
@@ -119,7 +113,8 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
         }
         Canvas canvas = page.getCanvas();
 
-        printItem.drawPage(canvas, 1000 * PdfDocumentScale, new RectF(0, 0, canvas.getWidth(), canvas.getHeight()));
+        // units are in points (1/72 of am inch)
+        printItem.drawPage(canvas, 72, new RectF(0, 0, canvas.getWidth(), canvas.getHeight()));
         myPdfDocument.finishPage(page);
 
         try {
