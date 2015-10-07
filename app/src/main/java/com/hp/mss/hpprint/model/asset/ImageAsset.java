@@ -14,6 +14,7 @@ package com.hp.mss.hpprint.model.asset;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -137,6 +138,29 @@ public class ImageAsset implements Asset, Parcelable {
     public float heightInInches(){
 
         return height;
+    }
+
+    @Override
+    public int getAssetWidth(){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        BitmapFactory.decodeFile(getAssetUri(), options);
+        return options.outWidth;
+    }
+
+    @Override
+    public int getAssetHeight(){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        BitmapFactory.decodeFile(getAssetUri(), options);
+        return options.outWidth;
+    }
+
+    @Override
+    public String getContentType(){
+        return "image";
     }
 
     //Parcelable

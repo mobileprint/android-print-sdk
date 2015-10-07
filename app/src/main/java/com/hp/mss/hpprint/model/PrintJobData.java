@@ -180,6 +180,27 @@ public class PrintJobData implements Parcelable{
 
     }
 
+    public void cleanup(){
+        defaultPrintItem.cleanup(context);
+
+        for(PrintItem printItem : printItems.values()) {
+            printItem.cleanup(context);
+        }
+    }
+
+    public boolean containsPDFItem(){
+        if(getDefaultPrintItem() instanceof PDFPrintItem){
+            return true;
+        }
+
+        for(PrintItem printItem : getPrintItems().values()){
+            if(printItem instanceof PDFPrintItem){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public int describeContents() {
         return 0;

@@ -29,4 +29,19 @@ public interface Asset{
      * @return The URI location of the asset.
      */
     String getAssetUri();
+
+    /**
+     * Get the asset width.
+     */
+    int getAssetWidth();
+
+    /**
+     * Get the asset height.
+     */
+    int getAssetHeight();
+
+    /**
+     * Get content type string.
+     */
+    String getContentType();
 }

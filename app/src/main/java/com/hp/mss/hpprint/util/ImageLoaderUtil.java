@@ -17,8 +17,6 @@ import android.content.ContextWrapper;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
-import android.os.Looper;
 import android.util.Log;
 
 import java.io.File;
@@ -32,7 +30,7 @@ import java.io.InputStream;
 public class ImageLoaderUtil {
     private static final int MAXFILEAGE = (int) 3600000L;   // Max file age is 1 hour
     private static final String TAG = "ImageLoaderUtil";
-    private static final String IMAGE_DIR = "imageDir";
+    public static final String IMAGE_DIR = "imageDir";
     private static final String IMAGE_EXT = ".jpg";
 
     private static Context c;

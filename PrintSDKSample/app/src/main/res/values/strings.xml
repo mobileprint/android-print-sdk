@@ -24,6 +24,9 @@
     <string name="layout_top_left">Top Left</string>
     <string name="metrics_option">Metrics Options</string>
 
+    <string name="content_option">Content Options</string>
+    <string name="content_pdf">PDF</string>
+    <string name="content_image">Image</string>
     <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
     <string-array name="scaleTypeArray">
         <item>Center</item>

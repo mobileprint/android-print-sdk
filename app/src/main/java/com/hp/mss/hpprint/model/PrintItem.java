@@ -12,9 +12,9 @@
 
 package com.hp.mss.hpprint.model;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -99,6 +99,8 @@ public abstract class PrintItem implements Parcelable{
      *                   want to draw on.
      */
     public abstract void drawPage(Canvas canvas, float dpi, RectF pageBounds);
+
+    protected abstract void cleanup(Context context);
 
     //Parcelable methods
     protected PrintItem(Parcel in) {

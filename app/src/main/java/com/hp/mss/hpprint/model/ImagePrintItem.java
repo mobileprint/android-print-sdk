@@ -17,15 +17,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.pdf.PdfDocument;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.print.PrintAttributes;
+import android.util.Log;
 
-import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.asset.Asset;
 import com.hp.mss.hpprint.model.asset.ImageAsset;
-import com.hp.mss.hpprint.util.ImageLoaderUtil;
+
+import java.io.File;
 
 /**
  * Once you create an image asset, you need to associate it with a PrintItem object.
@@ -160,6 +160,16 @@ public class ImagePrintItem extends PrintItem {
         final float bottom = top + photoHeight;
 
         canvas.drawBitmap(bitmap, null, new Rect((int) left, (int) top, (int) right, (int) bottom), null);
+    }
+
+    @Override
+    protected void cleanup(Context context){
+        try {
+            final File f = new File(asset.getAssetUri());
+            f.delete();
+        }catch(Exception e){
+            Log.e("ImagePrintItem", "File already deleted");
+        }
     }
 
     //Parcelable methods

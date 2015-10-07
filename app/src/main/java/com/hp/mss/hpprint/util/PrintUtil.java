@@ -57,7 +57,7 @@ public class PrintUtil {
             metricsListener = (PrintMetricsListener) activity;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP || printJobData.containsPDFItem()) {
             if (PrintUtil.showPluginHelper) {
                 showPluginHelper(activity);
             } else {
@@ -93,7 +93,7 @@ public class PrintUtil {
      * @param printJobData The print job data object that you want to use.
      */
     public static void setPrintJobData(PrintJobData printJobData){
-        PrintUtil.printJobData = printJobData;
+       PrintUtil.printJobData = printJobData;
     }
 
     /**

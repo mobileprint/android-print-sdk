@@ -18,9 +18,46 @@
     android:orientation="vertical"
     android:layout_margin="@dimen/component_margin">
     <RelativeLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/component_margin"
+        android:layout_marginBottom="@dimen/component_margin">
+        <TextView
+            android:id="@+id/contentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/content_option"
+            android:textColor="@android:color/white"
+            android:textAlignment="viewStart"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contentText"
+            android:id="@+id/contentRadioGroup"
+            android:checkedButton="@+id/contentPDF"
+            android:orientation="horizontal"
+            android:paddingStart="25px">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:id="@+id/contentPDF"
+                android:text="@string/content_pdf" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:id="@+id/contentImage"
+                android:text="@string/content_image" />
+        </RadioGroup>
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/layoutLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/contentLayout"
         android:layout_marginTop="@dimen/component_margin"
         android:layout_marginBottom="@dimen/component_margin">
         <TextView

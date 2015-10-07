@@ -37,6 +37,7 @@ import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
+import com.hp.mss.hpprint.model.asset.ImageAsset;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -88,7 +89,7 @@ class PrintMetricsCollector extends Thread {
         String printJobInfoString = printJob.getInfo().toString();
 
         if (isJobFailed(printJob) && !printJobInfoString.contains("PDF printer")) {
-            ImageLoaderUtil.cleanUpFileDirectory();
+            printJobData.cleanup();
             PrintMetricsData printMetricsData = new PrintMetricsData();
             printMetricsData.previewPaperSize = this.previewPaperSize;
 
@@ -105,7 +106,6 @@ class PrintMetricsCollector extends Thread {
         }
 
         if (hasJobInfo(printJob) || printJobInfoString.contains("PDF printer")) {
-            ImageLoaderUtil.cleanUpFileDirectory();
 
             PrintJobInfo printJobInfo = printJob.getInfo();
             PrintAttributes printJobAttributes = printJobInfo.getAttributes();
@@ -115,18 +115,10 @@ class PrintMetricsCollector extends Thread {
             printMetricsData.previewPaperSize = this.previewPaperSize;
 
             PrintItem printItem = printJobData.getPrintItem(printJobAttributes.getMediaSize());
-            if(printItem.getClass().equals(ImagePrintItem.class)) {
-                printMetricsData.contentType = "image";
-            } else {
-                printMetricsData.contentType = "invalid";
-            }
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-
-            BitmapFactory.decodeFile(printItem.getAsset().getAssetUri(), options);
-            printMetricsData.contentWidthPixels = Integer.toString(options.outWidth);
-            printMetricsData.contentHeightPixels = Integer.toString(options.outHeight);
+            printMetricsData.contentType = printItem.getAsset().getContentType();
+            printMetricsData.contentWidthPixels = Integer.toString(printItem.getAsset().getAssetWidth());
+            printMetricsData.contentHeightPixels = Integer.toString(printItem.getAsset().getAssetHeight());
 
             printMetricsData.printResult = PrintMetricsData.PRINT_RESULT_SUCCESS;
 
@@ -163,6 +155,7 @@ class PrintMetricsCollector extends Thread {
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 Log.e(TAG, "CollectionRunner", e);
             }
+            printJobData.cleanup();
 
         } else {
             metricsHandler.postDelayed(this, PRINT_JOB_WAIT_TIME);

@@ -27,11 +27,16 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
 
+import com.hp.mss.hpprint.model.ImagePrintItem;
+import com.hp.mss.hpprint.model.PDFPrintItem;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJobData;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * This class is our customized PrintDocumentAdapter. It's intended to be used within the HP Print SDK.
@@ -99,33 +104,64 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
 
 
 
+        if(printItem instanceof ImagePrintItem){
+            
+            PdfDocument.Page page = myPdfDocument.startPage(0);
 
+            //check for cancellation
+            if (cancellationSignal.isCanceled()) {
+                callback.onWriteCancelled();
+                myPdfDocument.finishPage(page);
+                myPdfDocument.close();
+                myPdfDocument = null;
+                return;
+            }
+            Canvas canvas = page.getCanvas();
 
-        PdfDocument.Page page = myPdfDocument.startPage(0);
+            // units are in points (1/72 of am inch)
+            printItem.drawPage(canvas, 72, new RectF(0, 0, canvas.getWidth(), canvas.getHeight()));
 
-        //check for cancellation
-        if (cancellationSignal.isCanceled()) {
-            callback.onWriteCancelled();
             myPdfDocument.finishPage(page);
-            myPdfDocument.close();
-            myPdfDocument = null;
-            return;
-        }
-        Canvas canvas = page.getCanvas();
+            try {
+                myPdfDocument.writeTo(new FileOutputStream(
+                        destination.getFileDescriptor()));
+            } catch (IOException e) {
+                callback.onWriteFailed(e.toString());
+                return;
+            } finally {
+                myPdfDocument.close();
+                myPdfDocument = null;
+            }
 
-        // units are in points (1/72 of am inch)
-        printItem.drawPage(canvas, 72, new RectF(0, 0, canvas.getWidth(), canvas.getHeight()));
-        myPdfDocument.finishPage(page);
+        } else if (printItem instanceof PDFPrintItem){
 
-        try {
-            myPdfDocument.writeTo(new FileOutputStream(
-                    destination.getFileDescriptor()));
-        } catch (IOException e) {
-            callback.onWriteFailed(e.toString());
-            return;
-        } finally {
-            myPdfDocument.close();
-            myPdfDocument = null;
+            //do other stuff
+            InputStream input = null;
+            OutputStream output = null;
+            try {
+                input = context.getAssets().open(printItem.getAsset().getAssetUri());
+                output = new FileOutputStream(destination.getFileDescriptor());
+
+                byte[] buf = new byte[1024];
+                int bytesRead;
+
+                while ((bytesRead = input.read(buf)) > 0) {
+                    output.write(buf, 0, bytesRead);
+                }
+
+                callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
+            }catch (FileNotFoundException ee) {
+                //Catch exception
+            } catch (Exception e) {
+                //Catch exception
+            } finally {
+                try {
+                    input.close();
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         callback.onWriteFinished(pageRanges);
