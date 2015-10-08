@@ -157,6 +157,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             printJobData = new PrintJobData(this, printItem4x6);
 
             printJobData.addPrintItem(printItemLetter);
+            printJobData.addPrintItem(printItem5x7);
         }
 
         //Giving the print job a name.
@@ -164,7 +165,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
         //Optionally include print attributes.
         PrintAttributes printAttributes = new PrintAttributes.Builder()
-                .setMediaSize(PrintAttributes.MediaSize.NA_INDEX_4X6)
+                .setMediaSize(PrintAttributes.MediaSize.NA_LETTER)
                 .build();
         printJobData.setPrintDialogOptions(printAttributes);
 
