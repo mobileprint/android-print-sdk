@@ -57,6 +57,9 @@ public class PrintUtil {
             metricsListener = (PrintMetricsListener) activity;
         }
 
+        if(printJobData == null)
+            return;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP || printJobData.containsPDFItem()) {
             if (PrintUtil.showPluginHelper) {
                 showPluginHelper(activity);
