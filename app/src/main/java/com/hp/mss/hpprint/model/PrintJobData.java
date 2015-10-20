@@ -177,15 +177,6 @@ public class PrintJobData implements Parcelable{
         for(int i = 0; i < size; i++){
             printItems.put(new PrintAttributes.MediaSize(in.readString(), "android", in.readInt(), in.readInt()), (PrintItem) in.readValue(PrintItem.class.getClassLoader()));
         }
-
-    }
-
-    public void cleanup(){
-        defaultPrintItem.cleanup(context);
-
-        for(PrintItem printItem : printItems.values()) {
-            printItem.cleanup(context);
-        }
     }
 
     public boolean containsPDFItem(){

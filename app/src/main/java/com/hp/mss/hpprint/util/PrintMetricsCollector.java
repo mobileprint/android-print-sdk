@@ -89,7 +89,7 @@ class PrintMetricsCollector extends Thread {
         String printJobInfoString = printJob.getInfo().toString();
 
         if (isJobFailed(printJob) && !printJobInfoString.contains("PDF printer")) {
-            printJobData.cleanup();
+            ImageLoaderUtil.cleanUpFileDirectory();
             PrintMetricsData printMetricsData = new PrintMetricsData();
             printMetricsData.previewPaperSize = this.previewPaperSize;
 
@@ -155,8 +155,7 @@ class PrintMetricsCollector extends Thread {
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 Log.e(TAG, "CollectionRunner", e);
             }
-            printJobData.cleanup();
-
+            ImageLoaderUtil.cleanUpFileDirectory();
         } else {
             metricsHandler.postDelayed(this, PRINT_JOB_WAIT_TIME);
         }
