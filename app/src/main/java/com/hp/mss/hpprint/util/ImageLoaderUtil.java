@@ -151,6 +151,9 @@ public class ImageLoaderUtil {
     }
 
     protected static void cleanUpFileDirectory(){
+        if (c == null) // no application context exists
+            return;
+
         ContextWrapper cw = new ContextWrapper(c.getApplicationContext());
         File directory = cw.getDir(IMAGE_DIR, Context.MODE_PRIVATE);
 
