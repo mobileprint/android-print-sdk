@@ -51,6 +51,7 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
     private boolean is4x5media;
     private PrintJobData printJobData;
     private PrintItem printItem;
+    private int contentType;
 
     public HPPrintDocumentAdapter(Context context, PrintJobData printJobData, boolean is4x5media) {
         this.context = context;
@@ -82,10 +83,17 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
             return;
         }
 
+
+        if(printItem instanceof PDFPrintItem){
+            contentType = PrintDocumentInfo.CONTENT_TYPE_DOCUMENT;
+        } else {
+            contentType = PrintDocumentInfo.CONTENT_TYPE_PHOTO;
+        }
+
         if (totalPages > 0) {
             PrintDocumentInfo.Builder builder = new PrintDocumentInfo
                     .Builder("print_card")
-                    .setContentType((PrintDocumentInfo.CONTENT_TYPE_PHOTO))
+                    .setContentType(contentType)
                     .setPageCount(totalPages);
 
             PrintDocumentInfo info = builder.build();
