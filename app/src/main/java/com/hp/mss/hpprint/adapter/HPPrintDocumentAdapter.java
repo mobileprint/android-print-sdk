@@ -159,13 +159,7 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
                 }
 
                 callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
-            } catch (FileNotFoundException ee) {
-                //Catch exception
-                Log.e("HPPrintDocumentAdapter:PDF", ee.getMessage());
-                ee.printStackTrace();
             } catch (Exception e) {
-                //Catch exception
-                Log.e("HPPrintDocumentAdapter:PDF", e.getMessage());
                 e.printStackTrace();
             } finally {
                 try {
