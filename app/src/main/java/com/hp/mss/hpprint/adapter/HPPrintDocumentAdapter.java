@@ -26,6 +26,7 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
+import android.util.Log;
 
 import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PDFPrintItem;
@@ -160,12 +161,18 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
                 callback.onWriteFinished(new PageRange[]{PageRange.ALL_PAGES});
             } catch (FileNotFoundException ee) {
                 //Catch exception
+                Log.e("HPPrintDocumentAdapter:PDF", ee.getMessage());
+                ee.printStackTrace();
             } catch (Exception e) {
                 //Catch exception
+                Log.e("HPPrintDocumentAdapter:PDF", e.getMessage());
+                e.printStackTrace();
             } finally {
                 try {
-                    input.close();
-                    output.close();
+                    if (input != null)
+                        input.close();
+                    if (output != null)
+                        output.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
