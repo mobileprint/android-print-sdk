@@ -27,6 +27,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * This is the class that encapsulates all the basic application data HP is collecting.
@@ -36,45 +38,50 @@ public class ApplicationMetricsData {
 
     private static final String TAG = "ClientMetricsData";
 
-    private static final String OS_TYPE = "Android";
-    private static final String PRODUCT_NAME = "HP Snapshots";
-    private static final String ACTION_PRINT = "Android Print";
-    private static final String NO = "NO";
-    private static final String APP_TYPE = "Partner";
+    protected static final String OS_TYPE = "Android";
+    protected static final String PRODUCT_NAME = "HP Snapshots";
+    protected static final String ACTION_PRINT = "Android Print";
+    protected static final String NO = "NO";
+    protected static final String APP_TYPE = "Partner";
 
-    private static final String DEVICE_BRAND_LABEL = "device_brand";
-    private static final String DEVICE_ID_LABEL = "device_id";
-    private static final String DEVICE_TYPE_LABEL = "device_type";
-    private static final String MANUFACTURER_LABEL = "manufacturer";
-    private static final String OFF_RAMP_LABEL = "off_ramp";
-    private static final String OS_TYPE_LABEL = "os_type";
-    private static final String OS_VERSION_LABEL = "os_version";
-    private static final String PRODUCT_NAME_LABEL = "product_name";
-    private static final String VERSION_LABEL = "version";
-    private static final String WIFI_SSID_LABEL = "wifi_ssid";
-    private static final String UNKNOWN_SSID = "<unknown ssid>";
-    private static final String NO_WIFI = "NO-WIFI";
-    private  static final String APP_TYPE_LABEL = "app_type";
-    private  static final String PRODUCT_ID_LABEL = "product_id";
-    private  static final String PRINT_LIBRARY_VERSION_LABEL = "print_library_version";
+    protected static final String DEVICE_ID_LABEL = "device_id";
+    protected static final String DEVICE_TYPE_LABEL = "device_type";
+    protected static final String OFF_RAMP_LABEL = "off_ramp";
+    protected static final String OS_TYPE_LABEL = "os_type";
+    protected static final String OS_VERSION_LABEL = "os_version";
+    protected static final String PRODUCT_NAME_LABEL = "product_name";
+    protected static final String VERSION_LABEL = "version";
+    protected static final String WIFI_SSID_LABEL = "wifi_ssid";
+    protected static final String UNKNOWN_SSID = "<unknown ssid>";
+    protected static final String NO_WIFI = "NO-WIFI";
+    protected static final String APP_TYPE_LABEL = "app_type";
+    protected static final String PRODUCT_ID_LABEL = "product_id";
+    protected static final String PRINT_LIBRARY_VERSION_LABEL = "print_library_version";
+    protected static final String LANGUAGE_CODE_LABEL = "language_code";
+    protected static final String COUNTRY_CODE_LABEL = "country_code";
+    protected static final String TIMEZONE_DESCRIPTION = "timezone_description";
+    protected static final String TIMEZONE_OFFSET_SECONDS = "timezone_offset_seconds";
 
-    private String deviceBrand;
-    private String deviceId;
-    private String deviceType;
-    private String manufacturer;
-    private String offRamp;
-    private String osType;
-    private String osVersion;
-    private String productName;
-    private String version;
-    private String wifiSsid;
-    private String appType;
-    private String productId;
-    private String printLibraryVersion;
+
+    protected String deviceId;
+    protected String deviceType;
+    protected String offRamp;
+    protected String osType;
+    protected String osVersion;
+    protected String productName;
+    protected String version;
+    protected String wifiSsid;
+    protected String appType;
+    protected String productId;
+    protected String printLibraryVersion;
+    protected String languageCode;
+    protected String countryCode;
+    protected String timezoneDescription;
+    protected String timezoneOffsetSeconds;
+
 
     public ApplicationMetricsData(final Context context) {
 
-//        this.deviceBrand = Build.BRAND;
         this.deviceId = getDeviceId(context);
         this.deviceType = Build.MODEL;
 //        this.manufacturer = Build.MANUFACTURER;
@@ -98,7 +105,13 @@ public class ApplicationMetricsData {
         } catch (SecurityException se) {
             this.wifiSsid = "NO PERMISSION";
         }
-//        this.appType = APP_TYPE;
+        this.appType = APP_TYPE;
+
+        this.languageCode = Locale.getDefault().getDisplayLanguage();
+        this.countryCode = Locale.getDefault().getDisplayCountry();
+        this.timezoneDescription = TimeZone.getDefault().getDisplayName();
+        this.timezoneOffsetSeconds = String.valueOf(TimeZone.getDefault().getRawOffset()/1000);
+
     }
     public String getAppLable(Context pContext) {
         PackageManager lPackageManager = pContext.getPackageManager();
@@ -109,14 +122,13 @@ public class ApplicationMetricsData {
         }
         return (String) (lApplicationInfo != null ? lPackageManager.getApplicationLabel(lApplicationInfo) : "Unknown");
     }
+
     public HashMap<String, String> toMap() {
 
         HashMap<String, String>  map = new HashMap<String, String>();
 
-        if (this.deviceBrand != null) map.put(DEVICE_BRAND_LABEL, this.deviceBrand);
         if (this.deviceId != null) map.put(DEVICE_ID_LABEL, this.deviceId);
         if (this.deviceType != null) map.put(DEVICE_TYPE_LABEL, this.deviceType);
-        if (this.manufacturer != null) map.put(MANUFACTURER_LABEL, this.manufacturer);
         if (this.offRamp != null) map.put(OFF_RAMP_LABEL, this.offRamp);
         if (this.osType != null) map.put(OS_TYPE_LABEL, this.osType);
         if (this.osVersion != null) map.put(OS_VERSION_LABEL, this.osVersion);
@@ -126,6 +138,21 @@ public class ApplicationMetricsData {
         if (this.appType != null) map.put(APP_TYPE_LABEL, this.appType);
         if (this.productId != null) map.put(PRODUCT_ID_LABEL, this.productId);
         if (this.printLibraryVersion != null) map.put(PRINT_LIBRARY_VERSION_LABEL, this.printLibraryVersion);
+        if (this.languageCode != null) map.put(LANGUAGE_CODE_LABEL, this.languageCode);
+        if (this.countryCode != null) map.put(COUNTRY_CODE_LABEL, this.countryCode);
+        if (this.timezoneDescription != null) map.put(TIMEZONE_DESCRIPTION, this.timezoneDescription);
+        if (this.timezoneOffsetSeconds != null) map.put(TIMEZONE_OFFSET_SECONDS, this.timezoneOffsetSeconds);
+
+        return map;
+    }
+
+    public HashMap<String, String> toEventOnlyMap() {
+        HashMap<String, String>  map = toMap();
+
+        map.remove(OFF_RAMP_LABEL);
+        map.remove(APP_TYPE);
+        map.remove(WIFI_SSID_LABEL);
+
         return map;
     }
 
@@ -154,7 +181,7 @@ public class ApplicationMetricsData {
     }
 
     private String getDeviceId(Context context) {
-        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return md5(Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
     }
 
 }

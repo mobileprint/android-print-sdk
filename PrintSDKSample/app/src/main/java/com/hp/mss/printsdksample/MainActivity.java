@@ -210,7 +210,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             builder.setMessage(printMetricsData.toMap().toString());
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
+                    dialog.dismiss();
                 }
             });
             builder.create().show();

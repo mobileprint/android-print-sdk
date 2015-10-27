@@ -104,6 +104,7 @@ public class PrintPluginHelper {
             }
         });
         pluginDialog.show();
+        EventMetricsCollector.postMetricsToHPServer(activity, EventMetricsCollector.PrintFlowEventTypes.OPENED_PLUGIN_HELPER);
 
     }
     public static void openPlayStore(Activity activity) {
@@ -111,6 +112,7 @@ public class PrintPluginHelper {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
+        EventMetricsCollector.postMetricsToHPServer(activity, EventMetricsCollector.PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE);
     }
 
 }
