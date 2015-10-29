@@ -5,7 +5,9 @@ Then(/^I select "(.*?)" (?:option|button)$/) do |option|
     else if option =="Preview"
         touch query("* text:'#{option}'")
     else if option =="I have one"
-        touch query("* text:'#{option}'")
+       if element_exists("* text:'#{option}'")
+            touch query("* text:'#{option}'")
+        end
     end
     end
     end
