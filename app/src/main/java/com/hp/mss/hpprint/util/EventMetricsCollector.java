@@ -60,6 +60,7 @@ public class EventMetricsCollector {
     }
 
     private static final String TAG = "EventMetricsCollector";
+    private static final String API_METHOD_NAME = "/v2/events";
 
     private static final String PRINT_SESSION_ID_LABEL = "print_session_id";
     private static final String EVENT_COUNTER_LABEL = "event_count";
@@ -67,7 +68,7 @@ public class EventMetricsCollector {
     private static final String NOT_AVAILABLE = "Not Available";
 
     String print_session_id;
-    String event_counter;
+    String event_count;
     String event_type_id;
     Activity hostActivity;
 
@@ -92,7 +93,7 @@ public class EventMetricsCollector {
 
         final Map<String, String> eventMap = metricsCollector.getMetricsParams();
 
-        StringRequest sr = new StringRequest(Request.Method.POST, MetricsUtil.getMetricsServer(context), new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST, MetricsUtil.getMetricsServer(context) + API_METHOD_NAME, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -131,7 +132,7 @@ public class EventMetricsCollector {
 
         HashMap<String, String> combinedMetrics = appData.toEventOnlyMap();
         if(print_session_id != null) combinedMetrics.put(PRINT_SESSION_ID_LABEL, print_session_id);
-        if(event_counter != null) combinedMetrics.put(EVENT_COUNTER_LABEL, event_counter);
+        if(event_count != null) combinedMetrics.put(EVENT_COUNTER_LABEL, event_count);
         if(event_type_id != null) combinedMetrics.put(EVENT_TYPE_ID_LABLE, event_type_id);
 
         return combinedMetrics;
@@ -142,32 +143,32 @@ public class EventMetricsCollector {
         switch (type) {
             case ENTERED_PRINT_SDK:
                 this.print_session_id = String.valueOf(getNextEventCounter(PrintFlowEventTypes.ENTERED_PRINT_SDK.name()));
-                this.event_counter = this.print_session_id;
+                this.event_count = this.print_session_id;
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.ENTERED_PRINT_SDK.getId());
                 break;
             case OPENED_PLUGIN_HELPER:
                 this.print_session_id = String.valueOf(getCurrentSessionCounter());
-                this.event_counter = String.valueOf(getNextEventCounter(PrintFlowEventTypes.OPENED_PLUGIN_HELPER.name()));
+                this.event_count = String.valueOf(getNextEventCounter(PrintFlowEventTypes.OPENED_PLUGIN_HELPER.name()));
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.OPENED_PLUGIN_HELPER.getId());
                 break;
             case SENT_TO_GOOGLE_PLAY_STORE:
                 this.print_session_id = String.valueOf(getCurrentSessionCounter());
-                this.event_counter = String.valueOf(getNextEventCounter(PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.name()));
+                this.event_count = String.valueOf(getNextEventCounter(PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.name()));
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.getId());
                 break;
             case OPENED_PREVIEW:
                 this.print_session_id = String.valueOf(getCurrentSessionCounter());
-                this.event_counter = String.valueOf(getNextEventCounter(PrintFlowEventTypes.OPENED_PREVIEW.name()));
+                this.event_count = String.valueOf(getNextEventCounter(PrintFlowEventTypes.OPENED_PREVIEW.name()));
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.OPENED_PREVIEW.getId());
                 break;
             case SENT_TO_PRINT_DIALOG:
                 this.print_session_id = String.valueOf(getCurrentSessionCounter());
-                this.event_counter = String.valueOf(getNextEventCounter(PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.name()));
+                this.event_count = String.valueOf(getNextEventCounter(PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.name()));
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.getId());
                 break;
             default:
                 this.event_type_id = NOT_AVAILABLE;
-                this.event_counter = NOT_AVAILABLE;
+                this.event_count = NOT_AVAILABLE;
                 this.event_type_id = NOT_AVAILABLE;
                 break;
         }
@@ -190,7 +191,7 @@ public class EventMetricsCollector {
     private int getCurrentSessionCounter() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(hostActivity.getApplicationContext());
 
-        return preferences.getInt(PRINT_SESSION_ID_LABEL, 0);
+        return preferences.getInt(PrintFlowEventTypes.ENTERED_PRINT_SDK.name(), 0);
     }
 
 }

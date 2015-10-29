@@ -51,6 +51,8 @@ import java.util.Map;
 class PrintMetricsCollector extends Thread {
 
     private static final String TAG = "PrintMetricsCollector";
+    private static final String API_METHOD_NAME = "/v1/mobile_app_metrics";
+
     private static final int PRINT_JOB_WAIT_TIME = 1000;
     private static final int MILS = 1000;
 
@@ -178,7 +180,7 @@ class PrintMetricsCollector extends Thread {
     private void postMetricsToHPServer(final Context context, final PrintMetricsData data) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest sr = new StringRequest(Request.Method.POST, MetricsUtil.getMetricsServer(context), new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST, MetricsUtil.getMetricsServer(context) + API_METHOD_NAME, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.i("PrintMetricsCollector", response.toString());

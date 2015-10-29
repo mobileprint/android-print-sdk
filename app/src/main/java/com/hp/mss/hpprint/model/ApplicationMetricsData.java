@@ -107,8 +107,8 @@ public class ApplicationMetricsData {
         }
         this.appType = APP_TYPE;
 
-        this.languageCode = Locale.getDefault().getDisplayLanguage();
-        this.countryCode = Locale.getDefault().getDisplayCountry();
+        this.languageCode = Locale.getDefault().getISO3Language();
+        this.countryCode = Locale.getDefault().getISO3Country();
         this.timezoneDescription = TimeZone.getDefault().getDisplayName();
         this.timezoneOffsetSeconds = String.valueOf(TimeZone.getDefault().getRawOffset()/1000);
 
@@ -181,7 +181,7 @@ public class ApplicationMetricsData {
     }
 
     private String getDeviceId(Context context) {
-        return md5(Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
 }

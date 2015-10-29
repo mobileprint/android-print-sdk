@@ -18,9 +18,9 @@ import android.util.Base64;
 
 public class MetricsUtil {
 
-    private static final String PRINT_METRICS_PRODUCTION_SERVER = "https://print-metrics-w1.twosmiles.com/api/v1/mobile_app_metrics";
-    private static final String PRINT_METRICS_TEST_SERVER = "http://print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics";
-    //    private static final String PRINT_METRICS_LOCAL_SERVER = "http://10.0.2.2:4567/api/v1/mobile_app_metrics";
+    private static final String PRINT_METRICS_PRODUCTION_SERVER = "https://print-metrics-w1.twosmiles.com/api";
+    private static final String PRINT_METRICS_TEST_SERVER = "http://print-metrics-test.twosmiles.com/api";
+    private static final String PRINT_METRICS_LOCAL_SERVER = "http://10.0.2.2:4567/api";
     private static final String PRINT_METRICS_USER_NAME = "hpmobileprint";
     private static final String PRINT_METRICS_PASSWORD = "print1t";
 
