@@ -21,6 +21,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.print.PrintAttributes;
 import android.print.PrintJob;
 import android.support.v7.app.ActionBarActivity;
@@ -148,7 +149,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         } else {
             PDFAsset pdf4x6 = new PDFAsset("4x6.pdf");
             PDFAsset pdf5x7 = new PDFAsset("5x7.pdf");
-            PDFAsset pdfletter = new PDFAsset("8.5x11.pdf");
+            PDFAsset pdfletter = new PDFAsset("8.5x11.pdf", true);
+
+//            PDFAsset pdfletter = null;
+//            try {
+//                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getCanonicalPath();
+//                File file = new File(path + "/HP_PRINT_ITEM_ORIGINAL_3.pdf");
+//                String s = file.getCanonicalPath();
+//                pdfletter = new PDFAsset(s);
+//            } catch (IOException e) {
+//                Log.e("MainActivity", "Unable to create path string.");
+//            }
 
             PrintItem printItem4x6 = new PDFPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6, scaleType, pdf4x6);
             PrintItem printItem5x7 = new PDFPrintItem(mediaSize5x7, scaleType, pdf5x7);

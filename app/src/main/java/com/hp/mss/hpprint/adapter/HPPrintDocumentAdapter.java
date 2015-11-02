@@ -26,14 +26,13 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
-import android.util.Log;
 
 import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PDFPrintItem;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJobData;
+import com.hp.mss.hpprint.model.asset.PDFAsset;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -142,13 +141,14 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
                 myPdfDocument = null;
             }
 
+            callback.onWriteFinished(pageRanges);
         } else if (printItem instanceof PDFPrintItem){
 
             //do other stuff
             InputStream input = null;
             OutputStream output = null;
             try {
-                input = context.getAssets().open(printItem.getAsset().getAssetUri());
+                input = ((PDFAsset) printItem.getAsset()).getInputStream(context);
                 output = new FileOutputStream(destination.getFileDescriptor());
 
                 byte[] buf = new byte[1024];
@@ -172,8 +172,6 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
                 }
             }
         }
-
-        callback.onWriteFinished(pageRanges);
     }
 
     @Override
