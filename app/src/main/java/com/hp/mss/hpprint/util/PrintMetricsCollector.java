@@ -50,13 +50,11 @@ import java.util.Map;
  */
 class PrintMetricsCollector extends Thread {
 
-    private static final String PRINT_METRICS_PRODUCTION_SERVER = "https://print-metrics-w1.twosmiles.com/api/v1/mobile_app_metrics";
-    private static final String PRINT_METRICS_TEST_SERVER = "http://print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics";
-//    private static final String PRINT_METRICS_LOCAL_SERVER = "http://10.0.2.2:4567/api/v1/mobile_app_metrics";
-    private static final String PRINT_METRICS_USER_NAME = "hpmobileprint";
-    private static final String PRINT_METRICS_PASSWORD = "print1t";
-
     private static final String TAG = "PrintMetricsCollector";
+    private static final String API_METHOD_NAME = "/v1/mobile_app_metrics";
+
+    private static final String PRINT_SESSION_ID_LABEL = "print_session_id";
+
     private static final int PRINT_JOB_WAIT_TIME = 1000;
     private static final int MILS = 1000;
 
@@ -184,7 +182,7 @@ class PrintMetricsCollector extends Thread {
     private void postMetricsToHPServer(final Context context, final PrintMetricsData data) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        StringRequest sr = new StringRequest(Request.Method.POST, getPrintMetricsServer(context), new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST, MetricsUtil.getMetricsServer(context) + API_METHOD_NAME, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.i("PrintMetricsCollector", response.toString());
@@ -203,7 +201,7 @@ class PrintMetricsCollector extends Thread {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String authorizationString = "Basic " + Base64.encodeToString((PRINT_METRICS_USER_NAME + ":" + PRINT_METRICS_PASSWORD).getBytes(), Base64.NO_WRAP);
+                String authorizationString = MetricsUtil.getAuthorizationString();
 
                 Map<String,String> params = new HashMap<String, String>();
 
@@ -214,23 +212,17 @@ class PrintMetricsCollector extends Thread {
         queue.add(sr);
     }
 
-    private static boolean isDebuggable(Context context) {
-        return ( 0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) );
-    }
 
-    private static String getPrintMetricsServer(Context context) {
-        return (isDebuggable(context) ? PRINT_METRICS_TEST_SERVER : PRINT_METRICS_PRODUCTION_SERVER);
-    }
-
-
-    private Map<String, String> getMetricsParams(PrintMetricsData data) {
+    private Map<String, String> getMetricsParams(PrintMetricsData printMetricsData) {
         HashMap<String, String> combinedMetrics = new HashMap<String, String>();
 
         if (appMetrics == null || appMetrics.isEmpty()) {
             appMetrics = (new ApplicationMetricsData(hostActivity.getApplicationContext())).toMap();
         }
         combinedMetrics.putAll(appMetrics);
-        combinedMetrics.putAll(data.toMap());
+        combinedMetrics.putAll(printMetricsData.toMap());
+        combinedMetrics.put(PRINT_SESSION_ID_LABEL,
+                String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity)));
         return combinedMetrics;
     }
 

@@ -53,6 +53,10 @@ public class PrintUtil {
     public static void print(Activity activity){
         metricsListener = null;
 
+        EventMetricsCollector.postMetricsToHPServer(
+                activity,
+                EventMetricsCollector.PrintFlowEventTypes.ENTERED_PRINT_SDK);
+
         if (checkIfActivityImplementsInterface(activity, PrintUtil.PrintMetricsListener.class)) {
             metricsListener = (PrintMetricsListener) activity;
         }
@@ -85,6 +89,7 @@ public class PrintUtil {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                EventMetricsCollector.postMetricsToHPServer(activity, EventMetricsCollector.PrintFlowEventTypes.SENT_TO_PRINT_DIALOG);
                 PrintMetricsCollector collector = new PrintMetricsCollector(activity, androidPrintJob);
                 collector.start();
             }
@@ -155,6 +160,7 @@ public class PrintUtil {
         intent.putExtra(HAS_METRICS_LISTENER, has_metrics_listener);
 
         activity.startActivityForResult(intent, START_PREVIEW_ACTIVITY_REQUEST);
+        EventMetricsCollector.postMetricsToHPServer(activity, EventMetricsCollector.PrintFlowEventTypes.OPENED_PREVIEW);
     }
 
     private static boolean checkIfActivityImplementsInterface(Activity theActivity, Class theInterface){
