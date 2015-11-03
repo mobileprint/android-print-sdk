@@ -142,28 +142,33 @@ public class EventMetricsCollector {
 
         switch (type) {
             case ENTERED_PRINT_SDK:
-                this.print_session_id = String.valueOf(getNextEventCounter(PrintFlowEventTypes.ENTERED_PRINT_SDK.name()));
+                this.print_session_id = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                        PrintFlowEventTypes.ENTERED_PRINT_SDK.name()));
                 this.event_count = this.print_session_id;
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.ENTERED_PRINT_SDK.getId());
                 break;
             case OPENED_PLUGIN_HELPER:
-                this.print_session_id = String.valueOf(getCurrentSessionCounter());
-                this.event_count = String.valueOf(getNextEventCounter(PrintFlowEventTypes.OPENED_PLUGIN_HELPER.name()));
+                this.print_session_id = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.event_count = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                        PrintFlowEventTypes.OPENED_PLUGIN_HELPER.name()));
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.OPENED_PLUGIN_HELPER.getId());
                 break;
             case SENT_TO_GOOGLE_PLAY_STORE:
-                this.print_session_id = String.valueOf(getCurrentSessionCounter());
-                this.event_count = String.valueOf(getNextEventCounter(PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.name()));
+                this.print_session_id = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.event_count = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                        PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.name()));
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.getId());
                 break;
             case OPENED_PREVIEW:
-                this.print_session_id = String.valueOf(getCurrentSessionCounter());
-                this.event_count = String.valueOf(getNextEventCounter(PrintFlowEventTypes.OPENED_PREVIEW.name()));
+                this.print_session_id = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.event_count = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                        PrintFlowEventTypes.OPENED_PREVIEW.name()));
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.OPENED_PREVIEW.getId());
                 break;
             case SENT_TO_PRINT_DIALOG:
-                this.print_session_id = String.valueOf(getCurrentSessionCounter());
-                this.event_count = String.valueOf(getNextEventCounter(PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.name()));
+                this.print_session_id = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.event_count = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                        PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.name()));
                 this.event_type_id = String.valueOf(PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.getId());
                 break;
             default:
@@ -176,23 +181,7 @@ public class EventMetricsCollector {
     }
 
 
-    private int getNextEventCounter(String key) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(hostActivity.getApplicationContext());
 
-        int id = preferences.getInt(key, 0);
-        id += 1;
-
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(key, id).commit();
-
-        return id;
-    }
-
-    private int getCurrentSessionCounter() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(hostActivity.getApplicationContext());
-
-        return preferences.getInt(PrintFlowEventTypes.ENTERED_PRINT_SDK.name(), 0);
-    }
 
 }
 
