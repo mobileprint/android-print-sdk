@@ -141,6 +141,44 @@
         </RadioGroup>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/deviceIdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/metricsLayout"
+        android:layout_marginTop="@dimen/component_margin"
+        android:layout_marginBottom="@dimen/component_margin">
+        <TextView
+            android:id="@+id/deviceIdText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unique_device_id_per_app"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/deviceIdText"
+            android:id="@+id/deviceIdRadioGroup"
+            android:checkedButton="@+id/udipaTrue"
+            android:orientation="horizontal"
+            android:paddingStart="25px">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:id="@+id/udipaTrue"
+                android:text="True" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:id="@+id/udipaFalse"
+                android:text="False" />
+        </RadioGroup>
+    </RelativeLayout>
+
     <Button
         android:id="@+id/printBtn"
         android:background="@color/HPFontColorBlue"
@@ -152,7 +190,7 @@
         android:text="Preview"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:onClick="buttonClicked"
-        android:layout_below="@+id/metricsLayout"
+        android:layout_below="@+id/deviceIdLayout"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

@@ -22,6 +22,7 @@ import android.os.Build;
 import android.provider.Settings;
 
 import com.hp.mss.hpprint.BuildConfig;
+import com.hp.mss.hpprint.util.PrintUtil;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -82,7 +83,11 @@ public class ApplicationMetricsData {
 
     public ApplicationMetricsData(final Context context) {
 
-        this.deviceId = getDeviceId(context);
+        if (PrintUtil.uniqueDeviceIdPerApp)
+            this.deviceId = getAppSpecificDeviceID(context);
+        else
+            this.deviceId = getVendorSpecificDeviceID(context);
+
         this.deviceType = Build.MODEL;
 //        this.manufacturer = Build.MANUFACTURER;
         this.osType = OS_TYPE;
@@ -181,7 +186,25 @@ public class ApplicationMetricsData {
     }
 
     private String getDeviceId(Context context) {
+
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    private String getVendorSpecificDeviceID(Context context) {
+
+        if( this.productId == null )
+            return null;
+
+        String vendorName = this.productId.split("[.]")[0] + "." + this.productId.split("[.]")[1];
+
+        return md5(vendorName + getDeviceId(context));
+
+    }
+
+    private String getAppSpecificDeviceID(Context context) {
+
+        return md5(this.productId + getDeviceId(context));
+
     }
 
 }
