@@ -184,7 +184,11 @@ public class PrintJobData implements Parcelable{
             return true;
         }
 
-        for(PrintItem printItem : getPrintItems().values()){
+        if(printItems == null){
+            return false;
+        }
+
+        for(PrintItem printItem : printItems.values()){
             if(printItem instanceof PDFPrintItem){
                 return true;
             }
