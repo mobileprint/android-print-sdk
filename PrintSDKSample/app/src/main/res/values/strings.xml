@@ -23,6 +23,7 @@
     <string name="layout_fit">Fit</string>
     <string name="layout_top_left">Top Left</string>
     <string name="metrics_option">Metrics Options</string>
+    <string name="unique_device_id_per_app">Unique Device Id Per App</string>
 
     <string name="content_option">Content Options</string>
     <string name="content_pdf">PDF</string>

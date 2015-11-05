@@ -76,8 +76,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         onCheckedChanged(contentRadioGroup, contentRadioGroup.getCheckedRadioButtonId());
 
         RadioGroup deviceIdRadioGroup = (RadioGroup) findViewById(R.id.deviceIdRadioGroup);
-        contentRadioGroup.setOnCheckedChangeListener(this);
-        onCheckedChanged(contentRadioGroup, contentRadioGroup.getCheckedRadioButtonId());
+        deviceIdRadioGroup.setOnCheckedChangeListener(this);
+        onCheckedChanged(contentRadioGroup, deviceIdRadioGroup.getCheckedRadioButtonId());
     }
 
     @Override

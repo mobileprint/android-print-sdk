@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/contentText"
             android:id="@+id/contentRadioGroup"
-            android:checkedButton="@+id/contentPDF"
+            android:checkedButton="@+id/contentImage"
             android:orientation="horizontal"
             android:paddingStart="25px">
             <RadioButton
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/metricsText"
             android:id="@+id/metricsRadioGroup"
-            android:checkedButton="@+id/withMetrics"
+            android:checkedButton="@+id/withoutMetrics"
             android:orientation="horizontal"
             android:paddingStart="25px">
             <RadioButton

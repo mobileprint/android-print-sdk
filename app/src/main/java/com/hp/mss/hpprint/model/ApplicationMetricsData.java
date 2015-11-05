@@ -37,7 +37,7 @@ import java.util.TimeZone;
  */
 public class ApplicationMetricsData {
 
-    private static final String TAG = "ClientMetricsData";
+    private static final String TAG = "ApplicationMetricsData";
 
     protected static final String OS_TYPE = "Android";
     protected static final String PRODUCT_NAME = "HP Snapshots";
@@ -83,6 +83,10 @@ public class ApplicationMetricsData {
 
     public ApplicationMetricsData(final Context context) {
 
+        this.productId = context.getPackageName();
+        this.productName = getAppLable(context);
+        this.printLibraryVersion = BuildConfig.VERSION_NAME;
+
         if (PrintUtil.uniqueDeviceIdPerApp)
             this.deviceId = getAppSpecificDeviceID(context);
         else
@@ -92,10 +96,6 @@ public class ApplicationMetricsData {
 //        this.manufacturer = Build.MANUFACTURER;
         this.osType = OS_TYPE;
         this.osVersion = Build.VERSION.RELEASE;
-
-        this.productName = getAppLable(context);
-        this.productId = context.getPackageName();
-        this.printLibraryVersion = BuildConfig.VERSION_NAME;
 
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -191,9 +191,6 @@ public class ApplicationMetricsData {
     }
 
     private String getVendorSpecificDeviceID(Context context) {
-
-        if( this.productId == null )
-            return null;
 
         String vendorName = this.productId.split("[.]")[0] + "." + this.productId.split("[.]")[1];
 
