@@ -22,6 +22,7 @@ import android.os.Build;
 import android.provider.Settings;
 
 import com.hp.mss.hpprint.BuildConfig;
+import com.hp.mss.hpprint.util.PrintUtil;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -36,7 +37,7 @@ import java.util.TimeZone;
  */
 public class ApplicationMetricsData {
 
-    private static final String TAG = "ClientMetricsData";
+    private static final String TAG = "ApplicationMetricsData";
 
     protected static final String OS_TYPE = "Android";
     protected static final String PRODUCT_NAME = "HP Snapshots";
@@ -82,15 +83,19 @@ public class ApplicationMetricsData {
 
     public ApplicationMetricsData(final Context context) {
 
-        this.deviceId = getDeviceId(context);
+        this.productId = context.getPackageName();
+        this.productName = getAppLable(context);
+        this.printLibraryVersion = BuildConfig.VERSION_NAME;
+
+        if (PrintUtil.uniqueDeviceIdPerApp)
+            this.deviceId = getAppSpecificDeviceID(context);
+        else
+            this.deviceId = getVendorSpecificDeviceID(context);
+
         this.deviceType = Build.MODEL;
 //        this.manufacturer = Build.MANUFACTURER;
         this.osType = OS_TYPE;
         this.osVersion = Build.VERSION.RELEASE;
-
-        this.productName = getAppLable(context);
-        this.productId = context.getPackageName();
-        this.printLibraryVersion = BuildConfig.VERSION_NAME;
 
         try {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -181,7 +186,29 @@ public class ApplicationMetricsData {
     }
 
     private String getDeviceId(Context context) {
+
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    private String getVendorSpecificDeviceID(Context context) {
+
+        String vendorName = "";
+        String[] vendorNames = null;
+
+        if (this.productId != null)
+            vendorNames = this.productId.split("[.]");
+
+        if (vendorNames != null && vendorNames.length >= 2)
+            vendorName = this.productId.split("[.]")[0] + "." + this.productId.split("[.]")[1];
+
+        return md5(vendorName + getDeviceId(context));
+
+    }
+
+    private String getAppSpecificDeviceID(Context context) {
+
+        return md5(this.productId + getDeviceId(context));
+
     }
 
 }

@@ -74,6 +74,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         RadioGroup contentRadioGroup = (RadioGroup) findViewById(R.id.contentRadioGroup);
         contentRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(contentRadioGroup, contentRadioGroup.getCheckedRadioButtonId());
+
+        RadioGroup deviceIdRadioGroup = (RadioGroup) findViewById(R.id.deviceIdRadioGroup);
+        deviceIdRadioGroup.setOnCheckedChangeListener(this);
+        onCheckedChanged(contentRadioGroup, deviceIdRadioGroup.getCheckedRadioButtonId());
     }
 
     @Override
@@ -102,6 +106,12 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 break;
             case R.id.contentImage:
                 contentType = "Image";
+                break;
+            case R.id.udipaTrue:
+                PrintUtil.uniqueDeviceIdPerApp = true;
+                break;
+            case R.id.udipaFalse:
+                PrintUtil.uniqueDeviceIdPerApp = false;
                 break;
             default:
                 showMetricsDialog = true;

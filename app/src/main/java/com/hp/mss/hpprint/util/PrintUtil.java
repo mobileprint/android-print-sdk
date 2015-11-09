@@ -40,6 +40,7 @@ public class PrintUtil {
     protected static PrintMetricsListener metricsListener;
     public static boolean is4x5media;
     public static final String mediaSize4x5Label = "4 x 5";
+    public static boolean uniqueDeviceIdPerApp = true;
 
     /**
      * Set this to false to disable plugin helper dialogs.
