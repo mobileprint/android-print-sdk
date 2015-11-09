@@ -192,8 +192,13 @@ public class ApplicationMetricsData {
 
     private String getVendorSpecificDeviceID(Context context) {
 
-        String vendorName = null;
+        String vendorName = "";
+        String[] vendorNames = null;
+
         if (this.productId != null)
+            vendorNames = this.productId.split("[.]");
+
+        if (vendorNames != null && vendorNames.length >= 2)
             vendorName = this.productId.split("[.]")[0] + "." + this.productId.split("[.]")[1];
 
         return md5(vendorName + getDeviceId(context));
