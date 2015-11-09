@@ -147,8 +147,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
 
         } else {
-            PDFAsset pdf4x6 = new PDFAsset("4x6.pdf");
-            PDFAsset pdf5x7 = new PDFAsset("5x7.pdf");
+            PDFAsset pdf4x6 = new PDFAsset("4x6.pdf", true);
+            PDFAsset pdf5x7 = new PDFAsset("5x7.pdf", true);
             PDFAsset pdfletter = new PDFAsset("8.5x11.pdf", true);
 
 //            PDFAsset pdfletter = null;
