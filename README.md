@@ -121,7 +121,13 @@ ImageAsset imageAsset4x6 = new ImageAsset(fileUriString, ImageAsset.MeasurementU
 
 ### PDFAsset
 
-You can also create a `PDFAsset` object. It behaves much the same as an ImageAsset, and can be substituted for an ImageAsset when creating PrintItems, etc. You can use one of the following 2 methods to create the PDFAsset.
+You can also create a `PDFAsset` object. It behaves much the same as an ImageAsset, and can be substituted for an ImageAsset when creating PrintItems, etc. There are a couple of key differences between PDFAsset and ImageAsset types.
+
+* ImageAssets print in photo mode.
+* PDFAssets print in document mode.
+* For PDFAssets, the layout is "Fit to Page", and the margins are controlled by the printer. This can lead to some undesirable scaling, and cause some documents to look smaller when printed than intended.
+
+You can use one of the following 2 methods to create the PDFAsset.
 
 To load a PDFAsset from the assets folder:
 ```java
