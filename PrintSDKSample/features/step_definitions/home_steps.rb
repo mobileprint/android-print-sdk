@@ -54,7 +54,11 @@ Then(/^I select layout as "(.*?)"$/) do |layout_option|
     end
 end
 
-Then(/^I select Without Metrics option$/) do 
-  element_id="com.hp.mss.printsdksample:id/withoutMetrics"
-    selenium.find_element(:id,element_id).click
+Then(/^I select metrics option as "(.*?)"$/) do |metrics_option|
+    if metrics_option == "Without Metrics"
+        element_id="com.hp.mss.printsdksample:id/withoutMetrics"
+    else 
+        element_id="com.hp.mss.printsdksample:id/withMetrics"
+    end
+  selenium.find_element(:id,element_id).click
 end

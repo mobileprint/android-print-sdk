@@ -11,6 +11,7 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for p
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
+    Then I select metrics option as "With Metrics"
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button 
     Then I tap on "I have one" option
@@ -53,6 +54,7 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for C
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
+    Then I select metrics option as "With Metrics"
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button 
     Then I tap on "I have one" option
@@ -71,7 +73,7 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics not g
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
-    Then I select Without Metrics option
+    Then I select metrics option as "Without Metrics"
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button 
     Then I tap on "I have one" option
