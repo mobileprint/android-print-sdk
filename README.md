@@ -36,6 +36,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
     + [ImageAsset](#imageasset)
+    + [PDFAsset](#pdfasset)
     + [PrintItem](#printitem)
     + [printJobData](#printJobData)
 - [Advanced](#advanced)
@@ -116,6 +117,22 @@ Or, if you already saved the bitmap into the internal storage location for your 
 
 ```java
 ImageAsset imageAsset4x6 = new ImageAsset(fileUriString, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+```
+
+### PDFAsset
+
+You can also create a `PDFAsset` object. It behaves much the same as an ImageAsset, and can be substituted for an ImageAsset when creating PrintItems, etc. You can use one of the following 2 methods to create the PDFAsset.
+
+To load a PDFAsset from the assets folder:
+```java
+PDFAsset pdfAsset4x6 = new PDFAsset("4x6.pdf", true);
+```
+Note: the second parameter, `true`, indicates that the file is part of the assets built into the app.
+
+If you already saved the PDF into a folder on the device:
+
+```java
+PDFAsset pdfAsset4x6 = new PDFAsset(fileUriString);
 ```
 
 ### PrintItem
