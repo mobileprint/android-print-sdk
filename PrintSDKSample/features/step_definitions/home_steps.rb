@@ -39,9 +39,22 @@ Then(/^I tap on "(.*?)" option$/) do |option|
             selenium.find_element(:id,element_id).click
         end
     end
+    sleep(WAIT_SCREENLOAD)
 end
 Then(/^I select preview button$/) do
+    $os_version = getOSversion
     sleep(WAIT_SCREENLOAD)
     element_id="com.hp.mss.printsdksample:id/printBtn"
+    selenium.find_element(:id,element_id).click
+end
+Then(/^I select layout as "(.*?)"$/) do |layout_option|
+    if layout_option == "Center"
+        element_id="com.hp.mss.printsdksample:id/layoutCenter"
+        selenium.find_element(:id,element_id).click
+    end
+end
+
+Then(/^I select Without Metrics option$/) do 
+  element_id="com.hp.mss.printsdksample:id/withoutMetrics"
     selenium.find_element(:id,element_id).click
 end
