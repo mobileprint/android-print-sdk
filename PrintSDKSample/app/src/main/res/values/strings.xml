@@ -19,20 +19,18 @@
     <string name="asset">Asset</string>
     <string name="layout_option">Layout Options</string>
     <string name="layout_center">Center</string>
-    <string name="layout_crop">Crop</string>
+    <string name="layout_center_top">Center Top</string>
+    <string name="layout_crop">Crop (Ignores Margin)</string>
     <string name="layout_fit">Fit</string>
     <string name="layout_top_left">Top Left</string>
+    <string name="margin_option">Margin Options</string>
+    <string name="layout_with_margin">Half Inch</string>
+    <string name="layout_without_margin">None</string>
+    <string name="layout_with_top_margin">Top Only</string>
     <string name="metrics_option">Metrics Options</string>
     <string name="unique_device_id_per_app">Unique Device Id Per App</string>
-
     <string name="content_option">Content Options</string>
     <string name="content_pdf">PDF</string>
     <string name="content_image">Image</string>
     <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
-    <string-array name="scaleTypeArray">
-        <item>Center</item>
-        <item>Center Top-Left</item>
-        <item>Crop</item>
-        <item>Fit</item>
-    </string-array>
 </resources>

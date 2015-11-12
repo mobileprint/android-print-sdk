@@ -16,17 +16,38 @@ public class PDFPrintItem extends PrintItem{
         super();
     }
 
-    public PDFPrintItem(PrintAttributes.MediaSize mediaSize, ScaleType scaleType, PDFAsset asset) {
-        super(mediaSize, scaleType, asset);
+    public PDFPrintItem(PrintAttributes.MediaSize mediaSize,PrintAttributes.Margins margins, ScaleType scaleType, PDFAsset asset) {
+        super(mediaSize,margins, scaleType, asset);
+    }
+
+    public PDFPrintItem(PrintAttributes.MediaSize mediaSize,ScaleType scaleType, PDFAsset asset) {
+        this(mediaSize, new PrintAttributes.Margins(0, 0, 0, 0), scaleType, asset);
+    }
+
+    public PDFPrintItem(PrintAttributes.Margins margins,ScaleType scaleType, PDFAsset asset) {
+        this(null, margins, scaleType, asset);
+    }
+
+    public PDFPrintItem(PrintAttributes.MediaSize mediaSize,PrintAttributes.Margins margins, PDFAsset asset) {
+        this(mediaSize, margins, DEFAULT_SCALE_TYPE, asset);
     }
 
     public PDFPrintItem(PrintAttributes.MediaSize mediaSize, PDFAsset asset) {
-        this(mediaSize, DEFAULT_SCALE_TYPE, asset);
+        this(mediaSize,new PrintAttributes.Margins(0, 0, 0, 0),DEFAULT_SCALE_TYPE, asset);
+    }
+
+    public PDFPrintItem(PrintAttributes.Margins margins, PDFAsset asset) {
+        this(null, margins, DEFAULT_SCALE_TYPE, asset);
     }
 
     public PDFPrintItem(ScaleType scaleType, PDFAsset asset) {
-        this(null, scaleType, asset);
+        this(null, new PrintAttributes.Margins(0, 0, 0, 0), scaleType, asset);
     }
+
+    public PDFPrintItem(PDFAsset asset) {
+        this(null, new PrintAttributes.Margins(0, 0, 0, 0), DEFAULT_SCALE_TYPE, asset);
+    }
+
     @Override
     public PrintAttributes.MediaSize getMediaSize() {
         return super.getMediaSize();

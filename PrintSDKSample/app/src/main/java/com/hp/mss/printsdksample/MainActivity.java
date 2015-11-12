@@ -56,6 +56,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
     String contentType;
     PrintItem.ScaleType scaleType;
+    PrintAttributes.Margins margins;
     boolean showMetricsDialog;
 
     @Override
@@ -66,6 +67,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         RadioGroup layoutRadioGroup = (RadioGroup) findViewById(R.id.layoutRadioGroup);
         layoutRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(layoutRadioGroup, layoutRadioGroup.getCheckedRadioButtonId());
+
+        RadioGroup layoutMarginRadioGroup = (RadioGroup) findViewById(R.id.layoutMarginRadioGroup);
+        layoutMarginRadioGroup.setOnCheckedChangeListener(this);
+        onCheckedChanged(layoutMarginRadioGroup, layoutMarginRadioGroup.getCheckedRadioButtonId());
 
         RadioGroup metricsRadioGroup = (RadioGroup) findViewById(R.id.metricsRadioGroup);
         metricsRadioGroup.setOnCheckedChangeListener(this);
@@ -83,10 +88,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
         switch(checkedId) {
+            case R.id.layoutCenterTop:
+                scaleType = PrintItem.ScaleType.CENTER_TOP;
+                break;
             case R.id.layoutCenter:
                 scaleType = PrintItem.ScaleType.CENTER;
                 break;
-            case R.id.layoutCorp:
+            case R.id.layoutCrop:
                 scaleType = PrintItem.ScaleType.CROP;
                 break;
             case R.id.layoutFit:
@@ -94,6 +102,15 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 break;
             case R.id.layoutCenterTopLeft:
                 scaleType = PrintItem.ScaleType.CENTER_TOP_LEFT;
+                break;
+            case R.id.layoutWithMargin:
+                margins = new PrintAttributes.Margins(500, 500, 500, 500);
+                break;
+            case R.id.layoutWithTopMargin:
+                margins = new PrintAttributes.Margins(0, 500, 0, 0);
+                break;
+            case R.id.layoutWithoutMargin:
+                margins = new PrintAttributes.Margins(0, 0, 0, 0);
                 break;
             case R.id.withMetrics:
                 showMetricsDialog = true;
@@ -117,6 +134,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 showMetricsDialog = true;
                 scaleType = PrintItem.ScaleType.CENTER;
                 contentType = "Image";
+                margins = new PrintAttributes.Margins(0, 0, 0, 0);
         }
     }
 
@@ -140,13 +158,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
 
             //Create printitems from the assets. These define what asset is to be used for each media size.
-            PrintItem printItem4x6 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6, scaleType, imageAsset4x6);
-            PrintItem printItem85x11 = new ImagePrintItem(PrintAttributes.MediaSize.NA_LETTER, scaleType, assetdirectory);
-            PrintItem printItem5x7 = new ImagePrintItem(mediaSize5x7, scaleType, imageAsset5x7);
-            PrintItem printItem5x8 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_5X8, scaleType, imageAsset4x5);
+            PrintItem printItem4x6 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6,margins, scaleType, imageAsset4x6);
+            PrintItem printItem85x11 = new ImagePrintItem(PrintAttributes.MediaSize.NA_LETTER,margins, scaleType, assetdirectory);
+            PrintItem printItem5x7 = new ImagePrintItem(mediaSize5x7,margins, scaleType, imageAsset5x7);
+            PrintItem printItem5x8 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_5X8,margins, scaleType, imageAsset4x5);
 
             //Create the printJobData with the default print item
-            PrintItem printItemDefault = new ImagePrintItem(scaleType, imageAsset4x5);
+            PrintItem printItemDefault = new ImagePrintItem(margins, scaleType, imageAsset4x5);
             printJobData = new PrintJobData(this, printItemDefault);
 
             //Lastly, add all the printitems to the print job data.
@@ -171,9 +189,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 //                Log.e("MainActivity", "Unable to create path string.");
 //            }
 
-            PrintItem printItem4x6 = new PDFPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6, scaleType, pdf4x6);
-            PrintItem printItem5x7 = new PDFPrintItem(mediaSize5x7, scaleType, pdf5x7);
-            PrintItem printItemLetter = new PDFPrintItem(PrintAttributes.MediaSize.NA_LETTER, scaleType, pdfletter);
+            PrintItem printItem4x6 = new PDFPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6,margins, scaleType, pdf4x6);
+            PrintItem printItem5x7 = new PDFPrintItem(mediaSize5x7,margins, scaleType, pdf5x7);
+            PrintItem printItemLetter = new PDFPrintItem(PrintAttributes.MediaSize.NA_LETTER,margins, scaleType, pdfletter);
 
             printJobData = new PrintJobData(this, printItem4x6);
 
