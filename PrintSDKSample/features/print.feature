@@ -83,6 +83,8 @@ Scenario Outline: Print a card in Kitkat device and verify xml counters for 'PDF
     And I select layout as "<Layout Type>"
     And I select preview button 
     Then I tap on "I have one" option 
+    And I tap on Print in Print Preview screen
+    Then I tap on "I have one" option 
     Then I select the printer "HP ENVY 5540 series" if available
     Then I select paper size as "<Paper Size>"
     Then I tap on Printer settings
