@@ -48,6 +48,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
     + [Font](#font)
     + [Color](#color)
 - [Layout Options](#layout-options)
+- [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting)
 - [Terms & Conditions](#terms-&-conditions)
 
 ## Overview
@@ -296,3 +297,6 @@ Here is the image we will use for the examples:
 
 ## Top Left
 ![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
+
+## Troubleshooting
+Please see our Wiki [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting) page.
