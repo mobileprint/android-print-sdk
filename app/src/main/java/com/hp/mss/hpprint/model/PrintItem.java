@@ -28,6 +28,7 @@ import com.hp.mss.hpprint.model.asset.Asset;
 public abstract class PrintItem implements Parcelable{
     //Clients are able to override printitems, to have their own layouting methods.
     PrintAttributes.MediaSize mediaSize;
+    PrintAttributes.Margins margins;
     ScaleType scaleType;
     Asset asset;
 
@@ -38,6 +39,7 @@ public abstract class PrintItem implements Parcelable{
      */
     public enum ScaleType {
         CENTER,
+        CENTER_TOP,
         CROP,
         FIT,
         CENTER_TOP_LEFT
@@ -52,9 +54,10 @@ public abstract class PrintItem implements Parcelable{
     PrintItem () {
     }
 
-    PrintItem (PrintAttributes.MediaSize mediaSize, ScaleType scaleType, Asset asset) {
+    PrintItem (PrintAttributes.MediaSize mediaSize,PrintAttributes.Margins margins, ScaleType scaleType, Asset asset) {
         this.scaleType = scaleType;
         this.mediaSize = mediaSize;
+        this.margins = margins;
         this.asset = asset;
     }
 
@@ -65,6 +68,15 @@ public abstract class PrintItem implements Parcelable{
      */
     public PrintAttributes.MediaSize getMediaSize(){
         return mediaSize;
+    }
+
+    /**
+     * Get the margin of the print item.
+     * @return The margin attribute of the print item.
+     * @see <a href="https://developer.android.com/reference/android/print/PrintAttributes.Margins.html">Margins</a>
+     */
+    public PrintAttributes.Margins getMargins(){
+        return margins;
     }
 
     /**
@@ -105,6 +117,7 @@ public abstract class PrintItem implements Parcelable{
     //Parcelable methods
     protected PrintItem(Parcel in) {
         mediaSize = new PrintAttributes.MediaSize(in.readString(), "android", in.readInt(), in.readInt());
+        margins = new PrintAttributes.Margins(in.readInt(), in.readInt(), in.readInt(), in.readInt());
         scaleType = (ScaleType) in.readValue(ScaleType.class.getClassLoader());
         asset = (Asset) in.readValue(Asset.class.getClassLoader());
     }
@@ -114,7 +127,10 @@ public abstract class PrintItem implements Parcelable{
         dest.writeString(mediaSize.getId());
         dest.writeInt(mediaSize.getWidthMils());
         dest.writeInt(mediaSize.getHeightMils());
-
+        dest.writeInt(margins.getLeftMils());
+        dest.writeInt(margins.getTopMils());
+        dest.writeInt(margins.getRightMils());
+        dest.writeInt(margins.getBottomMils());
         dest.writeValue(scaleType);
         dest.writeValue(asset);
     }
