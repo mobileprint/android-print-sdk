@@ -21,15 +21,11 @@ Then (/^I select paper size as "([^"]*)"$/) do |paper_size|
     sleep(APPIUM_TIMEOUT)
     $paper_size = paper_size
     if $os_version < '5.0.0'
-        #wait.until { selenium.find_element(:id,"com.hp.mss.droidphoto:id/paper_size_spinner") }
-        #selenium.find_element(:id,"com.hp.mss.droidphoto:id/paper_size_spinner").click
-    
-wait.until { selenium.find_element(:id,"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[2]/android.widget.LinearLayout[1]/android.widget.RelativeLayout[1]/android.widget.Spinner[1]") }        
-        selenium.find_element(:xpath,"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[2]/android.widget.LinearLayout[1]/android.widget.RelativeLayout[1]/android.widget.Spinner[1]").click
-        
-        wait.until {selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']")}
-        if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").size > 0
-        selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").click
+        wait.until { selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner") }
+        selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner").click   
+        wait.until {selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']")}
+        if selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']").size > 0
+        selenium.find_element(:xpath,"//android.widget.TextView[@text='#{paper_size}']").click
         else
             raise "Failed to select Paper!"
         end
@@ -49,13 +45,13 @@ end
 
 
 And (/^I tap on Print in Print Preview screen$/) do
-    #wait.until { selenium.find_element(:id,"com.hp.mss.droidphoto:id/action_print") }
-    #selenium.find_element(:id,"com.hp.mss.droidphoto:id/action_print").click
-    
-    wait.until { selenium.find_element(:xpath,"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.TextView[1]
-") }
-    selenium.find_element(:xpath,"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.TextView[1]
-").click
+    puts $content_option
+    if $content_option == "Image"
+        wait.until { selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print") }
+        selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print").click
+    end
+    #wait.until { selenium.find_element(:xpath,"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.TextView[1]") }
+    #selenium.find_element(:xpath,"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.TextView[1]").click
     
     if $paper_size == "4 x 5" 
         selenium.find_element(:id,"android:id/button1").click  #Click  Continue button

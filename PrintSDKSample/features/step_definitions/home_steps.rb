@@ -29,16 +29,13 @@ Given(/^I am on Home screen$/) do
 end
 
 Then(/^I tap on "(.*?)" option$/) do |option|
-    sleep(WAIT_SCREENLOAD)
     if option == "Image"
-        element_id="com.hp.mss.printsdksample:id/contentImage"
-        selenium.find_element(:id,element_id).click
-    else
-        element_id="android:id/button3"
-        if selenium.find_elements(:id,element_id).size > 0
-            selenium.find_element(:id,element_id).click
-        end
+        $content_option = "Image"
     end
+    sleep(WAIT_SCREENLOAD)  
+    if selenium.find_elements(:name,option).size > 0
+            selenium.find_element(:name,option).click
+        end
     sleep(WAIT_SCREENLOAD)
 end
 Then(/^I select preview button$/) do
@@ -54,11 +51,3 @@ Then(/^I select layout as "(.*?)"$/) do |layout_option|
     end
 end
 
-Then(/^I select metrics option as "(.*?)"$/) do |metrics_option|
-    if metrics_option == "Without Metrics"
-        element_id="com.hp.mss.printsdksample:id/withoutMetrics"
-    else 
-        element_id="com.hp.mss.printsdksample:id/withMetrics"
-    end
-  selenium.find_element(:id,element_id).click
-end
