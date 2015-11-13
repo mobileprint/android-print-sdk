@@ -36,6 +36,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
     + [ImageAsset](#imageasset)
+    + [PDFAsset](#pdfasset)
     + [PrintItem](#printitem)
     + [printJobData](#printJobData)
 - [Advanced](#advanced)
@@ -47,6 +48,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
     + [Font](#font)
     + [Color](#color)
 - [Layout Options](#layout-options)
+- [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting)
 - [Terms & Conditions](#terms-&-conditions)
 
 ## Overview
@@ -116,6 +118,28 @@ Or, if you already saved the bitmap into the internal storage location for your 
 
 ```java
 ImageAsset imageAsset4x6 = new ImageAsset(fileUriString, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+```
+
+### PDFAsset
+
+You can also create a `PDFAsset` object. It behaves much the same as an ImageAsset, and can be substituted for an ImageAsset when creating PrintItems, etc. There are a couple of key differences between PDFAsset and ImageAsset types.
+
+* ImageAssets print in photo mode.
+* PDFAssets print in document mode.
+* For PDFAssets, the layout is "Fit to Page", and the margins are controlled by the printer. This can lead to some undesirable scaling, and cause some documents to look smaller when printed than intended.
+
+You can use one of the following 2 methods to create the PDFAsset.
+
+To load a PDFAsset from the assets folder:
+```java
+PDFAsset pdfAsset4x6 = new PDFAsset("4x6.pdf", true);
+```
+Note: the second parameter, `true`, indicates that the file is part of the assets built into the app.
+
+If you already saved the PDF into a folder on the device:
+
+```java
+PDFAsset pdfAsset4x6 = new PDFAsset(fileUriString);
 ```
 
 ### PrintItem
@@ -273,3 +297,6 @@ Here is the image we will use for the examples:
 
 ## Top Left
 ![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
+
+## Troubleshooting
+Please see our Wiki [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting) page.
