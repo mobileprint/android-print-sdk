@@ -15,7 +15,7 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for p
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button 
     Then I tap on "I have one" option
-    Then I select the printer "HP ENVY 5540 series" if available
+    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
     Then I select paper size as "<Paper Size>"
     Then I get black and white filter value and number of copies
     Then I tap on Print
@@ -79,7 +79,7 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics not g
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button 
     Then I tap on "I have one" option
-    Then I select the printer "HP ENVY 5540 series" if available
+    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
     Then I select paper size as "<Paper Size>"
     Then I get black and white filter value and number of copies
     Then Fetch metrics details
@@ -104,7 +104,7 @@ Scenario Outline: Print a card in Kitkat device and verify print metrics for pri
     Then I tap on "I have one" option 
     And I tap on Print in Print Preview screen
     Then I tap on "I have one" option 
-    Then I select the printer "HP ENVY 5540 series" if available
+    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
     Then I select paper size as "<Paper Size>"
     Then I get black and white filter value and number of copies
     Then I tap on Print
@@ -146,7 +146,7 @@ Scenario Outline: Print a card in kitkat device and verify print metrics not gen
     Then I tap on "I have one" option 
     And I tap on Print in Print Preview screen
     Then I tap on "I have one" option 
-    Then I select the printer "HP ENVY 5540 series" if available
+    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
     Then I select paper size as "<Paper Size>"
     Then I get black and white filter value and number of copies
     Then Fetch metrics details
