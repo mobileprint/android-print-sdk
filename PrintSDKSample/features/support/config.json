@@ -1,0 +1,18 @@
+{
+    "PrinterIP" : "10.7.5.202",
+    "counter1" : {
+            "4 x 6" : "5031",
+            "5 x 7" : "5032"
+        },
+     
+       "counter2" : {
+            "4x6 in" : "5031",
+           "5x7 in" : "5032",
+           "Letter" : "5037"
+        },
+    "Plain/Normal" : "5041",
+    "Plain/Draft" : "5042",
+    "Plain/Best" : "5043",
+    "Photo Glossy/Normal" : "5044",
+    "Photo Glossy/Best" : "5046"
+}
