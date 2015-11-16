@@ -1,9 +1,8 @@
 Then (/^Fetch metrics details$/) do
   sleep(APPIUM_TIMEOUT)
     device_type=$device_type.strip
-     #hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
-    
- hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
+     hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
+   #hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
     hash = JSON.parse(hash)
     $mertics_array = hash["metrics"]
     $mertics_details = hash["metrics"][($mertics_array.length)-1]

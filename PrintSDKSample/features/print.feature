@@ -27,12 +27,12 @@ Scenario Outline: Print a card in Lollipop device and verify xml counters for 'P
     
      Examples:
         | Paper Size| Quality   | Paper Type   |Layout Type|
-        #| 4x6 in    | Draft     | Plain        |Center    |
-        #| 4x6 in    | Normal    | Plain        |Center    |
-        #| 4x6 in    | Best      | Plain        |Center    |
-        #| 5x7 in    | Draft     | Plain        |Center    |
-        #| 5x7 in    | Normal    | Plain        |Center    |
-        #| 5x7 in    | Best      | Plain        |Center    |
+        | 4x6 in    | Draft     | Plain        |Center    |
+        | 4x6 in    | Normal    | Plain        |Center    |
+        | 4x6 in    | Best      | Plain        |Center    |
+        | 5x7 in    | Draft     | Plain        |Center    |
+        | 5x7 in    | Normal    | Plain        |Center    |
+        | 5x7 in    | Best      | Plain        |Center    |
         | Letter    | Draft     | Plain        |Center    |
         | Letter    | Normal    | Plain        |Center    |
         | Letter    | Best      | Plain        |Center    |

@@ -32,7 +32,7 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for p
 	And I check the off ramp is "Android Print"
 	And I check the device type
 	And I check the os version
-    And I check the device id
+    #And I check the device id
    # And I check the wifi ssid
     And I check the black and white filter
     And I check the number of copies
@@ -41,7 +41,7 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for p
         
      Examples:
         |Content| Paper Size  | Paper Type|
-        #|PDF     | 4x6 in     | Document  |
+        |PDF     | 4x6 in     | Document  |
         |PDF     | Letter     | Document  |
         |Image   | 4x6 in     | Photo     |
         |Image   | 5x7 in     | Photo     |
@@ -51,7 +51,6 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for p
 @lollipop
 @kitkat
 @TA12260
-@1111
 Scenario Outline: Print a card and verify print metrics for Cancel print
     Given I am on Home screen
     Then I tap on "<Content>" option
@@ -71,6 +70,7 @@ Scenario Outline: Print a card and verify print metrics for Cancel print
         |Image  | 
         
 @lollipop
+@TA12260
 Scenario Outline: Print a card in Lollipop device and verify print metrics not generated for "without metrics" option
     Given I am on Home screen
     Then I tap on "<Content>" option
