@@ -31,6 +31,9 @@ end
 Then(/^I tap on "(.*?)" option$/) do |option|
     if option == "Image"
         $content_option = "Image"
+    else if option == "True" || option == "False"
+        $unique_id_per_app = option
+    end
     end
     sleep(WAIT_SCREENLOAD)  
     if selenium.find_elements(:name,option).size > 0
