@@ -103,22 +103,13 @@ And (/^I check the print_result is "([^\"]*)"$/) do |print_result|
 end
 
 And (/^I check the device id$/) do
-    puts $unique_id_per_app
     my_device = $device_id.split(" ").last
     if $unique_id_per_app == "True"
-        puts "true"
         device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
-        puts "test...."
-        puts device_id_value
-        puts "from metrics#{$mertics_details['device_id']}"
     else
-        puts "false"
         device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
-        puts "test...."
-        puts device_id_value
-        puts "from metrics#{$mertics_details['device_id']}"
     end
-      compare  = ($mertics_details['device_id'] == device_id_value) ?  true : false
+    compare  = ($mertics_details['device_id'] == device_id_value) ?  true : false
     raise "device_id verification failed" unless compare==true
 end
 
