@@ -27,7 +27,7 @@ end
 
 Then (/^I get black and white filter value and number of copies$/) do
     $copies = selenium.find_element(:id,"com.android.printspooler:id/copies_edittext").text
-    if $os_version < '5.0.0'
+    if $os_version < '5.0'
         $black_and_white_filter =  selenium.find_element(:xpath,"//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.Spinner[1]/android.widget.LinearLayout[1]").text
     else
         $black_and_white_filter =  selenium.find_element(:xpath," //android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.view.View[1]/android.widget.LinearLayout[3]/android.widget.Spinner[1]/android.widget.CheckedTextView[1]").text

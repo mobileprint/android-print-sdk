@@ -46,6 +46,7 @@ Then(/^I select preview button$/) do
     sleep(WAIT_SCREENLOAD)
     element_id="com.hp.mss.printsdksample:id/printBtn"
     selenium.find_element(:id,element_id).click
+    print_service_helper
 end
 Then(/^I select layout as "(.*?)"$/) do |layout_option|
     if layout_option == "Center"

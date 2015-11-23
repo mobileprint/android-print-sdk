@@ -206,3 +206,10 @@ def cancelprint
   }
   val
 end    
+def print_service_helper
+    sleep(WAIT_SCREENLOAD)  
+    if selenium.find_elements(:name,"I have one").size > 0
+            selenium.find_element(:name,"I have one").click
+        end
+    sleep(WAIT_SCREENLOAD)
+    end

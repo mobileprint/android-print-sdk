@@ -1,6 +1,6 @@
 And (/^I check the pop up - Print plugin is present or not$/) do
     $os_version = getOSversion
-    if $os_version < '5.0.0'
+    if $os_version < '5.0'
         if selenium.find_elements(:id, 'android:id/alertTitle').size() > 0
             selenium.find_element(:xpath,"//android.widget.Button[@text='CONTINUE']").click
         else
@@ -20,7 +20,7 @@ end
 Then (/^I select paper size as "([^"]*)"$/) do |paper_size|
     sleep(APPIUM_TIMEOUT)
     $paper_size = paper_size
-    if $os_version < '5.0.0'
+    if $os_version < '5.0'
         wait.until { selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner") }
         selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner").click   
         wait.until {selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']")}
@@ -46,6 +46,7 @@ end
 
 And (/^I tap on Print in Print Preview screen$/) do
     puts $content_option
+    if $os_version < '5.0'
     if $content_option == "Image"
         wait.until { selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print") }
         selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print").click
@@ -57,10 +58,10 @@ And (/^I tap on Print in Print Preview screen$/) do
         selenium.find_element(:id,"android:id/button1").click  #Click  Continue button
     end
 end
-
+end
 Then (/^I select the printer "([^"]*)" if available$/) do |printer_name|
-    
-    if $os_version < '5.0.0'
+    print_service_helper
+    if $os_version < '5.0'
         wait.until { selenium.find_element(:id,"com.android.printspooler:id/destination_spinner") }
         selenium.find_element(:id,"com.android.printspooler:id/destination_spinner").click   
     else
@@ -91,7 +92,7 @@ Then (/^I select the printer "([^"]*)" if available$/) do |printer_name|
 end 
 
 Then(/^I tap on Printer settings$/) do
-    if $os_version > '5.0.0'
+    if $os_version > '5.0'
         wait.until { selenium.find_element(:id,"com.android.printspooler:id/more_options_button") }
         selenium.find_element(:id,"com.android.printspooler:id/more_options_button").click
     else
