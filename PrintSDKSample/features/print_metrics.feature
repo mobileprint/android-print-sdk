@@ -109,7 +109,6 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics not g
     And I tap on Print in Print Preview screen
     Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
     Then I select paper size as "<Paper Size>"
-    Then I get black and white filter value and number of copies
     Then I tap on Print
     Then Fetch metrics details
     And I check the device id
@@ -120,4 +119,33 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics not g
         |PDF     | 4x6 in     | True            |
         |Image   | 5x7 in     | False           |
         
+        
+    @TA12391
+    @lollipop
+    @kitkat
+    Scenario: Print a card in Lollipop device and verify device id
+    Given I am on Home screen
+    Then I tap on "PDF" option
+    And I select layout as "Center"
+    Then I tap on "With Metrics" option
+    Then I tap on "True" option
+    And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
+    And I select preview button 
+    And I tap on Print in Print Preview screen
+    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
+    Then I select paper size as "4x6 in"
+    Then I tap on Print
+    Then Fetch metrics details
+    And I check the device id
+    Then I navigate to home screen
+    Then I tap on "False" option
+    And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
+    And I select preview button 
+    And I tap on Print in Print Preview screen
+    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
+    Then I select paper size as "5x7 in"
+    Then I tap on Print
+    Then Fetch metrics details
+    And I check the device id
+   
     

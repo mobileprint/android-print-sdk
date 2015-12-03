@@ -54,4 +54,10 @@ Then(/^I select layout as "(.*?)"$/) do |layout_option|
         selenium.find_element(:id,element_id).click
     end
 end
+Then(/^I navigate to home screen$/) do
+    if $os_version < '5.0'
+        macro %Q|I navigate to back|
+    end
+    macro %Q|I tap on "OK" option|
+end
 
