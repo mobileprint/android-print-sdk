@@ -15,7 +15,7 @@ And (/^I get the wifi_ssid, device id, os version, os type, device type, manufac
     sleep(APPIUM_TIMEOUT)
     $deviceid = %x(adb shell getprop net.hostname)
     $device_id = $deviceid.split("android-").last
-    $os_version = %x(adb shell getprop ro.build.version.release)
+    $os_version = getOSversion
     $os_type = %x(adb shell getprop net.bt.name)
     $device_type = %x(adb shell getprop ro.product.model)
     $manufacturer = %x(adb shell getprop ro.product.manufacturer)
