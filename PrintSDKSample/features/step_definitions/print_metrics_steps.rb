@@ -15,7 +15,7 @@ And (/^I get the wifi_ssid, device id, os version, os type, device type, manufac
     sleep(APPIUM_TIMEOUT)
     $deviceid = %x(adb shell getprop net.hostname)
     $device_id = $deviceid.split("android-").last
-    $os_version = %x(adb shell getprop ro.build.version.release)
+    $os_version_original = %x(adb shell getprop ro.build.version.release)
     $os_type = %x(adb shell getprop net.bt.name)
     $device_type = %x(adb shell getprop ro.product.model)
     $manufacturer = %x(adb shell getprop ro.product.manufacturer)
@@ -82,7 +82,7 @@ And (/^I check the device type$/) do
 end
     
 And (/^I check the os version$/) do
-  compare  = ($mertics_details['os_version'] == $os_version.split(" ").last) ?  true : false
+  compare  = ($mertics_details['os_version'] == $os_version_original.split(" ").last) ?  true : false
   raise "os version verification failed" unless compare==true
 end
 
