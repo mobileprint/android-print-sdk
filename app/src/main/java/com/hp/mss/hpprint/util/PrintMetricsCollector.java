@@ -216,9 +216,8 @@ class PrintMetricsCollector extends Thread {
     private Map<String, String> getMetricsParams(PrintMetricsData printMetricsData) {
         HashMap<String, String> combinedMetrics = new HashMap<String, String>();
 
-        if (appMetrics == null || appMetrics.isEmpty()) {
-            appMetrics = (new ApplicationMetricsData(hostActivity.getApplicationContext())).toMap();
-        }
+        appMetrics = (new ApplicationMetricsData(hostActivity.getApplicationContext())).toMap();
+
         combinedMetrics.putAll(appMetrics);
         combinedMetrics.putAll(printMetricsData.toMap());
         combinedMetrics.put(PRINT_SESSION_ID_LABEL,
