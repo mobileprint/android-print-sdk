@@ -45,7 +45,6 @@ end
 
 
 And (/^I tap on Print in Print Preview screen$/) do
-    puts $content_option
     if $os_version < '5.0'
     if $content_option == "Image"
         wait.until { selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print") }
@@ -61,6 +60,7 @@ end
 end
 Then (/^I select the printer "([^"]*)" if available$/) do |printer_name|
     print_service_helper
+    sleep(APPIUM_TIMEOUT)
     if $os_version < '5.0'
         wait.until { selenium.find_element(:id,"com.android.printspooler:id/destination_spinner") }
         selenium.find_element(:id,"com.android.printspooler:id/destination_spinner").click   
@@ -92,6 +92,8 @@ Then (/^I select the printer "([^"]*)" if available$/) do |printer_name|
 end 
 
 Then(/^I tap on Printer settings$/) do
+    sleep(APPIUM_TIMEOUT)
+    $os_version = getOSversion
     if $os_version > '5.0'
         wait.until { selenium.find_element(:id,"com.android.printspooler:id/more_options_button") }
         selenium.find_element(:id,"com.android.printspooler:id/more_options_button").click

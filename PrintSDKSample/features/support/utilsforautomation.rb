@@ -21,6 +21,7 @@ def clearfunction
 end
 
 def getOSversion
-    return %x(adb shell getprop ro.build.version.release)[0..2]
+    #return %x(adb shell getprop ro.build.version.release)[0..2]
+    return %x(adb shell getprop ro.build.version.release)
 end
 
