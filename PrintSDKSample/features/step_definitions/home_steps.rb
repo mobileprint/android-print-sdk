@@ -31,6 +31,9 @@ end
 Then(/^I tap on "(.*?)" option$/) do |option|
     if option == "Image"
         $content_option = "Image"
+    else if option == "True" || option == "False"
+        $unique_id_per_app = option
+    end
     end
     sleep(WAIT_SCREENLOAD)  
     if selenium.find_elements(:name,option).size > 0
@@ -43,11 +46,18 @@ Then(/^I select preview button$/) do
     sleep(WAIT_SCREENLOAD)
     element_id="com.hp.mss.printsdksample:id/printBtn"
     selenium.find_element(:id,element_id).click
+    print_service_helper
 end
 Then(/^I select layout as "(.*?)"$/) do |layout_option|
     if layout_option == "Center"
         element_id="com.hp.mss.printsdksample:id/layoutCenter"
         selenium.find_element(:id,element_id).click
     end
+end
+Then(/^I navigate to home screen$/) do
+    if $os_version < '5.0'
+        macro %Q|I navigate to back|
+    end
+    macro %Q|I tap on "OK" option|
 end
 

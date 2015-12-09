@@ -1,9 +1,10 @@
+require 'digest/md5'
+
 Then (/^Fetch metrics details$/) do
   sleep(APPIUM_TIMEOUT)
     device_type=$device_type.strip
-     #hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
-    
- hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
+     hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
+   #hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
     hash = JSON.parse(hash)
     $mertics_array = hash["metrics"]
     $mertics_details = hash["metrics"][($mertics_array.length)-1]
@@ -14,7 +15,7 @@ And (/^I get the wifi_ssid, device id, os version, os type, device type, manufac
     sleep(APPIUM_TIMEOUT)
     $deviceid = %x(adb shell getprop net.hostname)
     $device_id = $deviceid.split("android-").last
-    $os_version = %x(adb shell getprop ro.build.version.release)
+    $os_version_original = %x(adb shell getprop ro.build.version.release)
     $os_type = %x(adb shell getprop net.bt.name)
     $device_type = %x(adb shell getprop ro.product.model)
     $manufacturer = %x(adb shell getprop ro.product.manufacturer)
@@ -26,7 +27,7 @@ end
 
 Then (/^I get black and white filter value and number of copies$/) do
     $copies = selenium.find_element(:id,"com.android.printspooler:id/copies_edittext").text
-    if $os_version < '5.0.0'
+    if $os_version < '5.0'
         $black_and_white_filter =  selenium.find_element(:xpath,"//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.Spinner[1]/android.widget.LinearLayout[1]").text
     else
         $black_and_white_filter =  selenium.find_element(:xpath," //android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.view.View[1]/android.widget.LinearLayout[3]/android.widget.Spinner[1]/android.widget.CheckedTextView[1]").text
@@ -81,7 +82,7 @@ And (/^I check the device type$/) do
 end
     
 And (/^I check the os version$/) do
-  compare  = ($mertics_details['os_version'] == $os_version.split(" ").last) ?  true : false
+  compare  = ($mertics_details['os_version'] == $os_version_original.split(" ").last) ?  true : false
   raise "os version verification failed" unless compare==true
 end
 
@@ -102,7 +103,13 @@ And (/^I check the print_result is "([^\"]*)"$/) do |print_result|
 end
 
 And (/^I check the device id$/) do
-      compare  = ($mertics_details['device_id'] == $device_id.split(" ").last) ?  true : false
+    my_device = $device_id.split(" ").last
+    if $unique_id_per_app == "True"
+        device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
+    else
+        device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
+    end
+    compare  = ($mertics_details['device_id'] == device_id_value) ?  true : false
     raise "device_id verification failed" unless compare==true
 end
 

@@ -81,7 +81,7 @@ end
 def verifyxmlCounters # To verify counters before and after print
 
   if $os_version < '5.0.0' # To check os version
-    $counter =  getJsonData "counter1" # for kitkat
+    $counter =  getJsonData "counter2" # for kitkat
 
   else 
     $counter =  getJsonData "counter2" # for lollipop
@@ -206,3 +206,10 @@ def cancelprint
   }
   val
 end    
+def print_service_helper
+    sleep(WAIT_SCREENLOAD)  
+    if selenium.find_elements(:name,"I have one").size > 0
+            selenium.find_element(:name,"I have one").click
+        end
+    sleep(WAIT_SCREENLOAD)
+    end
