@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
@@ -32,6 +33,7 @@ import com.hp.mss.hpprint.model.PrintMetricsData;
  * You will need to set the printJobData in order to invoke the print method.
  */
 public class PrintUtil {
+
     public static final String PLAY_STORE_PRINT_SERVICES_URL = "https://play.google.com/store/apps/collection/promotion_3000abc_print_services";
     private static final String HAS_METRICS_LISTENER = "has_metrics_listener";
     private static final int START_PREVIEW_ACTIVITY_REQUEST = 100;
@@ -41,6 +43,8 @@ public class PrintUtil {
     public static boolean is4x5media;
     public static final String mediaSize4x5Label = "4 x 5";
     public static boolean uniqueDeviceIdPerApp = true;
+
+    public static final PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000);
 
     /**
      * Set this to false to disable plugin helper dialogs.
