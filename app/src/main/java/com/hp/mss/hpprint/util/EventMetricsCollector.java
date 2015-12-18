@@ -83,6 +83,8 @@ public class EventMetricsCollector {
 
     public static void postMetricsToHPServer(final Activity activity,
                                              PrintFlowEventTypes eventType) {
+        if (!PrintUtil.sendPrintMetrics)
+            return;
 
         EventMetricsCollector metricsCollector = new EventMetricsCollector(activity);
         metricsCollector.init(eventType);

@@ -210,6 +210,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
         //Set the printJobData to the PrintUtil and call print.
         PrintUtil.setPrintJobData(printJobData);
+        PrintUtil.sendPrintMetrics = showMetricsDialog;
         PrintUtil.print(this);
     }
 

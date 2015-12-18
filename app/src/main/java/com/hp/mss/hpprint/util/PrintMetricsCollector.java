@@ -180,6 +180,8 @@ class PrintMetricsCollector extends Thread {
     }
 
     private void postMetricsToHPServer(final Context context, final PrintMetricsData data) {
+        if (!PrintUtil.sendPrintMetrics)
+            return;
         RequestQueue queue = Volley.newRequestQueue(context);
 
         StringRequest sr = new StringRequest(Request.Method.POST, MetricsUtil.getMetricsServer(context) + API_METHOD_NAME, new Response.Listener<String>() {

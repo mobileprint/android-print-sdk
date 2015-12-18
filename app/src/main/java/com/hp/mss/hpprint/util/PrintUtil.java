@@ -50,6 +50,7 @@ public class PrintUtil {
      * Set this to false to disable plugin helper dialogs.
      */
     public static boolean showPluginHelper = true;
+    public static boolean sendPrintMetrics = true;
 
     /**
      * Call to start the HP Print SDK print flow.
