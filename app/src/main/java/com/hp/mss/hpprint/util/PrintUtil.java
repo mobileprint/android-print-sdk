@@ -26,6 +26,8 @@ import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 
+import java.util.HashMap;
+
 /**
  * In order to print, you need to call the print(Activity) method in this class. It automatically creates
  * the print preview activity for KitKat devices. It also helps you install/detect print plugins.
@@ -39,9 +41,13 @@ public class PrintUtil {
     private static final int START_PREVIEW_ACTIVITY_REQUEST = 100;
 
     private static PrintJobData printJobData;
+
+    private static HashMap<String, String> appSpecificMetrics;
+
     protected static PrintMetricsListener metricsListener;
     public static boolean is4x5media;
     public static final String mediaSize4x5Label = "4 x 5";
+    public static boolean doNotEncryptDeviceId = false;
     public static boolean uniqueDeviceIdPerApp = true;
 
     public static final PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000);
@@ -50,6 +56,16 @@ public class PrintUtil {
      * Set this to false to disable plugin helper dialogs.
      */
     public static boolean showPluginHelper = true;
+
+    /**
+     * Call to start the HP Print SDK print flow.
+     * @param activity The calling activity.
+     */
+    public static void print(Activity activity, HashMap<String,String> metrics){
+        appSpecificMetrics = metrics;
+        print(activity);
+    }
+
 
     /**
      * Call to start the HP Print SDK print flow.
@@ -65,6 +81,7 @@ public class PrintUtil {
         if (checkIfActivityImplementsInterface(activity, PrintUtil.PrintMetricsListener.class)) {
             metricsListener = (PrintMetricsListener) activity;
         }
+
 
         if(printJobData == null)
             return;
@@ -95,7 +112,7 @@ public class PrintUtil {
             @Override
             public void run() {
                 EventMetricsCollector.postMetricsToHPServer(activity, EventMetricsCollector.PrintFlowEventTypes.SENT_TO_PRINT_DIALOG);
-                PrintMetricsCollector collector = new PrintMetricsCollector(activity, androidPrintJob);
+                PrintMetricsCollector collector = new PrintMetricsCollector(activity, androidPrintJob, appSpecificMetrics);
                 collector.start();
             }
         });
