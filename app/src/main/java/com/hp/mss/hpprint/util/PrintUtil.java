@@ -60,7 +60,8 @@ public class PrintUtil {
     /**
      * Call to start the HP Print SDK print flow.
      * @param activity The calling activity.
-     */
+     * @param metrics any metrics related data in key/value hash format
+     * /
     public static void print(Activity activity, HashMap<String,String> metrics){
         appSpecificMetrics = metrics;
         print(activity);
