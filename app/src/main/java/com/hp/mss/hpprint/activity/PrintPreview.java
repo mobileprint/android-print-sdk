@@ -62,6 +62,8 @@ public class PrintPreview extends Activity {
     private float paperWidth;
     private float paperHeight;
 
+    private boolean isPrinting = false;
+
     PrintJobData printJobData;
     String spinnerSelectedText;
 
@@ -326,6 +328,7 @@ public class PrintPreview extends Activity {
         PrintUtil.setPrintJobData(printJobData);
 
         PrintUtil.createPrintJob(this);
+        isPrinting = true;
 
         disableMenu = false;
         invalidateOptionsMenu();
@@ -368,6 +371,15 @@ public class PrintPreview extends Activity {
         };
 
         PrintPluginHelper.showPluginHelper(this, printPluginListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isPrinting) {
+            isPrinting = false;
+            super.onBackPressed();
+        }
     }
 
 }

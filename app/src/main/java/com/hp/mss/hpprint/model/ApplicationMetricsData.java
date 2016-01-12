@@ -87,9 +87,11 @@ public class ApplicationMetricsData {
         this.productName = getAppLable(context);
         this.printLibraryVersion = BuildConfig.VERSION_NAME;
 
-        if (PrintUtil.uniqueDeviceIdPerApp)
+        if (PrintUtil.doNotEncryptDeviceId) {
+            this.deviceId = getDeviceId(context);
+        } else if (PrintUtil.uniqueDeviceIdPerApp) {
             this.deviceId = getAppSpecificDeviceID(context);
-        else
+        } else
             this.deviceId = getVendorSpecificDeviceID(context);
 
         this.deviceType = Build.MODEL;
@@ -118,6 +120,7 @@ public class ApplicationMetricsData {
         this.timezoneOffsetSeconds = String.valueOf(TimeZone.getDefault().getRawOffset()/1000);
 
     }
+
     public String getAppLable(Context pContext) {
         PackageManager lPackageManager = pContext.getPackageManager();
         ApplicationInfo lApplicationInfo = null;
