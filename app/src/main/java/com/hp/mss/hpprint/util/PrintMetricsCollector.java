@@ -233,11 +233,11 @@ class PrintMetricsCollector extends Thread {
 
         appMetrics = (new ApplicationMetricsData(hostActivity.getApplicationContext())).toMap();
         combinedMetrics.putAll(appMetrics);
+        combinedMetrics.putAll(printMetricsData.toMap());
 
         if (appSpecificMetrics != null && !appSpecificMetrics.isEmpty())
             combinedMetrics.putAll(appSpecificMetrics);
 
-        combinedMetrics.putAll(printMetricsData.toMap());
         combinedMetrics.put(PRINT_SESSION_ID_LABEL, String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity)));
 
         return combinedMetrics;
