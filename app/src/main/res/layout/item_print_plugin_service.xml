@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/print_service_plugin_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@+id/print_service_plugin_id">
+
+        <android.support.v4.widget.Space
+            android:id="@+id/center_mark"
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/plugin_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/center_mark"
+            android:textColor="@color/HPFontColorCarbonGrey"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/plugin_maker_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/center_mark"
+            android:textColor="@color/HPFontColorCarbonGrey"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/plugin_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
