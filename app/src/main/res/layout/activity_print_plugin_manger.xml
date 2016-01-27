@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/HPFontColorWhite">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/plugin_manager_toolbar"
@@ -19,17 +20,48 @@
     <TextView
         android:id="@+id/plugin_manager_sub_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:background="@color/HPFontColorLightGrey"
+        android:layout_height="44dp"
+        android:textSize="12sp"
         android:text="@string/plugin_manager_sub_title"
         android:layout_below="@+id/plugin_manager_toolbar"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:background="@color/HPFontColorLightGrey"/>
+
+    <View
+        android:id="@+id/title_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/plugin_manager_sub_toolbar"
+        android:background="@color/HPFontColorGrey" />
 
     <ListView
         android:id="@+id/plugin_manager_list_view"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/plugin_manager_sub_toolbar"/>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="17dp"
+        android:layout_below="@+id/title_divider"
+        android:scrollbars="vertical"/>
+
+    <View
+        android:id="@+id/list_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/print_btn"
+        android:background="@color/HPFontColorGrey" />
+
+    <TextView
+        android:id="@+id/print_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/HPFontColorWhite"
+        android:textColor="@color/HPFontColorDarkBlue"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:text="CONTINUE TO PRINT"
+        android:textAlignment="viewEnd"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"/>
+
 
 </RelativeLayout>

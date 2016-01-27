@@ -1,6 +1,7 @@
 package com.hp.mss.hpprint.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import com.hp.mss.hpprint.R;
 
 public class PrintPluginAdapter extends BaseAdapter {
+    private static final String TOOLBAR_TITLE_FONTFACE = "fonts/HPSimplified_Rg.ttf";
+
     Context context;
 
     private String[] names;
@@ -58,9 +61,12 @@ public class PrintPluginAdapter extends BaseAdapter {
 
         nameView = (TextView) row.findViewById(R.id.plugin_name);
         nameView.setText(names[i]);
+        nameView.setTextColor(Color.rgb(51,51,51));
 
         makerView = (TextView) row.findViewById(R.id.plugin_maker_name);
         makerView.setText(makers[i]);
+        makerView.setTextColor(Color.rgb(149, 149, 149));
+
 
         iconImageView = (ImageView) row.findViewById(R.id.print_service_plugin_id);
         iconImageView.setBackground(context.getDrawable(icons[i]));

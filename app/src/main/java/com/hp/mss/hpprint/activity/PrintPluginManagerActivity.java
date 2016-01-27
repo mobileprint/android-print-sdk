@@ -1,6 +1,7 @@
 package com.hp.mss.hpprint.activity;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -21,20 +22,32 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
     // customize your toolbar here
     private static final int TOOLBAR_BACKGROUND_COLOR = R.color.HPFontColorBlue;
     private static final int TOOLBAR__TITLE_TEXT_COLOR = R.color.HPFontColorWhite;
-    private static final String TOOLBAR_TITLE_FONTFACE = "fonts/HPSimplified_Rg.ttf";
 
     public static int[] plugin_icons = new int[]{
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp,
+            R.drawable.hp
 
     };
 
     public static int[] plugin_status = new int[]{
+            R.drawable.downloading_arrow,
+            R.drawable.downloading_arrow,
+            R.drawable.downloading_arrow,
+            R.drawable.downloading_arrow,
+            R.drawable.downloading_arrow,
+            R.drawable.downloading_arrow,
             R.drawable.downloading_arrow,
             R.drawable.downloading_arrow,
             R.drawable.downloading_arrow,
@@ -58,9 +71,6 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         topToolBar.setTitleTextColor(res.getColor(TOOLBAR__TITLE_TEXT_COLOR));
         topToolBar.setBackgroundColor(res.getColor(TOOLBAR_BACKGROUND_COLOR));
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(), TOOLBAR_TITLE_FONTFACE);
-        setToolbarFontface(topToolBar, typeface, res.getString(R.string.plugin_manager_title));
-
         setSupportActionBar(topToolBar);
 
         final ActionBar actionBar = getSupportActionBar();
@@ -72,7 +82,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.x);
 
         TextView textView = (TextView) findViewById(R.id.plugin_manager_sub_toolbar);
-        textView.setTypeface(typeface);
+        textView.setTextColor(Color.rgb(0, 0, 0));
 
         pluginNames = getResources().getStringArray(R.array.plugin_names);
         pluginMakers = getResources().getStringArray(R.array.plugin_makers);
