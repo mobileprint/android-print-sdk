@@ -56,33 +56,23 @@
 
     <string-array name="plugin_names">
         <item>HP Print Service Plugin</item>
-        <item>Samsung Print Service Plugin</item>
-        <item>Canon print Service</item>
-        <item>HP Print Service Plugin</item>
-        <item>Samsung Print Service Plugin</item>
-        <item>Canon print Service</item>
-        <item>HP Print Service Plugin</item>
-        <item>Samsung Print Service Plugin</item>
-        <item>Canon print Service</item>
-        <item>HP Print Service Plugin</item>
-        <item>Samsung Print Service Plugin</item>
-        <item>Canon print Service</item>
+        <item>Canon Print Service</item>
+        <item>Epson Print Enabler</item>
+        <item>Brother Print Service Plugin</item>
+        <item>Mopria Print Service</item>
+        <item>Other PrintServicePlugin</item>
     </string-array>
 
     <string-array name="plugin_makers">
         <item>HP Inc.</item>
-        <item>Samsung Electronics Co., Ltd</item>
         <item>Canon Inc.</item>
-        <item>HP Inc.</item>
-        <item>Samsung Electronics Co., Ltd</item>
-        <item>Canon Inc.</item>
-        <item>HP Inc.</item>
-        <item>Samsung Electronics Co., Ltd</item>
-        <item>Canon Inc.</item>
-        <item>HP Inc.</item>
-        <item>Samsung Electronics Co., Ltd</item>
-        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Mopria Alliance</item>
+        <item>N/A</item>
     </string-array>
+
+    <string name="continue_to_print">CONTINUE TO PRINT</string>
 
 
 </resources>

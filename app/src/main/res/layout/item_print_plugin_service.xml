@@ -32,13 +32,14 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:text="HP"
+            android:textColor="@color/PluginNameFontColor"
             android:layout_above="@+id/center_mark"/>
 
         <TextView
             android:id="@+id/plugin_maker_name"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:textColor="@color/HPFontColorCarbonGrey"
+            android:textColor="@color/PluginMakerFontColor"
             android:textSize="12sp"
             android:text="Inc"
             android:layout_alignParentLeft="true"

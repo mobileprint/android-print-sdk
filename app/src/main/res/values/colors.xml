@@ -20,4 +20,12 @@
     <color name="HPFontColorGrey">#8F8F95</color>
     <color name="HPFontColorLightGrey">#61E3E3EC</color>
     <color name="PrintPreviewBG">#2c363c</color>
+
+    <color name="PluginMGDividerColor">#9B9B9B</color>
+    <color name="PluginBtnColorBlue">#00849D</color>
+    <color name="PluginToolbarBKColor">#00A5C4</color>
+    <color name="PluginSubTitleBKColorGrey">#F2F1F2</color>
+    <color name="PluginFontColorBlack">#000000</color>
+    <color name="PluginNameFontColor">#333333</color>
+    <color name="PluginMakerFontColor">#959595</color>
 </resources>

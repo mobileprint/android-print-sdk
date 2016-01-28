@@ -11,11 +11,10 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app.titleTextAppearance="@style/PluginManagerToolbarTitle"
-        android:textColor="@android:color/white"
-        android:background="@color/HPFontColorBlue"
-        android:layout_gravity="center">
-    </android.support.v7.widget.Toolbar>
+        app:titleTextAppearance="@style/PluginManagerToolbarTitle"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:elevation="1dp">
+     </android.support.v7.widget.Toolbar>
 
     <TextView
         android:id="@+id/plugin_manager_sub_toolbar"
@@ -25,43 +24,41 @@
         android:text="@string/plugin_manager_sub_title"
         android:layout_below="@+id/plugin_manager_toolbar"
         android:padding="10dp"
-        android:background="@color/HPFontColorLightGrey"/>
-
-    <View
-        android:id="@+id/title_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/plugin_manager_sub_toolbar"
-        android:background="@color/HPFontColorGrey" />
-
-    <ListView
-        android:id="@+id/plugin_manager_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="17dp"
-        android:layout_below="@+id/title_divider"
-        android:scrollbars="vertical"/>
+        android:background="@color/PluginSubTitleBKColorGrey"
+        android:textColor="@color/PluginFontColorBlack"
+        android:elevation="1dp"
+        android:gravity="center_vertical"/>
 
     <View
         android:id="@+id/list_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/print_btn"
-        android:background="@color/HPFontColorGrey" />
+        android:background="@color/PluginMGDividerColor" />
 
-    <TextView
+    <Button
         android:id="@+id/print_btn"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="72dp"
         android:background="@color/HPFontColorWhite"
-        android:textColor="@color/HPFontColorDarkBlue"
-        android:textSize="18sp"
+        android:textColor="@color/PluginBtnColorBlue"
+        android:textSize="14sp"
         android:layout_alignParentBottom="true"
-        android:text="CONTINUE TO PRINT"
-        android:textAlignment="viewEnd"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"/>
+        android:text="@string/continue_to_print"
+        android:paddingRight="20dp"
+        android:gravity="center_vertical|end"
+        android:clickable="true">
+    </Button>
+
+
+    <ListView
+        android:id="@+id/plugin_manager_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="17dp"
+        android:layout_below="@+id/plugin_manager_sub_toolbar"
+        android:layout_above="@+id/list_divider"
+        android:scrollbars="vertical"/>
 
 
 </RelativeLayout>

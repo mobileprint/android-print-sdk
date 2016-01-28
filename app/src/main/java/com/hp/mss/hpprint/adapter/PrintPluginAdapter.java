@@ -61,18 +61,15 @@ public class PrintPluginAdapter extends BaseAdapter {
 
         nameView = (TextView) row.findViewById(R.id.plugin_name);
         nameView.setText(names[i]);
-        nameView.setTextColor(Color.rgb(51,51,51));
 
         makerView = (TextView) row.findViewById(R.id.plugin_maker_name);
         makerView.setText(makers[i]);
-        makerView.setTextColor(Color.rgb(149, 149, 149));
-
 
         iconImageView = (ImageView) row.findViewById(R.id.print_service_plugin_id);
-        iconImageView.setBackground(context.getDrawable(icons[i]));
+        iconImageView.setBackgroundResource(icons[i]);
 
         statusImageView = (ImageView) row.findViewById(R.id.plugin_state);
-        statusImageView.setBackground(context.getDrawable(status[i]));
+        statusImageView.setBackgroundResource(status[i]);
 
 
         return row;
