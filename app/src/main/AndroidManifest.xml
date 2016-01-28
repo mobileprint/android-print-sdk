@@ -28,7 +28,12 @@
             android:name=".activity.PrintPluginManagerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
-
+        <activity
+            android:name="com.hp.mss.hpprint.activity.PrintServicePluginInformation"
+            android:label="@string/title_activity_print_service_plugin_info"
+            android:theme="@style/PrintServicePluginInformationTheme"
+            android:launchMode="singleTop">
+        </activity>
     </application>
 
 </manifest>

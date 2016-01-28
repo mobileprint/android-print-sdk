@@ -17,9 +17,27 @@
         <item name="android:spinnerItemStyle">@style/previewSpinnerTextColor</item>
 
     </style>
+
+    <style name="PrintServicePluginInformationTheme" parent="@style/Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/AppCompatActionBar</item>
+        <item name="actionBarStyle">@style/AppCompatActionBar</item>
+    </style>
+
     <style name="MyActionBar"
         parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@color/HPFontColorBlue</item>
+    </style>
+
+    <style name="AppCompatActionBar"
+        parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@color/PluginToolbarBKColor</item>
+        <item name="titleTextStyle">@style/AppCompatActionBarTextStyle</item>
+    </style>
+
+    <style name="AppCompatActionBarTextStyle"
+        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">19sp</item>
     </style>
 
     <style name="pagePreviewView">
@@ -27,6 +45,10 @@
     </style>
 
     <style name="previewPrintInstructionsBG">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="printServicePluginInformationStyle">
         <item name="android:background">@android:color/white</item>
     </style>
 
