@@ -235,5 +235,19 @@
         android:layout_below="@+id/deviceIdLayout"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:id="@+id/newPluginStatus"
+        android:background="@color/HPFontColorBlue"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:text="Plugin Helper"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:onClick="pluginStatusButtonClicked"
+        android:layout_below="@+id/deviceIdLayout"
+        android:layout_alignParentRight="true" />
+
 </RelativeLayout>
 

@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.hp.mss.hpprint.activity.PrintPluginManagerActivity;
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PDFPrintItem;
@@ -214,7 +216,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         PrintUtil.print(this);
     }
 
-
+    public void pluginStatusButtonClicked(View v) {
+        Intent intent = new Intent(this, PrintPluginManagerActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onResume() {
