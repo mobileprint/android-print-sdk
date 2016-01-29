@@ -10,17 +10,17 @@
   ~ the license agreement.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     style="@style/printServicePluginInformationStyle"
     tools:context="com.hp.mss.hpprint.activity.PrintServicePluginInformation"
     >
 
     <LinearLayout
+        android:id="@+id/print_service_help_title_bar_1"
         android:layout_width="match_parent"
         android:layout_height="38.33dp"
         android:layout_marginTop="36dp"
@@ -48,15 +48,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="72.33dp"
         android:layout_marginRight="17dp"
+        android:layout_below="@id/print_service_help_title_bar_1"
         android:textColor="#343434"
         android:textSize="14sp"
+        android:lineSpacingExtra="5sp"
         android:fontFamily="sans-serif"
         android:text="@string/print_service_help_msg_1"/>
 
     <LinearLayout
+        android:id="@+id/print_service_help_title_bar_2"
         android:layout_width="match_parent"
         android:layout_height="38.33dp"
         android:layout_marginTop="36dp"
+        android:layout_below="@id/print_service_help_msg_1"
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageView
@@ -82,9 +86,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="72.33dp"
         android:layout_marginRight="17dp"
+        android:layout_below="@id/print_service_help_title_bar_2"
         android:textColor="#343434"
         android:textSize="14sp"
+        android:lineSpacingExtra="5sp"
         android:fontFamily="sans-serif"
         android:text="@string/print_service_help_msg_2"/>
 
-</LinearLayout>
+</RelativeLayout>

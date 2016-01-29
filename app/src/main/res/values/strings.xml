@@ -47,9 +47,9 @@
     <!-- Print Service Plugin Information -->
     <string name="title_activity_print_service_plugin_info">Print Service Plugin Information</string>
     <string name="print_service_help_title_1">1. Get a Print Service Plugin</string>
-    <string name="print_service_help_msg_1">You must have a print service plugin installed to print. Each brand of printer has their own plugin that enables you to print from your mobile device. There are also generic print service plugins available. Select the plugin that serves you best.You can add additional print plugins anytime.</string>
+    <string name="print_service_help_msg_1">You must have a print service plugin installed to print. Each brand of printer has their own plugin that enables you to print from your mobile device. Generic print service plugins are also available. Select the plugin that serves you best. You can add additional print plugins anytime.</string>
     <string name="print_service_help_title_2">2. Enable Plugin</string>
-    <string name="print_service_help_msg_2">After downloading a Print Service Plugin you must enable it. The Print Service Plugin Manager will take you to the system dialogue. Just select it and tap the switch to “ON”.</string>
+    <string name="print_service_help_msg_2">After downloading a Print Service Plugin, you will be prompted to enable your plugin. Just select it and tap the switch to “ON”.</string>
 
 
     <!-- Snap Shots Prompt -->
