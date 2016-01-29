@@ -10,45 +10,64 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hp.mss.hpprint.R;
+import com.hp.mss.hpprint.model.PrintPlugin;
 
 public class PrintPluginAdapter extends BaseAdapter {
     private static final String TOOLBAR_TITLE_FONTFACE = "fonts/HPSimplified_Rg.ttf";
 
     Context context;
-
-    private String[] names;
-    private String[] makers;
-    private int[] icons;
-    private int[] status;
+    PrintPlugin[] plugins;
 
     private LayoutInflater inflater;
 
-    public PrintPluginAdapter(Context context, int[] iconResources, String[] pluginNames, String[] pluginMakers, int[] status) {
+    /**
+     *
+     * @param context calling activity
+     * @param plugins plugin list that is managed by this adapter
+     */
+    public PrintPluginAdapter(Context context, PrintPlugin[] plugins) {
         this.context = context;
-        this.icons = iconResources;
-        this.names = pluginNames;
-        this.makers = pluginMakers;
-        this.status = status;
+        this.plugins = plugins;
 
         this.inflater = LayoutInflater.from(context);
     }
 
-
+    /**
+     *
+     * @return counter of the items
+     */
     @Override
     public int getCount() {
-        return names.length;
+        return plugins.length;
     }
 
+    /**
+     *
+     * @param i item index
+     * @return  the object at index i
+     */
     @Override
     public Object getItem(int i) {
-        return null;
+        return plugins[i];
     }
 
+    /**
+     *
+     * @param position item index
+     * @return item id
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     *
+     * @param i item position
+     * @param view the view to reused
+     * @param parent the parent that this view eventually be attached to
+     * @return a new view that will be displayed in the list
+     */
     @Override
     public View getView(int i, View view, ViewGroup parent) {
 
@@ -60,16 +79,16 @@ public class PrintPluginAdapter extends BaseAdapter {
         ImageView iconImageView, statusImageView;
 
         nameView = (TextView) row.findViewById(R.id.plugin_name);
-        nameView.setText(names[i]);
+        nameView.setText( ((PrintPlugin)plugins[i]).getName() );
 
         makerView = (TextView) row.findViewById(R.id.plugin_maker_name);
-        makerView.setText(makers[i]);
+        makerView.setText( ((PrintPlugin)plugins[i]).getMaker() );
 
         iconImageView = (ImageView) row.findViewById(R.id.print_service_plugin_id);
-        iconImageView.setBackgroundResource(icons[i]);
+        iconImageView.setBackgroundResource( ((PrintPlugin)plugins[i]).getIcon() );
 
         statusImageView = (ImageView) row.findViewById(R.id.plugin_state);
-        statusImageView.setBackgroundResource(status[i]);
+        statusImageView.setBackgroundResource(((PrintPlugin) plugins[i]).getNextActionIcon() );
 
 
         return row;

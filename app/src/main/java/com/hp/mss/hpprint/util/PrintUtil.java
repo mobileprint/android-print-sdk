@@ -21,6 +21,7 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
 
+import com.hp.mss.hpprint.activity.PrintPluginManagerActivity;
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.PrintJobData;
@@ -76,6 +77,9 @@ public class PrintUtil {
     public static void print(Activity activity){
         metricsListener = null;
 
+        if(printJobData == null)
+            return;
+
         EventMetricsCollector.postMetricsToHPServer(
                 activity,
                 EventMetricsCollector.PrintFlowEventTypes.ENTERED_PRINT_SDK);
@@ -84,16 +88,21 @@ public class PrintUtil {
             metricsListener = (PrintMetricsListener) activity;
         }
 
+        if ( needHelpToInstallPlugin(activity) ) {
+            Intent intent = new Intent(activity, PrintPluginManagerActivity.class);
+            activity.startActivity(intent);
+        } else {
+            readyToPrint(activity);
+        }
+    }
 
-        if(printJobData == null)
-            return;
-
+    /**
+     *
+     * @param activity
+     */
+    public static void readyToPrint(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP || printJobData.containsPDFItem()) {
-            if (PrintUtil.showPluginHelper) {
-                showPluginHelper(activity);
-            } else {
-                createPrintJob(activity);
-            }
+            createPrintJob(activity);
         } else {
             startPrintPreviewActivity(activity);
         }
@@ -193,5 +202,16 @@ public class PrintUtil {
                 return true;
         return false;
     }
+
+    private static boolean needHelpToInstallPlugin(Activity activity) {
+        boolean needHelp = true;
+
+        PrintPluginStatusHelper pluginStatusHelper = PrintPluginStatusHelper.getInstance(activity);
+        if (pluginStatusHelper.readyToPrint())
+            needHelp = false;
+
+        return needHelp;
+    }
+
 
 }

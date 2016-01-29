@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/HPFontColorWhite">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_title"
+        android:background="@color/HPFontColorWhite"
+        android:textColor="@color/PluginNameFontColor"
+        android:text="@string/before_download_tips_title"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:layout_margin="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_message"
+        android:background="@color/HPFontColorWhite"
+        android:textColor="@color/PluginMakerFontColor"
+        android:text="@string/before_download_tips"
+        android:textSize="16sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal|left">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_ok_btn"
+            android:background="@android:color/transparent"
+            android:textColor="@color/PluginBtnColorBlue"
+            android:text="@string/ok"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_cancel_btn"
+            android:background="@android:color/transparent"
+            android:textColor="@color/PluginBtnColorBlue"
+            android:text="@string/cancel"
+            android:textSize="16sp"
+            android:layout_toLeftOf="@+id/dialog_ok_btn" />
+
+    </RelativeLayout>
+
+</LinearLayout>
