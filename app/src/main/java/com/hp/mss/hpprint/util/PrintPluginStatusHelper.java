@@ -99,6 +99,18 @@ public class PrintPluginStatusHelper {
 
     /**
      *      Plugin Package Names - Last Updated: 01/14/2016
+     *      Excludes google cloud print(default), PrintHand Mobile (pay to use), and ThinkFree (requires Zimbra)
+     *      public static final String PRINTERON_PRINT_PLUGIN_PACKAGE_NAME      = "com.printeron.android.printplugin";
+     *      public static final String HP_PRINT_PLUGIN_PACKAGE_NAME             = "com.hp.android.printservice";
+     *      public static final String MOPRIA_PRINT_PLUGIN_PACKAGE_NAME         = "org.mopria.printplugin";
+     *      public static final String LEXMARK_PRINT_PLUGIN_PACKAGE_NAME        = "com.lexmark.print.plugin";
+     *      public static final String BROTHER_PRINT_PLUGIN_PACKAGE_NAME        = "com.brother.printservice";
+     *      public static final String SAMSUNG_PRINT_PLUGIN_PACKAGE_NAME        = "com.sec.app.samsungprintservice";
+     *      public static final String CANON_PRINT_PLUGIN_PACKAGE_NAME          = "jp.co.canon.android.printservice.plugin";
+     *      public static final String XEROX_PRINT_PLUGIN_PACKAGE_NAME          = "com.xerox.printservice";
+     *      public static final String KONICA_MINOLTA_PRINT_PLUGIN_PACKAGE_NAME = "com.kmbt.printservice";
+     *      public static final String PRINTERSHARE_PRINT_PLUGIN_PACKAGE_NAME   = "com.dynamixsoftware.printershare";
+     *      public static final String EPSON_PRINT_PLUGIN_PACKAGE_NAME          = "com.epson.mobilephone.android.epsonprintserviceplugin";
      */
     public static String[] packageNames  =   {"com.hp.android.printservice",
                                               MOPRIA_PRINT_PLUGIN_PACKAGE_NAME,
@@ -108,7 +120,18 @@ public class PrintPluginStatusHelper {
                                               OTHER_PRINT_PLUGIN_PACKAGE_NAME};
 
     /**
-     * Plugin Versions - Last Updated: 01/14/2016
+     *  Plugin Versions - Last Updated: 01/14/2016
+     *  private static final Integer PRINTERON_PRINT_PLUGIN_PACKAGE_VERSION      = 100;
+     *  private static final Integer HP_PRINT_PLUGIN_PACKAGE_VERSION             = 67;
+     *  private static final Integer MOPRIA_PRINT_PLUGIN_PACKAGE_VERSION         = 112;
+     *  private static final Integer LEXMARK_PRINT_PLUGIN_PACKAGE_VERSION        = 7;
+     *  private static final Integer BROTHER_PRINT_PLUGIN_PACKAGE_VERSION        = 1;
+     *  private static final Integer SAMSUNG_PRINT_PLUGIN_PACKAGE_VERSION        = 102;
+     *  private static final Integer CANON_PRINT_PLUGIN_PACKAGE_VERSION          = 2220;
+     *  private static final Integer XEROX_PRINT_PLUGIN_PACKAGE_VERSION          = 42;
+     *  private static final Integer KONICA_MINOLTA_PRINT_PLUGIN_PACKAGE_VERSION = 4;
+     *  private static final Integer PRINTERSHARE_PRINT_PLUGIN_PACKAGE_VERSION   = 308;
+     *  private static final Integer EPSON_PRINT_PLUGIN_PACKAGE_VERSION          = 6;
      */
     private static int[] pluginPackageVersions   = {67, 112, 1, 2220, 6, 0};
 

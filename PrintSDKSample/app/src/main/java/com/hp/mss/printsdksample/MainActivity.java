@@ -60,6 +60,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     PrintItem.ScaleType scaleType;
     PrintAttributes.Margins margins;
     boolean showMetricsDialog;
+    PrintJobData printJobData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         RadioGroup deviceIdRadioGroup = (RadioGroup) findViewById(R.id.deviceIdRadioGroup);
         deviceIdRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(contentRadioGroup, deviceIdRadioGroup.getCheckedRadioButtonId());
+
+        createPrintJobData();
     }
 
     @Override
@@ -142,8 +145,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
     public void buttonClicked(View v) {
 
-        PrintJobData printJobData;
+        PrintUtil.sendPrintMetrics = showMetricsDialog;
+        PrintUtil.print(this);
+    }
 
+    public void pluginStatusButtonClicked(View v) {
+        PrintUtil.setPrintJobData(printJobData);
+        Intent intent = new Intent(this, PrintPluginManagerActivity.class);
+        startActivity(intent);
+    }
+
+    private void createPrintJobData() {
         //Example for creating a custom media size in android.
         PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000);
 
@@ -156,8 +168,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
             //Alternatively, you can use a bitmap by doing the following.
             // ImageAsset bitmapAsset = new ImageAsset(this, bitmap, ImageAsset.MeasurementUnits.INCHES, 4,5);
-
-
 
             //Create printitems from the assets. These define what asset is to be used for each media size.
             PrintItem printItem4x6 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6,margins, scaleType, imageAsset4x6);
@@ -212,13 +222,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
         //Set the printJobData to the PrintUtil and call print.
         PrintUtil.setPrintJobData(printJobData);
-        PrintUtil.sendPrintMetrics = showMetricsDialog;
-        PrintUtil.print(this);
-    }
-
-    public void pluginStatusButtonClicked(View v) {
-        Intent intent = new Intent(this, PrintPluginManagerActivity.class);
-        startActivity(intent);
     }
 
     @Override
