@@ -60,7 +60,7 @@
 
     <!-- Print Plugin Manager -->
     <string name="plugin_manager_title">Print Service Plugin Manager</string>
-    <string name="plugin_manager_sub_title">Ensure your printer\'s Print Service Plugin is Installed &amp; Enabled</string>
+    <string name="plugin_manager_sub_title">You need a Print Service Plugin installed &amp; enabled to print.</string>
 
     <string-array name="plugin_names">
         <item>HP Print Service Plugin</item>
