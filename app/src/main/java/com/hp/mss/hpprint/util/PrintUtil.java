@@ -20,7 +20,10 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.hp.mss.hpprint.activity.PrintPluginManagerActivity;
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
 import com.hp.mss.hpprint.model.PrintJobData;
@@ -39,6 +42,7 @@ public class PrintUtil {
     public static final String PLAY_STORE_PRINT_SERVICES_URL = "https://play.google.com/store/apps/collection/promotion_3000abc_print_services";
     private static final String HAS_METRICS_LISTENER = "has_metrics_listener";
     private static final int START_PREVIEW_ACTIVITY_REQUEST = 100;
+    private static final String TAG = "PrintUtil";
 
     private static PrintJobData printJobData;
 
@@ -76,6 +80,12 @@ public class PrintUtil {
     public static void print(Activity activity){
         metricsListener = null;
 
+        if(printJobData == null){
+            Log.e(TAG, "Please set PrintJobData first");
+            Toast.makeText(activity.getApplicationContext(), TAG + ": " + "Please set PrintJobData first", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         EventMetricsCollector.postMetricsToHPServer(
                 activity,
                 EventMetricsCollector.PrintFlowEventTypes.ENTERED_PRINT_SDK);
@@ -84,16 +94,27 @@ public class PrintUtil {
             metricsListener = (PrintMetricsListener) activity;
         }
 
+        if ( needHelpToInstallPlugin(activity) ) {
+            Intent intent = new Intent(activity, PrintPluginManagerActivity.class);
+            activity.startActivity(intent);
+        } else {
+            readyToPrint(activity);
+        }
+    }
 
-        if(printJobData == null)
+    /**
+     *
+     * @param activity
+     */
+    public static void readyToPrint(Activity activity) {
+        if(printJobData == null) {
+            Log.e(TAG, "Please set PrintJobData first");
+            Toast.makeText(activity.getApplicationContext(), TAG + ": " + "Please set PrintJobData first", Toast.LENGTH_LONG).show();
             return;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP || printJobData.containsPDFItem()) {
-            if (PrintUtil.showPluginHelper) {
-                showPluginHelper(activity);
-            } else {
-                createPrintJob(activity);
-            }
+            createPrintJob(activity);
         } else {
             startPrintPreviewActivity(activity);
         }
@@ -193,5 +214,16 @@ public class PrintUtil {
                 return true;
         return false;
     }
+
+    private static boolean needHelpToInstallPlugin(Activity activity) {
+        boolean needHelp = true;
+
+        PrintPluginStatusHelper pluginStatusHelper = PrintPluginStatusHelper.getInstance(activity);
+        if (pluginStatusHelper.readyToPrint())
+            needHelp = false;
+
+        return needHelp;
+    }
+
 
 }

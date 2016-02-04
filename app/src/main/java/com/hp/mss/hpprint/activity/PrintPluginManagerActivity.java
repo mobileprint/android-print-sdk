@@ -1,8 +1,15 @@
 package com.hp.mss.hpprint.activity;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,83 +25,79 @@ import android.widget.Toast;
 
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.adapter.PrintPluginAdapter;
+import com.hp.mss.hpprint.model.PrintPlugin;
+import com.hp.mss.hpprint.util.PrintPluginStatusHelper;
+import com.hp.mss.hpprint.util.PrintUtil;
+
+import java.util.Collection;
 
 public class PrintPluginManagerActivity extends AppCompatActivity {
     private static final String TAG = "PRINT_PLUGIN_MANGER_ACTIVITY";
 
-    // customize your toolbar here
-    private static final int TOOLBAR_BACKGROUND_COLOR = R.color.PluginToolbarBKColor;
-    private static final int TOOLBAR__TITLE_TEXT_COLOR = R.color.HPFontColorWhite;
-
-    public static int[] plugin_icons = new int[]{
-            R.drawable.hp,
-            R.drawable.canon,
-            R.drawable.epson,
-            R.drawable.brother,
-            R.drawable.mopria,
-            R.drawable.other
-    };
-
-    public static int[] plugin_status = new int[]{
-            R.drawable.downloading_arrow,
-            R.drawable.downloading_arrow,
-            R.drawable.downloading_arrow,
-            R.drawable.downloading_arrow,
-            R.drawable.downloading_arrow,
-            R.drawable.downloading_arrow
-    };
-
-    public String[] pluginNames;
-    public String[] pluginMakers;
-
     private Toolbar topToolBar;
     private ListView pluginListView;
+    private PrintPluginStatusHelper printPluginStatusHelper;
+    private PrintPluginAdapter printPluginAdapter;
+    private BroadcastReceiver receiver;
+    Button printBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final Activity thisActivity = this;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_plugin_manger);
 
-        Resources res = getResources();
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if  (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.x);
+            actionBar.setElevation(2);
+        }
 
-        // Toolbar setup
-        topToolBar = (Toolbar) findViewById(R.id.plugin_manager_toolbar);
-        topToolBar.setTitleTextColor(res.getColor(TOOLBAR__TITLE_TEXT_COLOR));
-        topToolBar.setBackgroundColor(res.getColor(R.color.PluginToolbarBKColor));
 
-        setSupportActionBar(topToolBar);
+        pluginListView = (ListView) findViewById(R.id.plugin_manager_list_view);
+        printPluginStatusHelper = PrintPluginStatusHelper.getInstance(this);
+        printPluginAdapter = new PrintPluginAdapter(this, getprintPluginList());
+        pluginListView.setAdapter(printPluginAdapter);
 
-        final ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle(res.getString(R.string.plugin_manager_title));
-
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.x);
-
-        // plugin list view
-        pluginNames = getResources().getStringArray(R.array.plugin_names);
-        pluginMakers = getResources().getStringArray(R.array.plugin_makers);
-
-        ListView pluginListView = (ListView) findViewById(R.id.plugin_manager_list_view);
-        pluginListView.setAdapter(new PrintPluginAdapter(this, plugin_icons, pluginNames, pluginMakers, plugin_status));
-        pluginListView.smoothScrollByOffset(1);
         pluginListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), "item " + i + "clicked", Toast.LENGTH_LONG).show();
+                PrintPlugin plugin = (PrintPlugin) printPluginAdapter.getItem(i);
+                if(printPluginStatusHelper !=null && printPluginStatusHelper.showBeforeDownloadDialog(plugin) ) {
+                    displayDownloadTipsDialog(plugin);
+                } else if ( plugin.getStatus() == PrintPlugin.PluginStatus.DISABLED) {
+                    startActivity(new Intent(Settings.ACTION_PRINT_SETTINGS));
+                }
             }
         });
 
         // Continue to print action
-        Button printBtn = (Button) findViewById(R.id.print_btn);
+        printBtn = (Button) findViewById(R.id.print_btn);
+        printBtn.setText(readyToPrint() ? R.string.continue_to_print : R.string.skip);
         printBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "button clicked", Toast.LENGTH_LONG).show();
+                String viewText = ((Button) view).getText().toString();
+                if (viewText.equals(getResources().getString(R.string.continue_to_print))) {
+                    PrintUtil.readyToPrint(thisActivity);
+                } else {
+                    finish();
+                }
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        printPluginStatusHelper.updateAllPrintPluginStatus();
+        printPluginAdapter = new PrintPluginAdapter(this, getprintPluginList());
+        pluginListView.setAdapter(printPluginAdapter);
+
+        printBtn.setText(readyToPrint() ? R.string.continue_to_print : R.string.skip);
     }
 
     @Override
@@ -103,6 +107,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -120,5 +125,42 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private  PrintPlugin[] getprintPluginList() {
+        if(printPluginStatusHelper == null)
+            return null;
+        return printPluginStatusHelper.getPluginsSortedByStatus();
+    }
 
+    private boolean readyToPrint() {
+        return printPluginStatusHelper.readyToPrint();
+    }
+
+    private void displayDownloadTipsDialog(PrintPlugin printPlugin) {
+        final PrintPlugin plugin = printPlugin;
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_before_download_tips);
+
+
+        Button okBtn = (Button) dialog.findViewById(R.id.dialog_ok_btn);
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                plugin.goToPlayStoreForPlugin();
+            }
+        });
+
+        Button cancelBtn = (Button) dialog.findViewById(R.id.dialog_cancel_btn);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
 }

@@ -47,15 +47,21 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/plugin_state"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/downloading_arrow"
         android:layout_marginRight="20dp"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent">
 
+        <ImageView
+            android:id="@+id/plugin_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/downloading_arrow"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
 
 </RelativeLayout>
