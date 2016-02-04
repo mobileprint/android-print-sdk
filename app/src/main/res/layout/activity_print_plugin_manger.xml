@@ -27,7 +27,8 @@
         android:background="@color/PluginSubTitleBKColorGrey"
         android:textColor="@color/PluginFontColorBlack"
         android:elevation="1dp"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:ellipsize="end"/>
 
     <View
         android:id="@+id/list_divider"
