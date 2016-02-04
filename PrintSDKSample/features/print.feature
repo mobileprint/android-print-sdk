@@ -6,8 +6,6 @@ Feature: Print feature
     
 
 @TA12260
-@lollipop
-@kitkat
 Scenario Outline: Print a card in Lollipop device and verify xml counters for 'PDF' option
     Given I am on Home screen
     Then I tap on "PDF" option
@@ -40,8 +38,6 @@ Scenario Outline: Print a card in Lollipop device and verify xml counters for 'P
         
  	
 @TA12260
-@lollipop
-@kitkat
 Scenario Outline: Print a card in Lollipop device and verify xml counters for 'Image' option
     Given I am on Home screen
     Then I tap on "Image" option
