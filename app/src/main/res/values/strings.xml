@@ -19,7 +19,7 @@
     <string name="print_preview_prompt">Imagine a super duper image appears below</string>
     <string name="learn_about_mobile_print">Print Instructions</string>
     <string name="support">Support:</string>
-    <string name="paper_size">Paper Size</string>
+    <string name="paper_size">Paper Size:</string>
     <string name="paper_type">Paper Type</string>
     <string name="lib_font"></string>
 
@@ -33,6 +33,9 @@
     <string-array name="paper_type_array">
         <item> Photo Paper </item>
     </string-array>
+    <!-- Print Preview -->
+    <string name="print_preview_menu_help">Print Help</string>
+    <string name="print_preview_menu_print_service_plugins">Print Service Plugins</string>
 
     <!-- Print Plugin installation -->
     <string name="hp_print_plugin_alert_header">HP Print Plugin</string>
@@ -64,23 +67,26 @@
 
     <string-array name="plugin_names">
         <item>HP Print Service Plugin</item>
+        <item>Mopria Print Service</item>
+        <item>Brother Print Service Plugin</item>
         <item>Canon Print Service</item>
         <item>Epson Print Enabler</item>
-        <item>Brother Print Service Plugin</item>
-        <item>Mopria Print Service</item>
         <item>Other PrintServicePlugin</item>
     </string-array>
 
     <string-array name="plugin_makers">
         <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
         <item>Canon Inc.</item>
         <item>Seiko Epson Corporation</item>
-        <item>Brother Industries, Ltd.</item>
-        <item>Mopria Alliance</item>
-        <item>N/A</item>
+         <item>N/A</item>
     </string-array>
 
     <string name="continue_to_print">CONTINUE TO PRINT</string>
-
-
+    <string name="skip">SKIP</string>
+    <string name="before_download_tips">Download your Print Service Plugin and return to this application to enable it.</string>
+    <string name="before_download_tips_title">You are being sent to the Google Play store</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

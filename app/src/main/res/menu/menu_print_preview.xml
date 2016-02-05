@@ -12,9 +12,14 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.hp.mss.hpprint.activity.PrintPreview">
-    <item
-        android:id="@+id/action_print"
-        android:title="Print"
-        />
+        <item
+            android:id="@+id/print_preview_menu_print_help"
+            app:showAsAction="never"
+            android:title="@string/print_preview_menu_help"/>
+        <item
+            android:id="@+id/print_preview_menu_print_service_plugins"
+            app:showAsAction="never"
+            android:title="@string/print_preview_menu_print_service_plugins"/>
 </menu>
