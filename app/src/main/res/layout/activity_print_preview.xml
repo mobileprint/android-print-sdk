@@ -10,7 +10,7 @@
   ~ the license agreement.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,79 +19,68 @@
     tools:context="com.hp.mss.hpprint.activity.PrintPreview"
     >
 
-    <com.hp.mss.hpprint.view.PagePreviewView
-        style="@style/pagePreviewView"
-        android:id="@+id/preview_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        />
-
     <RelativeLayout
+        android:id="@+id/print_preview_selection"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginTop="0dp"
         style="@style/previewSpinnerBG">
 
         <TextView
             android:id="@+id/paper_size_title"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="110dp"
+            android:layout_height="20dp"
             android:text="@string/paper_size"
             android:gravity="left|bottom"
-            android:textSize="16sp"
-            android:paddingLeft="30dp"
+            android:textSize="17sp"
+            android:layout_marginTop="2dp"
+            android:paddingLeft="22dp"
+            android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             style="@style/previewPaperSizeSpinnerText"/>
 
-        <Spinner
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/paper_size_spinner"
             android:paddingBottom="1dp"
-            android:paddingTop="1dp"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/paper_size_title"
             android:spinnerMode="dialog"
             android:prompt="@string/paper_size"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:gravity="bottom|right" />
+            android:gravity="bottom|right"
+            style="@style/previewSpinner"/>
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/support_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:id="@+id/support_title"
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-            <TextView
-                style="@style/previewSupportText"
-                android:id="@+id/print_preview_support_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15sp"
-                android:paddingBottom="5dp"
-                android:text="@string/support"
-                android:textSize="18sp"
-                android:layout_alignParentBottom="true"
-                android:textAllCaps="true"/>
-        </RelativeLayout>
-        <RelativeLayout
-            style="@style/previewPrintInstructionsBG"
-            android:id="@+id/learn_more"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/support_title">
-            <TextView
-                style="@style/previewPrintInstructionsText"
-                android:id="@+id/ic_printing_support_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingLeft="30dp"
-                android:textSize="15sp"
-                android:text="@string/learn_about_mobile_print"/>
-        </RelativeLayout>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/print_preview_selection"
+        style="@style/previewBackGround">
+
+        <com.hp.mss.hpprint.view.PagePreviewView
+            style="@style/pagePreviewView"
+            android:id="@+id/preview_image_view"
+            android:layout_marginTop="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
     </RelativeLayout>
 
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/print_preview_print_btn"
+        android:layout_width="60dp"
+        android:layout_height="55.5dp"
+        android:layout_marginTop="-9dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="17dp"
+        android:layout_alignParentTop="true"
+        app:backgroundTint="@android:color/holo_orange_light"
+        android:clickable="true"
+        android:src="@drawable/ic_print_preview_print_button"
+        android:scaleType="fitCenter"/>
+
+</RelativeLayout>
