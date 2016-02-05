@@ -356,7 +356,7 @@ public class PrintPreview extends AppCompatActivity {
         super.onResume();
         if(isPrinting) {
             isPrinting = false;
-            super.onBackPressed();
+            super.finish();
         }
     }
 

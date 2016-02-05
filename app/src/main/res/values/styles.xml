@@ -61,7 +61,6 @@
 
     <style name="previewSpinner" parent="@style/Widget.AppCompat.Spinner">
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:popupBackground">@android:color/white</item>
     </style>
 
     <style name="previewSpinnerBG">
