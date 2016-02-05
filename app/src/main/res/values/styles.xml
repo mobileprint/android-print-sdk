@@ -77,9 +77,6 @@
 
     <style name="previewSupportText"></style>
 
-    <style name="printPluginHelperDialog" parent="@android:style/Theme.Holo.Dialog"></style>
-
-    <style name="printPluginHelperDialogCheckBox" parent="@android:style/Theme.Holo"></style>
 
     <style name="PluginManagerToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">19sp</item>

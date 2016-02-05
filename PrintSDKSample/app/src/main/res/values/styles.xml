@@ -38,7 +38,4 @@
         <!--<item name="android:textColor">@color/HPFontColorGrey</item>-->
     <!--</style>-->
 
-    <style name="printPluginHelperDialog" parent="@android:style/Theme.Holo.Light.Dialog"></style>
-
-    <style name="printPluginHelperDialogCheckBox" parent="@android:style/Theme.Holo.Light"></style>
 </resources>
