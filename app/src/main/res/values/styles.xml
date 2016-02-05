@@ -11,22 +11,18 @@
   -->
 
 <resources>
-    <style name="PreviewTheme" parent="@android:style/Theme.Holo">
+    <style name="PreviewTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <item name="android:spinnerItemStyle">@style/previewSpinnerTextColor</item>
-
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/AppCompatActionBar</item>
+        <item name="actionBarStyle">@style/AppCompatActionBar</item>
+        <item name="android:spinnerItemStyle">@style/previewSpinnerText</item>
     </style>
 
     <style name="PrintServicePluginInformationTheme" parent="@style/Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/AppCompatActionBar</item>
         <item name="actionBarStyle">@style/AppCompatActionBar</item>
-    </style>
-
-    <style name="MyActionBar"
-        parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
-        <item name="android:background">@color/HPFontColorBlue</item>
     </style>
 
     <style name="AppCompatActionBar"
@@ -52,17 +48,33 @@
         <item name="android:background">@android:color/white</item>
     </style>
 
-    <style name="previewPrintInstructionsText"></style>
+    <style name="previewPrintInstructionsText">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="previewSpinnerText">
+        <item name="android:textSize">17sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="previewSpinner" parent="@style/Widget.AppCompat.Spinner">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:popupBackground">@android:color/white</item>
+    </style>
 
     <style name="previewSpinnerBG">
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">@color/PluginToolbarBKColor</item>
     </style>
 
-    <style name="previewSpinnerTextColor">
-        <item name="android:textColor">@android:color/black</item>
+    <style name="previewBackGround">
+        <item name="android:background">@color/HPLightGreyBackground</item>
     </style>
 
-    <style name="previewPaperSizeSpinnerText"></style>
+    <style name="previewPaperSizeSpinnerText">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 
     <style name="previewSupportText"></style>
 

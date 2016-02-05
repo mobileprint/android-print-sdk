@@ -12,6 +12,7 @@
   -->
 
 <resources>
+    <color name="HPFontColorDarkGrey">#3A3A3A</color>
     <color name="HPFontColorBlue">#0096D9</color>
     <color name="HPFontColorWhite">#FFFFFF</color>
     <color name="HPFontColorDarkBlue">#007eba</color>
