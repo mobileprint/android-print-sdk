@@ -18,24 +18,25 @@
     </style>
     <!-- ActionBar styles -->
 
-    <style name="pagePreviewView">
-        <item name="sizeFontColor">@android:color/white</item>
-    </style>
-    <style name="previewPrintInstructionsBG">
-        <item name="android:background">@android:color/white</item>
-    </style>
-    <style name="previewPrintInstructionsText">
-        <item name="android:textColor">@color/HPFontColorBlue</item>
-    </style>
-    <style name="previewSpinnerBG">
-        <item name="android:background">@android:color/white</item>
-    </style>
-    <style name="previewPaperSizeSpinnerText">
-        <item name="android:textColor">@color/HPFontColorCarbonGrey</item>
-    </style>
-    <style name="previewSupportText">
-        <item name="android:textColor">@color/HPFontColorGrey</item>
-    </style>
+    <!-- Uncomment and override the below to style the preview page to fit your app theme -->
+    <!--<style name="pagePreviewView">-->
+        <!--<item name="sizeFontColor">@android:color/white</item>-->
+    <!--</style>-->
+    <!--<style name="previewPrintInstructionsBG">-->
+        <!--<item name="android:background">@android:color/white</item>-->
+    <!--</style>-->
+    <!--<style name="previewPrintInstructionsText">-->
+        <!--<item name="android:textColor">@color/HPFontColorBlue</item>-->
+    <!--</style>-->
+    <!--<style name="previewSpinnerBG">-->
+        <!--<item name="android:background">@color/PluginToolbarBKColor</item>-->
+    <!--</style>-->
+    <!--<style name="previewPaperSizeSpinnerText">-->
+        <!--<item name="android:textColor">@android:color/white</item>-->
+    <!--</style>-->
+    <!--<style name="previewSupportText">-->
+        <!--<item name="android:textColor">@color/HPFontColorGrey</item>-->
+    <!--</style>-->
 
     <style name="printPluginHelperDialog" parent="@android:style/Theme.Holo.Light.Dialog"></style>
 

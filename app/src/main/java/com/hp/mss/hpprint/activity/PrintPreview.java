@@ -12,36 +12,31 @@
 
 package com.hp.mss.hpprint.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintAttributes;
-import android.util.DisplayMetrics;
-import android.view.Display;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
-import com.hp.mss.hpprint.util.FontUtil;
 import com.hp.mss.hpprint.util.PrintPluginHelper;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +47,7 @@ import java.util.List;
  * create this activity by yourself). In the future, we may allow UI customization
  * within this activity.
  */
-public class PrintPreview extends Activity {
+public class PrintPreview extends AppCompatActivity {
     private static final String HP_ANDROID_MOBILE_SITE = "http://www8.hp.com/us/en/ads/mobility/overview.html?jumpid=va_r11400_eprint";
 
     HashMap<String,PrintAttributes.MediaSize> spinnerMap = new HashMap<>();
@@ -77,12 +72,12 @@ public class PrintPreview extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_print_preview);
-        final ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if  (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            actionBar.setElevation(0);
         }
+        setContentView(R.layout.activity_print_preview);
 
         printJobData = PrintUtil.getPrintJobData();
 
@@ -90,23 +85,27 @@ public class PrintPreview extends Activity {
 
         previewView = (PagePreviewView) findViewById(R.id.preview_image_view);
 
-        setPreviewViewLayoutProperties();
-
-        TextView linkTextView = (TextView) findViewById(R.id.ic_printing_support_link);
-        linkTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAboutLinkClicked(view);
+        final FloatingActionButton button = (FloatingActionButton) findViewById(R.id.print_preview_print_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onPrintClicked(v);
             }
         });
 
-        ((TextView) findViewById(R.id.paper_size_title)).setTypeface(FontUtil.getDefaultFont(this));
-        ((TextView) findViewById(R.id.print_preview_support_title)).setTypeface(FontUtil.getDefaultFont(this));
-        ((TextView) findViewById(R.id.ic_printing_support_link)).setTypeface(FontUtil.getDefaultFont(this));
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            if(menuKeyField != null) {
+                menuKeyField.setAccessible(true);
+                menuKeyField.setBoolean(config, false);
+            }
+        } catch (Exception ex) {
+            // Ignore
+        }
     }
 
     private void initializeSpinnerData(){
-        Spinner sizeSpinner = (Spinner) findViewById(R.id.paper_size_spinner);
+        AppCompatSpinner sizeSpinner = (AppCompatSpinner) findViewById(R.id.paper_size_spinner);
         List<String> spinnerList = new ArrayList<String>();
 
         // add 4x5 as needed
@@ -174,32 +173,10 @@ public class PrintPreview extends Activity {
             return String.format("%s",d);
     }
 
-    private void setPreviewViewLayoutProperties() {
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-
-        if (outMetrics.widthPixels <= outMetrics.heightPixels) { //screen in portrait mode
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) previewView.getLayoutParams();
-            int size = outMetrics.widthPixels;
-            params.width = size;
-            params.height = size;
-            previewView.setLayoutParams(params);
-        } else { //screen in landscape mode
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) previewView.getLayoutParams();
-            params.width = (int) (outMetrics.widthPixels / 2f);
-            params.height = outMetrics.heightPixels;
-            previewView.setLayoutParams(params);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_print_preview, menu);
-        MenuItem menuPrintItem = menu.findItem(R.id.action_print);
-        menuPrintItem.setEnabled(!disableMenu);
-        menuPrintItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
 
@@ -209,39 +186,14 @@ public class PrintPreview extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        disableMenu = true;
         invalidateOptionsMenu();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_print) {
-            if (paperWidth == 4 && paperHeight == 5) {
-                SnapShotsMediaPrompt.SnapShotsPromptListener snapShotsPromptListener =
-                        new SnapShotsMediaPrompt.SnapShotsPromptListener() {
-                            @Override
-                            public void SnapShotsPromptOk() {
-                                if (PrintUtil.showPluginHelper) {
-                                    showPluginHelper();
-                                } else {
-                                    doPrint();
-                                }
-                            }
-
-                            public void SnapShotsPromptCancel() {
-                                disableMenu = false;
-                                invalidateOptionsMenu();
-                            }
-                        };
-                SnapShotsMediaPrompt.displaySnapShotsPrompt(this, snapShotsPromptListener);
-            } else {
-                if (PrintUtil.showPluginHelper) {
-                    showPluginHelper();
-                } else {
-                    doPrint();
-                }
-            }
-            return true;
+        if (id == R.id.print_preview_menu_print_help) {
+            printHelpClicked();
+        } else if (id == R.id.print_preview_menu_print_service_plugins) {
+            printServicePluginClicked();
         } else if (id == android.R.id.home) {
             super.onBackPressed();
-            disableMenu = false;
             invalidateOptionsMenu();
             return true;
         }
@@ -261,10 +213,42 @@ public class PrintPreview extends Activity {
 //        }
     }
 
-    public void onAboutLinkClicked(View view) {
+    public void onPrintClicked(View view) {
+        if (paperWidth == 4 && paperHeight == 5) {
+            SnapShotsMediaPrompt.SnapShotsPromptListener snapShotsPromptListener =
+                    new SnapShotsMediaPrompt.SnapShotsPromptListener() {
+                        @Override
+                        public void SnapShotsPromptOk() {
+                            if (PrintUtil.showPluginHelper) {
+                                showPluginHelper();
+                            } else {
+                                doPrint();
+                            }
+                        }
+
+                        public void SnapShotsPromptCancel() {
+                            disableMenu = false;
+                        }
+                    };
+            SnapShotsMediaPrompt.displaySnapShotsPrompt(this, snapShotsPromptListener);
+        } else {
+            if (PrintUtil.showPluginHelper) {
+                showPluginHelper();
+            } else {
+                doPrint();
+            }
+        }
+    }
+
+    public void printHelpClicked() {
         Intent mobileSiteIntent = new Intent(Intent.ACTION_VIEW);
         mobileSiteIntent.setData(Uri.parse(HP_ANDROID_MOBILE_SITE));
         startActivity(mobileSiteIntent);
+    }
+
+    public void printServicePluginClicked() {
+        Intent pluginStatusIntent = new Intent(this, PrintPluginManagerActivity.class);
+        startActivity(pluginStatusIntent);
     }
 
     public void setSizeSpinnerListener(Spinner sizeSpinner) {
@@ -334,12 +318,6 @@ public class PrintPreview extends Activity {
         invalidateOptionsMenu();
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        setPreviewViewLayoutProperties();
-    }
-
     public void returnPrintDataToPreviousActivity(PrintMetricsData data) {
         Intent callingIntent = new Intent();
         callingIntent.putExtra(PrintMetricsData.class.toString(), data);
@@ -378,7 +356,7 @@ public class PrintPreview extends Activity {
         super.onResume();
         if(isPrinting) {
             isPrinting = false;
-            super.onBackPressed();
+            super.finish();
         }
     }
 
