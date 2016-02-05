@@ -31,7 +31,6 @@ import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.model.PrintItem;
 import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
-import com.hp.mss.hpprint.util.PrintPluginHelper;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.hpprint.util.SnapShotsMediaPrompt;
 import com.hp.mss.hpprint.view.PagePreviewView;
@@ -219,11 +218,7 @@ public class PrintPreview extends AppCompatActivity {
                     new SnapShotsMediaPrompt.SnapShotsPromptListener() {
                         @Override
                         public void SnapShotsPromptOk() {
-                            if (PrintUtil.showPluginHelper) {
-                                showPluginHelper();
-                            } else {
-                                doPrint();
-                            }
+                            doPrint();
                         }
 
                         public void SnapShotsPromptCancel() {
@@ -232,11 +227,7 @@ public class PrintPreview extends AppCompatActivity {
                     };
             SnapShotsMediaPrompt.displaySnapShotsPrompt(this, snapShotsPromptListener);
         } else {
-            if (PrintUtil.showPluginHelper) {
-                showPluginHelper();
-            } else {
-                doPrint();
-            }
+            doPrint();
         }
     }
 
@@ -325,31 +316,6 @@ public class PrintPreview extends AppCompatActivity {
         finish();
     }
 
-    public void showPluginHelper() {
-        PrintPluginHelper.PluginHelperListener printPluginListener = new PrintPluginHelper.PluginHelperListener() {
-            @Override
-            public void printPluginHelperSkippedByPreference() {
-                doPrint();
-            }
-
-            @Override
-            public void printPluginHelperSkipped() {
-                doPrint();
-            }
-
-            @Override
-            public void printPluginHelperSelected() {
-            }
-
-            @Override
-            public void printPluginHelperCanceled() {
-                disableMenu = false;
-                invalidateOptionsMenu();
-            }
-        };
-
-        PrintPluginHelper.showPluginHelper(this, printPluginListener);
-    }
 
     @Override
     protected void onResume() {

@@ -169,34 +169,6 @@ public class PrintUtil {
         void onPrintMetricsDataPosted(PrintMetricsData printMetricsData);
     }
 
-    private static void showPluginHelper(final Activity activity) {
-        final PrintPluginHelper.PluginHelperListener printPluginListener = new PrintPluginHelper.PluginHelperListener() {
-            @Override
-            public void printPluginHelperSkippedByPreference() {
-                createPrintJob(activity);
-            }
-
-            @Override
-            public void printPluginHelperSkipped() {
-                createPrintJob(activity);
-            }
-
-            @Override
-            public void printPluginHelperSelected() {
-            }
-
-            @Override
-            public void printPluginHelperCanceled() {
-            }
-        };
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                PrintPluginHelper.showPluginHelper(activity, printPluginListener);
-            }
-        });
-    }
-
     private static void startPrintPreviewActivity(Activity activity) {
         Intent intent = new Intent(activity, PrintPreview.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
