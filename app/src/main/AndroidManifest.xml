@@ -25,6 +25,12 @@
             android:theme="@style/PreviewTheme">
         </activity>
         <activity
+            android:name=".activity.PrintHelp"
+            android:label="@string/title_activity_print_help"
+            android:launchMode="singleTop"
+            android:theme="@style/PrintHelp">
+        </activity>
+        <activity
             android:name=".activity.PrintPluginManagerActivity"
             android:label="@string/plugin_manager_title"
             android:theme="@style/PrintServicePluginInformationTheme">

@@ -1,0 +1,98 @@
+<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/printServicePluginInformationStyle"
+    tools:context="com.hp.mss.hpprint.activity.PrintServicePluginInformation"
+    >
+
+    <LinearLayout
+        android:id="@+id/print_service_help_title_bar_1"
+        android:layout_width="match_parent"
+        android:layout_height="38.33dp"
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="38.33dp"
+            android:layout_height="38.33dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/ic_print_service_help_plugin_icon"
+            android:scaleType="fitCenter"/>
+        <TextView
+            android:id="@+id/print_service_help_title_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#515151"
+            android:textSize="16sp"
+            android:layout_marginRight="50dp"
+            android:text="@string/print_service_help_title_1"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/print_service_help_msg_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72.33dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@id/print_service_help_title_bar_1"
+        android:textColor="#343434"
+        android:textSize="14sp"
+        android:lineSpacingExtra="5sp"
+        android:fontFamily="sans-serif"
+        android:text="@string/print_service_help_msg_1"/>
+
+    <LinearLayout
+        android:id="@+id/print_service_help_title_bar_2"
+        android:layout_width="match_parent"
+        android:layout_height="38.33dp"
+        android:layout_marginTop="36dp"
+        android:layout_below="@id/print_service_help_msg_1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="38.33dp"
+            android:layout_height="38.33dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/ic_print_service_help_enable"
+            android:scaleType="fitCenter"/>
+        <TextView
+            android:id="@+id/print_service_help_title_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#515151"
+            android:textSize="16sp"
+            android:layout_marginRight="50dp"
+            android:text="@string/print_service_help_title_2"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/print_service_help_msg_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72.33dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@id/print_service_help_title_bar_2"
+        android:textColor="#343434"
+        android:textSize="14sp"
+        android:lineSpacingExtra="5sp"
+        android:fontFamily="sans-serif"
+        android:text="@string/print_service_help_msg_2"/>
+
+</RelativeLayout>

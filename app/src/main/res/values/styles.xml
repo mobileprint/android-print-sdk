@@ -18,6 +18,11 @@
         <item name="android:spinnerItemStyle">@style/previewSpinnerText</item>
     </style>
 
+    <style name="PrintHelp" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/AppCompatActionBar</item>
+        <item name="actionBarStyle">@style/AppCompatActionBar</item>
+    </style>
+
     <style name="PrintServicePluginInformationTheme" parent="@style/Theme.AppCompat">
         <item name="android:actionBarStyle">@style/AppCompatActionBar</item>
         <item name="actionBarStyle">@style/AppCompatActionBar</item>

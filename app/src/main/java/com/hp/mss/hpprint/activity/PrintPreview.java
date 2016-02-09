@@ -47,16 +47,12 @@ import java.util.List;
  * within this activity.
  */
 public class PrintPreview extends AppCompatActivity {
-    private static final String HP_ANDROID_MOBILE_SITE = "http://www8.hp.com/us/en/ads/mobility/overview.html?jumpid=va_r11400_eprint";
-
     HashMap<String,PrintAttributes.MediaSize> spinnerMap = new HashMap<>();
     private PagePreviewView previewView;
-    private boolean disableMenu = false;
 
     private float paperWidth;
     private float paperHeight;
-
-    private boolean isPrinting = false;
+    private boolean disablePrintButton = false;
 
     PrintJobData printJobData;
     String spinnerSelectedText;
@@ -87,7 +83,10 @@ public class PrintPreview extends AppCompatActivity {
         final FloatingActionButton button = (FloatingActionButton) findViewById(R.id.print_preview_print_btn);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onPrintClicked(v);
+                if (!disablePrintButton) {
+                    disablePrintButton = true;
+                    onPrintClicked(v);
+                }
             }
         });
 
@@ -222,7 +221,7 @@ public class PrintPreview extends AppCompatActivity {
                         }
 
                         public void SnapShotsPromptCancel() {
-                            disableMenu = false;
+                            disablePrintButton = false;
                         }
                     };
             SnapShotsMediaPrompt.displaySnapShotsPrompt(this, snapShotsPromptListener);
@@ -232,9 +231,8 @@ public class PrintPreview extends AppCompatActivity {
     }
 
     public void printHelpClicked() {
-        Intent mobileSiteIntent = new Intent(Intent.ACTION_VIEW);
-        mobileSiteIntent.setData(Uri.parse(HP_ANDROID_MOBILE_SITE));
-        startActivity(mobileSiteIntent);
+        Intent printHelpIntent = new Intent(this, PrintHelp.class);
+        startActivity(printHelpIntent);
     }
 
     public void printServicePluginClicked() {
@@ -303,9 +301,7 @@ public class PrintPreview extends AppCompatActivity {
         PrintUtil.setPrintJobData(printJobData);
 
         PrintUtil.createPrintJob(this);
-        isPrinting = true;
 
-        disableMenu = false;
         invalidateOptionsMenu();
     }
 
@@ -320,10 +316,7 @@ public class PrintPreview extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(isPrinting) {
-            isPrinting = false;
-            super.finish();
-        }
+        disablePrintButton = false;
     }
 
 }
