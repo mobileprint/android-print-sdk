@@ -114,7 +114,8 @@ And (/^I check the device id$/) do
 end
 
 And (/^I check the wifi ssid$/) do
-    compare  = ($mertics_details['wifi_ssid'] == $wifi_ssid.split(" ").last) ?  true : false
+  encrypt_wifi_ssid = Digest::MD5.hexdigest($wifi_ssid.split(" ").last).upcase
+    compare  = ($mertics_details['wifi_ssid'] == encrypt_wifi_ssid) ?  true : false
     raise "wifi_ssid verification failed" unless compare==true
 end
 
