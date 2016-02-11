@@ -12,15 +12,18 @@
 
 <resources>
     <style name="PreviewTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/AppCompatActionBar</item>
         <item name="actionBarStyle">@style/AppCompatActionBar</item>
         <item name="android:spinnerItemStyle">@style/previewSpinnerText</item>
     </style>
 
+    <style name="PrintHelp" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/AppCompatActionBar</item>
+        <item name="actionBarStyle">@style/AppCompatActionBar</item>
+    </style>
+
     <style name="PrintServicePluginInformationTheme" parent="@style/Theme.AppCompat">
-        <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/AppCompatActionBar</item>
         <item name="actionBarStyle">@style/AppCompatActionBar</item>
     </style>
@@ -40,16 +43,8 @@
         <item name="sizeFontColor">@android:color/black</item>
     </style>
 
-    <style name="previewPrintInstructionsBG">
-        <item name="android:background">@android:color/white</item>
-    </style>
-
     <style name="printServicePluginInformationStyle">
         <item name="android:background">@android:color/white</item>
-    </style>
-
-    <style name="previewPrintInstructionsText">
-        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="previewSpinnerText">

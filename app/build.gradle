@@ -56,6 +56,14 @@ android {
             )
         }
     }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
+
 }
 
 task copyAarFile(type: Copy) {

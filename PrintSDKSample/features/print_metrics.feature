@@ -32,8 +32,8 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for p
 	And I check the off ramp is "Android Print"
 	And I check the device type
 	And I check the os version
-    #And I check the device id
-   # And I check the wifi ssid
+    And I check the device id
+    And I check the wifi ssid
     And I check the black and white filter
     And I check the number of copies
     

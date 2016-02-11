@@ -165,12 +165,12 @@ public class ApplicationMetricsData {
     }
 
     public static String md5(String s) {
-        MessageDigest digest;
         try {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes(), 0, s.length());
-            String hash = new BigInteger(1, digest.digest()).toString(16);
-            return hash.toUpperCase();
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(s.getBytes());
+            BigInteger number = new BigInteger(1, messageDigest);
+            return String.format("%032x", number).toUpperCase();
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

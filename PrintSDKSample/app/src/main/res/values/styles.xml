@@ -19,23 +19,74 @@
     <!-- ActionBar styles -->
 
     <!-- Uncomment and override the below to style the preview page to fit your app theme -->
-    <!--<style name="pagePreviewView">-->
-        <!--<item name="sizeFontColor">@android:color/white</item>-->
+    <!-- KitKat Print Preview Theme-->
+    <!--<style name="PreviewTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="android:actionBarStyle">@style/AppCompatActionBar</item>-->
+        <!--<item name="actionBarStyle">@style/AppCompatActionBar</item>-->
+        <!--<item name="android:spinnerItemStyle">@style/previewSpinnerText</item>-->
     <!--</style>-->
-    <!--<style name="previewPrintInstructionsBG">-->
+
+    <!-- Print Help Theme-->
+    <!--<style name="PrintHelp" parent="@style/Theme.AppCompat.Light.DarkActionBar">-->
+        <!--<item name="android:actionBarStyle">@style/AppCompatActionBar</item>-->
+        <!--<item name="actionBarStyle">@style/AppCompatActionBar</item>-->
+    <!--</style>-->
+
+    <!-- Print Plugin Help Screen -->
+    <!--<style name="PrintServicePluginInformationTheme" parent="@style/Theme.AppCompat">-->
+        <!--<item name="android:actionBarStyle">@style/AppCompatActionBar</item>-->
+        <!--<item name="actionBarStyle">@style/AppCompatActionBar</item>-->
+    <!--</style>-->
+
+    <!-- AppCompatActionBar Used for most Print SDK screens -->
+    <!--<style name="AppCompatActionBar"-->
+        <!--parent="@style/Widget.AppCompat.ActionBar">-->
+        <!--<item name="background">@color/PluginToolbarBKColor</item>-->
+        <!--<item name="titleTextStyle">@style/AppCompatActionBarTextStyle</item>-->
+    <!--</style>-->
+
+    <!-- AppCompat ActionBar Text Styles -->
+    <!--<style name="AppCompatActionBarTextStyle"-->
+        <!--parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">-->
+        <!--<item name="android:textSize">19sp</item>-->
+    <!--</style>-->
+
+    <!-- Kit Kat Page Preview Page Size indicactors - might be depricated -->
+    <!--<style name="pagePreviewView">-->
+        <!--<item name="sizeFontColor">@android:color/black</item>-->
+    <!--</style>-->
+
+    <!-- Print Service Plugin Information Page Background  -->
+    <!--<style name="printServicePluginInformationStyle">-->
         <!--<item name="android:background">@android:color/white</item>-->
     <!--</style>-->
-    <!--<style name="previewPrintInstructionsText">-->
-        <!--<item name="android:textColor">@color/HPFontColorBlue</item>-->
+
+    <!-- Kit Kat Print Preview Page Size Selector -->
+    <!--<style name="previewSpinnerText">-->
+        <!--<item name="android:textSize">17sp</item>-->
+        <!--<item name="android:gravity">center</item>-->
+        <!--<item name="android:layout_marginRight">2dp</item>-->
+        <!--<item name="android:textColor">@android:color/white</item>-->
     <!--</style>-->
+
+    <!-- Kit Kat Print Preview Page Size Selector background Color -->
     <!--<style name="previewSpinnerBG">-->
         <!--<item name="android:background">@color/PluginToolbarBKColor</item>-->
     <!--</style>-->
+
+    <!-- Kit Kat Print Preview Background Color -->
+    <!--<style name="previewBackGround">-->
+        <!--<item name="android:background">@color/HPLightGreyBackground</item>-->
+    <!--</style>-->
+
+    <!-- Kit Kat Print Preview Page Size Selector Text Styles -->
     <!--<style name="previewPaperSizeSpinnerText">-->
         <!--<item name="android:textColor">@android:color/white</item>-->
     <!--</style>-->
-    <!--<style name="previewSupportText">-->
-        <!--<item name="android:textColor">@color/HPFontColorGrey</item>-->
+
+    <!--<style name="PluginManagerToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">-->
+        <!--<item name="android:textSize">19sp</item>-->
     <!--</style>-->
 
 </resources>
