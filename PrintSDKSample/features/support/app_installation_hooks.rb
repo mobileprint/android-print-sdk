@@ -34,3 +34,21 @@ class << FeatureNameMemory
   @feature_name = nil
   attr_accessor :feature_name, :invocation
 end
+
+Around('@lollipop') do |scenario, block|
+    if getOSversion.to_f < 5.0
+        puts "Applicable only for Lollipop devices!".blue
+        scenario.skip_invoke!
+    else
+        block.call
+    end
+end
+
+Around('@kitkat') do |scenario, block|
+    if getOSversion.to_f >= 5.0
+        puts "Applicable only for Kitkat devices!".blue
+        scenario.skip_invoke!
+    else
+        block.call
+    end
+end

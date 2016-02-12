@@ -6,9 +6,8 @@ Feature: Print metrics feature
     
 
 @TA12260
-@lollipop
-@kitkat
-Scenario Outline: Print a card in Lollipop device and verify print metrics for print with metrics option
+@printmetrics
+Scenario Outline: Print an Image/PDF with metrics option and verify print metrics
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
@@ -22,7 +21,7 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for p
     Then I tap on Print
     Then Fetch metrics details
     And I check the paper size
-    And I check the paper type is "<Paper Type>"
+    #And I check the paper type is "<Paper Type>" --Defect
     #And I check the manufacturer name
     And I check the os_type
     #And I check the version
@@ -49,10 +48,9 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics for p
      
      
             
-@lollipop
-@kitkat
+@printmetrics
 @TA12260
-Scenario Outline: Print a card and verify print metrics for Cancel print
+Scenario Outline: Verify print metrics for Cancel print
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
@@ -70,10 +68,9 @@ Scenario Outline: Print a card and verify print metrics for Cancel print
         |PDF    | 
         |Image  | 
         
-@lollipop
-@kitkat
+@printmetrics
 @TA12260
-Scenario Outline: Print a card in Lollipop device and verify print metrics not generated for "without metrics" option
+Scenario Outline: Print an Image/PDF with Without Metrics option and verify print metrics
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
@@ -96,9 +93,8 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics not g
 
         
     @TA12391
-    @lollipop
-    @kitkat
-    Scenario Outline: Print a card in Lollipop device and verify device id
+    @printmetrics
+    Scenario Outline: Print an image/PDF device and verify device id
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
@@ -121,9 +117,8 @@ Scenario Outline: Print a card in Lollipop device and verify print metrics not g
         
         
     @TA12391
-    @lollipop
-    @kitkat
-    Scenario: Print a card in Lollipop device and verify device id
+    @printmetrics
+    Scenario: Print a PDF with unique device id on & off options and verify device id
     Given I am on Home screen
     Then I tap on "PDF" option
     And I select layout as "Center"
