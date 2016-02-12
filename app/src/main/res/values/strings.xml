@@ -63,7 +63,7 @@
     <string name="print_help_activity_title_2">Ensure your mobile device and printer are connected to the same network</string>
     <string name="print_help_activity_msg_2">Your mobile device and printer must be connected to your local Wi-Fi network. Review both of your device’s Wi-Fi information and follow instructions to connect.</string>
     <string name="print_help_activity_title_3">Check your printer for any error messages or power issues</string>
-    <string name="print_help_activity_msg_3">Some common printer issues are low ink, a paper jam, and paper not loaded. Additionally check to ensure there is power to the printer.Some common printer issues are low ink, paper jam, and paper not loaded. Additionally, check to ensure the printer is plugged in and powered on.</string>
+    <string name="print_help_activity_msg_3">Some common printer issues are low ink, a paper jam, and paper not loaded. Additionally check to ensure there is power to the printer.</string>
 
 
     <!-- Snap Shots Prompt -->
