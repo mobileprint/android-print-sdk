@@ -13,10 +13,13 @@
 package com.hp.mss.hpprint.util;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.model.PrintPlugin;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,6 +30,7 @@ import java.util.Map;
 public class PrintPluginStatusHelper {
     public static final String MOPRIA_PRINT_SERVICE_NAME  = "org.mopria.printplugin.MopriaPrintService";
     public static final String MOPRIA_PRINT_PLUGIN_PACKAGE_NAME = "org.mopria.printplugin";
+    public static final String BROTHER_PRINT_PLUGIN_PACKAGE_NAME = "com.brother.printservice";
     public static final String OTHER_PRINT_PLUGIN_PACKAGE_NAME = "Other Print Service Plugin";
     private Context context;
     private static PrintPluginStatusHelper instance = null;
@@ -142,7 +146,7 @@ public class PrintPluginStatusHelper {
                                                             "https://play.google.com/store/apps/details?id=org.mopria.printplugin",
                                                             "https://play.google.com/store/apps/details?id=com.brother.printservice",
                                                             "https://play.google.com/store/apps/details?id=jp.co.canon.android.printservice.plugin",
-                                                            "https://play.google.com/store/apps/details?id=jp.co.canon.android.printservice.plugin",
+                                                            "https://play.google.com/store/apps/details?id=com.epson.mobilephone.android.epsonprintserviceplugin",
                                                             "https://play.google.com/store/search?q=print%20service%20plugin&c=apps" };
 
     /**
@@ -169,10 +173,16 @@ public class PrintPluginStatusHelper {
         Map<String, PrintPlugin> result = new HashMap<String, PrintPlugin>();
 
         for(int i=0; i < packageNames.length; i++) {
+
             PrintPlugin printPlugin = new PrintPlugin(packageNames[i], pluginPackageVersions[i], pluginPlaystoreUrls[i],
                                                         context, pluginNames[i], pluginMakers[i], pluginIcons[i]);
             printPlugin.updateStatus();
-            result.put(packageNames[i], printPlugin);
+            if(  Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                result.put(packageNames[i], printPlugin);
+            } else if( !packageNames[i].equals(BROTHER_PRINT_PLUGIN_PACKAGE_NAME ) ) {
+                result.put(packageNames[i], printPlugin);
+            }
+
         }
 
         return result;
@@ -182,13 +192,11 @@ public class PrintPluginStatusHelper {
      *
      * @return a sorted array of plugin list
      */
-    public PrintPlugin[] getPluginsSortedByStatus() {
+    public PrintPlugin[] getSortedPlugins() {
         PrintPlugin[] plugins = new PrintPlugin[pluginVersionMap.size()];
 
         if(pluginVersionMap.isEmpty())
             return plugins;
-
-        int index = 0;
 
         PrintPlugin.PluginStatus[] sortingOrder = {
                                             PrintPlugin.PluginStatus.READY,
@@ -198,16 +206,14 @@ public class PrintPluginStatusHelper {
                                             PrintPlugin.PluginStatus.NOTINSTALLED
         };
 
-        Map<String, PrintPlugin> result = new HashMap<String, PrintPlugin>();
-
-        // sorting the map according to plagin status
+        int index = 0;
+        // sorting the map according to plugin status
         for(int i = 0; i < sortingOrder.length; i++ ) {
-            Iterator it = pluginVersionMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                if ( ((PrintPlugin) pair.getValue()).getStatus() == sortingOrder[i] &&
-                        !pair.getKey().equals(OTHER_PRINT_PLUGIN_PACKAGE_NAME)) {
-                    plugins[index++] = (PrintPlugin) pair.getValue();
+            ArrayList<PrintPlugin> statusArray = getPluginsByStatus(sortingOrder[i]);
+            if( statusArray != null && !statusArray.isEmpty()) {
+                bubbleSort(statusArray);
+                for(int j = 0; j < statusArray.size(); j++) {
+                    plugins[index++] = statusArray.get(j);
                 }
             }
         }
@@ -216,6 +222,55 @@ public class PrintPluginStatusHelper {
         return plugins;
     }
 
+    // return all the plugins in the map with the same status
+    private ArrayList<PrintPlugin> getPluginsByStatus(PrintPlugin.PluginStatus status) {
+        if(pluginVersionMap.isEmpty())
+            return null;
+
+        ArrayList<PrintPlugin> list = new ArrayList<PrintPlugin>();
+        Iterator it = pluginVersionMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            if( status == ((PrintPlugin) pair.getValue()).getStatus() ) {
+                if( !pair.getKey().equals(OTHER_PRINT_PLUGIN_PACKAGE_NAME) )
+                    list.add((PrintPlugin) pair.getValue());
+            }
+        }
+        return list;
+    }
+
+    // bubble sort the plugins that have same status
+    private void bubbleSort(ArrayList<PrintPlugin> arrayList) {
+
+        // sorting without the other plugins
+        Map<String, Integer> sortingMap  = new HashMap<String, Integer>();
+        sortingMap.put("com.hp.android.printservice", 1);
+        sortingMap.put(PrintPluginStatusHelper.MOPRIA_PRINT_PLUGIN_PACKAGE_NAME, 2);
+        sortingMap.put("com.brother.printservice", 3);
+        sortingMap.put("jp.co.canon.android.printservice.plugin", 4);
+        sortingMap.put("com.epson.mobilephone.android.epsonprintserviceplugin", 5);
+
+        boolean swapped= true;
+        int j = 0;
+        PrintPlugin temp;
+
+        while(swapped) {
+            swapped = false;
+            j++;
+            for(int i = 0; i < arrayList.size() - j ; i++) {
+                int a = sortingMap.get(arrayList.get(i).getPackageName()).intValue();
+                int b = sortingMap.get(arrayList.get(i+1).getPackageName()).intValue();
+
+                if(a > b) {
+                    temp = arrayList.get(i);
+                    arrayList.set(i, arrayList.get(i+1));
+                    arrayList.set(i+1, temp);
+                    swapped = true;
+                }
+            }
+
+        }
+    }
 
     /**
      *
@@ -224,16 +279,16 @@ public class PrintPluginStatusHelper {
     public boolean readyToPrint() {
         boolean isReady = false;
 
-        PrintPlugin[] list = getPluginsSortedByStatus();
+        Collection<PrintPlugin> list = pluginVersionMap.values();
 
-        if (list != null) {
+        Iterator<PrintPlugin> iterator = list.iterator();
+        while (iterator.hasNext()) {
 
-            for (int i = 0; i < list.length; i++) {
-                PrintPlugin plugin = (PrintPlugin) list[i];
+                PrintPlugin plugin = (PrintPlugin) iterator.next();
                 plugin.updateStatus();
                 if (plugin.getStatus() == PrintPlugin.PluginStatus.READY)
                     isReady = true;
-            }
+
         }
 
         return isReady;
@@ -252,3 +307,4 @@ public class PrintPluginStatusHelper {
                 pluginStatus == PrintPlugin.PluginStatus.DOWNLOADING);
     }
 }
+

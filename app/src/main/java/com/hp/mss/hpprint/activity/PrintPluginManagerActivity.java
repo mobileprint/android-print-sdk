@@ -3,14 +3,9 @@ package com.hp.mss.hpprint.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,15 +16,12 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.adapter.PrintPluginAdapter;
 import com.hp.mss.hpprint.model.PrintPlugin;
 import com.hp.mss.hpprint.util.PrintPluginStatusHelper;
 import com.hp.mss.hpprint.util.PrintUtil;
-
-import java.util.Collection;
 
 public class PrintPluginManagerActivity extends AppCompatActivity {
     private static final String TAG = "PRINT_PLUGIN_MANGER_ACTIVITY";
@@ -128,7 +120,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
     private  PrintPlugin[] getprintPluginList() {
         if(printPluginStatusHelper == null)
             return null;
-        return printPluginStatusHelper.getPluginsSortedByStatus();
+        return printPluginStatusHelper.getSortedPlugins();
     }
 
     private boolean readyToPrint() {
