@@ -19,6 +19,7 @@ end
 
 Then (/^I select paper size as "([^"]*)"$/) do |paper_size|
     sleep(APPIUM_TIMEOUT)
+    $os_version = getOSversion
     $paper_size = paper_size
     if $os_version < '5.0'
         wait.until { selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner") }
@@ -45,10 +46,12 @@ end
 
 
 And (/^I tap on Print in Print Preview screen$/) do
+    $os_version = getOSversion
+    sleep(15)
     if $os_version < '5.0'
-    if $content_option == "Image"
-        wait.until { selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print") }
-        selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print").click
+        #wait.until { selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print") }
+        wait.until { selenium.find_element(:id,"com.hp.mss.printsdksample:id/print_preview_print_btn")}
+        selenium.find_element(:id,"com.hp.mss.printsdksample:id/print_preview_print_btn").click
     end
     #wait.until { selenium.find_element(:xpath,"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.TextView[1]") }
     #selenium.find_element(:xpath,"//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.TextView[1]").click
@@ -57,8 +60,9 @@ And (/^I tap on Print in Print Preview screen$/) do
         selenium.find_element(:id,"android:id/button1").click  #Click  Continue button
     end
 end
-end
+
 Then (/^I select the printer "([^"]*)" if available$/) do |printer_name|
+    $os_version = getOSversion
     print_service_helper
     sleep(APPIUM_TIMEOUT)
     if $os_version < '5.0'

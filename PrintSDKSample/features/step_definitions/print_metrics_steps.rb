@@ -26,8 +26,10 @@ And (/^I get the wifi_ssid, device id, os version, os type, device type, manufac
 end
 
 Then (/^I get black and white filter value and number of copies$/) do
-    $copies = selenium.find_element(:id,"com.android.printspooler:id/copies_edittext").text
-    if $os_version < '5.0'
+
+    $copies = selenium.find_element(:id,"com.android.printspooler:id/copies_edittext").text.split('')
+
+    if getOSversion < '5.0'
         $black_and_white_filter =  selenium.find_element(:xpath,"//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.Spinner[1]/android.widget.LinearLayout[1]").text
     else
         $black_and_white_filter =  selenium.find_element(:xpath," //android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.view.View[1]/android.widget.LinearLayout[3]/android.widget.Spinner[1]/android.widget.CheckedTextView[1]").text
@@ -37,6 +39,7 @@ Then (/^I get black and white filter value and number of copies$/) do
     else
         $black_and_white_filter = "0"
     end
+
 end
 
 And (/^I check the manufacturer name$/) do
@@ -104,10 +107,10 @@ end
 
 And (/^I check the device id$/) do
     my_device = $device_id.split(" ").last
-    if $unique_id_per_app == "True"
-        device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
-    else
+    if $unique_id_per_app == "False"
         device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
+    else
+      device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
     end
     compare  = ($mertics_details['device_id'] == device_id_value) ?  true : false
     raise "device_id verification failed" unless compare==true
@@ -125,7 +128,7 @@ And (/^I check the black and white filter$/) do
 end
 
 And (/^I check the number of copies$/) do
-    compare  = ($mertics_details['copies'] == $copies) ?  true : false
+    compare  = ($mertics_details['copies'].strip == $copies[0]) ?  true : false
     raise "copies verification failed" unless compare==true
 end
 
