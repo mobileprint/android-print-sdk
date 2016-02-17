@@ -48,7 +48,9 @@
         android:layout_marginLeft="17dp"
         android:layout_below="@+id/plugin_manager_sub_toolbar"
         android:layout_above="@+id/list_divider"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:divider="@color/PluginListViewDividerColor"
+        android:dividerHeight="1dp"/>
 
 
 </RelativeLayout>

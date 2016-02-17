@@ -29,4 +29,5 @@
     <color name="PluginFontColorBlack">#000000</color>
     <color name="PluginNameFontColor">#333333</color>
     <color name="PluginMakerFontColor">#959595</color>
+    <color name="PluginListViewDividerColor">#FFEFEEEE</color>
 </resources>

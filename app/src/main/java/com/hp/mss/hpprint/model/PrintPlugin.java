@@ -169,11 +169,11 @@ public class PrintPlugin {
             case DOWNLOADING:
                 return R.drawable.downloading_arrow;
             case REQUIREUPDATE:
-                return R.drawable.down_arrow;
+                return R.drawable.update;
             case DISABLED:
-                return R.drawable.enable;
+                return R.drawable.disabled;
             case READY:
-                return R.drawable.check;
+                return R.drawable.enabled;
             default:
                 return R.drawable.down_arrow;
         }

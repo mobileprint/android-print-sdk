@@ -75,8 +75,8 @@ public class PrintPluginAdapter extends BaseAdapter {
 
         row = inflater.inflate(R.layout.item_print_plugin_service, null);
 
-        TextView nameView, makerView;
-        ImageView iconImageView, statusImageView;
+        TextView nameView, makerView, statusImageView;
+        ImageView iconImageView;
 
         nameView = (TextView) row.findViewById(R.id.plugin_name);
         nameView.setText( ((PrintPlugin)plugins[i]).getName() );
@@ -87,9 +87,13 @@ public class PrintPluginAdapter extends BaseAdapter {
         iconImageView = (ImageView) row.findViewById(R.id.print_service_plugin_id);
         iconImageView.setBackgroundResource( ((PrintPlugin)plugins[i]).getIcon() );
 
-        statusImageView = (ImageView) row.findViewById(R.id.plugin_state);
-        statusImageView.setBackgroundResource(((PrintPlugin) plugins[i]).getNextActionIcon() );
+        statusImageView = (TextView) row.findViewById(R.id.plugin_state);
+        statusImageView.setBackgroundResource(((PrintPlugin) plugins[i]).getNextActionIcon());
 
+        if( ((PrintPlugin) plugins[i]).getStatus().equals(PrintPlugin.PluginStatus.DISABLED) )
+            statusImageView.setText(R.string.disabled);
+        else if ( ((PrintPlugin) plugins[i]).getStatus().equals(PrintPlugin.PluginStatus.READY) )
+            statusImageView.setText(R.string.enabled);
 
         return row;
     }
