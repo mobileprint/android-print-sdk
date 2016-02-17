@@ -75,12 +75,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         printBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String viewText = ((Button) view).getText().toString();
-                if (viewText.equals(getResources().getString(R.string.continue_to_print))) {
-                    PrintUtil.readyToPrint(thisActivity);
-                } else {
-                    finish();
-                }
+                PrintUtil.readyToPrint(thisActivity);
             }
         });
 
@@ -92,8 +87,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
                 if( isAPluginInstalled(packageName) ) {
                     if(isVisible) {
                         newPluginInstalledHandler();
-                    }
-                    else {
+                    } else {
                         newPackageInstalled = true;
                     }
                 }
