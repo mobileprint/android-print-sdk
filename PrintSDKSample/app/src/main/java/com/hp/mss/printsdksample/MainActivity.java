@@ -144,13 +144,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     }
 
     public void buttonClicked(View v) {
-
+        PrintUtil.setPrintJobData(printJobData);
         PrintUtil.sendPrintMetrics = showMetricsDialog;
         PrintUtil.print(this);
     }
 
     public void pluginStatusButtonClicked(View v) {
-        PrintUtil.setPrintJobData(printJobData);
+        PrintUtil.setPrintJobData(null);
         Intent intent = new Intent(this, PrintPluginManagerActivity.class);
         startActivity(intent);
     }
@@ -219,9 +219,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                 .setMediaSize(PrintAttributes.MediaSize.NA_LETTER)
                 .build();
         printJobData.setPrintDialogOptions(printAttributes);
-
-        //Set the printJobData to the PrintUtil and call print.
-        PrintUtil.setPrintJobData(printJobData);
     }
 
     @Override

@@ -72,6 +72,14 @@ public class PrintUtil {
         print(activity);
     }
 
+    public static boolean hasPrintJob() {
+        if (printJobData == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     /**
      * Call to start the HP Print SDK print flow.

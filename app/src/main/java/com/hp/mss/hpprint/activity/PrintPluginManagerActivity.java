@@ -33,6 +33,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
     private PrintPluginStatusHelper printPluginStatusHelper;
     private PrintPluginAdapter printPluginAdapter;
     private BroadcastReceiver receiver;
+    private IntentFilter intentFilter;
     protected static boolean isVisible = false;
     protected static boolean newPackageInstalled = false;
     Button printBtn;
@@ -71,13 +72,21 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
 
         // Continue to print action
         printBtn = (Button) findViewById(R.id.print_btn);
-        printBtn.setText(readyToPrint() ? R.string.continue_to_print : R.string.skip);
-        printBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PrintUtil.readyToPrint(thisActivity);
-            }
-        });
+        View listDivider = findViewById(R.id.list_divider);
+        if (!PrintUtil.hasPrintJob()) {
+            printBtn.setVisibility(View.GONE);
+            listDivider.setVisibility(View.GONE);
+        } else {
+            printBtn.setVisibility(View.VISIBLE);
+            listDivider.setVisibility(View.VISIBLE);
+            printBtn.setText(readyToPrint() ? R.string.continue_to_print : R.string.skip);
+            printBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PrintUtil.readyToPrint(thisActivity);
+                }
+            });
+        }
 
         // Receiver for broadcast message
         receiver = new BroadcastReceiver() {
@@ -94,7 +103,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
             }
         };
 
-        IntentFilter intentFilter = new IntentFilter();
+        intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_INSTALL);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
@@ -108,7 +117,6 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         isVisible = true;
-
         newPluginInstalledHandler();
     }
 
@@ -117,6 +125,13 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
     {
         super.onPause();
         isVisible = false;
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     @Override
