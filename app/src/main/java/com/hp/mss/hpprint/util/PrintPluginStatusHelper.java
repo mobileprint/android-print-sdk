@@ -31,6 +31,7 @@ public class PrintPluginStatusHelper {
     public static final String MOPRIA_PRINT_SERVICE_NAME  = "org.mopria.printplugin.MopriaPrintService";
     public static final String MOPRIA_PRINT_PLUGIN_PACKAGE_NAME = "org.mopria.printplugin";
     public static final String BROTHER_PRINT_PLUGIN_PACKAGE_NAME = "com.brother.printservice";
+    public static final String SAMSUNG_PRINT_PLUGIN_PACKAGE_NAME = "com.sec.app.samsungprintservice";
     public static final String OTHER_PRINT_PLUGIN_PACKAGE_NAME = "Other Print Service Plugin";
     private Context context;
     private static PrintPluginStatusHelper instance = null;
@@ -119,6 +120,7 @@ public class PrintPluginStatusHelper {
     public static String[] packageNames  =   {"com.hp.android.printservice",
                                               MOPRIA_PRINT_PLUGIN_PACKAGE_NAME,
                                               "com.brother.printservice",
+                                              SAMSUNG_PRINT_PLUGIN_PACKAGE_NAME,
                                               "jp.co.canon.android.printservice.plugin",
                                               "com.epson.mobilephone.android.epsonprintserviceplugin",
                                               OTHER_PRINT_PLUGIN_PACKAGE_NAME};
@@ -137,7 +139,8 @@ public class PrintPluginStatusHelper {
      *  private static final Integer PRINTERSHARE_PRINT_PLUGIN_PACKAGE_VERSION   = 308;
      *  private static final Integer EPSON_PRINT_PLUGIN_PACKAGE_VERSION          = 6;
      */
-    private static int[] pluginPackageVersions   = {67, 112, 1, 2220, 6, 0};
+    // {HP, Mopria, Brother, Samsung, Canon, Eposon, the Other
+    private static int[] pluginPackageVersions   = {67, 112, 1, 102, 2220, 6, 0};
 
     /**
      * Play Store Url
@@ -145,6 +148,7 @@ public class PrintPluginStatusHelper {
     private static final String[] pluginPlaystoreUrls    = { "https://play.google.com/store/apps/details?id=com.hp.android.printservice",
                                                             "https://play.google.com/store/apps/details?id=org.mopria.printplugin",
                                                             "https://play.google.com/store/apps/details?id=com.brother.printservice",
+                                                            "https://play.google.com/store/apps/details?id=com.sec.app.samsungprintservice",
                                                             "https://play.google.com/store/apps/details?id=jp.co.canon.android.printservice.plugin",
                                                             "https://play.google.com/store/apps/details?id=com.epson.mobilephone.android.epsonprintserviceplugin",
                                                             "https://play.google.com/store/search?q=print%20service%20plugin&c=apps" };
@@ -156,6 +160,7 @@ public class PrintPluginStatusHelper {
             R.drawable.hp,
             R.drawable.mopria,
             R.drawable.brother,
+            R.drawable.samsung,
             R.drawable.canon,
             R.drawable.epson,
             R.drawable.other
@@ -178,7 +183,8 @@ public class PrintPluginStatusHelper {
                                                         context, pluginNames[i], pluginMakers[i], pluginIcons[i]);
             printPlugin.updateStatus();
             if(  Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                result.put(packageNames[i], printPlugin);
+                if( !packageNames[i].equals(SAMSUNG_PRINT_PLUGIN_PACKAGE_NAME) )
+                    result.put(packageNames[i], printPlugin);
             } else if( !packageNames[i].equals(BROTHER_PRINT_PLUGIN_PACKAGE_NAME ) ) {
                 result.put(packageNames[i], printPlugin);
             }
@@ -247,8 +253,9 @@ public class PrintPluginStatusHelper {
         sortingMap.put("com.hp.android.printservice", 1);
         sortingMap.put(PrintPluginStatusHelper.MOPRIA_PRINT_PLUGIN_PACKAGE_NAME, 2);
         sortingMap.put("com.brother.printservice", 3);
-        sortingMap.put("jp.co.canon.android.printservice.plugin", 4);
-        sortingMap.put("com.epson.mobilephone.android.epsonprintserviceplugin", 5);
+        sortingMap.put("com.sec.app.samsungprintservice", 4);
+        sortingMap.put("jp.co.canon.android.printservice.plugin", 5);
+        sortingMap.put("com.epson.mobilephone.android.epsonprintserviceplugin", 6);
 
         boolean swapped= true;
         int j = 0;
