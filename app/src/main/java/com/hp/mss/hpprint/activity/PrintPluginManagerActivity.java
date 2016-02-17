@@ -3,7 +3,9 @@ package com.hp.mss.hpprint.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,8 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
     private PrintPluginStatusHelper printPluginStatusHelper;
     private PrintPluginAdapter printPluginAdapter;
     private BroadcastReceiver receiver;
+    protected static boolean isVisible = false;
+    protected static boolean newPackageInstalled = false;
     Button printBtn;
 
     @Override
@@ -57,10 +61,10 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 PrintPlugin plugin = (PrintPlugin) printPluginAdapter.getItem(i);
-                if(printPluginStatusHelper !=null && printPluginStatusHelper.showBeforeDownloadDialog(plugin) ) {
-                    displayDownloadTipsDialog(plugin);
-                } else if ( plugin.getStatus() == PrintPlugin.PluginStatus.DISABLED) {
-                    startActivity(new Intent(Settings.ACTION_PRINT_SETTINGS));
+                if(printPluginStatusHelper != null && printPluginStatusHelper.showBeforeEnableDialog(plugin) ) {
+                    displayEnableTipsDialog();
+                } else if ( printPluginStatusHelper.goToGoogleStore(plugin)) {
+                    plugin.goToPlayStoreForPlugin();
                 }
             }
         });
@@ -71,25 +75,48 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         printBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String viewText = ((Button) view).getText().toString();
-                if (viewText.equals(getResources().getString(R.string.continue_to_print))) {
-                    PrintUtil.readyToPrint(thisActivity);
-                } else {
-                    finish();
-                }
+                PrintUtil.readyToPrint(thisActivity);
             }
         });
+
+        // Receiver for broadcast message
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String packageName = intent.getData().getEncodedSchemeSpecificPart();
+                if( isAPluginInstalled(packageName) ) {
+                    if(isVisible) {
+                        newPluginInstalledHandler();
+                    } else {
+                        newPackageInstalled = true;
+                    }
+                }
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_INSTALL);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_CHANGED);
+        intentFilter.addDataScheme("package");
+        registerReceiver(receiver, intentFilter);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        printPluginStatusHelper.updateAllPrintPluginStatus();
-        printPluginAdapter = new PrintPluginAdapter(this, getprintPluginList());
-        pluginListView.setAdapter(printPluginAdapter);
+        isVisible = true;
 
-        printBtn.setText(readyToPrint() ? R.string.continue_to_print : R.string.skip);
+        newPluginInstalledHandler();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        isVisible = false;
     }
 
     @Override
@@ -127,12 +154,11 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         return printPluginStatusHelper.readyToPrint();
     }
 
-    private void displayDownloadTipsDialog(PrintPlugin printPlugin) {
-        final PrintPlugin plugin = printPlugin;
+    private void displayEnableTipsDialog() {
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_before_download_tips);
+        dialog.setContentView(R.layout.dialog_before_enable_tips);
 
 
         Button okBtn = (Button) dialog.findViewById(R.id.dialog_ok_btn);
@@ -140,7 +166,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                plugin.goToPlayStoreForPlugin();
+                startActivity(new Intent(Settings.ACTION_PRINT_SETTINGS));
             }
         });
 
@@ -153,6 +179,31 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         });
 
         dialog.show();
+
+    }
+
+    private boolean isAPluginInstalled(String packageName) {
+        boolean isInstalled = false;
+
+        for(int i = 0; i < PrintPluginStatusHelper.packageNames.length; i++) {
+            if( packageName.equals(PrintPluginStatusHelper.packageNames[i]) ) {
+                    isInstalled = true;
+            }
+
+        }
+        return isInstalled;
+    }
+
+    private void newPluginInstalledHandler() {
+
+        printPluginStatusHelper.updateAllPrintPluginStatus();
+        PrintPlugin[] sortedList = getprintPluginList();
+        printPluginAdapter = new PrintPluginAdapter(this, sortedList);
+        pluginListView.setAdapter(printPluginAdapter);
+
+        printBtn.setText(readyToPrint() ? R.string.continue_to_print : R.string.skip);
+        if(newPackageInstalled)
+            displayEnableTipsDialog();
 
     }
 }
