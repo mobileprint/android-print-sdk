@@ -96,8 +96,8 @@
 
     <string name="continue_to_print">CONTINUE TO PRINT</string>
     <string name="skip">SKIP</string>
-    <string name="before_download_tips">Download your Print Service Plugin and return to this application to enable it.</string>
-    <string name="before_download_tips_title">You are being sent to the Google Play store</string>
-    <string name="ok">OK</string>
+    <string name="before_enable_tips">You will be directed to the Android Print Settings.</string>
+    <string name="before_enable_tips_title">Enable your Plugin</string>
+    <string name="ok">GO TO SETTINGS</string>
     <string name="cancel">Cancel</string>
 </resources>

@@ -299,7 +299,13 @@ public class PrintPluginStatusHelper {
      * @param printPlugin for a given plugin
      * @return if help tip doalog box need to be displayed before users get redirected to google play store
      */
-    public boolean showBeforeDownloadDialog(PrintPlugin printPlugin) {
+    public boolean showBeforeEnableDialog(PrintPlugin printPlugin) {
+        PrintPlugin.PluginStatus pluginStatus = printPlugin.getStatus();
+
+        return (pluginStatus == PrintPlugin.PluginStatus.DISABLED);
+    }
+
+    public boolean goToGoogleStore(PrintPlugin printPlugin) {
         PrintPlugin.PluginStatus pluginStatus = printPlugin.getStatus();
 
         return (pluginStatus == PrintPlugin.PluginStatus.NOTINSTALLED ||
