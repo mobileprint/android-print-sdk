@@ -309,7 +309,7 @@ public class PrintPluginStatusHelper {
     public boolean showBeforeEnableDialog(PrintPlugin printPlugin) {
         PrintPlugin.PluginStatus pluginStatus = printPlugin.getStatus();
 
-        return (pluginStatus == PrintPlugin.PluginStatus.DISABLED);
+        return (pluginStatus == PrintPlugin.PluginStatus.DISABLED || pluginStatus == PrintPlugin.PluginStatus.READY);
     }
 
     public boolean goToGoogleStore(PrintPlugin printPlugin) {

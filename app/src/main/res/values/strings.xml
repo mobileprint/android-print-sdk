@@ -48,7 +48,7 @@
     <string name="install_print_plugin_msg">To print the best quality photos, please install and enable the proper plugin for your printer.</string>
 
     <!-- Print Service Plugin Information -->
-    <string name="title_activity_print_service_plugin_info">Print Service Plugin Information</string>
+    <string name="title_activity_print_service_plugin_info">Print Service Information</string>
     <string name="print_service_help_title_1">Get a Print Service Plugin</string>
     <string name="print_service_help_msg_1">You must have a print service plugin installed to print. Each brand of printer has their own plugin that enables you to print from your mobile device. Generic print service plugins are also available. Select the plugin that serves you best. You can add additional print plugins anytime.</string>
     <string name="print_service_help_title_2">Enable Plugin</string>
@@ -73,7 +73,7 @@
     <string name="snap_shots_prompt_message">You have selected 4x5 as your paper size. The next screen will show 4x6, but don\'t worry, it will print correctly.</string>
 
     <!-- Print Plugin Manager -->
-    <string name="plugin_manager_title">Print Service Plugin Manager</string>
+    <string name="plugin_manager_title">Print Service Manager</string>
     <string name="plugin_manager_sub_title">You need a Print Service Plugin installed &amp; enabled to print.</string>
 
     <string-array name="plugin_names">

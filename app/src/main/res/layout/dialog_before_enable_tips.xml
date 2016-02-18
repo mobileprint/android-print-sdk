@@ -50,7 +50,8 @@
             android:textColor="@color/PluginBtnColorBlue"
             android:text="@string/cancel"
             android:textSize="16sp"
-            android:layout_toLeftOf="@+id/dialog_ok_btn" />
+            android:layout_toLeftOf="@+id/dialog_ok_btn"
+            android:layout_marginRight="20dp"/>
 
     </RelativeLayout>
 

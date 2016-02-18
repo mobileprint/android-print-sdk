@@ -106,8 +106,6 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_INSTALL);
-        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
-        intentFilter.addAction(Intent.ACTION_PACKAGE_CHANGED);
         intentFilter.addDataScheme("package");
         registerReceiver(receiver, intentFilter);
 
@@ -180,8 +178,8 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
                 startActivity(new Intent(Settings.ACTION_PRINT_SETTINGS));
+                dialog.dismiss();
             }
         });
 
@@ -217,8 +215,10 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
         pluginListView.setAdapter(printPluginAdapter);
 
         printBtn.setText(readyToPrint() ? R.string.continue_to_print : R.string.skip);
-        if(newPackageInstalled)
+        if(newPackageInstalled) {
             displayEnableTipsDialog();
+            newPackageInstalled = false;
+        }
 
     }
 }
