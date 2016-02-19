@@ -62,7 +62,7 @@
             android:background="@drawable/downloading_arrow"
             android:layout_gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:gravity="center"/>
 
     </FrameLayout>
