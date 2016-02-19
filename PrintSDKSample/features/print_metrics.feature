@@ -57,7 +57,7 @@ Scenario Outline: Verify print metrics for Cancel print
     Then I tap on "With Metrics" option
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button 
-    Then I tap on "I have one" option
+    #Then I tap on "I have one" option
     And I cancel the print
     Then Fetch metrics details
     And I check print result is "Cancel"
