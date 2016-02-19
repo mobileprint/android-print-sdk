@@ -101,7 +101,7 @@
     <string name="before_enable_tips">You will be directed to the Android Print Settings.</string>
     <string name="before_enable_tips_title">Enable your Plugin</string>
     <string name="ok">GO TO SETTINGS</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">CANCEL</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
 </resources>
