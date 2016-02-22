@@ -312,6 +312,11 @@ public class PrintPluginStatusHelper {
         return (pluginStatus == PrintPlugin.PluginStatus.DISABLED || pluginStatus == PrintPlugin.PluginStatus.READY);
     }
 
+    /**
+     *
+     * @param printPlugin
+     * @return direct user to Google Playstore
+     */
     public boolean goToGoogleStore(PrintPlugin printPlugin) {
         PrintPlugin.PluginStatus pluginStatus = printPlugin.getStatus();
 
@@ -319,5 +324,61 @@ public class PrintPluginStatusHelper {
                 pluginStatus == PrintPlugin.PluginStatus.REQUIREUPDATE ||
                 pluginStatus == PrintPlugin.PluginStatus.DOWNLOADING);
     }
+
+    /**
+     *
+     * @return the number of the plugins installed at the moment
+     */
+    public int getNumOfPluginsInstalled() {
+        int num = 0;
+
+        if (pluginVersionMap == null)
+            return num;
+
+        Collection<PrintPlugin> list = pluginVersionMap.values();
+
+        Iterator<PrintPlugin> iterator = list.iterator();
+        while (iterator.hasNext()) {
+
+            PrintPlugin plugin = (PrintPlugin) iterator.next();
+            plugin.updateStatus();
+            if (plugin.getStatus() == PrintPlugin.PluginStatus.READY ||
+                    plugin.getStatus() == PrintPlugin.PluginStatus.DISABLED ||
+                    plugin.getStatus() == PrintPlugin.PluginStatus.REQUIREUPDATE)
+                num++;
+
+        }
+
+        return num;
+
+    }
+
+    /**
+     *
+     * @return the number of the plugins enabled at the moment
+     */
+    public int getNumOfPluginsEnabled() {
+        int num = 0;
+
+        if (pluginVersionMap == null)
+            return num;
+
+        Collection<PrintPlugin> list = pluginVersionMap.values();
+
+        Iterator<PrintPlugin> iterator = list.iterator();
+        while (iterator.hasNext()) {
+
+            PrintPlugin plugin = (PrintPlugin) iterator.next();
+            plugin.updateStatus();
+            if (plugin.getStatus() == PrintPlugin.PluginStatus.READY)
+                num++;
+
+        }
+
+        return num;
+
+    }
+
+
 }
 

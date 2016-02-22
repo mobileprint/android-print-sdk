@@ -44,6 +44,9 @@ public class PrintMetricsData implements Parcelable {
     private static final String CONTENT_TYPE = "content_type";
     private static final String CONTENT_WIDTH_PIXELS = "content_width_pixels";
     private static final String CONTENT_HEIGHT_PIXELS = "content_height_pixels";
+    private static final String NUM_OF_PLUGINS_INSTALLED = "num_of_plugins_installed";
+    private static final String NUM_OF_PLUGINS_ENABLED = "num_of_plugins_enabled";
+
 
     public static final String PRINT_RESULT_FAILED = "Fail";
     public static final String PRINT_RESULT_SUCCESS = "Success";
@@ -64,6 +67,8 @@ public class PrintMetricsData implements Parcelable {
     public String contentType;
     public String contentWidthPixels;
     public String contentHeightPixels;
+    public String numOfPluginsInstalled;
+    public String numOfPluginsEnabled;
 
 
     public PrintMetricsData() {
@@ -88,6 +93,8 @@ public class PrintMetricsData implements Parcelable {
         contentType = in.readString();
         contentWidthPixels = in.readString();
         contentHeightPixels = in.readString();
+        numOfPluginsInstalled = in.readString();
+        numOfPluginsEnabled = in.readString();
     }
 
     public PrintMetricsData(Map<String, String> map) {
@@ -105,6 +112,8 @@ public class PrintMetricsData implements Parcelable {
         this.contentType = map.get(CONTENT_TYPE);
         this.contentWidthPixels = map.get(CONTENT_WIDTH_PIXELS);
         this.contentHeightPixels = map.get(CONTENT_HEIGHT_PIXELS);
+        this.numOfPluginsInstalled = map.get(NUM_OF_PLUGINS_INSTALLED);
+        this.numOfPluginsEnabled = map.get(NUM_OF_PLUGINS_ENABLED);
     }
 
     public Map<String, String> toMap() {
@@ -124,6 +133,8 @@ public class PrintMetricsData implements Parcelable {
         if (contentType != null) map.put(CONTENT_TYPE, this.contentType);
         if (contentWidthPixels != null) map.put(CONTENT_WIDTH_PIXELS, this.contentWidthPixels);
         if (contentHeightPixels != null) map.put(CONTENT_HEIGHT_PIXELS, this.contentHeightPixels);
+        if (numOfPluginsInstalled != null) map.put(NUM_OF_PLUGINS_INSTALLED, this.numOfPluginsInstalled);
+        if (numOfPluginsEnabled != null) map.put(NUM_OF_PLUGINS_ENABLED, this.numOfPluginsEnabled);
 
         return map;
     }
@@ -149,7 +160,8 @@ public class PrintMetricsData implements Parcelable {
         out.writeString(contentType);
         out.writeString(contentWidthPixels);
         out.writeString(contentHeightPixels);
-
+        out.writeString(numOfPluginsInstalled);
+        out.writeString(numOfPluginsEnabled);
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

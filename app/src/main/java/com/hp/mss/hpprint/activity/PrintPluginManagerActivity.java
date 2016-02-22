@@ -22,6 +22,7 @@ import android.widget.ListView;
 import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.adapter.PrintPluginAdapter;
 import com.hp.mss.hpprint.model.PrintPlugin;
+import com.hp.mss.hpprint.util.EventMetricsCollector;
 import com.hp.mss.hpprint.util.PrintPluginStatusHelper;
 import com.hp.mss.hpprint.util.PrintUtil;
 
@@ -66,6 +67,9 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
                     displayEnableTipsDialog();
                 } else if ( printPluginStatusHelper.goToGoogleStore(plugin)) {
                     plugin.goToPlayStoreForPlugin();
+                    EventMetricsCollector.postMetricsToHPServer(
+                            thisActivity,
+                            EventMetricsCollector.PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE);
                 }
             }
         });
@@ -115,6 +119,9 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         isVisible = true;
+        EventMetricsCollector.postMetricsToHPServer(
+                this,
+                EventMetricsCollector.PrintFlowEventTypes.OPENED_PLUGIN_HELPER);
         newPluginInstalledHandler();
     }
 
@@ -169,6 +176,7 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
 
     private void displayEnableTipsDialog() {
 
+        final Activity thisActivity = this;
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_before_enable_tips);
@@ -180,6 +188,9 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Settings.ACTION_PRINT_SETTINGS));
                 dialog.dismiss();
+                EventMetricsCollector.postMetricsToHPServer(
+                        thisActivity,
+                        EventMetricsCollector.PrintFlowEventTypes.SENT_TO_PRINT_SETTING);
             }
         });
 

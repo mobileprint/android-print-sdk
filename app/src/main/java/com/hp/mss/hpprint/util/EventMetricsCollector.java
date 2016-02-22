@@ -14,8 +14,6 @@ package com.hp.mss.hpprint.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -37,7 +35,8 @@ public class EventMetricsCollector {
         OPENED_PLUGIN_HELPER (2),
         SENT_TO_GOOGLE_PLAY_STORE (3),
         OPENED_PREVIEW (4),
-        SENT_TO_PRINT_DIALOG(5);
+        SENT_TO_PRINT_DIALOG(5),
+        SENT_TO_PRINT_SETTING(6);
 
         private int id;
 
@@ -66,11 +65,16 @@ public class EventMetricsCollector {
     private static final String EVENT_COUNTER_LABEL = "event_count";
     private static final String EVENT_TYPE_ID_LABLE = "event_type_id";
     private static final String NOT_AVAILABLE = "Not Available";
+    private static final String NUM_OF_PLUGINS_INSTALLED = "num_of_plugins_installed";
+    private static final String NUM_OF_PLUGINS_ENABLED = "num_of_plugins_enabled";
 
-    String print_session_id;
-    String event_count;
-    String event_type_id;
+    String printSessionId;
+    String eventCount;
+    String eventTypeId;
+    String numOfPluginsInstalled;
+    String numOfPluginsEnabled;
     Activity hostActivity;
+    PrintPluginStatusHelper pluginStatusHelper;
 
     /**
      * Called inside the Print SDK to send printing related data to HP server.
@@ -78,6 +82,7 @@ public class EventMetricsCollector {
      * @param activity
      */
     private EventMetricsCollector(Activity activity) {
+        pluginStatusHelper = PrintPluginStatusHelper.getInstance(activity);
         this.hostActivity = activity;
     }
 
@@ -130,53 +135,65 @@ public class EventMetricsCollector {
 
     private Map<String, String> getMetricsParams() {
 
+
         ApplicationMetricsData appData = new ApplicationMetricsData(this.hostActivity.getApplicationContext());
 
         HashMap<String, String> combinedMetrics = appData.toEventOnlyMap();
-        if(print_session_id != null) combinedMetrics.put(PRINT_SESSION_ID_LABEL, print_session_id);
-        if(event_count != null) combinedMetrics.put(EVENT_COUNTER_LABEL, event_count);
-        if(event_type_id != null) combinedMetrics.put(EVENT_TYPE_ID_LABLE, event_type_id);
+        if(printSessionId != null) combinedMetrics.put(PRINT_SESSION_ID_LABEL, printSessionId);
+        if(eventCount != null) combinedMetrics.put(EVENT_COUNTER_LABEL, eventCount);
+        if(eventTypeId != null) combinedMetrics.put(EVENT_TYPE_ID_LABLE, eventTypeId);
+        if(numOfPluginsEnabled != null) combinedMetrics.put(NUM_OF_PLUGINS_ENABLED, numOfPluginsEnabled);
+        if(numOfPluginsInstalled != null) combinedMetrics.put(NUM_OF_PLUGINS_INSTALLED, numOfPluginsInstalled);
 
         return combinedMetrics;
     }
 
     private void init(PrintFlowEventTypes type) {
 
+        this.numOfPluginsEnabled = String.valueOf(pluginStatusHelper.getNumOfPluginsEnabled());
+        this.numOfPluginsInstalled = String.valueOf(pluginStatusHelper.getNumOfPluginsInstalled());
+
         switch (type) {
             case ENTERED_PRINT_SDK:
-                this.print_session_id = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                this.printSessionId = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
                         PrintFlowEventTypes.ENTERED_PRINT_SDK.name()));
-                this.event_count = this.print_session_id;
-                this.event_type_id = String.valueOf(PrintFlowEventTypes.ENTERED_PRINT_SDK.getId());
+                this.eventCount = this.printSessionId;
+                this.eventTypeId = String.valueOf(PrintFlowEventTypes.ENTERED_PRINT_SDK.getId());
                 break;
             case OPENED_PLUGIN_HELPER:
-                this.print_session_id = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
-                this.event_count = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                this.printSessionId = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.eventCount = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
                         PrintFlowEventTypes.OPENED_PLUGIN_HELPER.name()));
-                this.event_type_id = String.valueOf(PrintFlowEventTypes.OPENED_PLUGIN_HELPER.getId());
+                this.eventTypeId = String.valueOf(PrintFlowEventTypes.OPENED_PLUGIN_HELPER.getId());
                 break;
             case SENT_TO_GOOGLE_PLAY_STORE:
-                this.print_session_id = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
-                this.event_count = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                this.printSessionId = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.eventCount = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
                         PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.name()));
-                this.event_type_id = String.valueOf(PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.getId());
+                this.eventTypeId = String.valueOf(PrintFlowEventTypes.SENT_TO_GOOGLE_PLAY_STORE.getId());
                 break;
             case OPENED_PREVIEW:
-                this.print_session_id = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
-                this.event_count = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                this.printSessionId = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.eventCount = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
                         PrintFlowEventTypes.OPENED_PREVIEW.name()));
-                this.event_type_id = String.valueOf(PrintFlowEventTypes.OPENED_PREVIEW.getId());
+                this.eventTypeId = String.valueOf(PrintFlowEventTypes.OPENED_PREVIEW.getId());
                 break;
             case SENT_TO_PRINT_DIALOG:
-                this.print_session_id = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
-                this.event_count = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                this.printSessionId = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.eventCount = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
                         PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.name()));
-                this.event_type_id = String.valueOf(PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.getId());
+                this.eventTypeId = String.valueOf(PrintFlowEventTypes.SENT_TO_PRINT_DIALOG.getId());
+                break;
+            case SENT_TO_PRINT_SETTING:
+                this.printSessionId = String.valueOf(MetricsUtil.getCurrentSessionCounter(hostActivity));
+                this.eventCount = String.valueOf(MetricsUtil.getNextEventCounter(hostActivity,
+                        PrintFlowEventTypes.SENT_TO_PRINT_SETTING.name()));
+                this.eventTypeId = String.valueOf(PrintFlowEventTypes.SENT_TO_PRINT_SETTING.getId());
                 break;
             default:
-                this.event_type_id = NOT_AVAILABLE;
-                this.event_count = NOT_AVAILABLE;
-                this.event_type_id = NOT_AVAILABLE;
+                this.eventTypeId = NOT_AVAILABLE;
+                this.eventCount = NOT_AVAILABLE;
+                this.eventTypeId = NOT_AVAILABLE;
                 break;
         }
 

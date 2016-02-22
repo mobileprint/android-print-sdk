@@ -39,7 +39,6 @@ import java.util.HashMap;
  */
 public class PrintUtil {
 
-    public static final String PLAY_STORE_PRINT_SERVICES_URL = "https://play.google.com/store/apps/collection/promotion_3000abc_print_services";
     private static final String HAS_METRICS_LISTENER = "has_metrics_listener";
     private static final int START_PREVIEW_ACTIVITY_REQUEST = 100;
     private static final String TAG = "PrintUtil";

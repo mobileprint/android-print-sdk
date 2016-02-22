@@ -65,6 +65,7 @@ class PrintMetricsCollector extends Thread {
     private static HashMap<String,String> appSpecificMetrics;
     private String previewPaperSize;
     PrintJobData printJobData;
+    PrintPluginStatusHelper pluginStatusHelper;
 
     /**
      * Called inside the Print SDK to send printing related data to HP server.
@@ -75,6 +76,7 @@ class PrintMetricsCollector extends Thread {
     public PrintMetricsCollector(Activity activity, PrintJob printJob, HashMap<String,String> appSpecificMetrics) {
         this(activity, printJob);
         this.appSpecificMetrics = appSpecificMetrics;
+        this.pluginStatusHelper = PrintPluginStatusHelper.getInstance(activity.getApplicationContext());
     }
 
 
@@ -97,11 +99,15 @@ class PrintMetricsCollector extends Thread {
             return;
         }
 
+        PrintMetricsData printMetricsData = new PrintMetricsData();
+        printMetricsData.numOfPluginsInstalled = String.valueOf(pluginStatusHelper.getNumOfPluginsInstalled());
+        printMetricsData.numOfPluginsEnabled = String.valueOf(pluginStatusHelper.getNumOfPluginsEnabled());
+
+
         String printJobInfoString = printJob.getInfo().toString();
 
         if (isJobFailed(printJob) && !printJobInfoString.contains("PDF printer")) {
             ImageLoaderUtil.cleanUpFileDirectory();
-            PrintMetricsData printMetricsData = new PrintMetricsData();
             printMetricsData.previewPaperSize = this.previewPaperSize;
 
             if (printJob.isFailed()) {
@@ -122,7 +128,6 @@ class PrintMetricsCollector extends Thread {
             PrintAttributes printJobAttributes = printJobInfo.getAttributes();
             PrinterId printerId = printJobInfo.getPrinterId();
 
-            PrintMetricsData printMetricsData = new PrintMetricsData();
             printMetricsData.previewPaperSize = this.previewPaperSize;
 
             PrintItem printItem = printJobData.getPrintItem(printJobAttributes.getMediaSize());
