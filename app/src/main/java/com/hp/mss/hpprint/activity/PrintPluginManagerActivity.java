@@ -63,7 +63,9 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 PrintPlugin plugin = (PrintPlugin) printPluginAdapter.getItem(i);
-                if(printPluginStatusHelper != null && printPluginStatusHelper.showBeforeEnableDialog(plugin) ) {
+                if(plugin.getStatus().equals(PrintPlugin.PluginStatus.READY)) {
+                    startActivity(new Intent(Settings.ACTION_PRINT_SETTINGS));
+                } else if(printPluginStatusHelper != null && printPluginStatusHelper.showBeforeEnableDialog(plugin) ) {
                     displayEnableTipsDialog();
                 } else if ( printPluginStatusHelper.goToGoogleStore(plugin)) {
                     plugin.goToPlayStoreForPlugin();
