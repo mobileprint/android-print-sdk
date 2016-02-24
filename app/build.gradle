@@ -24,14 +24,16 @@ android {
         versionName "v2.00"
 
         if (org.gradle.internal.os.OperatingSystem.current().windows == false) {
-            def cmd = "git rev-parse --short HEAD"
-            def proc = cmd.execute()
-            sha = proc.text.trim()
-            cmd = "git rev-list HEAD --count"
-            proc = cmd.execute()
-            versionCode = Integer.parseInt(proc.text.trim())
+//            def cmd = "git rev-parse --short HEAD"
+//            def proc = cmd.execute()
+//            sha = proc.text.trim()
+            sha = "cf0c5a1";
+//            cmd = "git rev-list HEAD --count"
+//            proc = cmd.execute()
+            versionCode = 319
         } else {
-            versionCode = 0
+            sha = "cf0c5a1";
+            versionCode = 319
         }
 
         def f1 = new File('hpprint_ver.txt')
