@@ -21,30 +21,28 @@ android {
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
-        versionName "v2.00"
+        versionName "v2.00.320"
 
         if (org.gradle.internal.os.OperatingSystem.current().windows == false) {
-//            def cmd = "git rev-parse --short HEAD"
-//            def proc = cmd.execute()
-//            sha = proc.text.trim()
-            sha = "cf0c5a1";
+            def cmd = "git rev-parse --short HEAD"
+            def proc = cmd.execute()
+            sha = proc.text.trim()
 //            cmd = "git rev-list HEAD --count"
 //            proc = cmd.execute()
-            versionCode = 319
+            versionCode = 320
         } else {
-            sha = "cf0c5a1";
-            versionCode = 319
+            versionCode = 320
         }
 
-        def f1 = new File('hpprint_ver.txt')
-        f1.text = "${versionName}.${versionCode}\n"
+//        def f1 = new File('hpprint_ver.txt')
+//        f1.text = "${versionName}.${versionCode}\n"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            versionNameSuffix = ".${defaultConfig.versionCode}"
-            println("versionNameSuffix = ${versionNameSuffix}")
+//            versionNameSuffix = ".${defaultConfig.versionCode}"
+//            println("versionNameSuffix = ${versionNameSuffix}")
         }
         debug {
             versionNameSuffix = " (debug-${sha})"
