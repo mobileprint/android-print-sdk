@@ -21,7 +21,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "2.00"
 
         if (org.gradle.internal.os.OperatingSystem.current().windows == false) {
             def cmd = "git rev-parse --short HEAD"
@@ -41,7 +41,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            versionNameSuffix = " (${defaultConfig.versionCode})"
+            versionNameSuffix = ".${defaultConfig.versionCode}"
             println("versionNameSuffix = ${versionNameSuffix}")
         }
         debug {
