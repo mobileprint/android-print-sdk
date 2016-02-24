@@ -87,7 +87,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         deviceIdRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(contentRadioGroup, deviceIdRadioGroup.getCheckedRadioButtonId());
 
-        createPrintJobData();
     }
 
     @Override
@@ -144,6 +143,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     }
 
     public void buttonClicked(View v) {
+        createPrintJobData();
         PrintUtil.setPrintJobData(printJobData);
         PrintUtil.sendPrintMetrics = showMetricsDialog;
         PrintUtil.print(this);
