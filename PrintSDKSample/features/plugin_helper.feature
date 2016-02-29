@@ -1,7 +1,7 @@
 Feature: Plugin feature
 
          
-@TA13019
+@TA13059
 	Scenario: verify plugin helper screen 
 		Given I am on Home screen
         And I tap on plugin helper button 
@@ -16,7 +16,7 @@ Feature: Plugin feature
         |Epson Print Enabler|
         |Other PrintServicePlugin|
     
-@TA13019
+@TA13059
 	Scenario: verify plugin helper screen  from Preview
 		Given I am on Home screen
         And I select preview button
@@ -31,7 +31,7 @@ Feature: Plugin feature
         |Epson Print Enabler|
         |Other PrintServicePlugin|
     
-@TA13019
+@TA13059
 	Scenario Outline: Verify enable plugin pop up
 		Given I am on Home screen
         And I tap on plugin helper button 
