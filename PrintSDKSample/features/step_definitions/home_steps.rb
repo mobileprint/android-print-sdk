@@ -60,4 +60,8 @@ Then(/^I navigate to home screen$/) do
     end
     macro %Q|I tap on "OK" option|
 end
+Given(/^I tap on plugin helper button$/) do
+  element_id="com.hp.mss.printsdksample:id/newPluginStatus"
+    selenium.find_element(:id,element_id).click
+end
 

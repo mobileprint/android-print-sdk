@@ -213,3 +213,14 @@ def print_service_helper
         end
     sleep(WAIT_SCREENLOAD)
     end
+def check_value_exists item
+    if item.kind_of?(Array)
+  item.each do |subitem|
+   check_value_exists subitem
+  end
+ else
+  plugin_length = selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{item}']")
+    raise "#{item} not found!" unless plugin_length.size > 0
+ end
+
+end
