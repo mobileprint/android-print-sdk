@@ -1,6 +1,3 @@
-Then(/^I should see the following$/) do |table|
-    check_value_exists table.raw
-end
 Then(/^I should see the skip option$/) do 
     skip_button =selenium.find_elements(:id,"com.hp.mss.printsdksample:id/print_btn")
      #selenium.find_element(:id,"com.hp.mss.printsdksample:id/print_btn").click
