@@ -1,12 +1,11 @@
-Feature: Plugin feature
+Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify this feature from preview option
 
          
-@TA13059
+@done
 	Scenario: verify plugin helper screen 
 		Given I am on Home screen
         And I tap on plugin helper button 
         Then I should see "Print Service Manager" screen
-        #Then I should see the skip option
         And I should see the following
         
         |HP Print Service Plugin    | 
@@ -44,9 +43,9 @@ Feature: Plugin feature
         |plugin_name|
         |HP Print Service Plugin    | 
         |Mopria Print Service       |
-        |Brother Print Service Plugin|
-        |Canon Print Service|
-        |Epson Print Enabler|
-        |Other PrintServicePlugin|
+#        |Brother Print Service Plugin|
+#        |Canon Print Service|
+#        |Epson Print Enabler|
+#        |Other PrintServicePlugin|
         
         
