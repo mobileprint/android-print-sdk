@@ -2,10 +2,10 @@ Feature: Print metrics feature
 
   As an user
 	I want to take and verify print metrics for different options
-    for Print SDK Sample app 
-    
+    for Print SDK Sample app
 
-@TA12260
+
+    @done
 @printmetrics
 Scenario Outline: Print an Image/PDF with metrics option and verify print metrics
     Given I am on Home screen
@@ -45,10 +45,10 @@ Scenario Outline: Print an Image/PDF with metrics option and verify print metric
         |PDF     | Letter     | Document  |
         |Image   | 4x6 in     | Photo     |
         |Image   | 5x7 in     | Photo     |
-     
-     
-            
-@printmetrics
+
+
+
+    @done
 @TA12260
 Scenario Outline: Verify print metrics for Cancel print
     Given I am on Home screen
@@ -69,7 +69,7 @@ Scenario Outline: Verify print metrics for Cancel print
         |Image  | 
         
 @printmetrics
-@TA12260
+@done
 Scenario Outline: Print an Image/PDF with Without Metrics option and verify print metrics
     Given I am on Home screen
     Then I tap on "<Content>" option
@@ -91,8 +91,8 @@ Scenario Outline: Print an Image/PDF with Without Metrics option and verify prin
         |PDF    | Letter|
         |Image  | Letter|
 
-        
-    @TA12391
+
+    @done
     @printmetrics
     Scenario Outline: Print an image/PDF device and verify device id
     Given I am on Home screen
@@ -114,9 +114,9 @@ Scenario Outline: Print an Image/PDF with Without Metrics option and verify prin
         |Content| Paper Size  |Device_ip_per_app|
         |PDF     | 4x6 in     | True            |
         |Image   | 5x7 in     | False           |
-        
-        
-    @TA12391
+
+
+    @done
     @printmetrics
     Scenario: Print a PDF with unique device id on & off options and verify device id
     Given I am on Home screen
