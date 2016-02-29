@@ -11,4 +11,8 @@ Then /^I should see the "(.*?)" screen$/ do |screen_name|
     sleep(STEP_PAUSE)
 end
 
+Then(/^I should see the following$/) do |table|
+    check_value_exists table.raw
+end
+
 
