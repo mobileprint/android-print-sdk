@@ -168,9 +168,29 @@ Then(/^I verify metrics not generated for current print/) do
     end
 end
 
+Then(/^I check the print library version is "(.*?)"$/) do |print_library_version|
+    compare = ($mertics_details['print_library_version'] == print_library_version) ?  true : false
+  raise "print_library_version verification failed!" unless compare==true
+end
 
+Then(/^I check the content type is "(.*?)"$/) do |content_type|
+    compare = ($mertics_details['content_type'] == content_type.downcase) ?  true : false
+  raise "content_type verification failed!" unless compare==true
+end
 
+Then(/^I check the app_type is "(.*?)"$/) do |app_type|
+  compare = ($mertics_details['app_type'] == app_type) ?  true : false
+  raise "app_type verification failed!" unless compare==true
+end
 
+Then(/^I check the number of installed plugins$/) do
+    compare = ($mertics_details['num_of_plugins_installed'].to_i == installed_plugin_count) ?  true : false
+    raise "no of installed plugins verification failed!" unless compare==true
+end
 
+Then(/^I check the number of enabled plugins$/) do
+    compare = ($mertics_details['num_of_plugins_enabled'].to_i == $plugin_count.to_i) ?  true : false
+    raise "no of enabled plugins verification failed!" unless compare==true
+end
 
 

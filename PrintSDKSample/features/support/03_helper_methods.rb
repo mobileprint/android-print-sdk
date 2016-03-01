@@ -224,3 +224,17 @@ def check_value_exists item
  end
 
 end
+def installed_plugin_count
+    installed_plugin_arr=Array.new
+    package = ["com.hp.android.printservice","org.mopria.printplugin","jp.co.canon.android.printservice.plugin","com.brother.printservice"]
+        
+    package.each do |subitem|
+        package_version = %x(adb shell dumpsys package #{subitem})
+        if package_version.length >0
+            installed_plugin_arr.push(subitem)
+            
+        end
+    end
+    installed_plugin_count = installed_plugin_arr.length
+    return installed_plugin_count
+end

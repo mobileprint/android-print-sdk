@@ -51,3 +51,15 @@ Then(/^I should see "(.*?)" pop up$/) do |dialog_title|
 end
 
 
+Then(/^I get the enabled plugin count$/) do
+    index=1
+    $plugin_count=0
+    while index < 7
+        element_id ="//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[2]/android.widget.RelativeLayout[1]/android.widget.ListView[1]/android.widget.RelativeLayout[#{index.to_i}]/android.widget.FrameLayout[1]/android.widget.TextView[1]"
+        
+        if selenium.find_element(:xpath,element_id).text == "Enabled"
+            $plugin_count = $plugin_count+1
+        end
+         index = index + 1
+        end
+    end
