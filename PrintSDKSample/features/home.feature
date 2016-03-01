@@ -19,3 +19,36 @@ Feature: Home feature
 		Then I tap on "Image" option
         And I select preview button 
         Then I tap on "I have one" option
+        
+        
+@done
+@TA12609
+	Scenario: Verify all titles, values and button present in home screen
+		Given I am on "Home" screen
+        Then I should see the following options:
+         |Content Options|
+         |Layout Options|
+         |Margin Options|
+         |Metrics Options|
+         |Unique Device Id Per App|
+         
+@done
+@TA12609
+	Scenario Outline: Verify all titles, values and button present in home screen
+		Given I am on "Home" screen
+        And "<default_value>" value should be selected
+        When I tap on "<new_selection>" value, it should be selected
+        Examples:
+         |default_value     |new_selection          |
+         |Image             |PDF                    |
+         |Center Top        |Center                 |
+         |Center Top        |Crop (Ignores Margin)  |
+         |Center Top        |Fit                    |
+         |Center Top        |Top Left               |
+         |None              |Half Inch              |
+         |None              |Top Only               |
+         |Without Metrics   |With Metrics           |
+         |True              |False                  |
+         
+         
+         

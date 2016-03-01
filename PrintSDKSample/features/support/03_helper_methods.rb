@@ -213,6 +213,22 @@ def print_service_helper
         end
     sleep(WAIT_SCREENLOAD)
     end
+
+def check_elements_exist item
+		if item.kind_of?(Array)
+		item.each do |subitem|
+			check_elements_exist subitem
+		end
+	else
+	 colortxt = query "* text:'#{item.to_s}'"
+	if colortxt.any?
+	check_element_exists "* text:'#{item.to_s}'"
+	else
+	check_element_exists "* id:'#{item.to_s}'"
+	end
+	end
+end
+
 def check_value_exists item
     if item.kind_of?(Array)
   item.each do |subitem|

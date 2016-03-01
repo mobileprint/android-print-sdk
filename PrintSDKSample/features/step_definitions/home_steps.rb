@@ -65,3 +65,21 @@ Given(/^I tap on plugin helper button$/) do
     selenium.find_element(:id,element_id).click
 end
 
+Then /^verify that "(.*?)" value is present$/ do |value|
+    sleep(STEP_PAUSE)
+    wait_for_element_exists("radiobutton marked:'#{value}'", timeout: APPIUM_TIMEOUT)
+end
+
+Then /^verify that "(.*?)" button is present$/ do |button|
+    sleep(STEP_PAUSE)
+    wait_for_element_exists("button marked:'#{button}'", timeout: APPIUM_TIMEOUT)
+end
+
+Given(/^"(.*?)" value should be selected$/) do |value|
+    raise "#{value} is not the default selection" if query("radiobutton marked:'#{value}'",:checked)[0] != true   
+end
+
+When /^I tap on "(.*?)" value, it should be selected$/ do |value|
+    touch "radiobutton marked:'#{value}'"
+    raise "#{value} is not the default selection" if query("radiobutton marked:'#{value}'",:checked)[0] != true
+end
