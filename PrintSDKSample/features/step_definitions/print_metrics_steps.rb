@@ -168,8 +168,8 @@ Then(/^I verify metrics not generated for current print/) do
     end
 end
 
-Then(/^I check the print library version is "(.*?)"$/) do |print_library_version|
-    compare = ($mertics_details['print_library_version'] == print_library_version) ?  true : false
+Then(/^I check the print library version$/) do
+    compare = ($mertics_details['print_library_version'] == "v2.00.320") ?  true : false
   raise "print_library_version verification failed!" unless compare==true
 end
 

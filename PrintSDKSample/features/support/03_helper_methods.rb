@@ -248,7 +248,6 @@ def installed_plugin_count
         package_version = %x(adb shell dumpsys package #{subitem})
         if package_version.length >0
             installed_plugin_arr.push(subitem)
-            
         end
     end
     installed_plugin_count = installed_plugin_arr.length

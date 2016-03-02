@@ -5,7 +5,6 @@ Feature: Home feature
     and select different options and do print
 	
 @done
-@TA12015
 	Scenario: Navigate to home screen
 		Given I am on "Home" screen
 		Then I select "Image" option
@@ -13,7 +12,6 @@ Feature: Home feature
         Then I select "I have one" option 
         
 @done
-@TA12015
 	Scenario: Navigate to home screen using appium
 		Given I am on Home screen
 		Then I tap on "Image" option
@@ -22,7 +20,6 @@ Feature: Home feature
         
         
 @done
-@TA12609
 	Scenario: Verify all titles, values and button present in home screen
 		Given I am on "Home" screen
         Then I should see the following options:
@@ -33,7 +30,6 @@ Feature: Home feature
          |Unique Device Id Per App|
          
 @done
-@TA12609
 	Scenario Outline: Verify all titles, values and button present in home screen
 		Given I am on "Home" screen
         And "<default_value>" value should be selected

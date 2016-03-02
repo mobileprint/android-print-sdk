@@ -14,8 +14,8 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
         |Canon Print Service|
         |Epson Print Enabler|
         |Other PrintServicePlugin|
-    
-@TA13059
+
+        @regression
 	Scenario: verify plugin helper screen  from Preview
 		Given I am on Home screen
         And I select preview button
@@ -29,8 +29,8 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
         |Canon Print Service|
         |Epson Print Enabler|
         |Other PrintServicePlugin|
-    
-@TA13059
+
+        @done
 	Scenario Outline: Verify enable plugin pop up
 		Given I am on Home screen
         And I tap on plugin helper button 

@@ -5,9 +5,8 @@ Feature: Print metrics feature
     for Print SDK Sample app
 
 
-    @done
+ @done
 @printmetrics
-@TA13097
 Scenario Outline: Print an Image/PDF with metrics option and verify print metrics
     Given I am on Home screen
     Then I tap on "<Content>" option
@@ -26,9 +25,9 @@ Scenario Outline: Print an Image/PDF with metrics option and verify print metric
     Then Fetch metrics details
     And I check the paper size
     And I check the paper type is "<Paper Type>"
-    #And I check the manufacturer name
+   # And I check the manufacturer name
     And I check the os_type
-    #And I check the version
+   # And I check the version
     And I check the print_plugin_tech is "com.hp.android.printservice"
     And I check the print_result is "Success"
     And I check the product name is "PrintSDKSample"
@@ -40,7 +39,7 @@ Scenario Outline: Print an Image/PDF with metrics option and verify print metric
     And I check the wifi ssid
     And I check the black and white filter
     And I check the number of copies
-    #And I check the print library version is "1.0 (303)"
+    And I check the print library version
     And I check the content type is "<Content>"
     And I check the app_type is "Partner"
     And I check print result is "Success"
@@ -59,15 +58,13 @@ Scenario Outline: Print an Image/PDF with metrics option and verify print metric
 
 
     @done
-@TA12260
 Scenario Outline: Verify print metrics for Cancel print
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
     Then I tap on "With Metrics" option
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
-    And I select preview button 
-    #Then I tap on "I have one" option
+    And I select preview button
     And I cancel the print
     Then Fetch metrics details
     And I check print result is "Cancel"
