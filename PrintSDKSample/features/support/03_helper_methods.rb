@@ -213,6 +213,22 @@ def print_service_helper
         end
     sleep(WAIT_SCREENLOAD)
     end
+
+def check_elements_exist item
+		if item.kind_of?(Array)
+		item.each do |subitem|
+			check_elements_exist subitem
+		end
+	else
+	 colortxt = query "* text:'#{item.to_s}'"
+	if colortxt.any?
+	check_element_exists "* text:'#{item.to_s}'"
+	else
+	check_element_exists "* id:'#{item.to_s}'"
+	end
+	end
+end
+
 def check_value_exists item
     if item.kind_of?(Array)
   item.each do |subitem|
@@ -223,4 +239,17 @@ def check_value_exists item
     raise "#{item} not found!" unless plugin_length.size > 0
  end
 
+end
+def installed_plugin_count
+    installed_plugin_arr=Array.new
+    package = ["com.hp.android.printservice","org.mopria.printplugin","jp.co.canon.android.printservice.plugin","com.brother.printservice"]
+        
+    package.each do |subitem|
+        package_version = %x(adb shell dumpsys package #{subitem})
+        if package_version.length >0
+            installed_plugin_arr.push(subitem)
+        end
+    end
+    installed_plugin_count = installed_plugin_arr.length
+    return installed_plugin_count
 end

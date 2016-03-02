@@ -11,8 +11,16 @@ Then /^I should see the "(.*?)" screen$/ do |screen_name|
     sleep(STEP_PAUSE)
 end
 
+Then /^I should see the following (?:.*):$/ do |table|
+    check_elements_exist table.raw
+    sleep(STEP_PAUSE)
+end
+
 Then(/^I should see the following$/) do |table|
     check_value_exists table.raw
 end
 
-
+Then(/^I navigate back$/)do
+    selenium.driver.press_keycode 4
+    sleep(MAX_TIMEOUT)
+end
