@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/component_margin"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/contentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/contentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/content_option"
+                    android:textSize="14sp"
+                    android:textAlignment="viewStart"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <View
+                    android:id="@+id/contentTextDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_below="@+id/contentText"
+                    android:layout_alignParentStart="true" />
+
+                <RadioGroup
+                    android:id="@+id/contentRadioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/contentTextDivider"
+                    android:checkedButton="@+id/contentImage"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="4dp">
+
+                    <RadioButton
+                        android:id="@+id/contentImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/content_image"
+                        android:textColor="#b0b0b0" />
+
+                    <RadioButton
+                        android:id="@+id/contentPDF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/content_pdf"
+                        android:textColor="#b0b0b0" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contentLayout">
+
+                <TextView
+                    android:id="@+id/SpinnerText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/layout_option"
+                    android:textSize="14sp"
+                    android:textAlignment="viewStart"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <View
+                    android:id="@+id/SpinnerTextDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_below="@+id/SpinnerText"
+                    android:layout_alignParentStart="true" />
+
+                <RadioGroup
+                    android:id="@+id/layoutRadioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/SpinnerTextDivider"
+                    android:checkedButton="@+id/layoutCenterTop"
+                    android:orientation="vertical"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="4dp">
+
+                    <RadioButton
+                        android:id="@+id/layoutFit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/layout_fit"
+                        android:textColor="#b0b0b0" />
+
+                    <RadioButton
+                        android:id="@+id/layoutCrop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/layout_crop"
+                        android:textColor="#b0b0b0" />
+
+                    <RadioButton
+                        android:id="@+id/layoutCenter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/layout_center"
+                        android:textColor="#b0b0b0" />
+
+                    <RadioButton
+                        android:id="@+id/layoutCenterTop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/layout_center_top"
+                        android:textColor="#b0b0b0" />
+
+                    <RadioButton
+                        android:id="@+id/layoutCenterTopLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/layout_top_left"
+                        android:textColor="#b0b0b0" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/marginLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutLayout">
+
+                <TextView
+                    android:id="@+id/MarginText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/margin_option"
+                    android:textSize="14sp"
+                    android:textAlignment="viewStart"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <View
+                    android:id="@+id/MarginTextDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_below="@+id/MarginText"
+                    android:layout_alignParentStart="true" />
+
+                <RadioGroup
+                    android:id="@+id/layoutMarginRadioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/MarginTextDivider"
+                    android:checkedButton="@+id/layoutWithoutMargin"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="4dp">
+
+                    <RadioButton
+                        android:id="@+id/layoutWithoutMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/layout_without_margin"
+                        android:textColor="#b0b0b0" />
+
+                    <RadioButton
+                        android:id="@+id/layoutWithMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/layout_with_margin"
+                        android:textColor="#b0b0b0" />
+
+                    <RadioButton
+                        android:id="@+id/layoutWithTopMargin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/layout_with_top_margin"
+                        android:textColor="@color/TextColorGrey" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/metricsLayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_below="@+id/marginLayout">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/metricsText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/metrics_option"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:textAlignment="viewStart"-->
+                    <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                    <!--android:layout_marginLeft="10dp"/>-->
+
+                <!--<android.support.v7.widget.SwitchCompat-->
+                    <!--android:id="@+id/metricsRadioGroup"-->
+                    <!--android:layout_toRightOf="@+id/metricsText"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textOff="Off"-->
+                    <!--android:textOn="On"-->
+                    <!--android:showText="true"-->
+                    <!--android:layout_marginLeft="112dp"/>-->
+            <!--</RelativeLayout>-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/deviceIdLayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/metricsLayout"-->
+                <!--android:layout_marginBottom="90dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/deviceIdText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/unique_device_id_per_app"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:textAlignment="viewStart"-->
+                    <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                    <!--android:layout_marginLeft="10dp"/>-->
+
+                <!--<android.support.v7.widget.SwitchCompat-->
+                    <!--android:id="@+id/deviceIdRadioGroup"-->
+                    <!--android:layout_toRightOf="@+id/deviceIdText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textOff="Off"-->
+                    <!--android:textOn="On"-->
+                    <!--android:checked="true"-->
+                    <!--android:showText="true"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_marginLeft="72dp"/>-->
+            <!--</RelativeLayout>-->
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/printBtn"
+        android:layout_width="60dp"
+        android:layout_height="55.5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="17dp"
+        android:paddingLeft="2dp"
+        android:layout_alignParentBottom="true"
+        app:backgroundTint="@android:color/holo_red_light"
+        android:clickable="true"
+        android:src="@drawable/ic_play"
+        android:scaleType="center"/>
+</RelativeLayout>

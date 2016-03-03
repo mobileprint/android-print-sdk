@@ -10,244 +10,45 @@
   ~ the license agreement.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
-    android:layout_height="match_parent"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/component_margin">
-    <RelativeLayout
-        android:id="@+id/contentLayout"
+    android:layout_height="match_parent">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/sample_toolbar" />
+
+        <android.support.design.widget.TabLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            android:id="@+id/sample_tablayout"
+            app:tabBackground="@color/HPFontColorCarbonGrey"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/contentText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/content_option"
-            android:textColor="@android:color/white"
-            android:textAlignment="viewStart"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/contentText"
-            android:id="@+id/contentRadioGroup"
-            android:checkedButton="@+id/contentImage"
-            android:orientation="horizontal"
-            android:paddingStart="25px">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/contentImage"
-                android:text="@string/content_image" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/contentPDF"
-                android:text="@string/content_pdf" />
-        </RadioGroup>
-    </RelativeLayout>
+        android:id="@+id/sample_viewpager"
+        android:background="@drawable/dark_gradient_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <RelativeLayout
-        android:id="@+id/layoutLayout"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/contentLayout">
-        <TextView
-            android:id="@+id/SpinnerText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/layout_option"
-            android:textColor="@android:color/white"
-            android:textAlignment="viewStart"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/SpinnerText"
-            android:id="@+id/layoutRadioGroup"
-            android:checkedButton="@+id/layoutCenterTop"
-            android:orientation="vertical"
-            android:paddingStart="25px">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/layoutCenterTop"
-                android:text="@string/layout_center_top" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/layoutCenter"
-                android:text="@string/layout_center" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/layoutCrop"
-                android:text="@string/layout_crop" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/layoutFit"
-                android:text="@string/layout_fit" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/layoutCenterTopLeft"
-                android:text="@string/layout_top_left" />
-        </RadioGroup>
-    </RelativeLayout>
+        android:layout_height="1dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@android:color/holo_blue_light" />
 
-    <RelativeLayout
-        android:id="@+id/marginLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutLayout">
-        <TextView
-            android:id="@+id/MarginText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/margin_option"
-            android:textColor="@android:color/white"
-            android:textAlignment="viewStart"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/MarginText"
-            android:id="@+id/layoutMarginRadioGroup"
-            android:checkedButton="@+id/layoutWithoutMargin"
-            android:orientation="horizontal"
-            android:paddingStart="25px">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/layoutWithoutMargin"
-                android:text="@string/layout_without_margin" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/layoutWithMargin"
-                android:text="@string/layout_with_margin" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/layoutWithTopMargin"
-                android:text="@string/layout_with_top_margin" />
-        </RadioGroup>
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/metricsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/marginLayout">
-        <TextView
-            android:id="@+id/metricsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/metrics_option"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/metricsText"
-            android:id="@+id/metricsRadioGroup"
-            android:checkedButton="@+id/withoutMetrics"
-            android:orientation="horizontal"
-            android:paddingStart="25px">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/withoutMetrics"
-                android:text="Without Metrics" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/withMetrics"
-                android:text="With Metrics" />
-        </RadioGroup>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/deviceIdLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/metricsLayout"
-        android:layout_marginBottom="@dimen/component_margin">
-        <TextView
-            android:id="@+id/deviceIdText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/unique_device_id_per_app"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/deviceIdText"
-            android:id="@+id/deviceIdRadioGroup"
-            android:checkedButton="@+id/udipaTrue"
-            android:orientation="horizontal"
-            android:paddingStart="25px">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/udipaTrue"
-                android:text="True" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:id="@+id/udipaFalse"
-                android:text="False" />
-        </RadioGroup>
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/printBtn"
-        android:background="@color/HPFontColorBlue"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20px"
-        android:paddingRight="20px"
-        android:text="Preview"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:onClick="buttonClicked"
-        android:layout_below="@+id/deviceIdLayout"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/newPluginStatus"
-        android:background="@color/HPFontColorBlue"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20px"
-        android:paddingRight="20px"
-        android:text="Plugin Helper"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:onClick="pluginStatusButtonClicked"
-        android:layout_below="@+id/deviceIdLayout"
-        android:layout_alignParentRight="true" />
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
 
