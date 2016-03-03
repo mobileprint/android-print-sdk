@@ -11,25 +11,31 @@
   -->
 
 <resources>
-    <string name="app_name">PrintSDKSample</string>
+    <string name="app_name">Print SDK</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="print">Print</string>
+    <string name="print_settings">PRINT SETTINGS</string>
+    <string name="printing_help">PRINTING HELP</string>
+    <string name="print_plugin_manager">Print Plugin Manager</string>
+    <string name="print_plugin_manager_description">Help users install their printers PSP</string>
+    <string name="print_help_menu">Print Help Menu</string>
+    <string name="print_help_menu_description">Provide help content within your application</string>
     <string name="asset">Asset</string>
-    <string name="layout_option">Layout Options</string>
+    <string name="layout_option">PAGE LAYOUT</string>
     <string name="layout_center">Center</string>
     <string name="layout_center_top">Center Top</string>
-    <string name="layout_crop">Crop (Ignores Margin)</string>
+    <string name="layout_crop">Fill</string>
     <string name="layout_fit">Fit</string>
     <string name="layout_top_left">Top Left</string>
-    <string name="margin_option">Margin Options</string>
-    <string name="layout_with_margin">Half Inch</string>
+    <string name="margin_option">PAGE MARGINS</string>
+    <string name="layout_with_margin">1/2 Inch</string>
     <string name="layout_without_margin">None</string>
     <string name="layout_with_top_margin">Top Only</string>
-    <string name="metrics_option">Metrics Options</string>
-    <string name="unique_device_id_per_app">Unique Device Id Per App</string>
-    <string name="content_option">Content Options</string>
+    <string name="metrics_option">METRICS</string>
+    <string name="unique_device_id_per_app">UNIQUE APP ID</string>
+    <string name="content_option">CONTENT TYPE</string>
     <string name="content_pdf">PDF</string>
     <string name="content_image">Image</string>
     <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>

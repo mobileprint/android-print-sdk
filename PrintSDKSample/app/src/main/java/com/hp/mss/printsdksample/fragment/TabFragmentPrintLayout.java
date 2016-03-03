@@ -10,34 +10,20 @@
  * the license agreement.
  */
 
-package com.hp.mss.printsdksample;
+package com.hp.mss.printsdksample.fragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.print.PrintAttributes;
-import android.print.PrintJob;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
-import com.hp.mss.hpprint.activity.PrintPluginManagerActivity;
-import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PDFPrintItem;
 import com.hp.mss.hpprint.model.PrintItem;
@@ -45,17 +31,13 @@ import com.hp.mss.hpprint.model.PrintJobData;
 import com.hp.mss.hpprint.model.PrintMetricsData;
 import com.hp.mss.hpprint.model.asset.ImageAsset;
 import com.hp.mss.hpprint.model.asset.PDFAsset;
-import com.hp.mss.hpprint.util.ImageLoaderUtil;
 import com.hp.mss.hpprint.util.PrintUtil;
+import com.hp.mss.printsdksample.R;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-
-public class MainActivity extends Activity implements RadioGroup.OnCheckedChangeListener, PrintUtil.PrintMetricsListener {
-
+/**
+ * Created by panini on 2/25/16.
+ */
+public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener, PrintUtil.PrintMetricsListener {
     String contentType;
     PrintItem.ScaleType scaleType;
     PrintAttributes.Margins margins;
@@ -63,30 +45,57 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     PrintJobData printJobData;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View inflatedView = inflater.inflate(R.layout.tab_fragment_print_layout, container, false);
 
-        RadioGroup layoutRadioGroup = (RadioGroup) findViewById(R.id.layoutRadioGroup);
+
+        RadioGroup layoutRadioGroup = (RadioGroup) inflatedView.findViewById(R.id.layoutRadioGroup);
         layoutRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(layoutRadioGroup, layoutRadioGroup.getCheckedRadioButtonId());
 
-        RadioGroup layoutMarginRadioGroup = (RadioGroup) findViewById(R.id.layoutMarginRadioGroup);
+        RadioGroup layoutMarginRadioGroup = (RadioGroup) inflatedView.findViewById(R.id.layoutMarginRadioGroup);
         layoutMarginRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(layoutMarginRadioGroup, layoutMarginRadioGroup.getCheckedRadioButtonId());
 
-        RadioGroup metricsRadioGroup = (RadioGroup) findViewById(R.id.metricsRadioGroup);
-        metricsRadioGroup.setOnCheckedChangeListener(this);
-        onCheckedChanged(metricsRadioGroup, metricsRadioGroup.getCheckedRadioButtonId());
+//        SwitchCompat metricsSwitch = (SwitchCompat) inflatedView.findViewById(R.id.metricsRadioGroup);
+//        metricsSwitch.setOnCheckedChangeListener(this);
+//        onCheckedChanged(metricsSwitch, metricsSwitch.isChecked());
 
-        RadioGroup contentRadioGroup = (RadioGroup) findViewById(R.id.contentRadioGroup);
+        RadioGroup contentRadioGroup = (RadioGroup) inflatedView.findViewById(R.id.contentRadioGroup);
         contentRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(contentRadioGroup, contentRadioGroup.getCheckedRadioButtonId());
 
-        RadioGroup deviceIdRadioGroup = (RadioGroup) findViewById(R.id.deviceIdRadioGroup);
-        deviceIdRadioGroup.setOnCheckedChangeListener(this);
-        onCheckedChanged(contentRadioGroup, deviceIdRadioGroup.getCheckedRadioButtonId());
+//        SwitchCompat deviceIdSwitch = (SwitchCompat) inflatedView.findViewById(R.id.deviceIdRadioGroup);
+//        deviceIdSwitch.setOnCheckedChangeListener(this);
+//        onCheckedChanged(deviceIdSwitch, deviceIdSwitch.isChecked());
 
+        FloatingActionButton printButton = (FloatingActionButton) inflatedView.findViewById(R.id.printBtn);
+        printButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                continueButtonClicked(v);
+            }
+        });
+
+        createPrintJobData();
+
+        return inflatedView;
+    }
+
+    public void continueButtonClicked(View v) {
+        PrintUtil.setPrintJobData(printJobData);
+        PrintUtil.sendPrintMetrics = showMetricsDialog;
+        PrintUtil.print(getActivity());
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch(buttonView.getId()) {
+//            case R.id.deviceIdRadioGroup:
+//                PrintUtil.uniqueDeviceIdPerApp = isChecked;
+//            case R.id.metricsRadioGroup:
+//                showMetricsDialog = isChecked;
+            default:
+        }
     }
 
     @Override
@@ -116,23 +125,11 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             case R.id.layoutWithoutMargin:
                 margins = new PrintAttributes.Margins(0, 0, 0, 0);
                 break;
-            case R.id.withMetrics:
-                showMetricsDialog = true;
-                break;
-            case R.id.withoutMetrics:
-                showMetricsDialog = false;
-                break;
             case R.id.contentPDF:
                 contentType = "PDF";
                 break;
             case R.id.contentImage:
                 contentType = "Image";
-                break;
-            case R.id.udipaTrue:
-                PrintUtil.uniqueDeviceIdPerApp = true;
-                break;
-            case R.id.udipaFalse:
-                PrintUtil.uniqueDeviceIdPerApp = false;
                 break;
             default:
                 showMetricsDialog = true;
@@ -142,29 +139,16 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
     }
 
-    public void buttonClicked(View v) {
-        createPrintJobData();
-        PrintUtil.setPrintJobData(printJobData);
-        PrintUtil.sendPrintMetrics = showMetricsDialog;
-        PrintUtil.print(this);
-    }
-
-    public void pluginStatusButtonClicked(View v) {
-        PrintUtil.setPrintJobData(null);
-        Intent intent = new Intent(this, PrintPluginManagerActivity.class);
-        startActivity(intent);
-    }
-
     private void createPrintJobData() {
         //Example for creating a custom media size in android.
         PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000);
 
         if(contentType.equals("Image")) {
             //Create image assets from the saved files.
-            ImageAsset imageAsset4x5 = new ImageAsset(this, R.drawable.t4x5, ImageAsset.MeasurementUnits.INCHES, 4, 5);
-            ImageAsset imageAsset4x6 = new ImageAsset(this, R.drawable.t4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
-            ImageAsset imageAsset5x7 = new ImageAsset(this, R.drawable.t5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
-            ImageAsset assetdirectory = new ImageAsset(this, "t8.5x11.png", ImageAsset.MeasurementUnits.INCHES, 8.5f, 11f);
+            ImageAsset imageAsset4x5 = new ImageAsset(getActivity(), R.drawable.t4x5, ImageAsset.MeasurementUnits.INCHES, 4, 5);
+            ImageAsset imageAsset4x6 = new ImageAsset(getActivity(), R.drawable.t4x6, ImageAsset.MeasurementUnits.INCHES, 4, 6);
+            ImageAsset imageAsset5x7 = new ImageAsset(getActivity(), R.drawable.t5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
+            ImageAsset assetdirectory = new ImageAsset(getActivity(), "t8.5x11.png", ImageAsset.MeasurementUnits.INCHES, 8.5f, 11f);
 
             //Alternatively, you can use a bitmap by doing the following.
             // ImageAsset bitmapAsset = new ImageAsset(this, bitmap, ImageAsset.MeasurementUnits.INCHES, 4,5);
@@ -177,7 +161,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
             //Create the printJobData with the default print item
             PrintItem printItemDefault = new ImagePrintItem(margins, scaleType, imageAsset4x5);
-            printJobData = new PrintJobData(this, printItemDefault);
+            printJobData = new PrintJobData(getActivity(), printItemDefault);
 
             //Lastly, add all the printitems to the print job data.
             printJobData.addPrintItem(printItem4x6);
@@ -205,7 +189,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             PrintItem printItem5x7 = new PDFPrintItem(mediaSize5x7,margins, scaleType, pdf5x7);
             PrintItem printItemLetter = new PDFPrintItem(PrintAttributes.MediaSize.NA_LETTER,margins, scaleType, pdfletter);
 
-            printJobData = new PrintJobData(this, printItem4x6);
+            printJobData = new PrintJobData(getActivity(), printItem4x6);
 
             printJobData.addPrintItem(printItemLetter);
             printJobData.addPrintItem(printItem5x7);
@@ -222,36 +206,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onPrintMetricsDataPosted(PrintMetricsData printMetricsData) {
         if (showMetricsDialog) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(printMetricsData.toMap().toString());
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {

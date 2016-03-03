@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/component_margin"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/print_plugin_manager"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="30dp">
+        <ImageView
+            android:id="@+id/print_plugin_manager_icon"
+            android:layout_width="38.33dp"
+            android:layout_height="38.33dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="12dp"
+
+            android:src="@drawable/ic_print_service_help_plugin_icon"
+            android:scaleType="fitCenter"/>
+        <TextView
+            android:id="@+id/print_plugin_manager_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/print_plugin_manager_icon"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:textColor="@color/HPFontColorWhite"
+            android:text="@string/print_plugin_manager"/>
+        <TextView
+            android:id="@+id/print_plugin_manager_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/print_plugin_manager_icon"
+            android:layout_below="@id/print_plugin_manager_title"
+            android:textSize="16sp"
+            android:text="@string/print_plugin_manager_description"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/print_help_menu"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/print_plugin_manager">
+        <ImageView
+            android:id="@+id/print_help_menu_icon"
+            android:layout_width="38.33dp"
+            android:layout_height="38.33dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/ic_green_question"
+            android:scaleType="fitCenter"/>
+        <TextView
+            android:id="@+id/print_help_menu_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/print_help_menu_icon"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:textColor="@color/HPFontColorWhite"
+            android:text="@string/print_help_menu"/>
+        <TextView
+            android:id="@+id/print_help_menu_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/print_help_menu_icon"
+            android:layout_below="@id/print_help_menu_title"
+            android:text="@string/print_help_menu_description"/>
+    </RelativeLayout>
+
+</RelativeLayout>
