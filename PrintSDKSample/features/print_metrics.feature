@@ -5,17 +5,19 @@ Feature: Print metrics feature
     for Print SDK Sample app
 
 
- @done
+@done-1
 @printmetrics
 Scenario Outline: Print an Image/PDF with metrics option and verify print metrics
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
-    Then I tap on "With Metrics" option
+    #Then I tap on "With Metrics" option
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
-    And I tap on plugin helper button
+    And I tap on "PRINTING HELP" option
+    And I tap on print plugin manager
     Then I get the enabled plugin count
     Then I navigate back
+     And I tap on "PRINT SETTINGS" option
     And I select preview button 
     And I tap on Print in Print Preview screen
     Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
@@ -62,7 +64,7 @@ Scenario Outline: Verify print metrics for Cancel print
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
-    Then I tap on "With Metrics" option
+   # Then I tap on "With Metrics" option
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button
     And I cancel the print
@@ -73,10 +75,10 @@ Scenario Outline: Verify print metrics for Cancel print
      Examples:
         |Content| 
         |PDF    | 
-        |Image  | 
-        
-@printmetrics
-@done
+        |Image  |
+
+ #feature removed from sample app
+@blocked
 Scenario Outline: Print an Image/PDF with Without Metrics option and verify print metrics
     Given I am on Home screen
     Then I tap on "<Content>" option
@@ -105,8 +107,8 @@ Scenario Outline: Print an Image/PDF with Without Metrics option and verify prin
     Given I am on Home screen
     Then I tap on "<Content>" option
     And I select layout as "Center"
-    Then I tap on "With Metrics" option
-    Then I tap on "<Device_ip_per_app>" option
+    #Then I tap on "With Metrics" option
+    #Then I tap on "<Device_ip_per_app>" option
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button 
     And I tap on Print in Print Preview screen
@@ -123,8 +125,8 @@ Scenario Outline: Print an Image/PDF with Without Metrics option and verify prin
         |Image   | 5x7 in     | False           |
 
 
-    @done
-    @printmetrics
+     #feature removed from sample app
+    @blocked
     Scenario: Print a PDF with unique device id on & off options and verify device id
     Given I am on Home screen
     Then I tap on "PDF" option

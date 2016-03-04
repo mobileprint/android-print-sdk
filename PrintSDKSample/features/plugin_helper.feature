@@ -4,6 +4,7 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
 @done
 	Scenario: verify plugin helper screen 
 		Given I am on Home screen
+        And I tap on "PRINTING HELP" option
         And I tap on plugin helper button 
         Then I should see "Print Service Manager" screen
         And I should see the following
@@ -33,6 +34,7 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
         @done
 	Scenario Outline: Verify enable plugin pop up
 		Given I am on Home screen
+        And I tap on "PRINTING HELP" option
         And I tap on plugin helper button 
         Then I should see "Print Service Manager" screen
         Then I tap to enable "<plugin_name>" if installed

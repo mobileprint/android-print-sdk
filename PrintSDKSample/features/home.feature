@@ -26,8 +26,8 @@ Feature: Home feature
          |Content Options|
          |Layout Options|
          |Margin Options|
-         |Metrics Options|
-         |Unique Device Id Per App|
+        # |Metrics Options|
+        # |Unique Device Id Per App|
          
 @done
 	Scenario Outline: Verify all titles, values and button present in home screen
@@ -43,8 +43,8 @@ Feature: Home feature
          |Center Top        |Top Left               |
          |None              |Half Inch              |
          |None              |Top Only               |
-         |Without Metrics   |With Metrics           |
-         |True              |False                  |
+       #  |Without Metrics   |With Metrics           |
+        # |True              |False                  |
          
          
          

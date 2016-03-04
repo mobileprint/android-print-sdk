@@ -48,7 +48,7 @@ end
 And (/^I tap on Print in Print Preview screen$/) do
     $os_version = getOSversion
     sleep(15)
-    if $os_version < '5.0' && $content_option == 'Image'
+    if $os_version < '5.0' #&& $content_option == 'Image'
         #wait.until { selenium.find_element(:id,"com.hp.mss.printsdksample:id/action_print") }
         wait.until { selenium.find_element(:id,"com.hp.mss.printsdksample:id/print_preview_print_btn")}
         selenium.find_element(:id,"com.hp.mss.printsdksample:id/print_preview_print_btn").click

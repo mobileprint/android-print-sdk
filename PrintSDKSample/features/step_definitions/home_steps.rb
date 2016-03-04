@@ -22,10 +22,10 @@ Given(/^I am on Home screen$/) do
     system(path)
     sleep(WAIT_TIMEOUT)
     selenium.start_driver
-    element_id="android:id/action_bar_title"
+    element_id="com.hp.mss.printsdksample:id/sample_toolbar"
 	wait.until { selenium.find_element(:id,element_id) }
-    home_title = selenium.find_element(:id,element_id).text
-    raise "Error Screen" unless home_title == "PrintSDKSample"        
+    home_title = selenium.find_element(:name,"Print SDK").text
+    raise "Error Screen" unless home_title == "Print SDK"
 end
 
 Then(/^I tap on "(.*?)" option$/) do |option|
@@ -60,19 +60,20 @@ Then(/^I navigate to home screen$/) do
     end
     macro %Q|I tap on "OK" option|
 end
-Given(/^I tap on plugin helper button$/) do
-  element_id="com.hp.mss.printsdksample:id/newPluginStatus"
+
+Given(/^I tap on print plugin manager$/) do
+  element_id="com.hp.mss.printsdksample:id/print_plugin_manager"
     selenium.find_element(:id,element_id).click
 end
 
 Then /^verify that "(.*?)" value is present$/ do |value|
     sleep(STEP_PAUSE)
-    wait_for_element_exists("radiobutton marked:'#{value}'", timeout: APPIUM_TIMEOUT)
+    wait_for_element_exists("radiobutton marked:'#{value}'", timeout=> APPIUM_TIMEOUT)
 end
 
 Then /^verify that "(.*?)" button is present$/ do |button|
     sleep(STEP_PAUSE)
-    wait_for_element_exists("button marked:'#{button}'", timeout: APPIUM_TIMEOUT)
+    wait_for_element_exists("button marked:'#{button}'", timeout=> APPIUM_TIMEOUT)
 end
 
 Given(/^"(.*?)" value should be selected$/) do |value|

@@ -107,6 +107,7 @@ end
 
 And (/^I check the device id$/) do
     my_device = $device_id.split(" ").last
+    $unique_id_per_app = "True"
     if $unique_id_per_app == "False"
         device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
     else
