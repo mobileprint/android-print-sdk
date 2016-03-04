@@ -5,7 +5,7 @@ Feature: Print metrics feature
     for Print SDK Sample app
 
 
-@done-1
+@done
 @printmetrics
 Scenario Outline: Print an Image/PDF with metrics option and verify print metrics
     Given I am on Home screen
