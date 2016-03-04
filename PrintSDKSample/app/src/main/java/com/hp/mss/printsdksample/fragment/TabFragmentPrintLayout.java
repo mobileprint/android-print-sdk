@@ -76,12 +76,11 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
             }
         });
 
-        createPrintJobData();
-
         return inflatedView;
     }
 
     public void continueButtonClicked(View v) {
+        createPrintJobData();
         PrintUtil.setPrintJobData(printJobData);
         PrintUtil.sendPrintMetrics = showMetricsDialog;
         PrintUtil.print(getActivity());
