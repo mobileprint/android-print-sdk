@@ -32,7 +32,7 @@ Scenario Outline: Print an Image/PDF with metrics option and verify print metric
    # And I check the version
     And I check the print_plugin_tech is "com.hp.android.printservice"
     And I check the print_result is "Success"
-    And I check the product name is "PrintSDKSample"
+    And I check the product name is "Print SDK"
 	#And I check the device brand
 	And I check the off ramp is "Android Print"
 	And I check the device type

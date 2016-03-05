@@ -18,7 +18,7 @@ end
 
 
 Then (/^I select paper size as "([^"]*)"$/) do |paper_size|
-    sleep(APPIUM_TIMEOUT)
+    sleep(MAX_TIMEOUT)
     $os_version = getOSversion
     $paper_size = paper_size
     if $os_version < '5.0'

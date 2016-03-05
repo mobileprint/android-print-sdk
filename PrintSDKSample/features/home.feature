@@ -3,16 +3,10 @@ Feature: Home feature
   As an user
 	I want to view home screen for Print SDK Sample app 
     and select different options and do print
-	
-@done
-	Scenario: Navigate to home screen
-		Given I am on "Home" screen
-		Then I select "Image" option
-        And I select "Preview" option 
-        Then I select "I have one" option 
+
         
 @done
-	Scenario: Navigate to home screen using appium
+	Scenario: Navigate to Print screen using appium
 		Given I am on Home screen
 		Then I tap on "Image" option
         And I select preview button 
@@ -29,6 +23,7 @@ Feature: Home feature
         # |Metrics Options|
         # |Unique Device Id Per App|
          
+@reset
 @done
 	Scenario Outline: Verify all titles, values and button present in home screen
 		Given I am on "Home" screen
