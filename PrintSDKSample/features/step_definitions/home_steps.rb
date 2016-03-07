@@ -77,10 +77,10 @@ Then /^verify that "(.*?)" button is present$/ do |button|
 end
 
 Given(/^"(.*?)" value should be selected$/) do |value|
-    raise "#{value} is not the default selection" if query("radiobutton marked:'#{value}'",:checked)[0] != true   
+    raise "#{value} is not the default selection" if query("AppCompatRadioButton marked:'#{value}'",:checked)[0] != true
 end
 
 When /^I tap on "(.*?)" value, it should be selected$/ do |value|
-    touch "radiobutton marked:'#{value}'"
-    raise "#{value} is not the default selection" if query("radiobutton marked:'#{value}'",:checked)[0] != true
+    touch "AppCompatRadioButton marked:'#{value}'"
+    raise "#{value} is not selection" if query("AppCompatRadioButton marked:'#{value}'",:checked)[0] != true
 end

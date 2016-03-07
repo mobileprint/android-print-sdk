@@ -2,13 +2,13 @@ Feature: Print feature
 
   As an user
 	I want to take and verify print for different options
-    for Print SDK Sample app 
-    
+    for Print SDK Sample app
 
-@TA12260
-Scenario Outline: Print a card in Lollipop device and verify xml counters for 'PDF' option
+
+  @TA12260
+Scenario Outline: Print a card and verify xml counters for 'PDF' option
     Given I am on Home screen
-    Then I tap on "PDF" option
+    Then I tap on "<Content Type>" option
     And I select layout as "<Layout Type>"
     And I select preview button 
     And I tap on Print in Print Preview screen
@@ -25,16 +25,12 @@ Scenario Outline: Print a card in Lollipop device and verify xml counters for 'P
      #PDF print for 4x6 and 5x7 print has crash issues(defect DE3532)
     
      Examples:
-        | Paper Size| Quality   | Paper Type   |Layout Type|
-        | 4x6 in    | Draft     | Plain        |Center    |
-        | 4x6 in    | Normal    | Plain        |Center    |
-        | 4x6 in    | Best      | Plain        |Center    |
-        | 5x7 in    | Draft     | Plain        |Center    |
-        | 5x7 in    | Normal    | Plain        |Center    |
-        | 5x7 in    | Best      | Plain        |Center    |
-        | Letter    | Draft     | Plain        |Center    |
-        | Letter    | Normal    | Plain        |Center    |
-        | Letter    | Best      | Plain        |Center    |
+      |Content Type  | Paper Size| Quality   | Paper Type   |Layout Type|
+      |Image         | 4x6 in    | Best      | Plain        |Center     |
+      |PDF           | Letter    | Normal    | Plain        |Center Top |
+      |Image         | 5x7 in    | Best      | Plain        |Fit        |
+      |PDF           | 5x7 in    | Draft     | Plain        |Fill       |
+
         
  	
 @TA12260

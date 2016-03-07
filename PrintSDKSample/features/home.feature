@@ -17,9 +17,9 @@ Feature: Home feature
 	Scenario: Verify all titles, values and button present in home screen
 		Given I am on "Home" screen
         Then I should see the following options:
-         |Content Options|
-         |Layout Options|
-         |Margin Options|
+         |CONTENT TYPE|
+         |PAGE LAYOUT|
+         |PAGE MARGINS|
         # |Metrics Options|
         # |Unique Device Id Per App|
          
@@ -33,10 +33,10 @@ Feature: Home feature
          |default_value     |new_selection          |
          |Image             |PDF                    |
          |Center Top        |Center                 |
-         |Center Top        |Crop (Ignores Margin)  |
+         |Center Top        |Fill                   |
          |Center Top        |Fit                    |
          |Center Top        |Top Left               |
-         |None              |Half Inch              |
+         |None              |1/2 Inch               |
          |None              |Top Only               |
        #  |Without Metrics   |With Metrics           |
         # |True              |False                  |

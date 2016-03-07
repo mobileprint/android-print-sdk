@@ -52,7 +52,6 @@ Scenario Outline: Print an Image/PDF with metrics option and verify print metric
         
      Examples:
         |Content| Paper Size  | Paper Type|
-        |PDF     | 4x6 in     | Document  |
         |PDF     | Letter     | Document  |
         |Image   | 4x6 in     | Photo     |
         |Image   | 5x7 in     | Photo     |
@@ -60,6 +59,7 @@ Scenario Outline: Print an Image/PDF with metrics option and verify print metric
 
 
     @done
+    @printmetrics
 Scenario Outline: Verify print metrics for Cancel print
     Given I am on Home screen
     Then I tap on "<Content>" option
