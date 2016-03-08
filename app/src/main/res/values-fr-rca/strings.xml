@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+  <string name="app_name">Service d\'impression HP</string>
+  <string name="title_activity_print_preview">Aperçu avant impression</string>
+  <string name="title_activity_print_place_holder">Imprimer</string>
+  <string name="action_settings">Paramètres</string>
+  <string name="print_preview_prompt">Imaginez une super image apparaissant ci-dessous</string>
+  <string name="learn_about_mobile_print">Instructions d\'impression</string>
+  <string name="support">Support&#x00a0;:</string>
+  <string name="paper_size">Format du papier&#x00a0;:</string>
+  <string name="paper_type">Type de papier</string>
+  <string name="lib_font"/>
+
+    <string-array name="paper_size_array">
+        <item> 4 x 5 po </item>
+        <item> 4 x 6 po </item>
+        <item> 5 x 7 po </item>
+        <item> 8,5 x 11 po </item>
+    </string-array>
+
+
+  <string-array name="paper_type_array">
+    <item>Papier photo</item>
+  </string-array>
+
+    <!-- Print Preview -->
+    <string name="print_preview_menu_help">Imprimer l\'aide</string>
+    <string name="print_preview_menu_print_service_plugins">Module d\'extension du service d\'impression</string>
+
+  <!-- Print Plugin installation -->
+  <string name="hp_print_plugin_alert_header">Module d\'extension du Service d\'impression HP</string>
+  <string name="install_hp_print_plugin_msg">Avez-vous une imprimante HP? Pour imprimer des photos de qualité supérieure, veuillez installer le module d\'extension du Service d\'impression HP.</string>
+  <string name="update_hp_print_plugin_msg">Avez-vous une imprimante HP? Pour imprimer des photos de qualité supérieure, veuillez mettre à jour le module d\'extension du Service d\'impression HP.</string>
+  <string name="enable_hp_print_plugin_msg">Assurez-vous que le module d\'extension du Service d\'impression HP est activé.</string>
+
+  <!-- Print Plugin helper -->
+  <string name="hp_print_helper_header">Assistant du service d\'impression</string>
+  <string name="install_print_plugin_msg">Pour imprimer des photos de qualité supérieure, veuillez installer et activer le module d\'extension approprié pour votre imprimante.</string>
+
+
+</resources>

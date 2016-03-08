@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+  <string name="app_name">HP Print</string>
+  <string name="title_activity_print_preview">Podgląd wydruku</string>
+  <string name="title_activity_print_place_holder">Drukuj</string>
+  <string name="action_settings">Ustawienia</string>
+  <string name="print_preview_prompt">Wyobraź sobie, że widzisz poniżej superobrazek</string>
+  <string name="learn_about_mobile_print">Instrukcje drukowania</string>
+  <string name="support">Pomoc techniczna:</string>
+  <string name="paper_size">Rozmiar papieru</string>
+  <string name="paper_type">Rodzaj papieru</string>
+  <string name="lib_font"/>
+
+    <string-array name="paper_size_array">
+        <item> 4 x 5 </item>
+        <item> 4 x 6 </item>
+        <item> 5 x 7 </item>
+        <item> 8,5 x 11 </item>
+    </string-array>
+
+  <string-array name="paper_type_array">
+    <item>Papier Photo</item>
+  </string-array>
+
+    <!-- Print Preview -->
+    <string name="print_preview_menu_help">Pomoc dla opcji drukowania</string>
+    <string name="print_preview_menu_print_service_plugins">Dodatki do usługi drukowania</string>
+
+    <!-- Print Plugin installation -->
+  <string name="hp_print_plugin_alert_header">Dodatek HP Print</string>
+  <string name="install_hp_print_plugin_msg">Masz drukarkę HP? Aby drukować zdjęcia najlepszej jakości, zainstaluj dodatek HP Print.</string>
+  <string name="update_hp_print_plugin_msg">Masz drukarkę HP? Aby drukować zdjęcia najlepszej jakości, zaktualizuj dodatek HP Print.</string>
+  <string name="enable_hp_print_plugin_msg">Sprawdź, czy dodatek HP Print jest włączony.</string>
+
+  <!-- Print Plugin helper -->
+  <string name="hp_print_helper_header">Print Service Helper</string>
+  <string name="install_print_plugin_msg">Aby drukować zdjęcia najlepszej jakości, zainstaluj i włącz dodatek odpowiedni dla swojej drukarki.</string>
+
+</resources>

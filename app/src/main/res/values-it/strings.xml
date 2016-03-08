@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+  <string name="app_name">Stampa HP</string>
+  <string name="title_activity_print_preview">Anteprima di stampa</string>
+  <string name="title_activity_print_place_holder">Stampa</string>
+  <string name="action_settings">Impostazioni</string>
+  <string name="print_preview_prompt">Immagina che qui sotto compaia una stupenda fotografia</string>
+  <string name="learn_about_mobile_print">Istruzioni di stampa</string>
+  <string name="support">Assistenza:</string>
+  <string name="paper_size">Formato carta:</string>
+  <string name="paper_type">Tipo carta</string>
+  <string name="lib_font"/>
+
+    <string-array name="paper_size_array">
+        <item> 4 x 5 </item>
+        <item> 4 x 6 </item>
+        <item> 5 x 7 </item>
+        <item> 8,5 x 11 </item>
+    </string-array>
+
+  <string-array name="paper_type_array">
+    <item>Carta fotografica</item>
+  </string-array>
+
+    <!-- Print Preview -->
+    <string name="print_preview_menu_help">Guida di Stampa</string>
+    <string name="print_preview_menu_print_service_plugins">Plugin Servizi di stampa</string>
+
+  <!-- Print Plugin installation -->
+  <string name="hp_print_plugin_alert_header">Plugin Stampa HP</string>
+  <string name="install_hp_print_plugin_msg">Disponi di una stampante HP? Per stampare foto della migliore qualità, installare il plugin Stampa HP.</string>
+  <string name="update_hp_print_plugin_msg">Disponi di una stampante HP? Per stampare foto della migliore qualità, aggiornare il plugin Stampa HP.</string>
+  <string name="enable_hp_print_plugin_msg">Assicurarsi che il plugin Stampa HP sia abilitato.</string>
+
+  <!-- Print Plugin helper -->
+  <string name="hp_print_helper_header">Aiuto Supporto di stampa</string>
+  <string name="install_print_plugin_msg">Per stampare foto della migliore qualità, installare e abilitare il plugin corretto per la stampante.</string>
+
+</resources>

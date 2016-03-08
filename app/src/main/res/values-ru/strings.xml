@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+  <string name="app_name">HP Print</string>
+  <string name="title_activity_print_preview">Предварительный просмотр печати</string>
+  <string name="title_activity_print_place_holder">Печать</string>
+  <string name="action_settings">Параметры</string>
+  <string name="print_preview_prompt">Представьте, что дальше появляется фантастическое изображение</string>
+  <string name="learn_about_mobile_print">Инструкции для печати</string>
+  <string name="support">Поддержка:</string>
+  <string name="paper_size">Размер бумаги</string>
+  <string name="paper_type">Тип бумаги</string>
+  <string name="lib_font"/>
+
+    <string-array name="paper_size_array">
+        <item> 4 x 5 </item>
+        <item> 4 x 6 </item>
+        <item> 5 x 7 </item>
+        <item> 8,5 x 11 </item>
+    </string-array>
+
+  <string-array name="paper_type_array">
+    <item>Фотобумага</item>
+  </string-array>
+
+    <!-- Print Preview -->
+    <string name="print_preview_menu_help">Печать справки</string>
+    <string name="print_preview_menu_print_service_plugins">Print Service Plugins</string>
+
+    <!-- Print Plugin installation -->
+  <string name="hp_print_plugin_alert_header">Подключаемый модуль HP Print</string>
+  <string name="install_hp_print_plugin_msg">У вас есть принтер HP? Чтобы добиться максимально высокого качества печати фотографий, установите подключаемый модуль HP Print.</string>
+  <string name="update_hp_print_plugin_msg">У вас есть принтер HP? Чтобы добиться максимально высокого качества печати фотографий, обновите подключаемый модуль HP Print.</string>
+  <string name="enable_hp_print_plugin_msg">Убедитесь в том, что подключаемый модуль HP Print активирован.</string>
+
+    <!-- Print Plugin helper -->
+  <string name="hp_print_helper_header">Помощник службы печати</string>
+  <string name="install_print_plugin_msg">Чтобы добиться максимально высокого качества фотографий, установите и активируйте соответствующий подключаемый модуль для своего принтера.</string>
+
+
+</resources>
