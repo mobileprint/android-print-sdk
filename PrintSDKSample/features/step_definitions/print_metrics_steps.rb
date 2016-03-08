@@ -3,8 +3,8 @@ require 'digest/md5'
 Then (/^Fetch metrics details$/) do
   sleep(APPIUM_TIMEOUT)
     device_type=$device_type.strip
-     hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
-   #hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
+     hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_id=com.hp.mss.printsdksample"`
+    #hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
     hash = JSON.parse(hash)
     $mertics_array = hash["metrics"]
     $mertics_details = hash["metrics"][($mertics_array.length)-1]
@@ -107,6 +107,7 @@ end
 
 And (/^I check the device id$/) do
     my_device = $device_id.split(" ").last
+    $unique_id_per_app = "True"
     if $unique_id_per_app == "False"
         device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
     else
@@ -145,7 +146,6 @@ And (/^I check the paper size$/) do
         end
         end
         end
-   
     compare  = ($mertics_details['paper_size'] == $paper_size) ?  true : false
     raise "paper_size verification failed" unless compare==true
     

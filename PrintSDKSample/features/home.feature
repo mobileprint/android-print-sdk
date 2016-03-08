@@ -3,16 +3,10 @@ Feature: Home feature
   As an user
 	I want to view home screen for Print SDK Sample app 
     and select different options and do print
-	
-@done
-	Scenario: Navigate to home screen
-		Given I am on "Home" screen
-		Then I select "Image" option
-        And I select "Preview" option 
-        Then I select "I have one" option 
+
         
 @done
-	Scenario: Navigate to home screen using appium
+	Scenario: Navigate to Print screen using appium
 		Given I am on Home screen
 		Then I tap on "Image" option
         And I select preview button 
@@ -23,12 +17,13 @@ Feature: Home feature
 	Scenario: Verify all titles, values and button present in home screen
 		Given I am on "Home" screen
         Then I should see the following options:
-         |Content Options|
-         |Layout Options|
-         |Margin Options|
-         |Metrics Options|
-         |Unique Device Id Per App|
+         |CONTENT TYPE|
+         |PAGE LAYOUT|
+         |PAGE MARGINS|
+        # |Metrics Options|
+        # |Unique Device Id Per App|
          
+@reset
 @done
 	Scenario Outline: Verify all titles, values and button present in home screen
 		Given I am on "Home" screen
@@ -38,13 +33,13 @@ Feature: Home feature
          |default_value     |new_selection          |
          |Image             |PDF                    |
          |Center Top        |Center                 |
-         |Center Top        |Crop (Ignores Margin)  |
+         |Center Top        |Fill                   |
          |Center Top        |Fit                    |
          |Center Top        |Top Left               |
-         |None              |Half Inch              |
+         |None              |1/2 Inch               |
          |None              |Top Only               |
-         |Without Metrics   |With Metrics           |
-         |True              |False                  |
+       #  |Without Metrics   |With Metrics           |
+        # |True              |False                  |
          
          
          
