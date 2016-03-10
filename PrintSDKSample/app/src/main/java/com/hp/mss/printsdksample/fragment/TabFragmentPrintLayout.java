@@ -140,7 +140,7 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
 
     private void createPrintJobData() {
         //Example for creating a custom media size in android.
-        PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000);
+        PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "5 x 7", 5000, 7000);// PrintUtil.mediaSize5x7
 
         if(contentType.equals("Image")) {
             //Create image assets from the saved files.
