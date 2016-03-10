@@ -48,4 +48,61 @@
   <string name="hp_print_helper_header">Aiuto Supporto di stampa</string>
   <string name="install_print_plugin_msg">Per stampare foto della migliore qualità, installare e abilitare il plugin corretto per la stampante.</string>
 
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">Informazioni sui Servizi di stampa</string>
+    <string name="print_service_help_title_1">Ottieni un plugin Servizi di stampa</string>
+    <string name="print_service_help_msg_1">Per stampare è necessario disporre di un plugin di servizi di stampa installato. Ciascuna marca di stampante ha il proprio plugin che abilita la stampa dal dispositivo mobile. Sono disponibili anche plugin di stampa generici. Seleziona il plugin più idoneo alle tue esigenze. Puoi aggiungere in qualsiasi momento altri plugin di stampa.</string>
+    <string name="print_service_help_title_2">Abilita plugin</string>
+    <string name="print_service_help_msg_2">Dopo aver eseguito il downloading di un plugin Servizi di stampa, riceverai le istruzioni per abilitare il plugin. Seleziona il plugin e porta l\'interruttore su “ON”.</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">Guida di Stampa</string>
+    <string name="print_help_activity_title_1">Assicurati che il plugin Servizi di stampa sia installato e abilitato.</string>
+    <string name="print_help_activity_msg_1_part_1">Per stampare è necessario disporre di un plugin di servizi di stampa installato e abilitato. Ciascuna marca di stampante ha il proprio plugin che abilita la stampa dal dispositivo mobile. Sono disponibili anche plugin di stampa generici. Seleziona il plugin più idoneo alle tue esigenze. Puoi aggiungere in qualsiasi momento altri plugin di stampa.</string>
+    <string name="print_help_activity_msg_1_part_2">Dopo aver eseguito il downloading di un plugin Servizi di stampa, riceverai le istruzioni per abilitare il plugin. Seleziona il plugin e porta l\'interruttore su “ON”.</string>
+    <string name="print_help_activity_msg_1_link">Verifica i tuoi plugin Servizi di stampa.</string>
+    <string name="print_help_activity_title_2">Assicurati che il dispositivo e la stampante siano collegati alla stessa rete.</string>
+    <string name="print_help_activity_msg_2">Il dispositivo mobile e la stampante devono essere connessi alla tua rete locale Wi-Fi. Controlla le informazioni di Wi-Fi del dispositivo e segui le istruzioni di connessione.</string>
+    <string name="print_help_activity_title_3">Verifica gli eventuali messaggi di errore o problemi di alimentazione della stampante.</string>
+    <string name="print_help_activity_msg_3">Alcuni problemi comuni delle stampanti sono scarsità di inchiostro, inceppamento della carta o carta non caricata. Controlla inoltre che la stampante sia accesa.</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">Stampa su carta 4x5</string>
+    <string name="snap_shots_prompt_ok">CONTINUA</string>
+    <string name="snap_shots_prompt_do_not_show">Non visualizzare più questo messaggio.</string>
+    <string name="snap_shots_prompt_message">Hai scelto 4x5 come formato di carta. La schermata successiva mostra 4x6, tuttavia la stampa risulterà corretta.</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">Manager Servizi di stampa</string>
+    <string name="plugin_manager_sub_title">Devi disporre di un plugin di servizi di stampa installato e abilitato.</string>
+
+    <string-array name="plugin_names">
+        <item>Plugin Servizi di stampa HP</item>
+        <item>Servizi di stampa Mopria</item>
+        <item>Plugin Servizi di stampa Brother</item>
+        <item>Plugin Servizi di stampa Samsung</item>
+        <item>Servizi di stampa Canon</item>
+        <item>Epson Print Enabler</item>
+        <item>Altre piattaforme PrintServicePlugin:</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+        <item>N/D</item>
+    </string-array>
+
+    <string name="continue_to_print">CONTINUA A STAMPA</string>
+    <string name="skip">IGNORA</string>
+    <string name="before_enable_tips">Verrai indirizzato alle impostazioni di stampa di Android.</string>
+    <string name="before_enable_tips_title">Abilita il plugin</string>
+    <string name="ok">VAI A IMPOSTAZIONI</string>
+    <string name="cancel">ANNULLA</string>
+    <string name="enabled">Abilitato</string>
+    <string name="disabled">Disabilitato</string>
 </resources>

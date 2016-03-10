@@ -48,5 +48,62 @@
   <string name="hp_print_helper_header">Ayudante de servicios de impresión</string>
   <string name="install_print_plugin_msg">Para imprimir las mejores fotos de calidad, instale y active el plugin adecuado para su impresora.</string>
 
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">Acerca de los servicios de impresión</string>
+    <string name="print_service_help_title_1">Obtenga un complemento de servicios de impresión</string>
+    <string name="print_service_help_msg_1">Para imprimir, necesita instalar un complemento de servicios de impresión. Cada marca de impresora tiene su propio complemento para imprimir desde dispositivos móviles. También puede encontrar complementos genéricos. Seleccione el complemento que mejor se adapte a sus necesidades. Puede añadir más complementos de impresión en cualquier momento.</string>
+    <string name="print_service_help_title_2">Active el complemento</string>
+    <string name="print_service_help_msg_2">Al descargar un complemento de servicios de impresión, se le solicitará que lo active. Solo tiene que seleccionarlo y colocar el interruptor en “Activado”.</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">Ayuda de impresión</string>
+    <string name="print_help_activity_title_1">Asegúrese de haber instalado y activado un complemento de servicios de impresión</string>
+    <string name="print_help_activity_msg_1_part_1">Para imprimir, necesita instalar y activar un complemento de servicios de impresión. Cada marca de impresora tiene su propio complemento para imprimir desde dispositivos móviles. También puede encontrar complementos genéricos. Seleccione el complemento que mejor se adapte a sus necesidades. Puede añadir más complementos de impresión en cualquier momento.</string>
+    <string name="print_help_activity_msg_1_part_2">Al descargar un complemento de servicios de impresión, se le solicitará que lo active. Solo tiene que seleccionarlo y colocar el interruptor en “Activado”.</string>
+    <string name="print_help_activity_msg_1_link">Vea sus complementos de servicios de impresión</string>
+    <string name="print_help_activity_title_2">Asegúrese de que su dispositivo móvil y su impresora estén conectados a la misma red</string>
+    <string name="print_help_activity_msg_2">Su dispositivo móvil y su impresora deben estar conectados a su red Wi-Fi local. Compruebe la información Wi-Fi de ambos dispositivos y siga las instrucciones para realizar la conexión.</string>
+    <string name="print_help_activity_title_3">Compruebe si hay mensajes de error o problemas con la alimentación de la impresora</string>
+    <string name="print_help_activity_msg_3">Problemas frecuentes de una impresora: poca tinta, atasco de papel y falta de papel. Compruebe además que llegue corriente a la impresora.</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">Impresión en papel de 4 x 5</string>
+    <string name="snap_shots_prompt_ok">CONTINUAR</string>
+    <string name="snap_shots_prompt_do_not_show">No volver a mostrar.</string>
+    <string name="snap_shots_prompt_message">Ha seleccionado 4 x 5 como tamaño de papel. En la siguiente pantalla verá un tamaño de 4 x 6, pero no se preocupe, se imprimirá correctamente.</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">Print Service Manager</string>
+    <string name="plugin_manager_sub_title">Para imprimir, necesita instalar y activar un complemento de servicios de impresión.</string>
+
+    <string-array name="plugin_names">
+        <item>Complemento de servicios de impresión HP</item>
+        <item>Mopria Print Service</item>
+        <item>Brother Print Service Plugin</item>
+        <item>Samsung Print Service Plugin</item>
+        <item>Canon Print Service</item>
+        <item>Epson Print Enabler</item>
+        <item>Otro complemento de servicios de impresión</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+        <item>N/D</item>
+    </string-array>
+
+    <string name="continue_to_print">CONTINUAR PARA IMPRIMIR</string>
+    <string name="skip">OMITIR</string>
+    <string name="before_enable_tips">Se le dirigirá a los ajustes de impresión de Android</string>
+    <string name="before_enable_tips_title">Active su complemento</string>
+    <string name="ok">IR A AJUSTES</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="enabled">Activado</string>
+    <string name="disabled">Desactivado</string>
 
 </resources>

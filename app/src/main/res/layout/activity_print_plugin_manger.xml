@@ -9,7 +9,8 @@
     <TextView
         android:id="@+id/plugin_manager_sub_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:minHeight="44dp"
+        android:layout_height="wrap_content"
         android:textSize="12sp"
         android:text="@string/plugin_manager_sub_title"
         android:padding="10dp"

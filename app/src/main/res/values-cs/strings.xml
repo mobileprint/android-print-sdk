@@ -48,5 +48,62 @@
   <string name="hp_print_helper_header">Nápověda pro tiskovou službu</string>
   <string name="install_print_plugin_msg">Pokud chcete tisknout fotografie v&#x00a0;nejvyšší kvalitě, nainstalujte a&#x00a0;povolte potřebný doplněk pro vaši tiskárnu.</string>
 
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">Informace o tiskové službě</string>
+    <string name="print_service_help_title_1">Získání zásuvného modulu tiskové služby</string>
+    <string name="print_service_help_msg_1">Jestliže chcete tisknout, musíte mít nainstalován zásuvný modul tiskové služby. Každý značka tiskáren má vlastní zásuvný modul, který vám umožňuje tisknout z mobilního zařízení. K dispozici jsou rovněž obecné zásuvné moduly. Vyberte si zásuvný modul, který vám nejvíce vyhovuje. Kdykoli můžete přidat další zásuvné moduly.</string>
+    <string name="print_service_help_title_2">Povolení zásuvného modulu</string>
+    <string name="print_service_help_msg_2">Po stažení zásuvného modulu tiskové služby budete vyzváni k povolení tohoto modulu. Označte jej a přetáhněte přepínač do polohy zapnuto.</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">Nápověda k tisku</string>
+    <string name="print_help_activity_title_1">Kontrola, zda je zásuvný modul tiskové služby nainstalován a povolen</string>
+    <string name="print_help_activity_msg_1_part_1">Jestliže chcete tisknout, musíte mít nainstalován a povolen zásuvný modul tiskové služby. Každý značka tiskáren má vlastní zásuvný modul, který vám umožňuje tisknout z mobilního zařízení. K dispozici jsou rovněž obecné zásuvné moduly. Vyberte si zásuvný modul, který vám nejvíce vyhovuje. Kdykoli můžete přidat další zásuvné moduly.</string>
+    <string name="print_help_activity_msg_1_part_2">Po stažení zásuvného modulu tiskové služby budete vyzváni k povolení tohoto modulu. Označte jej a přetáhněte přepínač do polohy zapnuto.</string>
+    <string name="print_help_activity_msg_1_link">Kontrola zásuvných modulů tiskové služby</string>
+    <string name="print_help_activity_title_2">Ujistěte se, že jsou vaše mobilní zařízení i tiskárna připojeny ve stejné síti.</string>
+    <string name="print_help_activity_msg_2">Vaše mobilní zařízení i tiskárna musí být připojeny k místní síti Wi-Fi. Přečtěte si informace o zařízení k síti Wi-Fi a podle pokynů se připojte.</string>
+    <string name="print_help_activity_title_3">Zkontrolujte, že na tiskárně nejsou chybové zprávy ani problémy s napájeném</string>
+    <string name="print_help_activity_msg_3">Obvyklými problémy je nízká hladina inkoustu, zaseknutí papíru nebo chybějící papír. Kromě toho zkontrolujte, zda je tiskárna připojena k napájení.</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">Tisk na papír 4 x 5</string>
+    <string name="snap_shots_prompt_ok">POKRAČOVAT</string>
+    <string name="snap_shots_prompt_do_not_show">Znovu nezobrazovat.</string>
+    <string name="snap_shots_prompt_message">Jako formát papíru jste vybrali 4 × 5. Na následující obrazovce uvidíte 4 × 6, ale nebojte se, stránka se vytiskne správně.</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">Správce tiskové služby</string>
+    <string name="plugin_manager_sub_title">Jestliže chcete tisknout, musíte mít nainstalovaného a povoleného správce tiskové služby.</string>
+
+    <string-array name="plugin_names">
+        <item>Zásuvný model tiskové služby HP</item>
+        <item>Tisková služba Mopria</item>
+        <item>Zásuvný model tiskové služby Brother</item>
+        <item>Zásuvný model tiskové služby Samsung</item>
+        <item>Tisková služba Canon</item>
+        <item>Povolení funkcí tisku Epson</item>
+        <item>Zásuvný modul tiskové služby – jiný</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+        <item>N/A</item>
+    </string-array>
+
+    <string name="continue_to_print">POKRAČOVAT V TISKU</string>
+    <string name="skip">PŘESKOČIT</string>
+    <string name="before_enable_tips">Budete přesměrováni na nastavení tisku v systému Android.</string>
+    <string name="before_enable_tips_title">Povolení zásuvného modulu</string>
+    <string name="ok">PŘEJÍT NA NASTAVENÍ</string>
+    <string name="cancel">ZRUŠIT</string>
+    <string name="enabled">Povoleno</string>
+    <string name="disabled">Zakázáno</string>
 
 </resources>

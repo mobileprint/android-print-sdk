@@ -11,11 +11,33 @@
         android:background="@drawable/hp"
         android:layout_centerVertical="true"/>
 
+    <FrameLayout
+        android:id="@+id/plugin_state_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent">
+
+        <TextView
+            android:id="@+id/plugin_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/downloading_arrow"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+    </FrameLayout>
+
     <RelativeLayout
         android:id="@+id/text_layout"
         android:layout_width="fill_parent"
         android:layout_height="72dp"
-        android:layout_toLeftOf="@+id/plugin_state"
+        android:layout_toLeftOf="@+id/plugin_state_frame"
         android:layout_toRightOf="@+id/print_service_plugin_id"
         android:layout_marginLeft="15dp">
 
@@ -46,25 +68,5 @@
             android:layout_below="@+id/center_mark"/>
 
     </RelativeLayout>
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@android:color/transparent">
-
-        <TextView
-            android:id="@+id/plugin_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/downloading_arrow"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:gravity="center"/>
-
-    </FrameLayout>
 
 </RelativeLayout>

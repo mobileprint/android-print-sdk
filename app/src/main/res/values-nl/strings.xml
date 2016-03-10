@@ -48,4 +48,62 @@
   <string name="hp_print_helper_header">Hulp bij de Print Service</string>
   <string name="install_print_plugin_msg">Installeer de juiste plugin voor jouw printer en schakel deze in om de mooiste foto\'s te printen.</string>
 
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">Informatie over printservice</string>
+    <string name="print_service_help_title_1">Een printservice-plugin downloaden</string>
+    <string name="print_service_help_msg_1">Je moet een printservice-plugin installeren om te kunnen printen. Voor elk printermerk is er een aparte plugin waarmee je vanaf je mobiele device kunt printen. Er zijn ook universele printservice-plugins beschikbaar. Selecteer de plugin die voor jou het meest geschikt is. Je kunt op elk gewenst moment meer print-plugins toevoegen.</string>
+    <string name="print_service_help_title_2">Plugin inschakelen</string>
+    <string name="print_service_help_msg_2">Nadat je een printservice-plugin hebt gedownload, moet je de plugin inschakelen. Selecteer de plugin en tik op de schakelaar om hem \'AAN\' te zetten.</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">Help bij printen</string>
+    <string name="print_help_activity_title_1">Zorg dat de printservice-plugin is geïnstalleerd en ingeschakeld</string>
+    <string name="print_help_activity_msg_1_part_1">Je moet een printservice-plugin installeren en inschakelen om te kunnen printen. Voor elk printermerk is er een aparte plugin waarmee je vanaf je mobiele device kunt printen. Er zijn ook universele printservice-plugins beschikbaar. Selecteer de plugin die voor jou het meest geschikt is. Je kunt op elk gewenst moment meer print-plugins toevoegen.</string>
+    <string name="print_help_activity_msg_1_part_2">Nadat je een printservice-plugin hebt gedownload, moet je de plugin inschakelen. Selecteer de plugin en tik op de schakelaar om hem \'AAN\' te zetten.</string>
+    <string name="print_help_activity_msg_1_link">Je printservice-plugins controleren</string>
+    <string name="print_help_activity_title_2">Je mobiele device en de printer moeten op hetzelfde netwerk zijn aangesloten</string>
+    <string name="print_help_activity_msg_2">Het mobiele device en de printer moeten verbonden zijn met je lokale Wi-Fi-netwerk. Bekijk de Wi-Fi-informatie van beide apparaten en volg de instructies om verbinding te maken.</string>
+    <string name="print_help_activity_title_3">Controleer op de printer of er foutmeldingen of voedingsproblemen zijn</string>
+    <string name="print_help_activity_msg_3">Gangbare printerproblemen zijn: onvoldoende inkt, vastgelopen papier of geen papier geladen. Controleer ook of de printer aan staat.</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">Printen op 4x5-papier</string>
+    <string name="snap_shots_prompt_ok">DOORGAAN</string>
+    <string name="snap_shots_prompt_do_not_show">Niet meer weergeven.</string>
+    <string name="snap_shots_prompt_message">Je hebt 4x5 als papierformaat geselecteerd. Op het volgende scherm wordt 4x6 weergegeven, maar je print wordt op het goede formaat afgedrukt.</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">Printservicemanager</string>
+    <string name="plugin_manager_sub_title">Je moet een printservice-plugin installeren en inschakelen om te kunnen printen.</string>
+
+    <string-array name="plugin_names">
+        <item>HP printservice-plugin</item>
+        <item>Mopria printservice</item>
+        <item>Brother printservice-plugin</item>
+        <item>Samsung printservice-plugin</item>
+        <item>Canon printservice</item>
+        <item>Epson printondersteuning</item>
+        <item>Andere printservice-plugin</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+        <item>N.v.t.</item>
+    </string-array>
+
+    <string name="continue_to_print">DOORGAAN MET PRINTEN</string>
+    <string name="skip">OVERSLAAN</string>
+    <string name="before_enable_tips">Je gaat naar de Android-printinstellingen.</string>
+    <string name="before_enable_tips_title">Schakel de plugin in</string>
+    <string name="ok">GA NAAR INSTELLINGEN</string>
+    <string name="cancel">ANNULEREN</string>
+    <string name="enabled">Ingeschakeld</string>
+    <string name="disabled">Uitgeschakeld</string>
+
 </resources>

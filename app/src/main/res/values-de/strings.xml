@@ -48,4 +48,62 @@
   <string name="hp_print_helper_header">Print Service Helper</string>
   <string name="install_print_plugin_msg">Um Fotos in bester Qualität zu drucken, installieren und aktivieren Sie bitte das entsprechende Plugin für Ihren Drucker.</string>
 
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">Informationen zum Druckdienst</string>
+    <string name="print_service_help_title_1">Druckdienst-Plugin abrufen</string>
+    <string name="print_service_help_msg_1">Zum Drucken muss ein Druckdienst-Plugin installiert sein. Jede Druckermarke verfügt über eigene Plugins, die Ihnen das Drucken über Ihr Mobilgerät ermöglichen. Es stehen auch generische Druckdienst-Plugins zur Verfügung. Wählen Sie das Plugin aus, das Ihre Anforderungen am besten erfüllt. Sie können jederzeit weitere Druck-Plugins hinzufügen.</string>
+    <string name="print_service_help_title_2">Plugin aktivieren</string>
+    <string name="print_service_help_msg_2">Nach dem Herunterladen eines Druckdienst-Plugins werden Sie aufgefordert, das Plugin zu aktivieren. Wählen Sie das Plugin aus und schieben Sie den Schalter auf „EIN“.</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">Hilfe zur Druckfunktion</string>
+    <string name="print_help_activity_title_1">Sicherstellen, dass Ihr Druckdienst-Plugin installiert und aktiviert ist</string>
+    <string name="print_help_activity_msg_1_part_1">Zum Drucken muss ein Druckdienst-Plugin installiert und aktiviert sein. Jede Druckermarke verfügt über eigene Plugins, die Ihnen das Drucken über Ihr Mobilgerät ermöglichen. Es stehen auch generische Druckdienst-Plugins zur Verfügung. Wählen Sie das Plugin aus, das Ihre Anforderungen am besten erfüllt. Sie können jederzeit weitere Druck-Plugins hinzufügen.</string>
+    <string name="print_help_activity_msg_1_part_2">Nach dem Herunterladen eines Druckdienst-Plugins werden Sie aufgefordert, das Plugin zu aktivieren. Wählen Sie das Plugin aus und schieben Sie den Schalter auf „EIN“.</string>
+    <string name="print_help_activity_msg_1_link">Druckdienst-Plugins überprüfen</string>
+    <string name="print_help_activity_title_2">Sicherstellen, dass Mobilgerät und Drucker mit demselben Netzwerk verbunden sind</string>
+    <string name="print_help_activity_msg_2">Ihr Mobilgerät und Drucker müssen mit Ihrem lokalen Wi-Fi-Netzwerk verbunden sein. Überprüfen Sie die Wi-Fi-Informationen beider Geräte und folgen Sie den jeweiligen Anweisungen, um die Verbindung herzustellen.</string>
+    <string name="print_help_activity_title_3">Überprüfen des Druckers auf Fehlermeldungen oder Probleme mit der Stromversorgung</string>
+    <string name="print_help_activity_msg_3">Häufige Druckerprobleme sind: zu wenig Tinte, Papierstau, kein Papier eingelegt. Überprüfen Sie auch, ob der Drucker an die Stromversorgung angeschlossen ist.</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">Drucken auf Papier im Format 10x13 cm</string>
+    <string name="snap_shots_prompt_ok">WEITER</string>
+    <string name="snap_shots_prompt_do_not_show">Meldung nicht wieder anzeigen.</string>
+    <string name="snap_shots_prompt_message">Sie haben 10x13 cm als Papierformat ausgewählt. Auf dem nächsten Bildschirm wird 10x15 cm angezeigt, es wird jedoch im richtigen Format gedruckt.</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">Druckdienst-Manager</string>
+    <string name="plugin_manager_sub_title">Zum Drucken muss ein Druckdienst-Plugin installiert und aktiviert sein.</string>
+
+    <string-array name="plugin_names">
+        <item>HP Druckdienst-Plugin</item>
+        <item>Mopria-Druckdienst</item>
+        <item>Brother-Druckdienst-Plugin</item>
+        <item>Samsung-Druckdienst-Plugin</item>
+        <item>Canon-Druckdienst</item>
+        <item>Epson Print Enabler</item>
+        <item>Sonstige Druckdienst-Plugins</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+        <item>–</item>
+    </string-array>
+
+    <string name="continue_to_print">WEITER ZUM DRUCK</string>
+    <string name="skip">ÜBERSPRINGEN</string>
+    <string name="before_enable_tips">Sie werden zu den Android-Druckeinstellungen weitergeleitet.</string>
+    <string name="before_enable_tips_title">Plugin aktivieren</string>
+    <string name="ok">ZU EINSTELLUNGEN WECHSELN</string>
+    <string name="cancel">ABBRECHEN</string>
+    <string name="enabled">Aktiviert</string>
+    <string name="disabled">Deaktiviert</string>
+
 </resources>

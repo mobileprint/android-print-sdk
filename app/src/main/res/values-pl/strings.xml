@@ -48,4 +48,61 @@
   <string name="hp_print_helper_header">Print Service Helper</string>
   <string name="install_print_plugin_msg">Aby drukować zdjęcia najlepszej jakości, zainstaluj i włącz dodatek odpowiedni dla swojej drukarki.</string>
 
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">Informacje na temat usługi drukowania</string>
+    <string name="print_service_help_title_1">Pobieranie dodatku do usługi drukowania</string>
+    <string name="print_service_help_msg_1">Aby drukowanie było możliwe, należy zainstalować dodatek do usługi drukowania. Każda marka drukarek ma własny dodatek, który umożliwia drukowanie z urządzenia przenośnego. Dostępne są również ogólne dodatki do usługi drukowania. Wybierz dodatek najlepiej odpowiadający Twoim potrzebom. W dowolnym momencie można dodać kolejne dodatki umożliwiające drukowanie.</string>
+    <string name="print_service_help_title_2">Włączanie dodatku</string>
+    <string name="print_service_help_msg_2">Po pobraniu dodatku do usługi drukowania zostanie wyświetlony monit o jego włączenie. Wystarczy go zaznaczyć i ustawić przełącznik w pozycji „Włączone”.</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">Pomoc dla opcji drukowania</string>
+    <string name="print_help_activity_title_1">Sprawdzanie, czy dodatek do usługi drukowania został zainstalowany i włączony</string>
+    <string name="print_help_activity_msg_1_part_1">Aby drukowanie było możliwe, należy zainstalować i włączyć dodatek do usługi drukowania. Każda marka drukarek ma własny dodatek, który umożliwia drukowanie z urządzenia przenośnego. Dostępne są również ogólne dodatki do usługi drukowania. Wybierz dodatek najlepiej odpowiadający Twoim potrzebom. W dowolnym momencie można dodać kolejne dodatki umożliwiające drukowanie.</string>
+    <string name="print_help_activity_msg_1_part_2">Po pobraniu dodatku do usługi drukowania zostanie wyświetlony monit o jego włączenie. Wystarczy go zaznaczyć i ustawić przełącznik w pozycji „Włączone”.</string>
+    <string name="print_help_activity_msg_1_link">Sprawdź dodatki do usługi drukowania</string>
+    <string name="print_help_activity_title_2">Sprawdzanie, czy urządzenie przenośne i drukarka zostały podłączone do tej samej sieci</string>
+    <string name="print_help_activity_msg_2">Urządzenie przenośne i drukarkę należy podłączyć do lokalnej sieci Wi-Fi. Zapoznaj się informacjami na temat sieci Wi-Fi dla obydwu urządzeń i postępuj zgodnie z instrukcjami, aby nawiązać połączenie.</string>
+    <string name="print_help_activity_title_3">Sprawdzanie komunikatów o błędach lub problemów z zasilaniem drukarki</string>
+    <string name="print_help_activity_msg_3">Niektóre typowe problemy z drukarką to niski poziom tuszu, zacięcie papieru oraz brak papieru. Dodatkowo należy sprawdzić, czy do drukarki podłączono zasilanie.</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">Drukowanie na papierze 4 x 5</string>
+    <string name="snap_shots_prompt_ok">KONTYNUUJ</string>
+    <string name="snap_shots_prompt_do_not_show">Nie pokazuj więcej tej informacji.</string>
+    <string name="snap_shots_prompt_message">Wybrano papier o rozmiarze 4 x 5. Na następnym ekranie zostanie pokazany rozmiar 4 x 6, ale nie należy się tym martwić, wydruk będzie prawidłowy.</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">Print Service Manager</string>
+    <string name="plugin_manager_sub_title">Aby drukowanie było możliwe, należy zainstalować i włączyć dodatek do usługi drukowania.</string>
+
+    <string-array name="plugin_names">
+        <item>HP Print Service Plugin</item>
+        <item>Mopria Print Service</item>
+        <item>Brother Print Service Plugin</item>
+        <item>Samsung Print Service Plugin</item>
+        <item>Canon Print Service</item>
+        <item>Epson Print Enabler</item>
+        <item>Inne dodatki do usługi drukowania</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+        <item>N/D</item>
+    </string-array>
+
+    <string name="continue_to_print">KONTYNUUJ DRUKOWANIE</string>
+    <string name="skip">POMIŃ</string>
+    <string name="before_enable_tips">Nastąpi przekierowanie do ustawień drukowania w systemie Android.</string>
+    <string name="before_enable_tips_title">Włączanie dodatku</string>
+    <string name="ok">PRZEJDŹ DO USTAWIEŃ</string>
+    <string name="cancel">ANULUJ</string>
+    <string name="enabled">Włączony</string>
+    <string name="disabled">Wyłączony</string>
 </resources>
