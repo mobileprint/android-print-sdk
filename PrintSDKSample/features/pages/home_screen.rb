@@ -7,7 +7,7 @@ class HomeScreen < Calabash::ABase
   end
 
   def screen_title
-      "* text:'PrintSDKSample'"
+      "* text:'Print SDK'"
   end
 
 

@@ -59,7 +59,7 @@ public class PrintPreview extends AppCompatActivity {
 
     private static final PrintAttributes.MediaSize[] defaultMediaSizes = {
         PrintAttributes.MediaSize.NA_INDEX_4X6,
-        new PrintAttributes.MediaSize("na_5x7_5x7in", "android", 5000, 7000),
+        PrintUtil.mediaSize5x7,
         PrintAttributes.MediaSize.NA_LETTER
     };
 
@@ -109,7 +109,7 @@ public class PrintPreview extends AppCompatActivity {
         // add 4x5 as needed
         String text = "";
         if (PrintUtil.is4x5media) {
-            text = PrintUtil.mediaSize4x5Label;
+            text = (String) getText(R.string.preview_spinner_4x5);
             spinnerMap.put(text, PrintAttributes.MediaSize.NA_INDEX_4X6);
             spinnerList.add(text);
         }
@@ -156,9 +156,21 @@ public class PrintPreview extends AppCompatActivity {
     }
 
     private String getSpinnerText(PrintAttributes.MediaSize mediaSize){
-        String widthText = fmt(mediaSize.getWidthMils() / 1000f);
-        String heightText = fmt(mediaSize.getHeightMils() / 1000f);
-        return String.format("%s x %s", widthText, heightText);
+        String spinnerText = mediaSize.getLabel(getPackageManager());
+
+        if (mediaSize == PrintAttributes.MediaSize.NA_INDEX_4X6) {
+            spinnerText = (String) getText(R.string.preview_spinner_4x6);
+        } else if (mediaSize == PrintUtil.mediaSize5x7) {
+            spinnerText = (String) getText(R.string.preview_spinner_5x7);
+        } else if (mediaSize == PrintAttributes.MediaSize.NA_LETTER) {
+            spinnerText = (String) getText(R.string.preview_spinner_letter);
+        }
+        return  spinnerText;
+
+//        Note: Below is the no localized spinner text
+//        String widthText = fmt(mediaSize.getWidthMils() / 1000f);
+//        String heightText = fmt(mediaSize.getHeightMils() / 1000f);
+//        return String.format("%s x %s", widthText, heightText);
     }
 
 
@@ -248,7 +260,7 @@ public class PrintPreview extends AppCompatActivity {
 
                 PrintItem printItem = printJobData.getPrintItem(spinnerMap.get(spinnerSelectedText));
                 if (printItem != null && printItem.getMediaSize() != null) {
-                    if (spinnerSelectedText == PrintUtil.mediaSize4x5Label) {
+                    if (spinnerSelectedText == getText(R.string.preview_spinner_4x5)) {
                         paperWidth = 4;
                         paperHeight = 5;
                     } else {
@@ -258,7 +270,7 @@ public class PrintPreview extends AppCompatActivity {
                 } else {
                     printItem = printJobData.getDefaultPrintItem();
                     PrintAttributes.MediaSize mediaSize = spinnerMap.get(spinnerSelectedText);
-                    if (spinnerSelectedText == PrintUtil.mediaSize4x5Label) {
+                    if (spinnerSelectedText == getText(R.string.preview_spinner_4x5)) {
                         paperWidth = 4;
                         paperHeight = 5;
                     } else {
