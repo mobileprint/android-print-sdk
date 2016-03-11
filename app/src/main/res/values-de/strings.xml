@@ -23,12 +23,10 @@
   <string name="paper_type">Papiertyp</string>
   <string name="lib_font"/>
 
-    <string-array name="paper_size_array">
-        <item> 10x13 cm </item>
-        <item> 10x15 cm </item>
-        <item> 13x18 cm </item>
-        <item> 21,59x27,94 cm </item>
-    </string-array>
+    <string name="preview_spinner_4x5"> 10x13 cm </string>
+    <string name="preview_spinner_4x6"> 10x15 cm </string>
+    <string name="preview_spinner_5x7"> 13x18 cm </string>
+    <string name="preview_spinner_letter"> 21,59x27,94 cm </string>
 
   <string-array name="paper_type_array">
     <item>Fotopapier</item>

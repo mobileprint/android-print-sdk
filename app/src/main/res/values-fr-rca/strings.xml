@@ -23,12 +23,10 @@
   <string name="paper_type">Type de papier</string>
   <string name="lib_font"/>
 
-    <string-array name="paper_size_array">
-        <item> 4 x 5 po </item>
-        <item> 4 x 6 po </item>
-        <item> 5 x 7 po </item>
-        <item> 8,5 x 11 po </item>
-    </string-array>
+    <string name="preview_spinner_4x5"> 4 x 5 po </string>
+    <string name="preview_spinner_4x6"> 4 x 6 po </string>
+    <string name="preview_spinner_5x7"> 5 x 7 po </string>
+    <string name="preview_spinner_letter"> 8,5 x 11 po </string>
 
 
   <string-array name="paper_type_array">

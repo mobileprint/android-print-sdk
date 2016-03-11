@@ -23,12 +23,10 @@
   <string name="paper_type">Тип бумаги</string>
   <string name="lib_font"/>
 
-    <string-array name="paper_size_array">
-        <item> 4 x 5 </item>
-        <item> 4 x 6 </item>
-        <item> 5 x 7 </item>
-        <item> 8,5 x 11 </item>
-    </string-array>
+    <string name="preview_spinner_4x5"> 4 x 5 </string>
+    <string name="preview_spinner_4x6"> 4 x 6 </string>
+    <string name="preview_spinner_5x7"> 5 x 7 </string>
+    <string name="preview_spinner_letter"> 8,5 x 11 </string>
 
   <string-array name="paper_type_array">
     <item>Фотобумага</item>
