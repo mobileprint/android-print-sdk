@@ -23,6 +23,7 @@ import android.print.PrintManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hp.mss.hpprint.R;
 import com.hp.mss.hpprint.activity.PrintPluginManagerActivity;
 import com.hp.mss.hpprint.activity.PrintPreview;
 import com.hp.mss.hpprint.adapter.HPPrintDocumentAdapter;
@@ -88,7 +89,7 @@ public class PrintUtil {
 
         if(printJobData == null){
             Log.e(TAG, "Please set PrintJobData first");
-            Toast.makeText(activity.getApplicationContext(), TAG + ": " + "Please set PrintJobData first", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity.getApplicationContext(), TAG + ": " + R.string.set_print_job_data, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -115,7 +116,7 @@ public class PrintUtil {
     public static void readyToPrint(Activity activity) {
         if(printJobData == null) {
             Log.e(TAG, "Please set PrintJobData first");
-            Toast.makeText(activity.getApplicationContext(), TAG + ": " + "Please set PrintJobData first", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity.getApplicationContext(), TAG + ": " + R.string.set_print_job_data, Toast.LENGTH_LONG).show();
             return;
         }
 

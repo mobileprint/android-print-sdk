@@ -102,4 +102,7 @@
     <string name="cancel">CANCEL</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
+
+    <!--Toast Strings-->
+    <string name="set_print_job_data">Please set PrintJobData first</string>
 </resources>
