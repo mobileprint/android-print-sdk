@@ -18,7 +18,6 @@
     <string name="print">Print</string>
     <string name="print_settings">PRINT SETTINGS</string>
     <string name="printing_help">PRINTING HELP</string>
-    <string name="custom_data_desc">CUSTOM DATA</string>
     <string name="print_plugin_manager">Print Plugin Manager</string>
     <string name="print_plugin_manager_description">Help users install their printers PSP</string>
     <string name="print_help_menu">Print Help Menu</string>
