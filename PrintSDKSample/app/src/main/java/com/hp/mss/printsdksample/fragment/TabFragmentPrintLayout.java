@@ -21,7 +21,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.hp.mss.hpprint.model.ImagePrintItem;
@@ -42,7 +45,11 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
     PrintItem.ScaleType scaleType;
     PrintAttributes.Margins margins;
     boolean showMetricsDialog;
+    boolean showCustomData;
     PrintJobData printJobData;
+    EditText tagText;
+    EditText valueText;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +76,11 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
 //        deviceIdSwitch.setOnCheckedChangeListener(this);
 //        onCheckedChanged(deviceIdSwitch, deviceIdSwitch.isChecked());
 
+        tagText = (EditText) inflatedView.findViewById(R.id.tagEditText);
+        valueText = (EditText) inflatedView.findViewById(R.id.valueEditText);
+        LinearLayout customData = (LinearLayout) inflatedView.findViewById(R.id.customData);
+        showCustomData = customData.getVisibility() == View.VISIBLE;
+
         FloatingActionButton printButton = (FloatingActionButton) inflatedView.findViewById(R.id.printBtn);
         printButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -82,6 +94,7 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
     public void continueButtonClicked(View v) {
         createPrintJobData();
         PrintUtil.setPrintJobData(printJobData);
+        createCustomData();
 //        PrintUtil.sendPrintMetrics = showMetricsDialog;
         PrintUtil.print(getActivity());
     }
@@ -202,6 +215,11 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
                 .setMediaSize(PrintAttributes.MediaSize.NA_LETTER)
                 .build();
         printJobData.setPrintDialogOptions(printAttributes);
+    }
+
+    private void createCustomData() {
+        if (showCustomData)
+            PrintUtil.customData.put(tagText.getText(), valueText.getText());
     }
 
     @Override

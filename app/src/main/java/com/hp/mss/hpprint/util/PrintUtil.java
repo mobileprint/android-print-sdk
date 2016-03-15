@@ -52,6 +52,7 @@ public class PrintUtil {
     public static boolean is4x5media;
     public static boolean doNotEncryptDeviceId = false;
     public static boolean uniqueDeviceIdPerApp = true;
+    public static HashMap customData = new HashMap();
 
     public static final PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "5 x 7", 5000, 7000);
 
