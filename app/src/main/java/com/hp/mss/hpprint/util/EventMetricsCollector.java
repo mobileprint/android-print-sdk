@@ -67,12 +67,14 @@ public class EventMetricsCollector {
     private static final String NOT_AVAILABLE = "Not Available";
     private static final String NUM_OF_PLUGINS_INSTALLED = "num_of_plugins_installed";
     private static final String NUM_OF_PLUGINS_ENABLED = "num_of_plugins_enabled";
+    private static final String CUSTOM_DATA = "custom_data";
 
     String printSessionId;
     String eventCount;
     String eventTypeId;
     String numOfPluginsInstalled;
     String numOfPluginsEnabled;
+    String customData;
     Activity hostActivity;
     PrintPluginStatusHelper pluginStatusHelper;
 
@@ -144,6 +146,7 @@ public class EventMetricsCollector {
         if(eventTypeId != null) combinedMetrics.put(EVENT_TYPE_ID_LABLE, eventTypeId);
         if(numOfPluginsEnabled != null) combinedMetrics.put(NUM_OF_PLUGINS_ENABLED, numOfPluginsEnabled);
         if(numOfPluginsInstalled != null) combinedMetrics.put(NUM_OF_PLUGINS_INSTALLED, numOfPluginsInstalled);
+        if(customData != null) combinedMetrics.put(CUSTOM_DATA,customData);
 
         return combinedMetrics;
     }
@@ -152,6 +155,11 @@ public class EventMetricsCollector {
 
         this.numOfPluginsEnabled = String.valueOf(pluginStatusHelper.getNumOfPluginsEnabled());
         this.numOfPluginsInstalled = String.valueOf(pluginStatusHelper.getNumOfPluginsInstalled());
+
+        if(PrintUtil.customData.isEmpty())
+            this.customData = "N/A";
+        else
+            this.customData = PrintUtil.customData.toString();
 
         switch (type) {
             case ENTERED_PRINT_SDK:

@@ -18,10 +18,14 @@
     <string name="print">Print</string>
     <string name="print_settings">PRINT SETTINGS</string>
     <string name="printing_help">PRINTING HELP</string>
+    <string name="custom_data_desc">CUSTOM DATA</string>
     <string name="print_plugin_manager">Print Plugin Manager</string>
     <string name="print_plugin_manager_description">Help users install their printers PSP</string>
     <string name="print_help_menu">Print Help Menu</string>
     <string name="print_help_menu_description">Provide help content within your application</string>
+    <string name="custom_data_title">Please enter the custom data below</string>
+    <string name="custom_data_tag">Tag</string>
+    <string name="custom_data_value">Value</string>
     <string name="asset">Asset</string>
     <string name="layout_option">PAGE LAYOUT</string>
     <string name="layout_center">Center</string>
@@ -39,4 +43,5 @@
     <string name="content_pdf">PDF</string>
     <string name="content_image">Image</string>
     <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
+    <string name="add_constom_data">Add Data</string>
 </resources>

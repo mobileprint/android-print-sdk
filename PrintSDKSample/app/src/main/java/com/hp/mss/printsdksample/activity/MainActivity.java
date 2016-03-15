@@ -48,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         printLayoutFragment = new TabFragmentPrintLayout();
         printHelpFragment = new TabFragmentPrintHelp();
+
         adapter.addFrag(printLayoutFragment, getResources().getString(R.string.print_settings));
         adapter.addFrag(printHelpFragment, getResources().getString(R.string.printing_help));
+
         viewPager.setAdapter(adapter);
     }
 

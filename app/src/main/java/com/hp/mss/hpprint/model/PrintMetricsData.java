@@ -15,6 +15,8 @@ package com.hp.mss.hpprint.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hp.mss.hpprint.util.PrintUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +48,7 @@ public class PrintMetricsData implements Parcelable {
     private static final String CONTENT_HEIGHT_PIXELS = "content_height_pixels";
     private static final String NUM_OF_PLUGINS_INSTALLED = "num_of_plugins_installed";
     private static final String NUM_OF_PLUGINS_ENABLED = "num_of_plugins_enabled";
+    private static final String CUSTOM_DATA = "custom_data";
 
 
     public static final String PRINT_RESULT_FAILED = "Fail";
@@ -69,6 +72,7 @@ public class PrintMetricsData implements Parcelable {
     public String contentHeightPixels;
     public String numOfPluginsInstalled;
     public String numOfPluginsEnabled;
+    public String customData;
 
 
     public PrintMetricsData() {
@@ -76,6 +80,10 @@ public class PrintMetricsData implements Parcelable {
         this.printerLocation = DATA_NOT_AVAILABLE;
         this.printerModel = DATA_NOT_AVAILABLE;
         this.printerName = DATA_NOT_AVAILABLE;
+        if(PrintUtil.customData.isEmpty())
+            this.customData = "N/A";
+        else
+            this.customData = PrintUtil.customData.toString();
     }
 
     public PrintMetricsData(Parcel in) {
@@ -95,6 +103,7 @@ public class PrintMetricsData implements Parcelable {
         contentHeightPixels = in.readString();
         numOfPluginsInstalled = in.readString();
         numOfPluginsEnabled = in.readString();
+        customData = in.readString();
     }
 
     public PrintMetricsData(Map<String, String> map) {
@@ -114,6 +123,7 @@ public class PrintMetricsData implements Parcelable {
         this.contentHeightPixels = map.get(CONTENT_HEIGHT_PIXELS);
         this.numOfPluginsInstalled = map.get(NUM_OF_PLUGINS_INSTALLED);
         this.numOfPluginsEnabled = map.get(NUM_OF_PLUGINS_ENABLED);
+        this.customData = map.get(CUSTOM_DATA);
     }
 
     public Map<String, String> toMap() {
@@ -135,6 +145,7 @@ public class PrintMetricsData implements Parcelable {
         if (contentHeightPixels != null) map.put(CONTENT_HEIGHT_PIXELS, this.contentHeightPixels);
         if (numOfPluginsInstalled != null) map.put(NUM_OF_PLUGINS_INSTALLED, this.numOfPluginsInstalled);
         if (numOfPluginsEnabled != null) map.put(NUM_OF_PLUGINS_ENABLED, this.numOfPluginsEnabled);
+        if (customData != null) map.put(CUSTOM_DATA, this.customData);
 
         return map;
     }
@@ -162,6 +173,7 @@ public class PrintMetricsData implements Parcelable {
         out.writeString(contentHeightPixels);
         out.writeString(numOfPluginsInstalled);
         out.writeString(numOfPluginsEnabled);
+        out.writeString(customData);
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
