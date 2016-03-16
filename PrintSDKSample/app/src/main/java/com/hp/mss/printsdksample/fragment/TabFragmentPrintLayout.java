@@ -218,6 +218,7 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
     }
 
     private void createCustomData() {
+        PrintUtil.customData.clear();
         if (showCustomData)
             PrintUtil.customData.put(tagText.getText(), valueText.getText());
     }
