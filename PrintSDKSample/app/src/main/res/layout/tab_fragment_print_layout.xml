@@ -279,7 +279,7 @@
                 android:padding="10dp"
                 android:layout_below="@+id/marginLayout"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/customDataDesc"
