@@ -21,7 +21,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
-        versionName "v2.00.320"
+        versionName "v2.00.321"
 
         if (org.gradle.internal.os.OperatingSystem.current().windows == false) {
             def cmd = "git rev-parse --short HEAD"
@@ -29,9 +29,9 @@ android {
             sha = proc.text.trim()
 //            cmd = "git rev-list HEAD --count"
 //            proc = cmd.execute()
-            versionCode = 320
+            versionCode = 321
         } else {
-            versionCode = 320
+            versionCode = 321
         }
 
 //        def f1 = new File('hpprint_ver.txt')
