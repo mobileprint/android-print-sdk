@@ -16,30 +16,51 @@ And (/^I check the pop up - Print plugin is present or not$/) do
     end
 end
 
-
 Then (/^I select paper size as "([^"]*)"$/) do |paper_size|
-    sleep(MAX_TIMEOUT)
-    $os_version = getOSversion
+    sleep(APPIUM_TIMEOUT)
     $paper_size = paper_size
-    if $os_version < '5.0'
-        wait.until { selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner") }
-        selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner").click   
-        wait.until {selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']")}
-        if selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']").size > 0
-        selenium.find_element(:xpath,"//android.widget.TextView[@text='#{paper_size}']").click
+    if $paper_size == "4 x 5"
+        selenium.back
+        wait.until { selenium.find_element(:id,"com.hp.mss.droidphoto:id/paper_size_spinner") }
+        selenium.find_element(:id,"com.hp.mss.droidphoto:id/paper_size_spinner").click
+        wait.until {selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']")}
+        if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").size > 0
+            selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").click
         else
             raise "Failed to select Paper!"
         end
+        macro %Q|I select the printer "#{$PrinterName}" if available|        
     else
-        wait.until { selenium.find_element(:xpath,"//android.widget.TextView[@text='Paper size:']") }
-        selenium.find_element(:xpath,"//android.widget.TextView[@text='Paper size:']").click
+        if $os_version >= '5.0'
+            wait.until { selenium.find_element(:xpath,"//android.widget.TextView[@text='Paper size:']") }
+            selenium.find_element(:xpath,"//android.widget.TextView[@text='Paper size:']").click
+        end
         wait.until { selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner") }
-        selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner").click       
-        wait.until {selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']")}
-        if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").size > 0
-        selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").click
+        selenium.find_element(:id,"com.android.printspooler:id/paper_size_spinner").click
+        sleep(APPIUM_TIMEOUT)
+        if $os_version < '5.0'
+           # wait.until {selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']")}
+            if selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']").size > 0
+                selenium.find_element(:xpath,"//android.widget.TextView[@text='#{paper_size}']").click
+            else if selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{$paper_arr["#{paper_size}"]}']").size > 0
+                selenium.find_element(:xpath,"//android.widget.TextView[@text='#{$paper_arr["#{paper_size}"]}']").click
+            else
+                    raise "Failed to select Paper!"
+            end
+            end
         else
-            raise "Failed to select Paper!"
+            
+            # wait.until {selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']")}
+            if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").size > 0
+                selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").click
+            else if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{$paper_arr["#{paper_size}"]}']").size > 0
+                selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{$paper_arr["#{paper_size}"]}']").click
+            else
+                    raise "Failed to select Paper!"
+            end
+            end
+
+            puts selenium.find_element(:id,"android:id/text1").text
         end
     end
 end

@@ -18,7 +18,7 @@ Then(/^I tap to enable "(.*?)" if installed$/) do |plugin_name|
         index =1
     else if plugin_name == "Mopria Print Service"
         index =2
-    else if plugin_name == "Brother Print Service Plugin"
+    else if plugin_name == "Samsung Print Service Plugin"
         index =3
     else if plugin_name == "Canon Print Service"
         index =4

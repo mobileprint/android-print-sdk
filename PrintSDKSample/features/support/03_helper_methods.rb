@@ -242,7 +242,7 @@ def check_value_exists item
 end
 def installed_plugin_count
     installed_plugin_arr=Array.new
-    package = ["com.hp.android.printservice","org.mopria.printplugin","jp.co.canon.android.printservice.plugin","com.brother.printservice"]
+    package = ["com.hp.android.printservice","org.mopria.printplugin","jp.co.canon.android.printservice.plugin","com.sec.app.samsungprintservice"]
         
     package.each do |subitem|
         package_version = %x(adb shell dumpsys package #{subitem})
@@ -253,3 +253,9 @@ def installed_plugin_count
     installed_plugin_count = installed_plugin_arr.length
     return installed_plugin_count
 end
+ $paper_arr = {
+        "4x6 in" => "Photo-4x6 in",
+        "5x7 in" => "Photo-5x7 in",
+        "Legal" => "Main-Legal",
+        "Letter" => "Main-Letter"
+       }

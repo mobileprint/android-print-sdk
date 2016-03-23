@@ -11,7 +11,7 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
 
       | HP Print Service Plugin      |
       | Mopria Print Service         |
-      | Brother Print Service Plugin |
+      | Samsung Print Service Plugin |
       | Canon Print Service          |
       | Epson Print Enabler          |
       | Other PrintServicePlugin     |
@@ -26,7 +26,7 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
 
       | HP Print Service Plugin      |
       | Mopria Print Service         |
-      | Brother Print Service Plugin |
+      | Samsung Print Service Plugin |
       | Canon Print Service          |
       | Epson Print Enabler          |
       | Other PrintServicePlugin     |
@@ -47,7 +47,7 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
       | plugin_name             |
       | HP Print Service Plugin |
       | Mopria Print Service    |
-#        |Brother Print Service Plugin|
+#        |Samsung Print Service Plugin|
 #        |Canon Print Service|
 #        |Epson Print Enabler|
 #        |Other PrintServicePlugin|
