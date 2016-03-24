@@ -23,10 +23,10 @@
   <string name="paper_type">Тип бумаги</string>
   <string name="lib_font"/>
 
-    <string name="preview_spinner_4x5"> 4 x 5 </string>
-    <string name="preview_spinner_4x6"> 4 x 6 </string>
-    <string name="preview_spinner_5x7"> 5 x 7 </string>
-    <string name="preview_spinner_letter"> 8,5 x 11 </string>
+  <string name="preview_spinner_4x5"> 10x13cm (4x5”) </string>
+  <string name="preview_spinner_4x6"> 10x15cm (4x6”) </string>
+  <string name="preview_spinner_5x7"> 13x18cm (5x7”) </string>
+  <string name="preview_spinner_letter"> 21,59x27,94cm (8,5x11”) </string>
 
   <string-array name="paper_type_array">
     <item>Фотобумага</item>
@@ -66,7 +66,7 @@
 
 
     <!-- Snap Shots Prompt -->
-    <string name="snap_shots_prompt_header">Печать на бумаге 4 x 5</string>
+    <string name="snap_shots_prompt_header">Печать на бумаге 10x13cm (4x5")</string>
     <string name="snap_shots_prompt_ok">ПРОДОЛЖИТЬ</string>
     <string name="snap_shots_prompt_do_not_show">Больше не показывать это сообщение.</string>
     <string name="snap_shots_prompt_message">Возможно, выбран неправильный размер бумаги. The next screen will show 4x6, but don\'t worry, it will print correctly.</string>
