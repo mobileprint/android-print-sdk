@@ -25,7 +25,7 @@ import java.util.Map;
  * needed to build the print job.
  */
 public class PrintJobData implements Parcelable{
-    private String jobName;
+    private String jobName = "default";
 
     private Map<PrintAttributes.MediaSize, PrintItem> printItems;
 

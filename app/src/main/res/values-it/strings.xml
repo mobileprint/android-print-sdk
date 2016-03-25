@@ -23,10 +23,10 @@
   <string name="paper_type">Tipo carta</string>
   <string name="lib_font"/>
 
-    <string name="preview_spinner_4x5"> 4 x 5 </string>
-    <string name="preview_spinner_4x6"> 4 x 6 </string>
-    <string name="preview_spinner_5x7"> 5 x 7 </string>
-    <string name="preview_spinner_letter"> 8,5 x 11 </string>
+  <string name="preview_spinner_4x5"> 10x13cm (4x5”) </string>
+  <string name="preview_spinner_4x6"> 10x15cm (4x6”) </string>
+  <string name="preview_spinner_5x7"> 13x18cm (5x7”) </string>
+  <string name="preview_spinner_letter"> 21,59x27,94cm (8,5x11”) </string>
 
   <string-array name="paper_type_array">
     <item>Carta fotografica</item>
@@ -66,10 +66,10 @@
 
 
     <!-- Snap Shots Prompt -->
-    <string name="snap_shots_prompt_header">Stampa su carta 4x5</string>
+    <string name="snap_shots_prompt_header">Stampa su carta 10x13cm (4x5")</string>
     <string name="snap_shots_prompt_ok">CONTINUA</string>
     <string name="snap_shots_prompt_do_not_show">Non visualizzare più questo messaggio.</string>
-    <string name="snap_shots_prompt_message">Hai scelto 4x5 come formato di carta. La schermata successiva mostra 4x6, tuttavia la stampa risulterà corretta.</string>
+    <string name="snap_shots_prompt_message">Hai scelto 10x13cm (4x5") come formato di carta. La schermata successiva mostra 10x15cm (4x6”), tuttavia la stampa risulterà corretta.</string>
 
     <!-- Print Plugin Manager -->
     <string name="plugin_manager_title">Manager Servizi di stampa</string>
