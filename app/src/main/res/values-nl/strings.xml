@@ -104,4 +104,6 @@
     <string name="enabled">Ingeschakeld</string>
     <string name="disabled">Uitgeschakeld</string>
 
+  <!--Toast Strings-->
+  <string name="set_print_job_data">Stel eerst PrintJobData in</string>
 </resources>

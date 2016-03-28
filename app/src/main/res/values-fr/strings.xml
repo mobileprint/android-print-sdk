@@ -104,4 +104,6 @@
     <string name="enabled">Activé</string>
     <string name="disabled">Désactivé</string>
 
+  <!--Toast Strings-->
+  <string name="set_print_job_data">Commencez par choisir les données à imprimer</string>
 </resources>

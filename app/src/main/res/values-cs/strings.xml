@@ -104,4 +104,7 @@
     <string name="enabled">Povoleno</string>
     <string name="disabled">Zakázáno</string>
 
+    <!--Toast Strings-->
+    <string name="set_print_job_data">Nejdříve nastavte PrintJobData</string>
+
 </resources>

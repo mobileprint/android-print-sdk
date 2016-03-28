@@ -105,4 +105,6 @@
     <string name="enabled">Ativado</string>
     <string name="disabled">Desativado</string>
 
+  <!--Toast Strings-->
+  <string name="set_print_job_data">Defina um PrintJobData em primeiro lugar.</string>
 </resources>
