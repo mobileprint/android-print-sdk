@@ -230,26 +230,47 @@ def check_elements_exist item
 end
 
 def check_value_exists item
+    $os_version = getOSversion
     if item.kind_of?(Array)
-  item.each do |subitem|
-   check_value_exists subitem
-  end
- else
-  plugin_length = selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{item}']")
-    raise "#{item} not found!" unless plugin_length.size > 0
- end
-
+        item.each do |subitem|
+           
+            check_value_exists subitem
+        end
+    else
+         if item == "Samsung Print Service Plugin" && $os_version >= '5.0'
+             puts "skipping-check for Samsung plugin(Kitkat only)"
+         else if item == "Brother Print Service Plugin" && $os_version < '5.0'
+                puts "skipping-check for Brother plugin(Lollipop only)"
+         else
+                     plugin_length = selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{item}']")
+                    raise "#{item} not found!" unless plugin_length.size > 0
+         end
+         end
+    end
 end
 def installed_plugin_count
     installed_plugin_arr=Array.new
-    package = ["com.hp.android.printservice","org.mopria.printplugin","jp.co.canon.android.printservice.plugin","com.brother.printservice"]
-        
+    package = ["com.hp.android.printservice","org.mopria.printplugin","jp.co.canon.android.printservice.plugin","com.sec.app.samsungprintservice","com.brother.printservice"]
+
     package.each do |subitem|
-        package_version = %x(adb shell dumpsys package #{subitem})
-        if package_version.length >0
-            installed_plugin_arr.push(subitem)
-        end
+      if subitem == "com.sec.app.samsungprintservice" && $os_version >= '5.0'
+        puts "skipping-check for Samsung plugin(Kitkat only)"
+      else if subitem == "com.brother.printservice" && $os_version < '5.0'
+             puts "skipping-check for Brother plugin(Lollipop only)"
+           else
+             package_version = %x(adb shell dumpsys package #{subitem})
+             if package_version.length >0
+               installed_plugin_arr.push(subitem)
+             end
+           end
+      end
     end
     installed_plugin_count = installed_plugin_arr.length
     return installed_plugin_count
 end
+ $paper_arr = {
+        "4x6 in" => "Photo-4x6 in",
+        "5x7 in" => "Photo-5x7 in",
+        "Legal" => "Main-Legal",
+        "Letter" => "Main-Letter"
+       }

@@ -11,7 +11,8 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
 
       | HP Print Service Plugin      |
       | Mopria Print Service         |
-      | Brother Print Service Plugin |
+      | Samsung Print Service Plugin |
+      |Brother Print Service Plugin  |
       | Canon Print Service          |
       | Epson Print Enabler          |
       | Other PrintServicePlugin     |
@@ -20,13 +21,15 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
   @regression
   Scenario: verify plugin helper screen  from Preview
     Given I am on Home screen
-    And I select preview button
+    And I tap on "PRINTING HELP" option
+    And I tap on print plugin manager
     Then I should see "Print Service Manager" screen
     And I should see the following
 
       | HP Print Service Plugin      |
       | Mopria Print Service         |
-      | Brother Print Service Plugin |
+      | Samsung Print Service Plugin |
+      |Brother Print Service Plugin  |
       | Canon Print Service          |
       | Epson Print Enabler          |
       | Other PrintServicePlugin     |
@@ -47,7 +50,8 @@ Feature: Pre-condition: Print Plugin needs to be disabled/uninstalled to verify 
       | plugin_name             |
       | HP Print Service Plugin |
       | Mopria Print Service    |
-#        |Brother Print Service Plugin|
+     #|Samsung Print Service Plugin|
+     # |Brother Print Service Plugin  |
 #        |Canon Print Service|
 #        |Epson Print Enabler|
 #        |Other PrintServicePlugin|

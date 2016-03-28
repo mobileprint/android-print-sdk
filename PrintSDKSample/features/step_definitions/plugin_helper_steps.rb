@@ -5,6 +5,7 @@ Then(/^I should see the skip option$/) do
         
 end
 Then(/^I should see "(.*?)" screen$/) do |screen_name|
+    $flag = ""
     if screen_name == "Print Service Manager"
     element_xpath="//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.TextView[1]"
 	wait.until { selenium.find_element(:xpath,element_xpath) }
@@ -14,11 +15,12 @@ Then(/^I should see "(.*?)" screen$/) do |screen_name|
 end
 
 Then(/^I tap to enable "(.*?)" if installed$/) do |plugin_name|
+    $os_version = getOSversion
     if plugin_name == "HP Print Service Plugin"
         index =1
-    else if plugin_name == "Mopria Print Service"
+    else if plugin_name == "Samsung Print Service Plugin" || plugin_name == "Brother Print Service Plugin"
         index =2
-    else if plugin_name == "Brother Print Service Plugin"
+    else if plugin_name == "Mopria Print Service"    
         index =3
     else if plugin_name == "Canon Print Service"
         index =4
@@ -33,21 +35,33 @@ Then(/^I tap to enable "(.*?)" if installed$/) do |plugin_name|
     end
     end
     end
-element_id ="//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[2]/android.widget.RelativeLayout[1]/android.widget.ListView[1]/android.widget.RelativeLayout[#{index.to_i}]/android.widget.FrameLayout[1]/android.widget.TextView[1]"
-        
-    if selenium.find_element(:xpath,element_id).text == "Disabled"
-        selenium.find_element(:xpath,element_id).click
+    if plugin_name == "Samsung Print Service Plugin" && $os_version >= '5.0'
+        puts "skipping-check for Samsung plugin(Kitkat only)"
+        $flag = "false"
+    else if plugin_name == "Brother Print Service Plugin" && $os_version < '5.0'
+        puts "skipping-check for Brother plugin(Lollipop only)"
+        $flag = "false"
     else
-        raise "#{plugin_name} not installed!"
-end
+        element_id ="//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[2]/android.widget.RelativeLayout[1]/android.widget.ListView[1]/android.widget.RelativeLayout[#{index.to_i}]/android.widget.FrameLayout[1]/android.widget.TextView[1]"
+        if selenium.find_element(:xpath,element_id).text == "Disabled"
+            selenium.find_element(:xpath,element_id).click
+        else
+            raise "#{plugin_name} not installed!"
+        end
 
+    end
+    end
 end
 
 Then(/^I should see "(.*?)" pop up$/) do |dialog_title|
-  element_id="com.hp.mss.printsdksample:id/dialog_title"
-	wait.until { selenium.find_element(:id,element_id) }
-    home_title = selenium.find_element(:id,element_id).text
-    raise "Error Screen" unless home_title == "Enable your Plugin"  
+    if $flag != "false"
+        element_id="com.hp.mss.printsdksample:id/dialog_title"
+        wait.until { selenium.find_element(:id,element_id) }
+        home_title = selenium.find_element(:id,element_id).text
+        raise "Error Screen" unless home_title == "Enable your Plugin"  
+    else
+        puts "skipping-not applicable"
+    end
 end
 
 
