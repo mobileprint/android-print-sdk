@@ -46,62 +46,64 @@
   <string name="hp_print_helper_header">Помощник службы печати</string>
   <string name="install_print_plugin_msg">Чтобы добиться максимально высокого качества фотографий, установите и активируйте соответствующий подключаемый модуль для своего принтера.</string>
 
-    <!-- Print Service Plugin Information -->
-    <string name="title_activity_print_service_plugin_info">Print Service Information</string>
-    <string name="print_service_help_title_1">Get a Print Service Plugin</string>
-    <string name="print_service_help_msg_1">You must have a print service plugin installed to print. Each brand of printer has their own plugin that enables you to print from your mobile device. Generic print service plugins are also available. Select the plugin that serves you best. You can add additional print plugins anytime.</string>
-    <string name="print_service_help_title_2">Enable Plugin</string>
-    <string name="print_service_help_msg_2">After downloading a Print Service Plugin, you will be prompted to enable your plugin. Just select it and tap the switch to “ON”.</string>
+  <!-- Print Service Plugin Information -->
+  <string name="title_activity_print_service_plugin_info">Информация об услугах печати</string>
+  <string name="print_service_help_title_1">Получить подключаемый модуль услуг печати</string>
+  <string name="print_service_help_msg_1">Для печати необходимо установить подключаемый модуль услуг печати. Для каждой марки принтера существует свой подключаемый модуль, который позволит выполнить печать с вашего мобильного устройства. Доступны также универсальные подключаемые модули услуг печати. Выберите наиболее подходящий подключаемый модуль. Дополнительные подключаемые модули печати можно добавить в любое время.</string>
+  <string name="print_service_help_title_2">Включить подключаемый модуль</string>
+  <string name="print_service_help_msg_2">После загрузки подключаемого модуля услуг печати будет предложено включить его. Просто выберите его и переведите переключатель в положение “ВКЛ”.</string>
 
-    <!-- Print Help -->
-    <string name="title_activity_print_help">Печать справки</string>
-    <string name="print_help_activity_title_1">Ensure your Print Service Plugin is installed and enabled</string>
-    <string name="print_help_activity_msg_1_part_1">You must have a print service plugin installed and enabled to print. Each brand of printer has their own plugin that enables you to print from your mobile device. Generic print service plugins are also available. Select the plugin that serves you best. You can add additional print plugins anytime.</string>
-    <string name="print_help_activity_msg_1_part_2">After downloading a Print Service Plugin, you will be prompted to enable your plugin. Just select it and tap the switch to “ON”.</string>
-    <string name="print_help_activity_msg_1_link">Check your Print Service Plugins</string>
-    <string name="print_help_activity_title_2">Убедитесь в том, что и устройство, и принтер подключены к одной и той же сети.</string>
-    <string name="print_help_activity_msg_2">Your mobile device and printer must be connected to your local Wi-Fi network. Review both of your device’s Wi-Fi information and follow instructions to connect.</string>
-    <string name="print_help_activity_title_3">Check your printer for any error messages or power issues</string>
-    <string name="print_help_activity_msg_3">Some common printer issues are low ink, a paper jam, and paper not loaded. Additionally check to ensure there is power to the printer.</string>
+  <!-- Print Help -->
+  <string name="title_activity_print_help">Справка по печати</string>
+  <string name="print_help_activity_title_1">Убедитесь, что подключаемый модуль услуг печати установлен и включен</string>
+  <string name="print_help_activity_msg_1_part_1">Для печати необходимо установить подключаемый модуль услуг печати и включить его. Для каждой марки принтера существует свой подключаемый модуль, который позволит выполнить печать с вашего мобильного устройства. Доступны также универсальные подключаемые модули услуг печати. Выберите наиболее подходящий подключаемый модуль. Дополнительные подключаемые модули печати можно добавить в любое время.</string>
+  <string name="print_help_activity_msg_1_part_2">После загрузки подключаемого модуля услуг печати будет предложено включить его. Просто выберите его и переведите переключатель в положение “ВКЛ”.</string>
+  <string name="print_help_activity_msg_1_link">Проверьте подключаемые модули услуг печати</string>
+  <string name="print_help_activity_title_2">Убедитесь, что мобильное устройство и принтер подключены к одной сети.</string>
+  <string name="print_help_activity_msg_2">Мобильное устройство и принтер должны быть подключены к локальной сети Wi-Fi. Проверьте параметры Wi-Fi на обоих устройствах и следуйте инструкциям для подключения.</string>
+  <string name="print_help_activity_title_3">Проверьте принтер на наличие сообщений об ошибках или проблем с питанием.</string>
+  <string name="print_help_activity_msg_3">Наиболее распространенными проблемами принтеров являются низкий уровень чернил, замятие бумаги или ее отсутствие. Также проверьте питание принтера.</string>
 
 
-    <!-- Snap Shots Prompt -->
-    <string name="snap_shots_prompt_header">Печать на бумаге 10x13cm (4x5")</string>
-    <string name="snap_shots_prompt_ok">ПРОДОЛЖИТЬ</string>
-    <string name="snap_shots_prompt_do_not_show">Больше не показывать это сообщение.</string>
-    <string name="snap_shots_prompt_message">Возможно, выбран неправильный размер бумаги. The next screen will show 4x6, but don\'t worry, it will print correctly.</string>
+  <!-- Snap Shots Prompt -->
+  <string name="snap_shots_prompt_header">Печать на бумаге 10x13cm (4x5")</string>
+  <string name="snap_shots_prompt_ok">ПРОДОЛЖИТЬ</string>
+  <string name="snap_shots_prompt_do_not_show">Больше не показывать это сообщение.</string>
+  <string name="snap_shots_prompt_message">Выбран размер бумаги 10x13cm (4x5"). На следующем экране отобразится 10x15cm (4x6”), не беспокойтесь - печать будет выполнена правильно.</string>
 
-    <!-- Print Plugin Manager -->
-    <string name="plugin_manager_title">Print Service Manager</string>
-    <string name="plugin_manager_sub_title">You need a Print Service Plugin installed &amp; enabled to print.</string>
+  <!-- Print Plugin Manager -->
+  <string name="plugin_manager_title">Диспетчер услуг печати</string>
+  <string name="plugin_manager_sub_title">Для печати необходимо установить подключаемый модуль услуг печати и включить его.</string>
 
-    <string-array name="plugin_names">
-        <item>Подключаемый модуль HP Print</item>
-        <item>Mopria Print Service</item>
-        <item>Brother Print Service Plugin</item>
-        <item>Samsung Print Service Plugin</item>
-        <item>Canon Print Service</item>
-        <item>• Печатные рекламные материалы</item>
-        <item>Другие операционные системы </item>
-    </string-array>
+  <string-array name="plugin_names">
+    <item>HP Print Service Plugin</item>
+    <item>Mopria Print Service</item>
+    <item>Brother Print Service Plugin</item>
+    <item>Samsung Print Service Plugin</item>
+    <item>Canon Print Service</item>
+    <item>Epson Print Enabler</item>
+    <item>Другой подключаемый модуль услуг печати</item>
+  </string-array>
 
-    <string-array name="plugin_makers">
-        <item>HP, Inc.:</item>
-        <item>Mopria Alliance</item>
-        <item>Brother Industries, Ltd.</item>
-        <item>Samsung Electronics Co., Ltd.</item>
-        <item>Canon Inc.</item>
-        <item>Seiko Epson Corporation</item>
-        <item>Нет</item>
-    </string-array>
+  <string-array name="plugin_makers">
+    <item>HP Inc.</item>
+    <item>Mopria Alliance</item>
+    <item>Brother Industries, Ltd.</item>
+    <item>Samsung Electronics Co., Ltd.</item>
+    <item>Canon Inc.</item>
+    <item>Seiko Epson Corporation</item>
+    <item>Н/д</item>
+  </string-array>
 
-    <string name="continue_to_print">Печать шаблона CONTINUE</string>
-    <string name="skip">Пропустить</string>
-    <string name="before_enable_tips">You will be directed to the Android Print Settings.</string>
-    <string name="before_enable_tips_title">Enable your Plugin</string>
-    <string name="ok">ПАРАМЕТРЫ ФОТОГРАФИЙ</string>
-    <string name="cancel">ОТМЕНА</string>
-    <string name="enabled">Активировано</string>
-    <string name="disabled">Отключено</string>
+  <string name="continue_to_print">ПРОДОЛЖИТЬ ПЕЧАТЬ</string>
+  <string name="skip">ПРОПУСТИТЬ</string>
+  <string name="before_enable_tips">Вы будете перенаправлены к настройкам печати Android.</string>
+  <string name="before_enable_tips_title">Включите подключаемый модуль</string>
+  <string name="ok">ПЕРЕЙТИ К НАСТРОЙКАМ</string>
+  <string name="cancel">ОТМЕНА </string>
+  <string name="enabled">Включено</string>
+  <string name="disabled">Отключено</string>
 
+  <!--Toast Strings-->
+  <string name="set_print_job_data">Сначала установите PrintJobData</string>
 </resources>

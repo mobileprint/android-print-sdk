@@ -104,4 +104,7 @@
     <string name="cancel">Annuler</string>
     <string name="enabled">Activé</string>
     <string name="disabled">Désactivé</string>
+
+  <!--Toast Strings-->
+  <string name="set_print_job_data">Veuillez définir les données de la tâche d’impression d’abord</string>
 </resources>
