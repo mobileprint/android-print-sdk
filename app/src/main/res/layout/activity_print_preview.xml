@@ -35,6 +35,7 @@
             android:textSize="17sp"
             android:layout_marginTop="2dp"
             android:paddingLeft="22dp"
+            android:paddingRight="10dp"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             style="@style/previewPaperSizeSpinnerText"/>

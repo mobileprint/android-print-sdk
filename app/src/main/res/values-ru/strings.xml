@@ -23,10 +23,10 @@
   <string name="paper_type">Тип бумаги</string>
   <string name="lib_font"/>
 
-  <string name="preview_spinner_4x5"> 10x13cm (4x5”) </string>
-  <string name="preview_spinner_4x6"> 10x15cm (4x6”) </string>
-  <string name="preview_spinner_5x7"> 13x18cm (5x7”) </string>
-  <string name="preview_spinner_letter"> 21,59x27,94cm (8,5x11”) </string>
+  <string name="preview_spinner_4x5"> 10x13cm </string>
+  <string name="preview_spinner_4x6"> 10x15cm </string>
+  <string name="preview_spinner_5x7"> 13x18cm </string>
+  <string name="preview_spinner_letter"> 21,59x27,94cm </string>
 
   <string-array name="paper_type_array">
     <item>Фотобумага</item>
