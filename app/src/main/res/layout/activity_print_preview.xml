@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/paper_size_title"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:text="@string/paper_size"
             android:gravity="left|bottom"
             android:textSize="17sp"
@@ -44,7 +44,7 @@
             android:id="@+id/paper_size_spinner"
             android:paddingBottom="1dp"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/paper_size_title"
             android:spinnerMode="dialog"

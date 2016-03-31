@@ -34,7 +34,7 @@
 
     <!-- Print Preview -->
     <string name="print_preview_menu_help">Печать справки</string>
-    <string name="print_preview_menu_print_service_plugins">Print Service Plugins</string>
+    <string name="print_preview_menu_print_service_plugins">Подключаемые модули услуг печати</string>
 
     <!-- Print Plugin installation -->
   <string name="hp_print_plugin_alert_header">Подключаемый модуль HP Print</string>
