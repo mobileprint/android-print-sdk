@@ -329,6 +329,7 @@ public class PrintPreview extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         disablePrintButton = false;
+        initializeSpinnerData();
     }
 
 }

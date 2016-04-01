@@ -251,7 +251,7 @@ end
 def installed_plugin_count
     installed_plugin_arr=Array.new
     package = ["com.hp.android.printservice","org.mopria.printplugin","jp.co.canon.android.printservice.plugin","com.sec.app.samsungprintservice","com.brother.printservice"]
-        
+
     package.each do |subitem|
       if subitem == "com.sec.app.samsungprintservice" && $os_version >= '5.0'
         puts "skipping-check for Samsung plugin(Kitkat only)"

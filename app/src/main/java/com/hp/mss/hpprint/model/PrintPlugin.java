@@ -155,7 +155,10 @@ public class PrintPlugin {
             printServiceName = PrintPluginStatusHelper.MOPRIA_PRINT_SERVICE_NAME;
         }
         String enabledPrintServices = Settings.Secure.getString(context.getContentResolver(), "enabled_print_services");
-        return enabledPrintServices.toLowerCase().contains(printServiceName.toLowerCase());
+        if (null != enabledPrintServices)
+            return enabledPrintServices.toLowerCase().contains(printServiceName.toLowerCase());
+        else
+            return false;
     }
 
     /**

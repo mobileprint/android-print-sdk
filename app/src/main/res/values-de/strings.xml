@@ -23,10 +23,10 @@
   <string name="paper_type">Papiertyp</string>
   <string name="lib_font"/>
 
-    <string name="preview_spinner_4x5"> 10x13 cm </string>
-    <string name="preview_spinner_4x6"> 10x15 cm </string>
-    <string name="preview_spinner_5x7"> 13x18 cm </string>
-    <string name="preview_spinner_letter"> 21,59x27,94 cm </string>
+  <string name="preview_spinner_4x5"> 10x13cm </string>
+  <string name="preview_spinner_4x6"> 10x15cm </string>
+  <string name="preview_spinner_5x7"> 13x18cm </string>
+  <string name="preview_spinner_letter"> 21,59x27,94cm </string>
 
   <string-array name="paper_type_array">
     <item>Fotopapier</item>
@@ -66,10 +66,10 @@
 
 
     <!-- Snap Shots Prompt -->
-    <string name="snap_shots_prompt_header">Drucken auf Papier im Format 10x13 cm</string>
+    <string name="snap_shots_prompt_header">Drucken auf Papier im Format 10x13cm (4x5")</string>
     <string name="snap_shots_prompt_ok">WEITER</string>
     <string name="snap_shots_prompt_do_not_show">Meldung nicht wieder anzeigen.</string>
-    <string name="snap_shots_prompt_message">Sie haben 10x13 cm als Papierformat ausgewählt. Auf dem nächsten Bildschirm wird 10x15 cm angezeigt, es wird jedoch im richtigen Format gedruckt.</string>
+    <string name="snap_shots_prompt_message">Sie haben 10x13cm (4x5") als Papierformat ausgewählt. Auf dem nächsten Bildschirm wird 10x15cm (4x6”) angezeigt, es wird jedoch im richtigen Format gedruckt.</string>
 
     <!-- Print Plugin Manager -->
     <string name="plugin_manager_title">Druckdienst-Manager</string>
@@ -103,5 +103,8 @@
     <string name="cancel">ABBRECHEN</string>
     <string name="enabled">Aktiviert</string>
     <string name="disabled">Deaktiviert</string>
+
+  <!--Toast Strings-->
+  <string name="set_print_job_data">Stellen Sie zuerst PrintJobData ein.</string>
 
 </resources>

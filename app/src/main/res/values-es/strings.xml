@@ -23,10 +23,10 @@
   <string name="paper_type">Tipo de papel</string>
   <string name="lib_font"/>
 
-    <string name="preview_spinner_4x5"> 4 x 5 </string>
-    <string name="preview_spinner_4x6"> 4 x 6 </string>
-    <string name="preview_spinner_5x7"> 5 x 7 </string>
-    <string name="preview_spinner_letter"> 8,5 x 11 </string>
+  <string name="preview_spinner_4x5"> 10x13cm </string>
+  <string name="preview_spinner_4x6"> 10x15cm </string>
+  <string name="preview_spinner_5x7"> 13x18cm </string>
+  <string name="preview_spinner_letter"> 21,59x27,94cm </string>
 
   <string-array name="paper_type_array">
     <item>Papel fotográfico</item>
@@ -66,10 +66,10 @@
 
 
     <!-- Snap Shots Prompt -->
-    <string name="snap_shots_prompt_header">Impresión en papel de 4 x 5</string>
+    <string name="snap_shots_prompt_header">Impresión en papel de 10x13cm (4x5")</string>
     <string name="snap_shots_prompt_ok">CONTINUAR</string>
     <string name="snap_shots_prompt_do_not_show">No volver a mostrar.</string>
-    <string name="snap_shots_prompt_message">Ha seleccionado 4 x 5 como tamaño de papel. En la siguiente pantalla verá un tamaño de 4 x 6, pero no se preocupe, se imprimirá correctamente.</string>
+    <string name="snap_shots_prompt_message">Ha seleccionado 10x13cm (4x5") como tamaño de papel. En la siguiente pantalla verá un tamaño de 10x15cm (4x6”), pero no se preocupe, se imprimirá correctamente.</string>
 
     <!-- Print Plugin Manager -->
     <string name="plugin_manager_title">Print Service Manager</string>
@@ -103,5 +103,8 @@
     <string name="cancel">CANCELAR</string>
     <string name="enabled">Activado</string>
     <string name="disabled">Desactivado</string>
+
+  <!--Toast Strings-->
+  <string name="set_print_job_data">Establezca primero un PrintJobData.</string>
 
 </resources>

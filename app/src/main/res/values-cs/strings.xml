@@ -23,10 +23,10 @@
   <string name="paper_type">Typ papíru</string>
   <string name="lib_font"/>
 
-    <string name="preview_spinner_4x5"> 4 x 5 </string>
-    <string name="preview_spinner_4x6"> 4 x 6 </string>
-    <string name="preview_spinner_5x7"> 5 x 7 </string>
-    <string name="preview_spinner_letter"> 8,5 x 11 </string>
+    <string name="preview_spinner_4x5"> 10x13cm </string>
+    <string name="preview_spinner_4x6"> 10x15cm </string>
+    <string name="preview_spinner_5x7"> 13x18cm </string>
+    <string name="preview_spinner_letter"> 21,59x27,94cm </string>
 
   <string-array name="paper_type_array">
         <item>Fotografický papír</item>
@@ -66,10 +66,10 @@
 
 
     <!-- Snap Shots Prompt -->
-    <string name="snap_shots_prompt_header">Tisk na papír 4 x 5</string>
+    <string name="snap_shots_prompt_header">Tisk na papír 10x13cm (4x5")</string>
     <string name="snap_shots_prompt_ok">POKRAČOVAT</string>
     <string name="snap_shots_prompt_do_not_show">Znovu nezobrazovat.</string>
-    <string name="snap_shots_prompt_message">Jako formát papíru jste vybrali 4 × 5. Na následující obrazovce uvidíte 4 × 6, ale nebojte se, stránka se vytiskne správně.</string>
+    <string name="snap_shots_prompt_message">Jako formát papíru jste vybrali 10x13cm (4x5"). Na následující obrazovce uvidíte 10x15cm (4x6”), ale nebojte se, stránka se vytiskne správně.</string>
 
     <!-- Print Plugin Manager -->
     <string name="plugin_manager_title">Správce tiskové služby</string>
@@ -103,5 +103,8 @@
     <string name="cancel">ZRUŠIT</string>
     <string name="enabled">Povoleno</string>
     <string name="disabled">Zakázáno</string>
+
+    <!--Toast Strings-->
+    <string name="set_print_job_data">Nejdříve nastavte PrintJobData</string>
 
 </resources>
