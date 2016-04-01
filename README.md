@@ -235,15 +235,12 @@ Currently, the Android Framework requires customers to install a print service p
 
 In order to improve the customers' print experience, we have created a helper that guides them to the print plugin play store page. The helper works by dectecting top five plugins. They are HP Print Sevice Plugin, Mopria Print Service, Canon Print Service, Epson Print Service, and Brother Print Service Plugin for Lollipop and above or Samsung Print Service Plugin for Kitkat. See below:
 
-The plugin check will happen when PrintUtil.print() is called. If none of above plugins is installed and enabled, the Print 
+The plugin check will happen when PrintUtil.print() is called. If none of above plugins is installed and enabled, the Print Service Manager will display, and guild users to plugin install/enable process.
 
+Your program can also invoke Print Service Manager by adding:
+	```Intent pluginIntent = new Intent(context, PrintPluginManagerActivity.class);
+        ```startActivity(pluginIntent);
 
-
-You can disable the  print plugin install helper by setting:
-
-```java
-PrintUtil.showPluginHelper = false;
-```
 
 ## KitKat Print Preview (Lollipop has its own print preview functionality)
 
