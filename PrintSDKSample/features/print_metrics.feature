@@ -15,7 +15,7 @@ Scenario Outline: Print an Image/PDF with metrics option and verify print metric
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I tap on "PRINTING HELP" option
     And I tap on print plugin manager
-    Then I get the enabled plugin count
+    Then I get installed and enabled plugin count
     Then I navigate back
      And I tap on "PRINT SETTINGS" option
     And I select preview button 

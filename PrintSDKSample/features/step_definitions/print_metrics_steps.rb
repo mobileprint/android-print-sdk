@@ -184,12 +184,12 @@ Then(/^I check the app_type is "(.*?)"$/) do |app_type|
 end
 
 Then(/^I check the number of installed plugins$/) do
-    compare = ($mertics_details['num_of_plugins_installed'].to_i == installed_plugin_count) ?  true : false
+    compare = ($mertics_details['num_of_plugins_installed'].to_i == $installed_plugin_count.to_i) ?  true : false
     raise "no of installed plugins verification failed!" unless compare==true
 end
 
 Then(/^I check the number of enabled plugins$/) do
-    compare = ($mertics_details['num_of_plugins_enabled'].to_i == $plugin_count.to_i) ?  true : false
+    compare = ($mertics_details['num_of_plugins_enabled'].to_i == $enabled_plugin_count.to_i) ?  true : false
     raise "no of enabled plugins verification failed!" unless compare==true
 end
 
