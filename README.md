@@ -238,9 +238,11 @@ In order to improve the customers' print experience, we have created a helper th
 The plugin check will happen when PrintUtil.print() is called. If none of above plugins is installed and enabled, the Print Service Manager will display, and guild users to plugin install/enable process.
 
 Your program can also invoke Print Service Manager by adding:
-	```Intent pluginIntent = new Intent(context, PrintPluginManagerActivity.class);
-        ```startActivity(pluginIntent);
 
+```java
+Intent pluginIntent = new Intent(context, PrintPluginManagerActivity.class);
+startActivity(pluginIntent);
+```
 
 ## KitKat Print Preview (Lollipop has its own print preview functionality)
 
