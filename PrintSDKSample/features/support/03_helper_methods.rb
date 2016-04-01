@@ -253,10 +253,17 @@ def installed_plugin_count
     package = ["com.hp.android.printservice","org.mopria.printplugin","jp.co.canon.android.printservice.plugin","com.sec.app.samsungprintservice","com.brother.printservice"]
         
     package.each do |subitem|
-        package_version = %x(adb shell dumpsys package #{subitem})
-        if package_version.length >0
-            installed_plugin_arr.push(subitem)
-        end
+      if subitem == "com.sec.app.samsungprintservice" && $os_version >= '5.0'
+        puts "skipping-check for Samsung plugin(Kitkat only)"
+      else if subitem == "com.brother.printservice" && $os_version < '5.0'
+             puts "skipping-check for Brother plugin(Lollipop only)"
+           else
+             package_version = %x(adb shell dumpsys package #{subitem})
+             if package_version.length >0
+               installed_plugin_arr.push(subitem)
+             end
+           end
+      end
     end
     installed_plugin_count = installed_plugin_arr.length
     return installed_plugin_count
