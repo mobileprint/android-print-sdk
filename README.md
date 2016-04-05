@@ -302,7 +302,29 @@ Here is the image we will use for the examples:
 ![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
 
 ##Integrate with Legacy App
-
+If your application support minSdkVersion < 19, to be able to compile with this Print SDK, add following line to AndroidManufest.xml as following:
+```java
+<application
+....
+    <activity
+       .....
+    </activity>
+    <uses-sdk tools:overrideLibrary="com.hp.mss.hpprint" />
+</application>
+```
+In your app, dynamically check users' OS version, only call print SDK when OS version is Kitkat and above which Android API >= 19 as following:
+```java
+if(Build.VERSION.SDK_INT >= 19) {
+    PrintUtil.print() 
+}
+```
+In your app, dynamically check users' OS version, only call Print Plugin Helper when OS version is Kitkat and above which Android API > 19 as following:
+```java
+if(Build.VERSION.SDK_INT >= 19) {
+    Intent intent = new Intent(getActivity(), PrintPluginManagerActivity.class);
+    startActivity(intent);
+}
+```
 
 ## Troubleshooting
 Please see our Wiki [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting) page.
