@@ -2,7 +2,7 @@
 
 A library to simplify development of printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
 
-Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
+Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with OS older than KitKat will not be able to print using our library workflow. Please see [instructions](##Integrate) if you want to compile the SDK with older version app, but only call Print functionality from Kitkat and above.
 
 By using the HP Mobile Print SDK, you agree to HP's [terms & conditions](http://assets.print-dev.com/sdk-resources/terms/HP-Mobile-Print-SDK-Terms.pdf).
 
@@ -300,6 +300,9 @@ Here is the image we will use for the examples:
 
 ## Top Left
 ![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
+
+## Integrate
+
 
 ## Troubleshooting
 Please see our Wiki [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting) page.
