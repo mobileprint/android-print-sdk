@@ -234,8 +234,8 @@ class YourCallingActivity extends ActionBarActivity implements PrintUtil.PrintMe
 Currently, the Android Framework requires customers to install a print service plugin for their printer on their device. Without the right plugin, the device will be unable to discover or use their printer.
 
 In order to improve the users' print experience, we have created a helper that guides users to the print plugin play store page. The helper works by dectecting top five plugins. They are HP Print Sevice Plugin, Mopria Print Service, Canon Print Service, Epson Print Service, and Brother Print Service Plugin for Lollipop and above or Samsung Print Service Plugin for Kitkat. See below:
-[Lollipop](https://s3-us-west-2.amazonaws.com/droidprint/images/Lollipop.png)
-[Kitkat](https://s3-us-west-2.amazonaws.com/droidprint/images/Kitkat.png)
+![Lollipop](https://s3-us-west-2.amazonaws.com/droidprint/images/Lollipop.png)
+![Kitkat](https://s3-us-west-2.amazonaws.com/droidprint/images/Kitkat.png)
 
 The plugin check will happen when PrintUtil.print() is called. If none of above plugins is installed and enabled, the Print Service Manager will display, and guild users to plugin install and enable process.
 
