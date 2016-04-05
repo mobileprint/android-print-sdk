@@ -312,13 +312,13 @@ If your application support minSdkVersion < 19, to be able to compile with this 
     <uses-sdk tools:overrideLibrary="com.hp.mss.hpprint" />
 </application>
 ```
-In your app, dynamically check users' OS version, only call print SDK when OS version is Kitkat and above which Android API >= 19 as following:
+In your app, dynamically check users' OS version, only call print SDK when OS version is Kitkat and above (Android API >= 19) as following:
 ```java
 if(Build.VERSION.SDK_INT >= 19) {
     PrintUtil.print() 
 }
 ```
-In your app, dynamically check users' OS version, only call Print Plugin Helper when OS version is Kitkat and above which Android API > 19 as following:
+In your app, dynamically check users' OS version, only call Print Plugin Helper when OS version is Kitkat and above (Android API > 19) as following:
 ```java
 if(Build.VERSION.SDK_INT >= 19) {
     Intent intent = new Intent(getActivity(), PrintPluginManagerActivity.class);
