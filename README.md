@@ -301,7 +301,7 @@ Here is the image we will use for the examples:
 ## Top Left
 ![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
 
-##Integrate with Legacy App
+## Integrate with Legacy App
 If your application support minSdkVersion < 19, to be able to compile with this Print SDK, add following line to AndroidManufest.xml as following:
 ```java
 <application
