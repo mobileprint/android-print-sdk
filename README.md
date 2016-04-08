@@ -2,7 +2,7 @@
 
 A library to simplify development of printing in apps on Android, as well as providing an improved user experience.  This library serves as an interface to Google Cloud Print and various other Print Plugins and services.
 
-Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with an older OS than KitKat will not be able to print using our library workflow.
+Note: Print functionality only exists starting in Android API versions 19 and beyond. Devices with OS older than KitKat will not be able to print using our library workflow. Please see [instructions](#integrate-with-legacy-app) if you want to compile the SDK with older version app, but only call Print functionality from Kitkat and above.
 
 By using the HP Mobile Print SDK, you agree to HP's [terms & conditions](http://assets.print-dev.com/sdk-resources/terms/HP-Mobile-Print-SDK-Terms.pdf).
 
@@ -233,12 +233,17 @@ class YourCallingActivity extends ActionBarActivity implements PrintUtil.PrintMe
 ### Print Service Plugin Install Helper
 Currently, the Android Framework requires customers to install a print service plugin for their printer on their device. Without the right plugin, the device will be unable to discover or use their printer.
 
-In order to improve the customer's print experience, we have created a helper that guides them to the print plugin play store page. The helper works by displaying an alert dialog when the customer hits print. 
+In order to improve the users' print experience, we have created a helper that guides users to the print plugin play store page. The helper works by dectecting the top five plugins. They are HP Print Sevice Plugin, Mopria Print Service, Canon Print Service, Epson Print Service, and Brother Print Service Plugin for Lollipop and above or Samsung Print Service Plugin for Kitkat. See below:
+![Lollipop](https://s3-us-west-2.amazonaws.com/droidprint/images/Lollipop.png)
+![Kitkat](https://s3-us-west-2.amazonaws.com/droidprint/images/Kitkat.png)
 
-You can disable the  print plugin install helper by setting:
+The plugin check will happen when PrintUtil.print() is called. If none of above plugins is installed and enabled, the Print Service Manager will display, and guide users through the plugin install and enable process.
+
+Your program can also invoke Print Service Manager by adding:
 
 ```java
-PrintUtil.showPluginHelper = false;
+Intent pluginIntent = new Intent(context, PrintPluginManagerActivity.class);
+startActivity(pluginIntent);
 ```
 
 ## KitKat Print Preview (Lollipop has its own print preview functionality)
@@ -297,6 +302,31 @@ Here is the image we will use for the examples:
 
 ## Top Left
 ![Top Left](https://s3-us-west-2.amazonaws.com/droidprint/images/top_left.jpeg)
+
+## Integrate with Legacy App
+If your application supports minSdkVersion < 19, to compile with this Print SDK, add 'overrideLibrary' property to AndroidManufest.xml as following:
+```java
+<application
+....
+    <activity
+       .....
+    </activity>
+    <uses-sdk tools:overrideLibrary="com.hp.mss.hpprint" />
+</application>
+```
+In your app, dynamically check users' OS version, only call print SDK when OS version is Kitkat and above (Android API >= 19) as following:
+```java
+if(Build.VERSION.SDK_INT >= 19) {
+    PrintUtil.print() 
+}
+```
+In your app, dynamically check users' OS version, only call Print Plugin Helper when OS version is Kitkat and above (Android API > 19) as following:
+```java
+if(Build.VERSION.SDK_INT >= 19) {
+    Intent intent = new Intent(getActivity(), PrintPluginManagerActivity.class);
+    startActivity(intent);
+}
+```
 
 ## Troubleshooting
 Please see our Wiki [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting) page.
