@@ -213,64 +213,97 @@
                 </RadioGroup>
             </RelativeLayout>
 
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/metricsLayout"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:layout_below="@+id/marginLayout">-->
+            <RelativeLayout
+                android:id="@+id/deviceIdLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/marginLayout"
+                android:layout_marginBottom="90dp"
+                android:visibility="visible">
 
-                <!--<TextView-->
-                    <!--android:id="@+id/metricsText"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/metrics_option"-->
-                    <!--android:textSize="14sp"-->
-                    <!--android:textAlignment="viewStart"-->
-                    <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-                    <!--android:layout_marginLeft="10dp"/>-->
+                <TextView
+                    android:id="@+id/deviceIdText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unique_device_id_per_app"
+                    android:textSize="14sp"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginLeft="10dp"/>
 
-                <!--<android.support.v7.widget.SwitchCompat-->
-                    <!--android:id="@+id/metricsRadioGroup"-->
-                    <!--android:layout_toRightOf="@+id/metricsText"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textOff="Off"-->
-                    <!--android:textOn="On"-->
-                    <!--android:showText="true"-->
-                    <!--android:layout_marginLeft="112dp"/>-->
-            <!--</RelativeLayout>-->
+                <View
+                    android:id="@+id/deviceIdTextDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_below="@+id/deviceIdText"
+                    android:layout_alignParentStart="true" />
 
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/deviceIdLayout"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/metricsLayout"-->
-                <!--android:layout_marginBottom="90dp">-->
+                <RadioGroup
+                    android:id="@+id/deviceIdRadioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/deviceIdTextDivider"
+                    android:checkedButton="@+id/notEncrypted"
+                    android:orientation="vertical"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="4dp">
 
-                <!--<TextView-->
-                    <!--android:id="@+id/deviceIdText"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/unique_device_id_per_app"-->
-                    <!--android:textSize="14sp"-->
-                    <!--android:textAlignment="viewStart"-->
-                    <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-                    <!--android:layout_marginLeft="10dp"/>-->
+                    <RadioButton
+                        android:id="@+id/notEncrypted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/not_encrypted"
+                        android:textColor="#b0b0b0" />
 
-                <!--<android.support.v7.widget.SwitchCompat-->
-                    <!--android:id="@+id/deviceIdRadioGroup"-->
-                    <!--android:layout_toRightOf="@+id/deviceIdText"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textOff="Off"-->
-                    <!--android:textOn="On"-->
-                    <!--android:checked="true"-->
-                    <!--android:showText="true"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_marginLeft="72dp"/>-->
-            <!--</RelativeLayout>-->
+                    <RadioButton
+                        android:id="@+id/uniquePerApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/unique_per_app"
+                        android:textColor="#b0b0b0" />
+
+                    <RadioButton
+                        android:id="@+id/uniquePerVendor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/unique_per_vendor"
+                        android:textColor="#b0b0b0" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/metricsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/deviceIdLayout"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/metricsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/metrics_option"
+                    android:textSize="14sp"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginLeft="10dp"/>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/metricsRadioGroup"
+                    android:layout_toRightOf="@+id/metricsText"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOff="Off"
+                    android:textOn="On"
+                    android:showText="true"
+                    android:layout_marginLeft="112dp"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/customData"

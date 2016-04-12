@@ -37,10 +37,13 @@
     <string name="layout_without_margin">None</string>
     <string name="layout_with_top_margin">Top Only</string>
     <string name="metrics_option">METRICS</string>
-    <string name="unique_device_id_per_app">UNIQUE APP ID</string>
+    <string name="unique_device_id_per_app">UNIQUE DEVICE ID</string>
     <string name="content_option">CONTENT TYPE</string>
     <string name="content_pdf">PDF</string>
     <string name="content_image">Image</string>
     <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
     <string name="add_constom_data">Add Data</string>
+    <string name="not_encrypted">Not Encrypted</string>
+    <string name="unique_per_app">Unique Per App</string>
+    <string name="unique_per_vendor">Unique Per Vendor</string>
 </resources>

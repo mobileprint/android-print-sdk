@@ -20,6 +20,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.widget.Toast;
 
 import com.hp.mss.hpprint.BuildConfig;
 import com.hp.mss.hpprint.util.PrintUtil;
@@ -36,6 +37,9 @@ import java.util.TimeZone;
  * It is used inside HP print SDK, you should not create this yourself.
  */
 public class ApplicationMetricsData {
+    private static final String DO_NOT_ENCRYPT_DEVICE_ID = "Device id is not encrypted";
+    private static final String APP_SPECIFIC_DEVICE_ID = "Device id is encrypted & app specific";
+    private static final String VENDOR_SPECIFIC_DEVICE_ID = "Device id is encrypted & vendor specific";
 
     private static final String TAG = "ApplicationMetricsData";
 
@@ -82,6 +86,7 @@ public class ApplicationMetricsData {
 
 
     public ApplicationMetricsData(final Context context) {
+        boolean isDebuggable =  ( 0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) );
 
         this.productId = context.getPackageName();
         this.productName = getAppLable(context);
@@ -89,10 +94,17 @@ public class ApplicationMetricsData {
 
         if (PrintUtil.doNotEncryptDeviceId) {
             this.deviceId = getDeviceId(context);
+            if(isDebuggable)
+                Toast.makeText(context, DO_NOT_ENCRYPT_DEVICE_ID, Toast.LENGTH_LONG).show();
         } else if (PrintUtil.uniqueDeviceIdPerApp) {
             this.deviceId = getAppSpecificDeviceID(context);
-        } else
+            if(isDebuggable)
+                Toast.makeText(context, APP_SPECIFIC_DEVICE_ID, Toast.LENGTH_LONG).show();
+        } else {
             this.deviceId = getVendorSpecificDeviceID(context);
+            if(isDebuggable)
+                Toast.makeText(context, VENDOR_SPECIFIC_DEVICE_ID, Toast.LENGTH_LONG).show();
+        }
 
         this.deviceType = Build.MODEL;
 //        this.manufacturer = Build.MANUFACTURER;

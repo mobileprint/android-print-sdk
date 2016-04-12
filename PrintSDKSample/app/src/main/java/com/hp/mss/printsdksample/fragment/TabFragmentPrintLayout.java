@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.print.PrintAttributes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,17 +65,17 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
         layoutMarginRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(layoutMarginRadioGroup, layoutMarginRadioGroup.getCheckedRadioButtonId());
 
-//        SwitchCompat metricsSwitch = (SwitchCompat) inflatedView.findViewById(R.id.metricsRadioGroup);
-//        metricsSwitch.setOnCheckedChangeListener(this);
-//        onCheckedChanged(metricsSwitch, metricsSwitch.isChecked());
+        SwitchCompat metricsSwitch = (SwitchCompat) inflatedView.findViewById(R.id.metricsRadioGroup);
+        metricsSwitch.setOnCheckedChangeListener(this);
+        onCheckedChanged(metricsSwitch, metricsSwitch.isChecked());
 
         RadioGroup contentRadioGroup = (RadioGroup) inflatedView.findViewById(R.id.contentRadioGroup);
         contentRadioGroup.setOnCheckedChangeListener(this);
         onCheckedChanged(contentRadioGroup, contentRadioGroup.getCheckedRadioButtonId());
 
-//        SwitchCompat deviceIdSwitch = (SwitchCompat) inflatedView.findViewById(R.id.deviceIdRadioGroup);
-//        deviceIdSwitch.setOnCheckedChangeListener(this);
-//        onCheckedChanged(deviceIdSwitch, deviceIdSwitch.isChecked());
+        RadioGroup deviceIdRadioGroup = (RadioGroup) inflatedView.findViewById(R.id.deviceIdRadioGroup);
+        deviceIdRadioGroup.setOnCheckedChangeListener(this);
+        onCheckedChanged(deviceIdRadioGroup, deviceIdRadioGroup.getCheckedRadioButtonId());
 
         tagText = (EditText) inflatedView.findViewById(R.id.tagEditText);
         valueText = (EditText) inflatedView.findViewById(R.id.valueEditText);
@@ -102,10 +103,8 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch(buttonView.getId()) {
-//            case R.id.deviceIdRadioGroup:
-//                PrintUtil.uniqueDeviceIdPerApp = isChecked;
-//            case R.id.metricsRadioGroup:
-//                showMetricsDialog = isChecked;
+            case R.id.metricsRadioGroup:
+                showMetricsDialog = isChecked;
             default:
         }
     }
@@ -142,6 +141,17 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
                 break;
             case R.id.contentImage:
                 contentType = "Image";
+                break;
+            case R.id.notEncrypted:
+                PrintUtil.doNotEncryptDeviceId = true;
+                break;
+            case R.id.uniquePerApp:
+                PrintUtil.doNotEncryptDeviceId = false;
+                PrintUtil.uniqueDeviceIdPerApp = true;
+                break;
+            case R.id.uniquePerVendor:
+                PrintUtil.doNotEncryptDeviceId = false;
+                PrintUtil.uniqueDeviceIdPerApp = false;
                 break;
             default:
                 showMetricsDialog = true;

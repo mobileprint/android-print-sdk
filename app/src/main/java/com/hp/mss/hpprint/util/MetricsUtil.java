@@ -56,6 +56,6 @@ public class MetricsUtil {
     public static int getCurrentSessionCounter(Activity hostActivity) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(hostActivity.getApplicationContext());
 
-        return preferences.getInt(EventMetricsCollector.PrintFlowEventTypes.ENTERED_PRINT_SDK.name(), 0);
+        return preferences.getInt(EventMetricsCollector.PrintFlowEventTypes.ENTERED_PRINT_SDK.name(), 1);
     }
 }
