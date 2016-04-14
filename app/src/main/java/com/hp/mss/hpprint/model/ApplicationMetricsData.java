@@ -20,7 +20,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.hp.mss.hpprint.BuildConfig;
 import com.hp.mss.hpprint.util.PrintUtil;
@@ -95,15 +95,15 @@ public class ApplicationMetricsData {
         if (PrintUtil.doNotEncryptDeviceId) {
             this.deviceId = getDeviceId(context);
             if(isDebuggable)
-                Toast.makeText(context, DO_NOT_ENCRYPT_DEVICE_ID, Toast.LENGTH_LONG).show();
+                Log.d(TAG, DO_NOT_ENCRYPT_DEVICE_ID);
         } else if (PrintUtil.uniqueDeviceIdPerApp) {
             this.deviceId = getAppSpecificDeviceID(context);
             if(isDebuggable)
-                Toast.makeText(context, APP_SPECIFIC_DEVICE_ID, Toast.LENGTH_LONG).show();
+                Log.d(TAG, APP_SPECIFIC_DEVICE_ID);
         } else {
             this.deviceId = getVendorSpecificDeviceID(context);
             if(isDebuggable)
-                Toast.makeText(context, VENDOR_SPECIFIC_DEVICE_ID, Toast.LENGTH_LONG).show();
+                Log.d(TAG, VENDOR_SPECIFIC_DEVICE_ID);
         }
 
         this.deviceType = Build.MODEL;
