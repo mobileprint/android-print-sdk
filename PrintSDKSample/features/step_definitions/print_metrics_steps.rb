@@ -106,17 +106,18 @@ And (/^I check the print_result is "([^\"]*)"$/) do |print_result|
 end
 
 And (/^I check the device id$/) do
-    my_device = $device_id.split(" ").last
-    if $unique_device_id == "Not Encrypted"
+  my_device = $device_id.split(" ").last
+  if $unique_device_id == "Unique Per Vendor"
+    device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
+  else if $unique_device_id == "Unique Per App"
+      device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
+  else if $unique_device_id == "Not Encrypted"
         device_id_value = my_device
-    else if $unique_device_id == "Unique Per App"
-        device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
-    else
-        device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
-    end
-    end    
-    compare  = ($mertics_details['device_id'] == device_id_value.delete(' ')) ?  true : false
-    raise "device_id verification failed" unless compare==true
+  end
+  end
+  end
+  compare = ($mertics_details['device_id'] == device_id_value.delete(' ')) ? true : false
+  raise "device_id verification failed" unless compare==true
 end
 
 And (/^I check the wifi ssid$/) do
