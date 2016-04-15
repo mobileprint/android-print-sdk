@@ -20,6 +20,7 @@ Feature: Home feature
          |CONTENT TYPE|
          |PAGE LAYOUT|
          |PAGE MARGINS|
+         |UNIQUE DEVICE ID|
         # |Metrics Options|
         # |Unique Device Id Per App|
          
@@ -38,6 +39,8 @@ Feature: Home feature
          |Center Top        |Top Left               |
          |None              |1/2 Inch               |
          |None              |Top Only               |
+         |Not Encrypted     |Unique Per App          |
+         |Not Encrypted     |Unique Per Vendor          |
        #  |Without Metrics   |With Metrics           |
         # |True              |False                  |
          

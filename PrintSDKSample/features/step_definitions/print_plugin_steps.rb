@@ -1,24 +1,16 @@
 And (/^I check the pop up - Print plugin is present or not$/) do
     $os_version = getOSversion
-    if $os_version < '5.0'
-        if selenium.find_elements(:id, 'android:id/alertTitle').size() > 0
-            selenium.find_element(:xpath,"//android.widget.Button[@text='CONTINUE']").click
-        else
-        end
-    else
-        begin
-            if selenium.find_element(:xpath,"//android.widget.TextView[@text='HP Print Plugin']").displayed? == true
-                selenium.find_element(:xpath,"//android.widget.Button[@text='CONTINUE']").click
-            end
-        rescue Selenium::WebDriver::Error::NoSuchElementError
-        end
-        selenium.find_element(:id,"android:id/button1").click
+    if selenium.find_elements(:xpath,"//android.widget.Button[@text='SKIP']").size > 0
+           puts "Plugin is not installed!, so I am skipping the pop up to load Print Preview screen"
+        selenium.find_element(:xpath,"//android.widget.Button[@text='SKIP']").click
     end
 end
 
 Then (/^I select paper size as "([^"]*)"$/) do |paper_size|
     sleep(APPIUM_TIMEOUT)
     $paper_size = paper_size
+    $printer_arr = $paper_arr["paper_arr_printer"]
+    $pdf_arr = $paper_arr["paper_arr_pdf"]
     if $paper_size == "4 x 5"
         selenium.back
         wait.until { selenium.find_element(:id,"com.hp.mss.droidphoto:id/paper_size_spinner") }
@@ -42,26 +34,31 @@ Then (/^I select paper size as "([^"]*)"$/) do |paper_size|
            # wait.until {selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']")}
             if selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{paper_size}']").size > 0
                 selenium.find_element(:xpath,"//android.widget.TextView[@text='#{paper_size}']").click
-            else if selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{$paper_arr["#{paper_size}"]}']").size > 0
-                selenium.find_element(:xpath,"//android.widget.TextView[@text='#{$paper_arr["#{paper_size}"]}']").click
+            else if selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{$printer_arr["#{paper_size}"]}']").size > 0
+                selenium.find_element(:xpath,"//android.widget.TextView[@text='#{$printer_arr["#{paper_size}"]}']").click
+            else if selenium.find_elements(:xpath,"//android.widget.TextView[@text='#{$pdf_arr["#{paper_size}"]}']").size > 0
+                    selenium.find_element(:xpath,"//android.widget.TextView[@text='#{$pdf_arr["#{paper_size}"]}']").click
             else
                     raise "Failed to select Paper!"
             end
             end
+end
         else
             
-            # wait.until {selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']")}
+             # wait.until {selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']")}
             if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").size > 0
                 selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{paper_size}']").click
-            else if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{$paper_arr["#{paper_size}"]}']").size > 0
-                selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{$paper_arr["#{paper_size}"]}']").click
-            else
+           else if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{$printer_arr["#{paper_size}"]}']").size > 0
+                selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{$printer_arr["#{paper_size}"]}']").click
+            else if selenium.find_elements(:xpath,"//android.widget.CheckedTextView[@text='#{$pdf_arr["#{paper_size}"]}']").size > 0
+                    selenium.find_element(:xpath,"//android.widget.CheckedTextView[@text='#{$pdf_arr["#{paper_size}"]}']").click
+           else
                     raise "Failed to select Paper!"
             end
             end
+end
 
-            puts selenium.find_element(:id,"android:id/text1").text
-        end
+            end
     end
 end
 
@@ -162,3 +159,33 @@ Then (/^I select Paper Type as "([^"]*)"$/) do |paperType|
     
     sleep(MAX_TIMEOUT)
 end
+Then(/^I save the pdf$/) do
+    sleep(5.0)
+    $target = ""
+    if $device_brand.include? "generic"
+        $target = "Emulator"
+    end
+    if selenium.find_elements(:xpath,"//android.widget.TextView[@text='Recent']").size > 0
+         selenium.find_element(:xpath,"//android.widget.TextView[@text='Downloads']").click
+     end
+    sleep(5.0)
+    selenium.find_element(:xpath,"//android.widget.Button[@text='Save']").click
+     
+end
+
+$paper_arr =
+
+{
+    "paper_arr_printer" => {
+        "4x6 in" => "Photo-4x6 in",
+        "5x7 in" => "Photo-5x7 in",
+        "Legal" => "Main-Legal",
+        "Letter" => "Main-Letter"
+       },
+    "paper_arr_pdf" => {
+        "4x6 in" => "Index Card 4x6",
+        "5x8 in" => "Index Card 5x8",
+        "Legal" => "Main-Legal",
+        "Letter" => "Main-Letter"
+       }
+ }
