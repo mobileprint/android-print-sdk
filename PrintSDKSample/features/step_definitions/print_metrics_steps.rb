@@ -53,7 +53,7 @@ And (/^I check the os_type$/) do
 end
 
 And (/^I check the version$/) do
-  compare  = ($mertics_details['version'] == $version) ?  true : false
+  compare  = ($mertics_details['version'] == "1.0") ?  true : false
   raise "version verification failed" unless compare==true
 end
 
@@ -107,13 +107,15 @@ end
 
 And (/^I check the device id$/) do
     my_device = $device_id.split(" ").last
-    $unique_id_per_app = "True"
-    if $unique_id_per_app == "False"
-        device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
+    if $unique_device_id == "Not Encrypted"
+        device_id_value = my_device
+    else if $unique_device_id == "Unique Per App"
+        device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
     else
-      device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
+        device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
     end
-    compare  = ($mertics_details['device_id'] == device_id_value) ?  true : false
+    end    
+    compare  = ($mertics_details['device_id'] == device_id_value.delete(' ')) ?  true : false
     raise "device_id verification failed" unless compare==true
 end
 
@@ -192,5 +194,41 @@ Then(/^I check the number of enabled plugins$/) do
     compare = ($mertics_details['num_of_plugins_enabled'].to_i == $enabled_plugin_count.to_i) ?  true : false
     raise "no of enabled plugins verification failed!" unless compare==true
 end
+Then(/^I check timestamp is not null$/) do
+   compare = ($mertics_details['timestamp'] != "null") ?  true : false
+  raise "Timestamp verification failed" unless compare==true
+end
 
+Then(/^I check the route taken is "(.*?)"$/) do |route_taken|
+  compare = ($mertics_details['route_taken'] == route_taken) ?  true : false
+  raise "Route_taken verification failed!" unless compare==true
+end
+Then(/^I check the printer id$/) do
+    printer_id = "PDF printer"
+    encrypt_printer_id = Digest::MD5.hexdigest(printer_id).upcase
+    
+  compare = ($mertics_details['printer_id'] == encrypt_printer_id) ?  true : false
+  raise "Printer id verification failed" unless compare==true
+end
+Then(/^I check the country code$/) do
+  compare = ($mertics_details['country_code'] == "USA") ?  true : false
+  raise "Country code verification failed" unless compare==true
+end
 
+Then(/^I check the language code$/) do
+  compare = ($mertics_details['language_code'] == "eng") ?  true : false
+  raise "Language code verification failed" unless compare==true
+end
+Then(/^I check the print session id$/) do
+  compare = ($mertics_details['print_session_id'] == "1") ?  true : false
+  raise "Print Session id verification failed" unless compare==true
+end
+
+Then(/^I check the custom data$/) do
+  compare = ($mertics_details['custom_data'] == "N/A") ?  true : false
+  raise "Custom data verification failed" unless compare==true
+end
+Then(/^I check the product id is "(.*?)"$/) do |product_id| 
+  compare = ($mertics_details['product_id'] == product_id) ?  true : false
+  raise "product_id verification failed" unless compare==true
+end

@@ -125,14 +125,13 @@ Scenario Outline: Print an Image/PDF with Without Metrics option and verify prin
         |Image   | 5x7 in     | False           |
 
 
-     #feature removed from sample app
-    @blocked
-    Scenario: Print a PDF with unique device id on & off options and verify device id
+     @test11
+    Scenario Outline: Print a PDF with unique device id on & off options and verify device id
     Given I am on Home screen
     Then I tap on "PDF" option
     And I select layout as "Center"
-    Then I tap on "With Metrics" option
-    Then I tap on "True" option
+    Then I tap on "<Device_id>" option
+    #Then I tap on "True" option
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
     And I select preview button 
     And I tap on Print in Print Preview screen
@@ -141,15 +140,64 @@ Scenario Outline: Print an Image/PDF with Without Metrics option and verify prin
     Then I tap on Print
     Then Fetch metrics details
     And I check the device id
-    Then I navigate to home screen
-    Then I tap on "False" option
+    Examples:
+        |Device_id        | 
+        |Not Encrypted    | 
+       |Unique Per App   | 
+        |Unique Per Vendor|
+    
+    @done
+@printmetrics
+@t11
+Scenario Outline: Print an Image/PDF with metrics option and verify print metrics
+    Given I am on Home screen
+    Then I tap on "PDF" option
+    And I select layout as "Center"
+    #Then I tap on "With Metrics" option
+    Then I tap on "Not Encrypted" option
     And I get the wifi_ssid, device id, os version, os type, device type, manufacturer and device brand
+    And I tap on "PRINTING HELP" option
+    And I tap on print plugin manager
+    Then I get installed and enabled plugin count
+    Then I navigate back
+     And I tap on "PRINT SETTINGS" option
     And I select preview button 
+    And I check the pop up - Print plugin is present or not
     And I tap on Print in Print Preview screen
-    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
-    Then I select paper size as "5x7 in"
+    Then I select the printer "Save as PDF" if available
+    Then I select paper size as "<Paper Size>"
+    Then I get black and white filter value and number of copies
     Then I tap on Print
+    Then I save the pdf
     Then Fetch metrics details
     And I check the device id
-   
+    And I check the off ramp is "Android Print"
+    And I check timestamp is not null
+    And I check the product name is "Print SDK"
+    And I check the version
+    And I check the os_type
+    And I check the os version
+    And I check the print_plugin_tech is "com.android.printspooler"
+    And I check the printer id   
+    And I check the wifi ssid
+    And I check the number of copies
+    And I check the product id is "com.hp.mss.printsdksample"
+    And I check the print library version
+    And I check the app_type is "Partner"
+    And I check print result is "Success"
+    And I check the route taken is "print-metrics-test.twosmiles.com"
+    And I check the country code
+    And I check the language code
+    And I check the print session id
+    And I check the number of installed plugins
+    And I check the number of enabled plugins
+    And I check the custom data
+    
+        
+     Examples:
+        |Content| Paper Size  | Paper Type|
+        |PDF     | Letter     | Document  |
+        |Image   | 4x6 in     | Photo     |
+       
+
     

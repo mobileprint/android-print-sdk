@@ -31,8 +31,8 @@ end
 Then(/^I tap on "(.*?)" option$/) do |option|
     if option == "Image"
         $content_option = "Image"
-    else if option == "True" || option == "False"
-        $unique_id_per_app = option
+    else if option == "Not Encrypted" || option == "Unique Per App" || option == "Unique Per Vendor"
+        $unique_device_id = option
     end
     end
     sleep(WAIT_SCREENLOAD)  
