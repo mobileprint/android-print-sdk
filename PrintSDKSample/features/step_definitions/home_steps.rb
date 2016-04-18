@@ -32,6 +32,17 @@ Then(/^I tap on "(.*?)" option$/) do |option|
     if option == "Image"
         $content_option = "Image"
     else if option == "Not Encrypted" || option == "Unique Per App" || option == "Unique Per Vendor"
+        unique_id_loc = selenium.find_element(:id,"com.hp.mss.printsdksample:id/deviceIdText").location
+        data_loc = (unique_id_loc.to_s).split(" ")
+        data_x = data_loc[2].split("=")
+        data_y = data_loc[3].split("=")
+        x1_value = data_x[1].to_i
+        y1_value = (data_y[1].delete! '>').to_i
+        x1 = x1_value + 100
+        x2 =  x1
+        y1 = y1_value + 50
+        y2 = y1 - 200
+        %x(adb shell input swipe #{x1.to_i} #{y1.to_i} #{x2.to_i} #{y2.to_i} 100)
         $unique_device_id = option
     end
     end
