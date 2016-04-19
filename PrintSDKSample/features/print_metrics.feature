@@ -163,6 +163,7 @@ Scenario Outline: Save to PDF and verify print metrics
     And I check the number of installed plugins
     And I check the number of enabled plugins
     And I check the custom data
+    And I delete the generated pdf
     
         
      Examples:

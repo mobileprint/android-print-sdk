@@ -239,3 +239,13 @@ Then(/^I check the product id is "(.*?)"$/) do |product_id|
   compare = ($mertics_details['product_id'] == product_id) ?  true : false
   raise "product_id verification failed" unless compare==true
 end
+Then(/^I delete the generated pdf$/) do
+  sleep(APPIUM_TIMEOUT)
+    file_path = %x(adb shell ls /storage/sdcard/Download)
+  
+    if (file_path.to_s).include? "No such file or directory"
+        %x(adb shell rm /storage/sdcard0/Download/print_card.pdf)
+    else
+        %x(adb shell rm /storage/sdcard/Download/print_card.pdf)
+    end
+end
