@@ -14,6 +14,7 @@ package com.hp.mss.hpprint.model.asset;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -25,15 +26,21 @@ import java.io.InputStream;
 
 public class PDFAsset implements Asset, Parcelable {
 
-    String uri;
+    String uriString;
     Boolean fromAsset;
+    Uri uri;
 
-    public PDFAsset(String uri) {
-        this.uri = uri;
+    public PDFAsset(String uriString) {
+        this.uriString = uriString;
         this.fromAsset = false;
     }
 
-    public PDFAsset(String uri, Boolean fromAsset) {
+    public PDFAsset(String uriString, Boolean fromAsset) {
+        this.uriString = uriString;
+        this.fromAsset = fromAsset;
+    }
+
+    public PDFAsset(Uri uri, Boolean fromAsset) {
         this.uri = uri;
         this.fromAsset = fromAsset;
     }
@@ -45,7 +52,7 @@ public class PDFAsset implements Asset, Parcelable {
 
     @Override
     public String getAssetUri() {
-        return uri;
+        return uriString;
     }
 
     @Override
@@ -79,23 +86,28 @@ public class PDFAsset implements Asset, Parcelable {
             if (fromAsset) {
                 // get InputStream from AssetManager
                 if (context != null) {
-                    input = context.getAssets().open(this.uri);
+                    input = context.getAssets().open(this.uriString);
 
                     if (input == null) {
-                        Log.e("PDFAsset", "Unable to open asset: " + this.uri);
+                        Log.e("PDFAsset", "Unable to open asset: " + this.uriString);
                     }
                 } else {
                     Log.e("PDFAsset", "Error opening file. Context was null.");
                 }
             } else {
-                File file = new File(this.uri);
-                input = new FileInputStream(file);
+                if(this.uri != null) {
+                    input = context.getContentResolver().openInputStream(uri);
+                } else if (this.uriString != null) {
+                    File file = new File(this.uriString);
+                    input = new FileInputStream(file);
+                }
+
                 if (input == null) {
-                    Log.e("PDFAsset", "Unable to open file: " + this.uri);
+                    Log.e("PDFAsset", "Unable to open file: " + this.uriString);
                 }
             }
         } catch (IOException e) {
-            Log.e("PDFAsset", "Error opening file: " + this.uri);
+            Log.e("PDFAsset", "Error opening file: " + this.uriString);
             e.printStackTrace();
         }
 

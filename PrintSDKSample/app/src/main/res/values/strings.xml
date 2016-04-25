@@ -46,4 +46,5 @@
     <string name="not_encrypted">Not Encrypted</string>
     <string name="unique_per_app">Unique Per App</string>
     <string name="unique_per_vendor">Unique Per Vendor</string>
+    <string name="select_a_file">SELECT A FILE</string>
 </resources>
