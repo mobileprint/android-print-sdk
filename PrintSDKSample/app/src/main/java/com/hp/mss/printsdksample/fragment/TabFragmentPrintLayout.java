@@ -12,13 +12,24 @@
 
 package com.hp.mss.printsdksample.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintAttributes;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +38,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.hp.mss.hpprint.model.ImagePrintItem;
 import com.hp.mss.hpprint.model.PDFPrintItem;
@@ -38,10 +51,25 @@ import com.hp.mss.hpprint.model.asset.PDFAsset;
 import com.hp.mss.hpprint.util.PrintUtil;
 import com.hp.mss.printsdksample.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 /**
  * Created by panini on 2/25/16.
  */
 public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener, PrintUtil.PrintMetricsListener {
+    public static String CONTENT_TYPE_PDF = "PDF";
+    public static String CONTENT_TYPE_IMAGE = "Image";
+    public static String MIME_TYPE_PDF = "application/pdf";
+    public static String MIME_TYPE_IMAGE = "image/*";
+    public static String MIME_TYPE_IMAGE_PREFIX = "image/";
+    public static String TAG = "TabFragmentPrintLayout";
+
     String contentType;
     PrintItem.ScaleType scaleType;
     PrintAttributes.Margins margins;
@@ -51,11 +79,19 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
     EditText tagText;
     EditText valueText;
 
+    static final int PICKFILE_RESULT_CODE = 1;
+    private Uri userPickedUri;
+
+    //Example for creating a custom media size in android.
+    PrintAttributes.MediaSize mediaSize5x7;
+    RelativeLayout filePickerLayout;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.tab_fragment_print_layout, container, false);
-
+        filePickerLayout = (RelativeLayout) inflatedView.findViewById(R.id.filePickerLayout);
 
         RadioGroup layoutRadioGroup = (RadioGroup) inflatedView.findViewById(R.id.layoutRadioGroup);
         layoutRadioGroup.setOnCheckedChangeListener(this);
@@ -82,6 +118,7 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
         LinearLayout customData = (LinearLayout) inflatedView.findViewById(R.id.customData);
         showCustomData = customData.getVisibility() == View.VISIBLE;
 
+
         FloatingActionButton printButton = (FloatingActionButton) inflatedView.findViewById(R.id.printBtn);
         printButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -89,7 +126,30 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
             }
         });
 
+        Button buttonPick = (Button) inflatedView.findViewById(R.id.buttonPick);
+        buttonPick.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType(getContentMimeType());
+                startActivityForResult(Intent.createChooser(intent,"Select Picture"),PICKFILE_RESULT_CODE);
+            }});
+
+
+
+        mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "5 x 7", 5000, 7000);
+
         return inflatedView;
+    }
+
+    private String getContentMimeType() {
+        String mimeType = MIME_TYPE_IMAGE;
+
+        if (contentType == CONTENT_TYPE_PDF)
+            mimeType =  MIME_TYPE_PDF;
+
+        return mimeType;
     }
 
     public void continueButtonClicked(View v) {
@@ -111,6 +171,7 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+
         switch(checkedId) {
             case R.id.layoutCenterTop:
                 scaleType = PrintItem.ScaleType.CENTER_TOP;
@@ -137,10 +198,12 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
                 margins = new PrintAttributes.Margins(0, 0, 0, 0);
                 break;
             case R.id.contentPDF:
-                contentType = "PDF";
+                contentType = CONTENT_TYPE_PDF;
+//                filePickerLayout.setVisibility(View.GONE);
                 break;
             case R.id.contentImage:
-                contentType = "Image";
+                contentType = CONTENT_TYPE_IMAGE;
+//                filePickerLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.notEncrypted:
                 PrintUtil.doNotEncryptDeviceId = true;
@@ -162,8 +225,24 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
     }
 
     private void createPrintJobData() {
-        //Example for creating a custom media size in android.
-        PrintAttributes.MediaSize mediaSize5x7 = new PrintAttributes.MediaSize("na_5x7_5x7in", "5 x 7", 5000, 7000);// PrintUtil.mediaSize5x7
+        if( userPickedUri !=null && getMimeType(userPickedUri).startsWith(MIME_TYPE_IMAGE_PREFIX) && contentType == CONTENT_TYPE_IMAGE)
+            createUserSelectedImageJobData();
+        else if( userPickedUri !=null  && getMimeType(userPickedUri).equals(MIME_TYPE_PDF) && contentType == CONTENT_TYPE_PDF  )
+            createUserSelectedPDFJobData();
+        else
+            createDefaultPrintJobData();
+
+        //Giving the print job a name.
+        printJobData.setJobName("Example");
+
+        //Optionally include print attributes.
+        PrintAttributes printAttributes = new PrintAttributes.Builder()
+                .setMediaSize(PrintAttributes.MediaSize.NA_LETTER)
+                .build();
+        printJobData.setPrintDialogOptions(printAttributes);
+
+    }
+    private void createDefaultPrintJobData() {
 
         if(contentType.equals("Image")) {
             //Create image assets from the saved files.
@@ -172,8 +251,6 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
             ImageAsset imageAsset5x7 = new ImageAsset(getActivity(), R.drawable.t5x7, ImageAsset.MeasurementUnits.INCHES, 5, 7);
             ImageAsset assetdirectory = new ImageAsset(getActivity(), "t8.5x11.png", ImageAsset.MeasurementUnits.INCHES, 8.5f, 11f);
 
-            //Alternatively, you can use a bitmap by doing the following.
-            // ImageAsset bitmapAsset = new ImageAsset(this, bitmap, ImageAsset.MeasurementUnits.INCHES, 4,5);
 
             //Create printitems from the assets. These define what asset is to be used for each media size.
             PrintItem printItem4x6 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6,margins, scaleType, imageAsset4x6);
@@ -217,15 +294,69 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
             printJobData.addPrintItem(printItem5x7);
         }
 
-        //Giving the print job a name.
-        printJobData.setJobName("Example");
-
-        //Optionally include print attributes.
-        PrintAttributes printAttributes = new PrintAttributes.Builder()
-                .setMediaSize(PrintAttributes.MediaSize.NA_LETTER)
-                .build();
-        printJobData.setPrintDialogOptions(printAttributes);
     }
+
+    private void createUserSelectedImageJobData() {
+        Bitmap userPickedBitmap;
+
+        try {
+            userPickedBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), userPickedUri);
+            int width = userPickedBitmap.getWidth();
+            int height = userPickedBitmap.getHeight();
+
+            DisplayMetrics mDisplayMetric = getActivity().getResources().getDisplayMetrics();
+            float widthInches =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_IN, width, mDisplayMetric);
+            float heightInches =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_IN, height, mDisplayMetric);
+
+            ImageAsset imageAsset = new ImageAsset(getActivity(),
+                    userPickedBitmap,
+                    ImageAsset.MeasurementUnits.INCHES,
+                    widthInches, heightInches);
+
+            PrintItem printItem4x6 = new ImagePrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6,margins, scaleType, imageAsset);
+            PrintItem printItem85x11 = new ImagePrintItem(PrintAttributes.MediaSize.NA_LETTER,margins, scaleType, imageAsset);
+            PrintItem printItem5x7 = new ImagePrintItem(mediaSize5x7,margins, scaleType, imageAsset);
+
+            printJobData = new PrintJobData(getActivity(), printItem4x6);
+            printJobData.addPrintItem(printItem85x11);
+            printJobData.addPrintItem(printItem5x7);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void createUserSelectedPDFJobData() {
+        File file = new File(userPickedUri.toString());
+        try {
+//            FileInputStream input = new FileInputStream(file);
+            InputStream input=getActivity().getContentResolver().openInputStream(userPickedUri);
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "No File", e);
+        }
+        Bitmap userPickedBitmap;
+
+//        try {
+//        userPickedBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), userPickedUri);
+//        int width = userPickedBitmap.getWidth();
+//        int height = userPickedBitmap.getHeight();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+                  PDFAsset pdfAsset = new PDFAsset(userPickedUri, false);
+
+            PrintItem printItem4x6 = new PDFPrintItem(PrintAttributes.MediaSize.NA_INDEX_4X6, margins, scaleType, pdfAsset);
+            PrintItem printItem5x7 = new PDFPrintItem(mediaSize5x7, margins, scaleType, pdfAsset);
+            PrintItem printItemLetter = new PDFPrintItem(PrintAttributes.MediaSize.NA_LETTER, margins, scaleType, pdfAsset);
+
+            printJobData = new PrintJobData(getActivity(), printItem4x6);
+
+            printJobData.addPrintItem(printItemLetter);
+            printJobData.addPrintItem(printItem5x7);
+
+    }
+
 
     private void createCustomData() {
         PrintUtil.customData.clear();
@@ -245,5 +376,38 @@ public class TabFragmentPrintLayout extends Fragment implements RadioGroup.OnChe
             });
             builder.create().show();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        switch (requestCode) {
+            case PICKFILE_RESULT_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    userPickedUri = data.getData();
+                    showFileInfo(userPickedUri);
+                }
+                break;
+
+        }
+    }
+
+    private String getMimeType(Uri uri) {
+        Uri returnUri = uri;
+        return getActivity().getContentResolver().getType(returnUri);
+    }
+
+    private void showFileInfo(Uri uri) {
+        Cursor returnCursor =
+                getActivity().getContentResolver().query(uri, null, null, null, null);
+
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+        returnCursor.moveToFirst();
+
+        Toast.makeText(getActivity(),
+                "File " + returnCursor.getString(nameIndex) + "(" + Long.toString(returnCursor.getLong(sizeIndex)) + "0",
+                Toast.LENGTH_LONG).show();
+
     }
 }

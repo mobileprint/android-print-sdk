@@ -59,7 +59,7 @@
                     android:checkedButton="@+id/contentImage"
                     android:orientation="horizontal"
                     android:layout_marginTop="7dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:paddingStart="4dp">
 
                     <RadioButton
@@ -80,10 +80,24 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/filePickerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/contentLayout"
+                android:visibility="visible">
+                <Button
+                    android:id="@+id/buttonPick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_a_file"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/layoutLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/contentLayout">
+                android:layout_below="@+id/filePickerLayout">
 
                 <TextView
                     android:id="@+id/SpinnerText"
@@ -372,6 +386,7 @@
                         android:layout_marginRight="20dp"/>
                 </RelativeLayout>
             </LinearLayout>
+
         </RelativeLayout>
 
     </ScrollView>
