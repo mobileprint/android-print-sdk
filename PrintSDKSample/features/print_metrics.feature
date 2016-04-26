@@ -139,7 +139,7 @@ Scenario Outline: Save to PDF and verify print metrics
     And I check the pop up - Print plugin is present or not
     And I tap on Print in Print Preview screen
     Then I select the printer "Save as PDF" if available
-    Then I select paper size as "<Paper Size>"
+   # Then I select paper size as "<Paper Size>"
     Then I tap on Print
     Then I save the pdf
     Then Fetch metrics details
