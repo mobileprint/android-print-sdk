@@ -1,10 +1,12 @@
 require 'digest/md5'
+require 'uri'
 
 Then (/^Fetch metrics details$/) do
   sleep(APPIUM_TIMEOUT)
     device_type=$device_type.strip
-     hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_id=com.hp.mss.printsdksample"`
-    #hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_name=PrintSDKSample"`
+    device_type= URI.encode(device_type)
+    hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_id=com.hp.mss.printsdksample"`
+    #hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_id=com.hp.mss.printsdksample"`
     hash = JSON.parse(hash)
     $mertics_array = hash["metrics"]
     $mertics_details = hash["metrics"][($mertics_array.length)-1]
@@ -59,6 +61,7 @@ end
 
 
 And (/^I check the wifi_ssid$/) do
+    
   compare  = ($mertics_details['wifi_ssid'] == $wifi_ssid) ?  true : false
   raise "wifi_ssid verification failed" unless compare==true
 end
@@ -106,21 +109,24 @@ And (/^I check the print_result is "([^\"]*)"$/) do |print_result|
 end
 
 And (/^I check the device id$/) do
-  my_device = $device_id.split(" ").last
-  if $unique_device_id == "Unique Per Vendor"
-    device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
-  else if $unique_device_id == "Unique Per App"
-      device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
-  else if $unique_device_id == "Not Encrypted"
+    my_device = $device_id.split(" ").last
+    if $unique_device_id == "Unique Per Vendor"
+        device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
+    else if $unique_device_id == "Unique Per App"
+        device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
+    else if $unique_device_id == "Not Encrypted"
         device_id_value = my_device
-  end
-  end
-  end
-  compare = ($mertics_details['device_id'] == device_id_value.delete(' ')) ? true : false
-  raise "device_id verification failed" unless compare==true
+    end
+    end
+    end
+    compare = ($mertics_details['device_id'] == device_id_value.delete(' ')) ? true : false
+    raise "device_id verification failed" unless compare==true
 end
 
 And (/^I check the wifi ssid$/) do
+    if $target == "Emulator"
+        $wifi_ssid = "NO-WIFI"
+    end
   encrypt_wifi_ssid = Digest::MD5.hexdigest($wifi_ssid.split(" ").last).upcase
     compare  = ($mertics_details['wifi_ssid'] == encrypt_wifi_ssid) ?  true : false
     raise "wifi_ssid verification failed" unless compare==true
@@ -232,4 +238,14 @@ end
 Then(/^I check the product id is "(.*?)"$/) do |product_id| 
   compare = ($mertics_details['product_id'] == product_id) ?  true : false
   raise "product_id verification failed" unless compare==true
+end
+Then(/^I delete the generated pdf$/) do
+  sleep(APPIUM_TIMEOUT)
+    file_path = %x(adb shell ls /storage/sdcard/Download)
+  
+    if (file_path.to_s).include? "No such file or directory"
+        %x(adb shell rm /storage/sdcard0/Download/print_card.pdf)
+    else
+        %x(adb shell rm /storage/sdcard/Download/print_card.pdf)
+    end
 end

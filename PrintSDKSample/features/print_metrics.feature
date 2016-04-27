@@ -139,6 +139,7 @@ Scenario Outline: Save to PDF and verify print metrics
     And I check the pop up - Print plugin is present or not
     And I tap on Print in Print Preview screen
     Then I select the printer "Save as PDF" if available
+   # Then I select paper size as "<Paper Size>"
     Then I tap on Print
     Then I save the pdf
     Then Fetch metrics details
@@ -162,12 +163,13 @@ Scenario Outline: Save to PDF and verify print metrics
     And I check the number of installed plugins
     And I check the number of enabled plugins
     And I check the custom data
+    And I delete the generated pdf
     
         
      Examples:
-        |Content| Device_id           |
-        |PDF    | Not Encrypted       |
-        |Image  | Unique Per App      |
-        |Image  | Unique Per Vendor   |
+        |Content| Device_id           |Paper Size  |
+        |PDF    | Not Encrypted       |Letter     |
+        |Image  | Unique Per App      |4x6 in     |
+        |Image  | Unique Per Vendor   |4x6 in     |
 
     
