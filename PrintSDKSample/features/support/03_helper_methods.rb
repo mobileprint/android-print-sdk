@@ -275,7 +275,7 @@ def get_device_id
         device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
     else if $unique_device_id == "Unique Per App"
         device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
-    else if $unique_device_id == "Not Encrypted"
+    else
         device_id_value = my_device
     end
     end
