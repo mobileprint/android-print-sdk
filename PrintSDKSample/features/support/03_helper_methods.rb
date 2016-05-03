@@ -279,7 +279,6 @@ def get_device_id
         device_id_value = my_device
     end
     end
-    end
     return device_id_value
 end
 
