@@ -268,6 +268,21 @@ def installed_plugin_count
     installed_plugin_count = installed_plugin_arr.length
     return installed_plugin_count
 end
+
+def get_device_id
+    my_device = $device_id.split(" ").last
+    if $unique_device_id == "Unique Per Vendor"
+        device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
+    else if $unique_device_id == "Unique Per App"
+        device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
+    else if $unique_device_id == "Not Encrypted"
+        device_id_value = my_device
+    end
+    end
+    end
+    return device_id_value
+end
+
  $paper_arr = {
         "4x6 in" => "Photo-4x6 in",
         "5x7 in" => "Photo-5x7 in",
