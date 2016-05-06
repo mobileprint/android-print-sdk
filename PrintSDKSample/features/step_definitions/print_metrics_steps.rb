@@ -3,10 +3,11 @@ require 'uri'
 
 Then (/^Fetch metrics details$/) do
   sleep(APPIUM_TIMEOUT)
-    device_type=$device_type.strip
-    device_type= URI.encode(device_type)
-    hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_id=com.hp.mss.printsdksample"`
-    #hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_type=#{device_type}&product_id=com.hp.mss.printsdksample"`
+    #device_type=$device_type.strip
+    #device_type= URI.encode(device_type)
+	encrypted_device_id = get_device_id
+    hash = `curl -x "http://proxy.atlanta.hp.com:8080" -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_id=#{encrypted_device_id}&product_id=com.hp.mss.printsdksample"`
+    #hash = `curl -L "http://hpmobileprint:print1t@print-metrics-test.twosmiles.com/api/v1/mobile_app_metrics?device_id=#{encrypted_device_id}&product_id=com.hp.mss.printsdksample"`
     hash = JSON.parse(hash)
     $mertics_array = hash["metrics"]
     $mertics_details = hash["metrics"][($mertics_array.length)-1]
@@ -109,17 +110,17 @@ And (/^I check the print_result is "([^\"]*)"$/) do |print_result|
 end
 
 And (/^I check the device id$/) do
-    my_device = $device_id.split(" ").last
-    if $unique_device_id == "Unique Per Vendor"
-        device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
-    else if $unique_device_id == "Unique Per App"
-        device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
-    else if $unique_device_id == "Not Encrypted"
-        device_id_value = my_device
-    end
-    end
-    end
-    compare = ($mertics_details['device_id'] == device_id_value.delete(' ')) ? true : false
+    #my_device = $device_id.split(" ").last
+    #if $unique_device_id == "Unique Per Vendor"
+    #    device_id_value = Digest::MD5.hexdigest("com.hp#{my_device.to_s}").upcase
+    #else if $unique_device_id == "Unique Per App"
+    #    device_id_value = Digest::MD5.hexdigest("com.hp.mss.printsdksample#{my_device.to_s}").upcase
+    #else if $unique_device_id == "Not Encrypted"
+    #    device_id_value = my_device
+    #end
+    #end
+    #end
+    compare = ($mertics_details['device_id'] == get_device_id.delete(' ')) ? true : false
     raise "device_id verification failed" unless compare==true
 end
 
