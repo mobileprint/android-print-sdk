@@ -1,0 +1,50 @@
+<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+  <string name="app_name">Print SDK</string>
+
+  <string name="hello_world">Hello world!</string>
+  <string name="action_settings">设置</string>
+  <string name="print">打印</string>
+  <string name="print_settings">打印设置</string>
+  <string name="printing_help">打印帮助</string>
+  <string name="print_plugin_manager">打印插件管理</string>
+  <string name="print_plugin_manager_description">帮助用户安装他们的PSP</string>
+  <string name="print_help_menu">打印帮助菜单</string>
+  <string name="print_help_menu_description">在应用程序中提供帮助内容</string>
+  <string name="custom_data_title">请在下面输入用户数据</string>
+  <string name="custom_data_tag">标签</string>
+  <string name="custom_data_value">数值</string>
+  <string name="asset">资源</string>
+  <string name="layout_option">页面布局</string>
+  <string name="layout_center">居中</string>
+  <string name="layout_center_top">上部居中</string>
+  <string name="layout_crop">充满</string>
+  <string name="layout_fit">合适</string>
+  <string name="layout_top_left">左部居中</string>
+  <string name="margin_option">页边距</string>
+  <string name="layout_with_margin">1/2英寸</string>
+  <string name="layout_without_margin">无</string>
+  <string name="layout_with_top_margin">仅顶部</string>
+  <string name="metrics_option">度量</string>
+  <string name="unique_device_id_per_app">唯一设备ID</string>
+  <string name="content_option">内容类型</string>
+  <string name="content_pdf">PDF</string>
+  <string name="content_image">图片</string>
+  <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
+  <string name="add_constom_data">增加数据</string>
+  <string name="not_encrypted">不加密</string>
+  <string name="unique_per_app">唯一应用程序</string>
+  <string name="unique_per_vendor">唯一供应商</string>
+  <string name="select_a_file">选择一个文件</string>
+</resources>

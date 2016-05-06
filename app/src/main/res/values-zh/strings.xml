@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+
+  <string name="app_name">惠普打印</string>
+  <string name="title_activity_print_preview">打印预览</string>
+  <string name="title_activity_print_place_holder">打印</string>
+  <string name="action_settings">设置</string>
+  <string name="print_preview_prompt">想象一个大型图像出现在下部</string>
+  <string name="learn_about_mobile_print">打印引导</string>
+  <string name="support">支持</string>
+  <string name="paper_size">纸张大小</string>
+  <string name="paper_type">纸张类型</string>
+  <string name="lib_font"></string>
+
+  <string name="preview_spinner_4x5">4 x 5</string>
+  <string name="preview_spinner_4x6">4 x 6</string>
+  <string name="preview_spinner_5x7">5 x 7</string>
+  <string name="preview_spinner_letter">8.5 x 11</string>
+
+  <string-array name="paper_type_array">
+    <item> 照片纸 </item>
+  </string-array>
+  <!-- Print Preview -->
+  <string name="print_preview_menu_help">打印帮助</string>
+  <string name="print_preview_menu_print_service_plugins">打印服务插件</string>
+
+  <!-- Print Plugin installation -->
+  <string name="hp_print_plugin_alert_header">惠普打印插件</string>
+  <string name="install_hp_print_plugin_msg">你有惠普打印机吗？为了打印最好质量的照片，请安装惠普打印插件。</string>
+  <string name="update_hp_print_plugin_msg">你有惠普打印机吗？为了打印最好质量的照片，请更新惠普打印插件。</string>
+  <string name="enable_hp_print_plugin_msg">确认你的惠普打印插件可用。</string>
+
+  <!-- Print Plugin helper -->
+  <string name="hp_print_helper_header">打印服务助手</string>
+  <string name="install_print_plugin_msg">为了打印最好质量的照片，请安装合适的插件并启动。</string>
+
+  <!-- Print Service Plugin Information -->
+  <string name="title_activity_print_service_plugin_info">打印服务信息</string>
+  <string name="print_service_help_title_1">获取打印服务插件</string>
+  <string name="print_service_help_msg_1">你必须安装打印服务插件。每个品牌的打印机都有自己的插件，使您可以使用移动设备打印。通用打印服务插件也可使用。选择为您提供最佳服务的插件。你可以随时添加额外的打印插件。</string>
+  <string name="print_service_help_title_2">启动插件</string>
+  <string name="print_service_help_msg_2">下载打印服务插件后，你应该试图启动插件，选中并切换到“ON”</string>
+
+  <!-- Print Help -->
+  <string name="title_activity_print_help">打印服务</string>
+  <string name="print_help_activity_title_1">确认打印服务插件安装并启动完成。</string>
+  <string name="print_help_activity_msg_1_part_1">你必须安装打印服务插件。每个品牌的打印机都有自己的插件，使您可以使用移动设备打印。通用打印服务插件也可使用。选择为您提供最佳服务的插件。你可以随时添加额外的打印插件。</string>
+  <string name="print_help_activity_msg_1_part_2">下载打印服务插件后，你应该试图启动插件，选中并切换到“ON”</string>
+  <string name="print_help_activity_msg_1_link">检查你的打印服务插件</string>
+  <string name="print_help_activity_title_2">确认你的移动设备和打印机连接到同一网络中。</string>
+  <string name="print_help_activity_msg_2">您的移动设备和打印机必须连接到您的本地Wi-Fi网络。查看您的设备的Wi-Fi信息，并按照指示连接。</string>
+  <string name="print_help_activity_title_3">检查您的打印机的任何错误信息或者电源问题。</string>
+  <string name="print_help_activity_msg_3">一些常见的打印机问题有墨量低、卡纸、未装纸。另外检查确认打印机的电源。</string>
+
+
+  <!-- Snap Shots Prompt -->
+  <string name="snap_shots_prompt_header">在4x5纸上打印</string>
+  <string name="snap_shots_prompt_ok">继续</string>
+  <string name="snap_shots_prompt_do_not_show">不再显示</string>
+  <string name="snap_shots_prompt_message">您选择了4x5作为纸张大小。下一个屏幕将显示4x6，但是别担心，打印机将正确工作。</string>
+
+  <!-- Print Plugin Manager -->
+  <string name="plugin_manager_title">打印服务管理</string>
+  <string name="plugin_manager_sub_title">你需要安装和启动打印服务插件</string>
+
+  <string-array name="plugin_names">
+    <item>惠普打印服务插件</item>
+    <item>打印服务</item>
+    <item>兄弟打印服务插件</item>
+    <item>三星打印服务插件</item>
+    <item>佳能打印服务</item>
+    <item>爱普生打印技术</item>
+    <item>其他打印服务插件</item>
+  </string-array>
+
+  <string-array name="plugin_makers">
+    <item>惠普公司</item>
+    <item>Mopria联盟</item>
+    <item>兄弟工业有限公司</item>
+    <item>三星电子有限公司</item>
+    <item>佳能公司</item>
+    <item>精工爱普生公司</item>
+    <item>N/A</item>
+  </string-array>
+
+  <string name="continue_to_print">继续打印</string>
+  <string name="skip">跳过</string>
+  <string name="before_enable_tips">你将被引导至安卓打印设置</string>
+  <string name="before_enable_tips_title">启动插件</string>
+  <string name="ok">去设置</string>
+  <string name="cancel">取消</string>
+  <string name="enabled">启动</string>
+  <string name="disabled">不启动</string>
+
+  <!--Toast Strings-->
+  <string name="set_print_job_data">请首先设置打印作业数据</string>
+</resources>
