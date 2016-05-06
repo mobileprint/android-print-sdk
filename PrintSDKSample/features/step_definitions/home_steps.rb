@@ -95,3 +95,37 @@ When /^I tap on "(.*?)" value, it should be selected$/ do |value|
     touch "AppCompatRadioButton marked:'#{value}'"
     raise "#{value} is not selection" if query("AppCompatRadioButton marked:'#{value}'",:checked)[0] != true
 end
+Then(/^I click "(.*?)" button$/) do |buton_text|
+  selenium.find_element(:xpath,"//android.widget.Button[@text='#{buton_text}']").click
+end
+Then(/^I select the "(.*?)"$/) do |content_type|
+    sleep(APPIUM_TIMEOUT)
+    if content_type == "pdf"
+        if selenium.find_elements(:xpath,"//android.widget.TextView[@text='Recent']").size > 0
+            selenium.find_element(:xpath,"//android.widget.TextView[@text='Downloads']").click
+        end
+        sleep(APPIUM_TIMEOUT)
+        if selenium.find_elements(:xpath,"//android.widget.TextView[contains(@text, '.pdf')]").size > 0
+            selenium.find_element(:xpath,"//android.widget.TextView[contains(@text, '.pdf')]").click
+        else
+            raise "#{content_type} file not found!"
+        end
+    else
+        $os_version = getOSversion
+        if $os_version >= '5.0'
+            element_id = "//android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.support.v4.widget.DrawerLayout[1]/android.widget.LinearLayout[1]/android.view.View[1]/android.widget.ImageButton[1]"
+        else
+            element_id = "//android.view.View[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.ImageView[1]"
+        end
+        if selenium.find_elements(:xpath,"//android.widget.TextView[@text='Downloads']").size > 0
+            selenium.find_element(:xpath,"#{element_id}").click
+            sleep(APPIUM_TIMEOUT)
+            selenium.find_element(:xpath,"//android.widget.TextView[@text='Images']").click
+        end
+        sleep(APPIUM_TIMEOUT)
+        %x(adb shell input tap 300 300)
+        sleep(APPIUM_TIMEOUT)
+        %x(adb shell input tap 300 300)
+        sleep(APPIUM_TIMEOUT)
+    end    
+end
