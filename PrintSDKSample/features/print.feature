@@ -89,8 +89,7 @@ Scenario Outline: Print a card in Lollipop device and verify xml counters for 'I
     Given I am on Home screen
     Then I tap on "Image" option
     Then I click "SELECT A FILE" button
-    #Then I select the "pdf" 
-    Then I select a Photo
+    Then I select the "photo" 
     And I select layout as "Center"
     Then I tap on "Not Encrypted" option
     And I tap on "PRINT SETTINGS" option
