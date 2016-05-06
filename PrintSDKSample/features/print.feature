@@ -68,4 +68,37 @@ Scenario Outline: Print a card in Lollipop device and verify xml counters for 'I
         | 5x7 in     | Normal    | Plain        |Top Left  |
         | Letter     | Best      | Plain        |Top Left  |
         
-   
+   @TA13625
+   Scenario: Select a pdf and verify print
+    Given I am on Home screen
+    Then I tap on "PDF" option
+    Then I click "SELECT A FILE" button
+    Then I select the "pdf" 
+    And I select layout as "Center"
+    Then I tap on "Not Encrypted" option
+    And I tap on "PRINT SETTINGS" option
+    And I select preview button 
+    And I tap on Print in Print Preview screen
+    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
+    Then I select paper size as "Letter"
+    Then I tap on Print
+    Then I should see "Print Preview" screen for kitkat and "Print SDK" screen for Lollipop
+    
+    @TA13625
+    Scenario: Select a image and verify print
+    Given I am on Home screen
+    Then I tap on "Image" option
+    Then I click "SELECT A FILE" button
+    #Then I select the "pdf" 
+    Then I select a Photo
+    And I select layout as "Center"
+    Then I tap on "Not Encrypted" option
+    And I tap on "PRINT SETTINGS" option
+    And I select preview button 
+    And I tap on Print in Print Preview screen
+    Then I select the printer "_QA Photosmart 6510 series [FD90EC]" if available
+    Then I select paper size as "Letter"
+    Then I tap on Print
+    Then I should see "Print Preview" screen for kitkat and "Print SDK" screen for Lollipop
+    
+    
