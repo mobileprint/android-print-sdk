@@ -11,6 +11,10 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+version = 'v2.02.418'
 
 android {
     compileSdkVersion 22
@@ -58,8 +62,74 @@ android {
     lintOptions {
         abortOnError false
     }
+}
 
+def siteUrl = 'https://github.com/IPGPTP/DroidPrint'
+def gitUrl = 'https://github.com/IPGPTP/DroidPrint.git'
+group = 'com.hp.mss'
 
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_API_KEY')
+
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'mobileprintsdk'
+        userOrg = 'mobileprintsdk'
+        desc = 'Android Mobile Print SDK'
+        websiteUrl = siteUrl
+        issueTrackerUrl = 'https://developers.hp.com/forums/mobile-print-sdk'
+        vcsUrl = gitUrl
+        licenses = ['MIT']
+        labels = ['Android', 'Print', 'SDK']
+        publicDownloadNumbers = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+
+                name 'Mobile Print SDK'
+                url siteUrl
+
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+    // options.encoding = 'UTF-8'
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
 
 task copyAarFile(type: Copy) {
@@ -70,7 +140,6 @@ task copyAarFile(type: Copy) {
     into("${myDir}/")
     include("mobileprintsdk.aar")
 }
-
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
