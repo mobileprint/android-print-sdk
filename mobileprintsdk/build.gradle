@@ -21,7 +21,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
-        versionName "v2.01.417"
+        versionName "v2.02.418"
 
         if (org.gradle.internal.os.OperatingSystem.current().windows == false) {
             def cmd = "git rev-parse --short HEAD"
@@ -29,13 +29,11 @@ android {
             sha = proc.text.trim()
 //            cmd = "git rev-list HEAD --count"
 //            proc = cmd.execute()
-            versionCode = 417
+            versionCode = 418
         } else {
-            versionCode = 417
+            versionCode = 418
         }
 
-//        def f1 = new File('hpprint_ver.txt')
-//        f1.text = "${versionName}.${versionCode}\n"
     }
     buildTypes {
         release {
@@ -52,7 +50,7 @@ android {
     libraryVariants.all { variant ->
         variant.outputs.each { output ->
             output.outputFile = new File(
-                    output.outputFile.parent, "hpprint.aar"
+                    output.outputFile.parent, "mobileprintsdk.aar"
             )
         }
     }
@@ -66,11 +64,11 @@ android {
 
 task copyAarFile(type: Copy) {
     def myDir = System.getProperty("user.dir")
-    def myFile = "hpprint.aar"
+    def myFile = "mobileprintsdk.aar"
 
     from("${myDir}/app/build/outputs/aar/")
     into("${myDir}/")
-    include("hpprint.aar")
+    include("mobileprintsdk.aar")
 }
 
 

@@ -11,4 +11,4 @@
  */
 
 include ':app', ':hpprintsdk'
-project(':hpprintsdk').projectDir = new File('../app')
+project(':hpprintsdk').projectDir = new File('../mobileprintsdk')
