@@ -16,8 +16,19 @@ apply plugin: 'com.jfrog.bintray'
 
 version = 'v2.02.418'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-plugin:1.2'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
+    }
+}
+
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "21.1.2"
     def sha = ""
 
@@ -117,7 +128,7 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 
-task javadoc(type: Javadoc) {
+task javadoc(type: Javadoc) << {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
@@ -132,7 +143,7 @@ artifacts {
     archives sourcesJar
 }
 
-task copyAarFile(type: Copy) {
+task copyAarFile(type: Copy) << {
     def myDir = System.getProperty("user.dir")
     def myFile = "mobileprintsdk.aar"
 
