@@ -7,7 +7,7 @@ And (/^I check the pop up - Print plugin is present or not$/) do
 end
 
 Then (/^I select paper size as "([^"]*)"$/) do |paper_size|
-    sleep(APPIUM_TIMEOUT)
+    sleep(MAX_TIMEOUT)
     $paper_size = paper_size
     $printer_arr = $paper_arr["paper_arr_printer"]
     $pdf_arr = $paper_arr["paper_arr_pdf"]
@@ -90,6 +90,7 @@ Then (/^I select the printer "([^"]*)" if available$/) do |printer_name|
         wait.until { selenium.find_element(:id,"com.android.printspooler:id/title") }
         selenium.find_element(:id,"com.android.printspooler:id/title").click
     end
+    sleep(APPIUM_TIMEOUT)
     if selenium.find_elements(:name,"#{printer_name}").size > 0
         selenium.find_element(:name,"#{printer_name}").click
     else if selenium.find_elements(:xpath,"//android.widget.TextView[@text='All printers…']").size > 0

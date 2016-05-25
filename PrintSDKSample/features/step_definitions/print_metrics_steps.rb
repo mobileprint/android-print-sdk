@@ -29,7 +29,7 @@ And (/^I get the wifi_ssid, device id, os version, os type, device type, manufac
 end
 
 Then (/^I get black and white filter value and number of copies$/) do
-
+  sleep(APPIUM_TIMEOUT)
     $copies = selenium.find_element(:id,"com.android.printspooler:id/copies_edittext").text.split('')
 
     if getOSversion < '5.0'
@@ -166,7 +166,7 @@ Then(/^I cancel the print$/) do
 end
 
 Then(/^I check print result is "(.*?)"$/) do |print_result|
-  compare  = ($mertics_details['print_result'] == print_result.strip) ?  true : false
+  compare  = ($mertics_details['print_result'].strip == print_result.strip) ?  true : false
   fail "Print result verification failed" unless compare==true
 end
 
@@ -179,7 +179,7 @@ Then(/^I verify metrics not generated for current print/) do
 end
 
 Then(/^I check the print library version$/) do
-    compare = ($mertics_details['print_library_version'] == "v2.00.321") ?  true : false
+    compare = ($mertics_details['print_library_version'] == "v2.02.418") ?  true : false
   raise "print_library_version verification failed!" unless compare==true
 end
 
