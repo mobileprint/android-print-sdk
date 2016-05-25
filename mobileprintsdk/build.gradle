@@ -123,7 +123,7 @@ install {
     }
 }
 
-task sourcesJar(type: Jar) << {
+task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
@@ -133,7 +133,7 @@ task javadoc(type: Javadoc) << {
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) << {
+task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
     // options.encoding = 'UTF-8'
