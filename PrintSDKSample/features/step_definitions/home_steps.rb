@@ -88,6 +88,9 @@ Then /^verify that "(.*?)" button is present$/ do |button|
 end
 
 Given(/^"(.*?)" value should be selected$/) do |value|
+    if value.to_s == "Not Encrypted"
+        %x(adb shell input swipe 400 400 400 200 100)
+    end
     raise "#{value} is not the default selection" if query("AppCompatRadioButton marked:'#{value}'",:checked)[0] != true
 end
 
