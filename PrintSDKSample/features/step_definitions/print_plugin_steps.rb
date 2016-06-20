@@ -190,3 +190,10 @@ $paper_arr =
         "Letter" => "Main-Letter"
        }
  }
+
+Then(/^I navigate back to PrintPod screen$/) do
+    macro %Q|I navigate back|
+    if $os_version.to_f < 5.0           
+        macro %Q|I navigate back|
+    end
+end
