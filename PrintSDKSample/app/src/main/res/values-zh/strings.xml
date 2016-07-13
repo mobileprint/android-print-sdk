@@ -11,8 +11,9 @@
   -->
 
 <resources>
+  <!--
   <string name="app_name">Print SDK</string>
-
+-->
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">设置</string>
   <string name="print">打印</string>
