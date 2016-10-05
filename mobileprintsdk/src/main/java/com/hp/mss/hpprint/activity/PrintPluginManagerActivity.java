@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -229,7 +230,9 @@ public class PrintPluginManagerActivity extends AppCompatActivity {
 
         printBtn.setText(readyToPrint() ? R.string.continue_to_print : R.string.skip);
         if(newPackageInstalled) {
-            displayEnableTipsDialog();
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                displayEnableTipsDialog();
+            }
             newPackageInstalled = false;
         }
 

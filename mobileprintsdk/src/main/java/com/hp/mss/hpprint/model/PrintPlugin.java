@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 
 import com.hp.mss.hpprint.R;
@@ -150,15 +151,26 @@ public class PrintPlugin {
         //MOPRIA STILL HAS DEFECT - Disabling the print plugin will not disable the running service
         //Using ugly work around specifically for Mopria org.mopria.printplugin/org.mopria.printplugin.MopriaPrintService
         //I'm sorry :(
+        //This defect was fixed in Nougat
         String printServiceName = packageName;
-        if (packageName == PrintPluginStatusHelper.MOPRIA_PRINT_PLUGIN_PACKAGE_NAME) {
+        if (packageName == PrintPluginStatusHelper.MOPRIA_PRINT_PLUGIN_PACKAGE_NAME && Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             printServiceName = PrintPluginStatusHelper.MOPRIA_PRINT_SERVICE_NAME;
         }
         String enabledPrintServices = Settings.Secure.getString(context.getContentResolver(), "enabled_print_services");
-        if (null != enabledPrintServices)
-            return enabledPrintServices.toLowerCase().contains(printServiceName.toLowerCase());
-        else
-            return false;
+        String disabledPrintServices = Settings.Secure.getString(context.getContentResolver(), "disabled_print_services");
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+            if (null != enabledPrintServices)
+                return enabledPrintServices.toLowerCase().contains(printServiceName.toLowerCase());
+            else
+                return false;
+        } else {
+            if (null != disabledPrintServices)
+                return !disabledPrintServices.toLowerCase().contains(printServiceName.toLowerCase());
+            else
+                return true;
+        }
+
     }
 
     /**
