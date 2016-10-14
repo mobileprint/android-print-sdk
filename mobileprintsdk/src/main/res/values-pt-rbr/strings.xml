@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+
+    <string name="app_name">Impressão HP</string>
+    <string name="title_activity_print_preview">Visualização da impressão</string>
+    <string name="title_activity_print_place_holder">Imprimir</string>
+    <string name="action_settings">Configurações</string>
+    <string name="print_preview_prompt">Imagine que uma imagem de alta qualidade aparece abaixo</string>
+    <string name="learn_about_mobile_print">Instruções de impressão</string>
+    <string name="support">Suporte:</string>
+    <string name="paper_size">Tamanho do papel:</string>
+    <string name="paper_type">Tipo de papel</string>
+    <string name="lib_font"></string>
+
+    <string name="preview_spinner_4x5">4 x 5</string>
+    <string name="preview_spinner_4x6">4 x 6</string>
+    <string name="preview_spinner_5x7">5 x 7</string>
+    <string name="preview_spinner_letter">8,5 x 11</string>
+
+    <string-array name="paper_type_array">
+        <item> Papel fotográfico </item>
+    </string-array>
+    <!-- Print Preview -->
+    <string name="print_preview_menu_help">Ajuda de impressão</string>
+    <string name="print_preview_menu_print_service_plugins">Plugins de serviços de impressão</string>
+
+    <!-- Print Plugin installation -->
+    <string name="hp_print_plugin_alert_header">Plugin de impressão HP</string>
+    <string name="install_hp_print_plugin_msg">Você possui uma impressora HP? Para imprimir fotos da melhor qualidade, instale o plugin de impressão HP.</string>
+    <string name="update_hp_print_plugin_msg">Você possui uma impressora HP? Para imprimir fotos da melhor qualidade, atualize o plugin de impressão HP.</string>
+    <string name="enable_hp_print_plugin_msg">Confira se o plugin de impressão HP está habilitado.</string>
+
+    <!-- Print Plugin helper -->
+    <string name="hp_print_helper_header">Auxiliar de serviços de impressão</string>
+    <string name="install_print_plugin_msg">Para imprimir fotos da melhor qualidade, instale o plugin de impressão HP adequado à sua impressora.</string>
+
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">Informações de serviços de impressão</string>
+    <string name="print_service_help_title_1">Obtenha um plugin de serviços de impressão</string>
+    <string name="print_service_help_msg_1">Você deve providenciar a instalação de um plugin de serviços de impressão para poder imprimir. Cada marca de impressora possui seu próprio plugin que permite imprimir a partir de seu dispositivo móvel. Também estão disponíveis plugins genéricos de serviços de impressão. Selecione o plugin que melhor atende suas necessidades. Você pode adicionar outros plugins de impressão a qualquer momento.</string>
+    <string name="print_service_help_title_2">Habilitar plugin</string>
+    <string name="print_service_help_msg_2">Depois de baixar um plugin de serviços de impressão, será solicitada a para habilitação do plugin. Basta selecioná-lo e colocar o interruptor na posição &quot;ON&quot;.</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">Ajuda de impressão</string>
+    <string name="print_help_activity_title_1">Confira se seu plugin de serviços de impressão está instalado e habilitado</string>
+    <string name="print_help_activity_msg_1_part_1">Você deve providenciar a instalação e a habilitação de um plugin de serviços de impressão para poder imprimir. Cada marca de impressora possui seu próprio plugin que permite imprimir a partir de seu dispositivo móvel. Também estão disponíveis plugins genéricos de serviços de impressão. Selecione o plugin que melhor atende suas necessidades. Você pode adicionar outros plugins de impressão a qualquer momento.</string>
+    <string name="print_help_activity_msg_1_part_2">Depois de baixar um plugin de serviços de impressão, será solicitada a habilitação do plugin. Basta selecioná-lo e colocar o interruptor na posição &quot;ON&quot;.</string>
+    <string name="print_help_activity_msg_1_link">Verifique seus plugins de serviços de impressão</string>
+    <string name="print_help_activity_title_2">Confira se o dispositivo móvel e a impressora estão conectados à mesma rede</string>
+    <string name="print_help_activity_msg_2">O dispositivo móvel e a impressora devem estar conectados à sua rede Wi-Fi local. Revise as informações de acesso Wi-Fi do dispositivo e siga as instruções para se conectar.</string>
+    <string name="print_help_activity_title_3">Verifique se há alguma mensagem de erro ou problemas de energia na sua impressora</string>
+    <string name="print_help_activity_msg_3">Alguns dos problemas comuns da impressora incluem: pouca tinta, atolamento de papel e papel não carregado. Além disso, confira se há energia na impressora.</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">Impressão em papel de 4 x 5</string>
+    <string name="snap_shots_prompt_ok">CONTINUAR</string>
+    <string name="snap_shots_prompt_do_not_show">Não exibir novamente.</string>
+    <string name="snap_shots_prompt_message">Você selecionou 4 x 5 como o tamanho do papel. A tela seguinte mostrará 4 x 6, mas não se preocupe, pois sairá a impressão correta.</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">Gerenciador de serviços de impressão</string>
+    <string name="plugin_manager_sub_title">Você precisa de um plugin de serviços de impressão instalado e habilitado para poder imprimir.</string>
+
+    <string-array name="plugin_names">
+        <item>Plugin de serviços de impressão HP</item>
+        <item>Serviço de impressão Mopria</item>
+        <item>Plugin do serviço de impressão Brother</item>
+        <item>Plugin do serviço de impressão Samsung</item>
+        <item>Serviço de impressão Canon</item>
+        <item>Facilitador de impressão Epson</item>
+        <item>Outro plugin de serviços de impressão</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+         <item>N/D</item>
+    </string-array>
+
+    <string name="continue_to_print">CONTINUAR IMPRESSÃO</string>
+    <string name="skip">IGNORAR</string>
+    <string name="before_enable_tips">Você será direcionado para as configurações de impressão do Android.</string>
+    <string name="before_enable_tips_title">Habilitar seu plugin</string>
+    <string name="ok">VÁ PARA CONFIGURAÇÕES</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="enabled">Habilitado</string>
+    <string name="disabled">Desabilitado</string>
+
+    <!--Toast Strings-->
+    <string name="set_print_job_data">Primeiro, defina PrintJobData</string>
+</resources>

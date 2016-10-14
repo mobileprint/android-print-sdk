@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+
+    <string name="app_name">HP Baskı</string>
+    <string name="title_activity_print_preview">Baskı Önizleme</string>
+    <string name="title_activity_print_place_holder">Yazdır</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="print_preview_prompt">Aşağıda harika bir görüntünün belirdiğini hayal edin</string>
+    <string name="learn_about_mobile_print">Yazdırma Talimatları</string>
+    <string name="support">Destek:</string>
+    <string name="paper_size">Kağıt Boyutu:</string>
+    <string name="paper_type">Kağıt Türü</string>
+    <string name="lib_font"></string>
+
+    <string name="preview_spinner_4x5">4 x 5</string>
+    <string name="preview_spinner_4x6">4 x 6</string>
+    <string name="preview_spinner_5x7">5 x 7</string>
+    <string name="preview_spinner_letter">8,5 x 11</string>
+
+    <string-array name="paper_type_array">
+        <item> Fotoğraf Kağıdı </item>
+    </string-array>
+    <!-- Print Preview -->
+    <string name="print_preview_menu_help">Yazdırma Yardımı</string>
+    <string name="print_preview_menu_print_service_plugins">Baskı Hizmeti Sağlayıcılar</string>
+
+    <!-- Print Plugin installation -->
+    <string name="hp_print_plugin_alert_header">HP Baskı Eklentisi</string>
+    <string name="install_hp_print_plugin_msg">Bir HP yazıcınız mı var? En iyi kalitede fotoğraflar yazdırmak için lütfen HP Baskı Eklentisini yükleyin.</string>
+    <string name="update_hp_print_plugin_msg">Bir HP yazıcınız mı var? En iyi kalitede fotoğraflar yazdırmak için lütfen HP Baskı Eklentisini güncelleyin.</string>
+    <string name="enable_hp_print_plugin_msg">HP Baskı Eklentisinin etkinleştirilmiş olduğundan emin olun.</string>
+
+    <!-- Print Plugin helper -->
+    <string name="hp_print_helper_header">Baskı Hizmeti Yardımcısı</string>
+    <string name="install_print_plugin_msg">En iyi kalitede fotoğraflar yazdırmak için lütfen yazıcınız için uygun eklentiyi yükleyip etkinleştirin.</string>
+
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">Baskı Hizmeti Bilgileri</string>
+    <string name="print_service_help_title_1">Bir Baskı Hizmeti Eklentisi edinin</string>
+    <string name="print_service_help_msg_1">Yazdırmak için bir baskı hizmeti eklentisinin yüklü olması gerekir. Her marka yazıcının mobil aygıtınızdan yazdırmanıza olanak sağlayan kendi eklentisi vardır. Genel baskı hizmeti eklentileri de mevcuttur. Kendinize en uygun eklentiyi seçin. İstediğiniz zaman ilave baskı eklentileri ekleyebilirsiniz.</string>
+    <string name="print_service_help_title_2">Eklentiyi Etkinleştir</string>
+    <string name="print_service_help_msg_2">Bir Baskı Hizmeti Eklentisi indirdikten sonra eklentinizi etkinleştirmeniz istenecektir. Eklentiyi seçin düğmeyi “ON” (“AÇIK”) konumuna getirmeniz yeterlidir.</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">Yazdırma Yardımı</string>
+    <string name="print_help_activity_title_1">Baskı Hizmeti Eklentinizin yüklü ve etkinleştirilmiş olduğundan emin olun.</string>
+    <string name="print_help_activity_msg_1_part_1">Yazdırmak için bir baskı hizmeti eklentisinin yüklü ve etkinleştirilmiş olması gerekir. Her marka yazıcının mobil aygıtınızdan yazdırmanıza olanak sağlayan kendi eklentisi vardır. Genel baskı hizmeti eklentileri de mevcuttur. Kendinize en uygun eklentiyi seçin. İstediğiniz zaman ilave baskı eklentileri ekleyebilirsiniz.</string>
+    <string name="print_help_activity_msg_1_part_2">Bir Baskı Hizmeti Eklentisi indirdikten sonra eklentinizi etkinleştirmeniz istenecektir. Eklentiyi seçin düğmeyi “ON” (“AÇIK”) konumuna getirmeniz yeterlidir.</string>
+    <string name="print_help_activity_msg_1_link">Bir Baskı Hizmeti Eklentilerinizi kontrol edin</string>
+    <string name="print_help_activity_title_2">Aygıtınızın ve yazıcınızın aynı ağa bağlı olduğundan emin olun</string>
+    <string name="print_help_activity_msg_2">Mobil aygıtınız ile yazıcınızın yerel Wi-Fi ağınıza bağlı olması gerekir. Bağlanmak için her iki aygıtınızın da Wi-Fi bilgilerini gözden geçirin ve talimatları izleyin.</string>
+    <string name="print_help_activity_title_3">Yazıcınızda herhangi bir hata mesajı veya güç sorunları olup olmadığını kontrol edin</string>
+    <string name="print_help_activity_msg_3">Yaygın görülen yazıcı sorunları arasında düşük mürekkep düzeyi, kağıt sıkışması ve kağıt yüklenmemesi bulunmaktadır. Ayrıca yazıcının güç bağlantısı olduğundan emin olun.</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">4x5 kağıda yazdırma</string>
+    <string name="snap_shots_prompt_ok">DEVAM</string>
+    <string name="snap_shots_prompt_do_not_show">Tekrar gösterme.</string>
+    <string name="snap_shots_prompt_message">Kağıt boyutu olarak 4x5 seçimini yaptınız. Sonraki ekranda 4x6 gösterilecektir, ancak endişelenmeyin\, doğru şekilde yazdırılacaktır.</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">Baskı Hizmeti Yöneticisi</string>
+    <string name="plugin_manager_sub_title">Yazdırmak için bir Baskı Hizmeti Eklentisinin yüklü ve etkinleştirilmiş olması gerekir.</string>
+
+    <string-array name="plugin_names">
+        <item>HP Baskı Hizmeti Eklentisi</item>
+        <item>Mopria Baskı Hizmeti</item>
+        <item>Brother Baskı Hizmeti Eklentisi</item>
+        <item>Samsung Baskı Hizmeti Eklentisi</item>
+        <item>Canon Baskı Hizmeti</item>
+        <item>Epson Baskı Etkinleştirici</item>
+        <item>Diğer Baskı Hizmeti Eklentisi</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>Brother Industries, Ltd.</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>Canon Inc.</item>
+        <item>Seiko Epson Corporation</item>
+         <item> -</item>
+    </string-array>
+
+    <string name="continue_to_print">YAZDIRMAK İÇİN DEVAM EDİN</string>
+    <string name="skip">ATLA</string>
+    <string name="before_enable_tips">Android Baskı Ayarlarına yönlendirileceksiniz.</string>
+    <string name="before_enable_tips_title">Eklentinizi etkinleştirin</string>
+    <string name="ok">AYARLARA GİT</string>
+    <string name="cancel">İPTAL</string>
+    <string name="enabled">Etkin</string>
+    <string name="disabled">Devre Dışı</string>
+
+    <!--Toast Strings-->
+    <string name="set_print_job_data">Lütfen ilk önce PrintJobData ayarını yapın</string>
+</resources>

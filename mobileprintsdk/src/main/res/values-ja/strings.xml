@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+
+    <string name="app_name">HPプリント</string>
+    <string name="title_activity_print_preview">印刷プレビュー</string>
+    <string name="title_activity_print_place_holder">印刷する</string>
+    <string name="action_settings">設定</string>
+    <string name="print_preview_prompt">最高に素晴らしい画像がこの下に表示されることを想像してください</string>
+    <string name="learn_about_mobile_print">ページを印刷するには</string>
+    <string name="support">サポート：</string>
+    <string name="paper_size">用紙サイズ:</string>
+    <string name="paper_type">用紙の種類</string>
+    <string name="lib_font"></string>
+
+    <string name="preview_spinner_4x5">4 x 5インチ</string>
+    <string name="preview_spinner_4x6">4 x 6インチ</string>
+    <string name="preview_spinner_5x7">5 x 7インチ</string>
+    <string name="preview_spinner_letter">8.5 x 11インチ</string>
+
+    <string-array name="paper_type_array">
+        <item> 写真用紙 </item>
+    </string-array>
+    <!-- Print Preview -->
+    <string name="print_preview_menu_help">印刷のヘルプ</string>
+    <string name="print_preview_menu_print_service_plugins">印刷サービスプラグイン</string>
+
+    <!-- Print Plugin installation -->
+    <string name="hp_print_plugin_alert_header">HP印刷プラグイン</string>
+    <string name="install_hp_print_plugin_msg">HPプリンタをお持ちですか? 最高品質の写真を印刷するには、HPの印刷プラグインをインストールしてください。</string>
+    <string name="update_hp_print_plugin_msg">HPプリンタをお持ちですか? 最高品質の写真を印刷するには、HPの印刷プラグインを更新してください。</string>
+    <string name="enable_hp_print_plugin_msg">HPの印刷プラグインが有効であることを確認してください。</string>
+
+    <!-- Print Plugin helper -->
+    <string name="hp_print_helper_header">印刷サービスヘルパ</string>
+    <string name="install_print_plugin_msg">最高品質の写真を印刷するには、使用するプリンタ用の適切なプラグインをインストールし、有効にしてください。</string>
+
+    <!-- Print Service Plugin Information -->
+    <string name="title_activity_print_service_plugin_info">印刷サービス情報</string>
+    <string name="print_service_help_title_1">印刷サービスプラグインを入手してください</string>
+    <string name="print_service_help_msg_1">印刷用に、印刷サービスプラグインがインストールされている必要があります。 各メーカーのプリンタには、ご使用のモバイルデバイスから印刷を可能にする、独自のプラグインがあります。 汎用の印刷サービスプラグインも入手できます。 最適に機能するプラグインを選択してください。 追加の印刷プラグインを、いつでも追加することができます。</string>
+    <string name="print_service_help_title_2">プラグインを有効にする</string>
+    <string name="print_service_help_msg_2">印刷サービスプラグインをダウンロードしたら、プラグインを有効化するようにプロンプトが表示されます。 選択したら、スイッチをタップして「オン」にするだけです。</string>
+
+    <!-- Print Help -->
+    <string name="title_activity_print_help">印刷のヘルプ</string>
+    <string name="print_help_activity_title_1">印刷サービスプラグインがインストールされ、有効になっていることを確認してください</string>
+    <string name="print_help_activity_msg_1_part_1">印刷用に、印刷サービスプラグインがインストールされ、有効になっている必要があります。 各メーカーのプリンタには、ご使用のモバイルデバイスから印刷を可能にする、独自のプラグインがあります。 汎用の印刷サービスプラグインも入手できます。 最適に機能するプラグインを選択してください。 追加の印刷プラグインを、いつでも追加することができます。</string>
+    <string name="print_help_activity_msg_1_part_2">印刷サービスプラグインをダウンロードしたら、プラグインを有効化するようにプロンプトが表示されます。 選択したら、スイッチをタップして「オン」にするだけです。</string>
+    <string name="print_help_activity_msg_1_link">ご使用の印刷サービスプラグインを確認してください</string>
+    <string name="print_help_activity_title_2">ご使用のモバイルデバイスとプリンタが同じネットワーク内に接続されていることを確認してください</string>
+    <string name="print_help_activity_msg_2">ご使用のモバイルデバイスとプリンタは、ご使用のローカルWiFiネットワーク内に接続されていることが必要です。 両方のデバイスのWiFi情報を確認して、接続のための説明に従ってください。</string>
+    <string name="print_help_activity_title_3">ご使用のプリンタにエラーメッセージや電源の問題がないことを確認してください</string>
+    <string name="print_help_activity_msg_3">一般的なプリンタの問題には、インク切れ、紙詰まり、紙切れなどがあります。 さらに、プリンタに電源が入っていることを確認してください。</string>
+
+
+    <!-- Snap Shots Prompt -->
+    <string name="snap_shots_prompt_header">4ｘ5インチ用紙での印刷</string>
+    <string name="snap_shots_prompt_ok">継続</string>
+    <string name="snap_shots_prompt_do_not_show">今後表示しない。</string>
+    <string name="snap_shots_prompt_message">用紙サイズに4ｘ5インチが選択されました。 次の画面には4ｘ6インチが表示されますが、問題ありません。正常に印刷されます。</string>
+
+    <!-- Print Plugin Manager -->
+    <string name="plugin_manager_title">印刷サービスマネージャ</string>
+    <string name="plugin_manager_sub_title">印刷するためには、印刷サービスプラグインがインストールされ、有効になっている必要があります。</string>
+
+    <string-array name="plugin_names">
+        <item>HP印刷サービスプラグイン</item>
+        <item>Mopria印刷サービス</item>
+        <item>ブラザー印刷サービスプラグイン</item>
+        <item>サムスン印刷サービスプラグイン</item>
+        <item>キャノン印刷サービス</item>
+        <item>エプソン印刷イネーブラ</item>
+        <item>その他のPrintServicePlugin</item>
+    </string-array>
+
+    <string-array name="plugin_makers">
+        <item>HP Inc.</item>
+        <item>Mopria Alliance</item>
+        <item>ブラザー工業株式会社</item>
+        <item>Samsung Electronics Co., Ltd.</item>
+        <item>キャノン株式会社</item>
+        <item>セイコーエプソン株式会社</item>
+         <item>該当なし</item>
+    </string-array>
+
+    <string name="continue_to_print">印刷を続ける</string>
+    <string name="skip">省略</string>
+    <string name="before_enable_tips">アンドロイド用印刷設定の説明があります。</string>
+    <string name="before_enable_tips_title">プラグインを有効にしてください</string>
+    <string name="ok">設定に移動する</string>
+    <string name="cancel">キャンセル</string>
+    <string name="enabled">有効化</string>
+    <string name="disabled">無効化</string>
+
+    <!--Toast Strings-->
+    <string name="set_print_job_data">最初にPrintJobDataを設定してください。</string>
+</resources>
