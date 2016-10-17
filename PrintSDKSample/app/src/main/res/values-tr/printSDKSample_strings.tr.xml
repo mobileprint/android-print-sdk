@@ -11,7 +11,7 @@
   -->
 
 <resources>
-    <string name="app_name">Baskı SDK'si</string>
+    <string name="app_name">Baskı SDK\'si</string>
 
     <string name="hello_world">Merhaba dünya!</string>
     <string name="action_settings">Ayarlar</string>
