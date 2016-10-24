@@ -182,13 +182,7 @@ public class PrintPluginStatusHelper {
             PrintPlugin printPlugin = new PrintPlugin(packageNames[i], pluginPackageVersions[i], pluginPlaystoreUrls[i],
                                                         context, pluginNames[i], pluginMakers[i], pluginIcons[i]);
             printPlugin.updateStatus();
-            if(  Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                if( !packageNames[i].equals(SAMSUNG_PRINT_PLUGIN_PACKAGE_NAME) )
-                    result.put(packageNames[i], printPlugin);
-            } else if( !packageNames[i].equals(BROTHER_PRINT_PLUGIN_PACKAGE_NAME ) ) {
-                result.put(packageNames[i], printPlugin);
-            }
-
+            result.put(packageNames[i], printPlugin);
         }
 
         return result;
