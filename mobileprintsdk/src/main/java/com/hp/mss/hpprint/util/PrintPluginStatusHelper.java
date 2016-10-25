@@ -279,6 +279,9 @@ public class PrintPluginStatusHelper {
      */
     public boolean readyToPrint() {
         boolean isReady = false;
+        if (android.os.Build.MANUFACTURER.equals("Amazon")) {
+            return true;
+        }
 
         Collection<PrintPlugin> list = pluginVersionMap.values();
 
