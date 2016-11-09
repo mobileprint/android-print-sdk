@@ -12,7 +12,6 @@
   -->
 
 <resources>
-  <string name="app_name">HP Print</string>
   <string name="title_activity_print_preview">Náhled tisku</string>
   <string name="title_activity_print_place_holder">Tisk</string>
   <string name="action_settings">Nastavení</string>

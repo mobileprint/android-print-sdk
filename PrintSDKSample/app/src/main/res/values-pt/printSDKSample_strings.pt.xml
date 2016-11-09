@@ -1,0 +1,50 @@
+﻿<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+    <string name="app_name">Imprimir SDK</string>
+
+    <string name="hello_world">Olá, mundo!</string>
+    <string name="action_settings">Configurações</string>
+    <string name="print">Imprimir</string>
+    <string name="print_settings">CONFIGURAÇÕES DE IMPRESSÃO</string>
+    <string name="printing_help">AJUDA DE IMPRESSÃO</string>
+    <string name="print_plugin_manager">Gerenciador de plugins de impressão</string>
+    <string name="print_plugin_manager_description">Ajudar usuários na instalação de suas impressoras PSP</string>
+    <string name="print_help_menu">Menu da ajuda de impressão</string>
+    <string name="print_help_menu_description">Fornecer conteúdo de ajuda dentro de seu aplicativo</string>
+    <string name="custom_data_title">Favor inserir os dados personalizados abaixo</string>
+    <string name="custom_data_tag">Tag</string>
+    <string name="custom_data_value">Valor</string>
+    <string name="asset">Ativo</string>
+    <string name="layout_option">LAYOUT DA PÁGINA</string>
+    <string name="layout_center">Centro</string>
+    <string name="layout_center_top">Parte sup. central</string>
+    <string name="layout_crop">Preencher</string>
+    <string name="layout_fit">Adaptar</string>
+    <string name="layout_top_left">Parte sup. esquerda</string>
+    <string name="margin_option">MARGENS DE PÁGINA</string>
+    <string name="layout_with_margin">1/2 polegada</string>
+    <string name="layout_without_margin">Nenhum</string>
+    <string name="layout_with_top_margin">Apenas parte sup.</string>
+    <string name="metrics_option">MÉTRICA</string>
+    <string name="unique_device_id_per_app">ID DE DISPOSITIVO EXCLUSIVO</string>
+    <string name="content_option">TIPO DE CONTEÚDO</string>
+    <string name="content_pdf">PDF</string>
+    <string name="content_image">Imagem</string>
+    <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
+    <string name="add_constom_data">Adicionar dados</string>
+    <string name="not_encrypted">Não criptografados</string>
+    <string name="unique_per_app">Exclusivo por aplicativo</string>
+    <string name="unique_per_vendor">Exclusivo por fornecedor</string>
+    <string name="select_a_file">SELECIONAR UM ARQUIVO</string>
+</resources>

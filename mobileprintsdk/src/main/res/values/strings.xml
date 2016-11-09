@@ -12,7 +12,6 @@
 
 <resources>
 
-    <string name="app_name">HP Print</string>
     <string name="title_activity_print_preview">Print Preview</string>
     <string name="title_activity_print_place_holder">Print</string>
     <string name="action_settings">Settings</string>

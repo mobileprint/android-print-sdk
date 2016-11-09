@@ -128,7 +128,7 @@ public class ApplicationMetricsData {
 
         this.languageCode = Locale.getDefault().getISO3Language();
         this.countryCode = Locale.getDefault().getISO3Country();
-        this.timezoneDescription = TimeZone.getDefault().getDisplayName();
+        this.timezoneDescription = TimeZone.getDefault().getDisplayName(Locale.US);
         this.timezoneOffsetSeconds = String.valueOf(TimeZone.getDefault().getRawOffset()/1000);
 
     }

@@ -12,7 +12,6 @@
   -->
 
 <resources>
-  <string name="app_name">Impressão HP</string>
   <string name="title_activity_print_preview">Pré-visualização da impressão</string>
   <string name="title_activity_print_place_holder">Imprimir</string>
   <string name="action_settings">Definições</string>

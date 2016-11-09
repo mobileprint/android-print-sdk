@@ -12,7 +12,6 @@
   -->
 
 <resources>
-  <string name="app_name">Stampa HP</string>
   <string name="title_activity_print_preview">Anteprima di stampa</string>
   <string name="title_activity_print_place_holder">Stampa</string>
   <string name="action_settings">Impostazioni</string>

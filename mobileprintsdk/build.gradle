@@ -14,7 +14,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = 'v2.02.418'
+version = 'v2.02.448'
 
 buildscript {
     repositories {
@@ -22,7 +22,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.github.dcendents:android-maven-plugin:1.2'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
     }
 }
@@ -34,9 +34,9 @@ android {
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
-        versionName "v2.02.418"
+        versionName "v2.02.448"
 
         if (org.gradle.internal.os.OperatingSystem.current().windows == false) {
             def cmd = "git rev-parse --short HEAD"
@@ -155,7 +155,7 @@ task copyAarFile(type: Copy) << {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.mcxiaoke.volley:library:1.0.6'
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:support-v4:23.0.1'
 }

@@ -1,0 +1,50 @@
+﻿<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+    <string name="app_name">Baskı SDK\'si</string>
+
+    <string name="hello_world">Merhaba dünya!</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="print">Yazdır</string>
+    <string name="print_settings">YAZDIRMA AYARLARI</string>
+    <string name="printing_help">YAZDIRMA YARDIMI</string>
+    <string name="print_plugin_manager">Baskı Eklentisi Yöneticisi</string>
+    <string name="print_plugin_manager_description">Kullanıcıların yazıcılarının baskı hizmeti eklentisini yüklemesine yardım edin</string>
+    <string name="print_help_menu">Yazdırma Yardımı Menüsü</string>
+    <string name="print_help_menu_description">Uygulamanız içinde yardım içeriği sağlayın</string>
+    <string name="custom_data_title">Lütfen özel bilgileri aşağıya girin</string>
+    <string name="custom_data_tag">Etiket</string>
+    <string name="custom_data_value">Değer</string>
+    <string name="asset">Varlık</string>
+    <string name="layout_option">SAYFA DÜZENİ</string>
+    <string name="layout_center">Orta</string>
+    <string name="layout_center_top">Orta Üst</string>
+    <string name="layout_crop">Doldur</string>
+    <string name="layout_fit">Sığdır</string>
+    <string name="layout_top_left">Sol Üst</string>
+    <string name="margin_option">SAYFA KENAR BOŞLUKLARI</string>
+    <string name="layout_with_margin">1/2 inç</string>
+    <string name="layout_without_margin">Hiçbiri</string>
+    <string name="layout_with_top_margin">Yalnızca Üst</string>
+    <string name="metrics_option">METRİKLER</string>
+    <string name="unique_device_id_per_app">ÖZGÜN AYGIT KİMLİĞİ</string>
+    <string name="content_option">İÇERİK TÜRÜ</string>
+    <string name="content_pdf">PDF</string>
+    <string name="content_image">Görüntü</string>
+    <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
+    <string name="add_constom_data">Veri Ekle</string>
+    <string name="not_encrypted">Şifrelenmemiş</string>
+    <string name="unique_per_app">Uygulama için Özgün</string>
+    <string name="unique_per_vendor">Tedarikçi için Özgün</string>
+    <string name="select_a_file">BİR DOSYA SEÇİN</string>
+</resources>

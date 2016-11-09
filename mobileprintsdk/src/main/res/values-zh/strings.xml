@@ -12,7 +12,6 @@
 
 <resources>
 
-  <string name="app_name">惠普打印</string>
   <string name="title_activity_print_preview">打印预览</string>
   <string name="title_activity_print_place_holder">打印</string>
   <string name="action_settings">设置</string>

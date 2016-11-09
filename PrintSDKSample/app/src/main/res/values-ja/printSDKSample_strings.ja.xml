@@ -1,0 +1,50 @@
+﻿<!--
+  ~ Hewlett-Packard Company
+  ~ All rights reserved.
+  ~
+  ~ This file, its contents, concepts, methods, behavior, and operation
+  ~ (collectively the "Software") are protected by trade secret, patent,
+  ~ and copyright laws. The use of the Software is governed by a license
+  ~ agreement. Disclosure of the Software to third parties, in any form,
+  ~ in whole or in part, is expressly prohibited except as authorized by
+  ~ the license agreement.
+  -->
+
+<resources>
+    <string name="app_name">SDKの印刷</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">設定</string>
+    <string name="print">印刷する</string>
+    <string name="print_settings">印刷設定</string>
+    <string name="printing_help">印刷のヘルプ</string>
+    <string name="print_plugin_manager">印刷プラグインマネージャ</string>
+    <string name="print_plugin_manager_description">ユーザのプリンタPSPインストールをお手伝いします</string>
+    <string name="print_help_menu">印刷ヘルプメニュ</string>
+    <string name="print_help_menu_description">ご使用のアプリケーション内にヘルプが用意されています</string>
+    <string name="custom_data_title">以下に、カスタムデータを入力してください</string>
+    <string name="custom_data_tag">タグ</string>
+    <string name="custom_data_value">値</string>
+    <string name="asset">資産</string>
+    <string name="layout_option">ページ レイアウト</string>
+    <string name="layout_center">中央</string>
+    <string name="layout_center_top">上部中央</string>
+    <string name="layout_crop">塗りつぶし</string>
+    <string name="layout_fit">サイズ調整</string>
+    <string name="layout_top_left">左上</string>
+    <string name="margin_option">ページ余白</string>
+    <string name="layout_with_margin">1/2インチ</string>
+    <string name="layout_without_margin">なし</string>
+    <string name="layout_with_top_margin">HPのみ</string>
+    <string name="metrics_option">メトリック</string>
+    <string name="unique_device_id_per_app">一意のデバイスID</string>
+    <string name="content_option">コンテンツタイプ</string>
+    <string name="content_pdf">PDF</string>
+    <string name="content_image">イメージ</string>
+    <string name="lib_font">fonts/HPSimplified_Rg.ttf</string>
+    <string name="add_constom_data">データの追加</string>
+    <string name="not_encrypted">暗号化されていません</string>
+    <string name="unique_per_app">アプリごとに一意</string>
+    <string name="unique_per_vendor">メーカーごとに一意</string>
+    <string name="select_a_file">ファイルの選択</string>
+</resources>

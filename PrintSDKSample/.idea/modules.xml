@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PrintSDKSample.iml" filepath="$PROJECT_DIR$/PrintSDKSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../app/hpprintsdk.iml" filepath="$PROJECT_DIR$/../app/hpprintsdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mobileprintsdk/hpprintsdk.iml" filepath="$PROJECT_DIR$/../mobileprintsdk/hpprintsdk.iml" />
     </modules>
   </component>
 </project>
