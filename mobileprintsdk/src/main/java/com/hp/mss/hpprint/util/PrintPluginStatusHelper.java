@@ -36,6 +36,7 @@ public class PrintPluginStatusHelper {
     private Context context;
     private static PrintPluginStatusHelper instance = null;
     private final Map<String, PrintPlugin> pluginVersionMap;
+    private String locale;
 
     protected PrintPluginStatusHelper(Context context) {
 
@@ -153,6 +154,7 @@ public class PrintPluginStatusHelper {
                                                             "https://play.google.com/store/apps/details?id=com.epson.mobilephone.android.epsonprintserviceplugin",
                                                             "https://play.google.com/store/search?q=print%20service%20plugin&c=apps" };
 
+    private static final String[] pluginTencentUrls    = {"http://sj.qq.com/myapp/search.htm?kw=HP%20Print%20Service%20plugin"};
     /**
      * Plugin Icon Name
      */
@@ -177,13 +179,24 @@ public class PrintPluginStatusHelper {
 
         Map<String, PrintPlugin> result = new HashMap<String, PrintPlugin>();
 
-        for(int i=0; i < packageNames.length; i++) {
 
-            PrintPlugin printPlugin = new PrintPlugin(packageNames[i], pluginPackageVersions[i], pluginPlaystoreUrls[i],
-                                                        context, pluginNames[i], pluginMakers[i], pluginIcons[i]);
-            printPlugin.updateStatus();
-            result.put(packageNames[i], printPlugin);
+        if (isChina()) {
+            for(int i=0; i < pluginTencentUrls.length; i++) {
+                PrintPlugin printPlugin = new PrintPlugin(packageNames[i], pluginPackageVersions[i], pluginTencentUrls[i],
+                        context, pluginNames[i], pluginMakers[i], pluginIcons[i]);
+                printPlugin.updateStatus();
+                result.put(packageNames[i], printPlugin);
+            }
+        } else {
+            for(int i=0; i < packageNames.length; i++) {
+
+                PrintPlugin printPlugin = new PrintPlugin(packageNames[i], pluginPackageVersions[i], pluginPlaystoreUrls[i],
+                        context, pluginNames[i], pluginMakers[i], pluginIcons[i]);
+                printPlugin.updateStatus();
+                result.put(packageNames[i], printPlugin);
+            }
         }
+
 
         return result;
     }
@@ -217,7 +230,9 @@ public class PrintPluginStatusHelper {
                 }
             }
         }
-
+        if (isChina()) {
+            return plugins;
+        }
         plugins[index] = pluginVersionMap.get(OTHER_PRINT_PLUGIN_PACKAGE_NAME);
         return plugins;
     }
@@ -376,6 +391,12 @@ public class PrintPluginStatusHelper {
 
     }
 
+    private boolean isChina() {
+        if (locale == null) {
+            locale = context.getResources().getConfiguration().locale.getISO3Country();
+        }
+        return locale.equals("CHN") || locale.equals("HKG");
+    }
 
 }
 
