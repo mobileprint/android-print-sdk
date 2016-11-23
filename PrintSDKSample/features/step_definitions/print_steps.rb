@@ -23,7 +23,7 @@ Then(/^I should see "([^\"]*) screen$/) do |screen_name|
       screen_displayed = selenium.find_element(:id, "com.hp.mss.printsdksample:id/preview_image_view").displayed?
     end
   end
-  raise "Error screen not loaded" unless screen_displayed = true
+  raise "Error screen not loaded" unless screen_displayed == true
 
 end
 

@@ -19,11 +19,11 @@ Then(/^I tap to enable "(.*?)" if installed$/) do |plugin_name|
     if plugin_name == "HP Print Service Plugin"
         index =1
     else if plugin_name == "Samsung Print Service Plugin" || plugin_name == "Brother Print Service Plugin"
-        index =2
-    else if plugin_name == "Mopria Print Service"    
         index =3
-    else if plugin_name == "Canon Print Service"
+    else if plugin_name == "Mopria Print Service"    
         index =4
+    else if plugin_name == "Canon Print Service"
+        index =2
     else if plugin_name == "Epson Print Enabler"
         index =5
     else if plugin_name == "Other PrintServicePlugin"
@@ -83,3 +83,22 @@ Then(/^I get installed and enabled plugin count$/) do
          index = index + 1
         end
     end
+Then(/^I tap to "(.*?)" a plugin$/) do |action|
+    index=1
+ while index < 7
+        element_id ="//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[2]/android.widget.RelativeLayout[1]/android.widget.ListView[1]/android.widget.RelativeLayout[#{index.to_i}]/android.widget.FrameLayout[1]/android.widget.TextView[1]"
+        
+     if action == "enable"
+        if (selenium.find_element(:xpath,element_id).text == "Disabled") 
+            selenium.find_element(:xpath,element_id).click
+            break
+        end
+    else
+         if (selenium.find_element(:xpath,element_id).text == "") 
+            selenium.find_element(:xpath,element_id).click
+            break
+        end
+    end
+         index = index + 1
+        end
+end

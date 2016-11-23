@@ -220,9 +220,12 @@ def check_elements_exist item
 			check_elements_exist subitem
 		end
 	else
-	 colortxt = query "* text:'#{item.to_s}'"
-	if colortxt.any?
-	check_element_exists "* text:'#{item.to_s}'"
+    if item.to_s == "UNIQUE DEVICE ID"
+        %x(adb shell input swipe 400 400 400 200 100)
+    end
+    colortxt = query "* text:'#{item.to_s}'"
+    if colortxt.any?
+        check_element_exists "* text:'#{item.to_s}'"
 	else
 	check_element_exists "* id:'#{item.to_s}'"
 	end
