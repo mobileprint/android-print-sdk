@@ -93,8 +93,11 @@ public class HPPrintDocumentAdapter extends PrintDocumentAdapter {
         if (totalPages > 0) {
             PrintDocumentInfo.Builder builder = new PrintDocumentInfo
                     .Builder("print_card")
-                    .setContentType(contentType)
-                    .setPageCount(totalPages);
+                    .setContentType(contentType);
+
+            if(printItem instanceof ImagePrintItem) {
+                builder.setPageCount(totalPages);
+            }
 
             PrintDocumentInfo info = builder.build();
             callback.onLayoutFinished(info, true);
