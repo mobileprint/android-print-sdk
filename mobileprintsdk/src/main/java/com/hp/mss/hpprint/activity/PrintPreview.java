@@ -282,7 +282,10 @@ public class PrintPreview extends AppCompatActivity {
                 previewView.setPageSize(paperWidth, paperHeight);
                 new PagePreviewView.ImageLoaderTask(PrintPreview.this).execute(new PagePreviewView.LoaderParams(printItem, previewView));
 
-                PrintUtil.is4x5media = paperHeight == 5 && paperWidth == 4;
+                // 'is4x5media' boolean was added to be used with adapter which is already removed from the project.
+                // Currently 'is4x5media' boolean is used only for building of paper size spinner list.
+                // Following row contains deprecated logic and causes issues in paper size list.
+                // PrintUtil.is4x5media = paperHeight == 5 && paperWidth == 4;
             }
 
             @Override
