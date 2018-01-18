@@ -14,7 +14,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = 'v2.02.471'
+version = 'v2.02.474'
 
 buildscript {
     repositories {
@@ -36,7 +36,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
-        versionName "v2.02.471"
+        versionName "v2.02.474"
 
         if (org.gradle.internal.os.OperatingSystem.current().windows == false) {
             def cmd = "git rev-parse --short HEAD"
