@@ -16,7 +16,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
 
 1. Clone the repo (for this tutorial, we'll clone to our home folder)
 
-    `git clone git@github.com:IPGPTP/DroidPrint ~/DroidPrint`
+    `git clone git@github.com:mobileprint/android-print-sdk ~/DroidPrint`
 
 2. Run Android Studio.
     ![Run Android Studio](https://s3-us-west-2.amazonaws.com/droidprint/images/androidstudio.png)
@@ -32,7 +32,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
 
 ## Contents
 
-- [JavaDocs](##javadocs)
+- [JavaDocs](#javadocs)
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
     + [ImageAsset](#imageasset)
@@ -48,7 +48,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
     + [Font](#font)
     + [Color](#color)
 - [Layout Options](#layout-options)
-- [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting)
+- [Troubleshooting](https://github.com/mobileprint/android-print-sdk/wiki/Troubleshooting)
 - [Terms & Conditions](#terms-&-conditions)
 
 ## Overview
@@ -86,8 +86,8 @@ In order to use the SDK and run the PrintSDKSample app, you need the following S
 The __DroidPrint__ library is not yet available publicly via maven or jcenter.
 There are two ways to install the library in your application. The recommended and much simpler way is to use the .aar file. The other option is to download the source code and compile it into your application.
 
-1. [Install aar file](https://github.com/IPGPTP/DroidPrint/wiki/Install-With-.aar-File)
-2. [Install from source](https://github.com/IPGPTP/DroidPrint/wiki/Install-with-source-code)
+1. [Install aar file](https://github.com/mobileprint/android-print-sdk/wiki/Install-With-.aar-File)
+2. [Install from source](https://github.com/mobileprint/android-print-sdk/wiki/Install-with-source-code)
 
 ## Basic Usage
 
@@ -329,4 +329,4 @@ if(Build.VERSION.SDK_INT >= 19) {
 ```
 
 ## Troubleshooting
-Please see our Wiki [Troubleshooting](https://github.com/IPGPTP/DroidPrint/wiki/Troubleshooting) page.
+Please see our Wiki [Troubleshooting](https://github.com/mobileprint/android-print-sdk/wiki/Troubleshooting) page.
