@@ -32,7 +32,7 @@ Note: If you are behind a proxy, please make sure Android Studio is capable of d
 
 ## Contents
 
-- [JavaDocs](##javadocs)
+- [JavaDocs](#javadocs)
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
     + [ImageAsset](#imageasset)
